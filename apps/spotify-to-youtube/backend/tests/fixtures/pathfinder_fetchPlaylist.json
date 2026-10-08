@@ -1,0 +1,1825 @@
+{
+ "data": {
+  "playlistV2": {
+   "__typename": "Playlist",
+   "content": {
+    "__typename": "PlaylistItemsPage",
+    "items": [
+     {
+      "addedAt": {
+       "isoString": "2026-07-09T14:06:14.326Z"
+      },
+      "addedBy": null,
+      "attributes": [
+       {
+        "key": "shuffle.average_position",
+        "value": "0"
+       },
+       {
+        "key": "decision_id",
+        "value": "ssp~065d522306c618a1dc048ce9ba85d7c4eeb6"
+       }
+      ],
+      "itemV2": {
+       "__typename": "TrackResponseWrapper",
+       "data": {
+        "__typename": "Track",
+        "albumOfTrack": {
+         "artists": {
+          "items": [
+           {
+            "profile": {
+             "name": "Madonna"
+            },
+            "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+           }
+          ]
+         },
+         "coverArt": {
+          "sources": [
+           {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02de3094d98b62340d3268c7bc",
+            "width": 300
+           },
+           {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851de3094d98b62340d3268c7bc",
+            "width": 64
+           },
+           {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273de3094d98b62340d3268c7bc",
+            "width": 640
+           }
+          ]
+         },
+         "date": {
+          "isoString": "1986-06-30T00:00:00Z",
+          "precision": "DAY"
+         },
+         "name": "True Blue",
+         "uri": "spotify:album:6fmnT17jc2Sc69q3nza1eD"
+        },
+        "artists": {
+         "items": [
+          {
+           "profile": {
+            "name": "Madonna"
+           },
+           "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+          }
+         ]
+        },
+        "associationsV3": {
+         "audioAssociations": {
+          "__typename": "TrackAudioAssociationPage",
+          "items": []
+         },
+         "videoAssociations": {
+          "totalCount": 1
+         }
+        },
+        "contentRating": {
+         "label": "NONE"
+        },
+        "discNumber": 1,
+        "trackDuration": {
+         "totalMilliseconds": 242733
+        },
+        "mediaType": "AUDIO",
+        "name": "La Isla Bonita",
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "playcount": "817944685",
+        "playlistAudioAttributes": {
+         "bpm": 99.9000015258789,
+         "key": {
+          "camelotKey": {
+           "color": "#04ebeb",
+           "value": "12B"
+          },
+          "key": "E",
+          "mode": "MODE_MAJOR"
+         }
+        },
+        "trackNumber": 7,
+        "uri": "spotify:track:6r8k1vznHrzlEKYxL4dZEe"
+       }
+      },
+      "itemV3": {
+       "__typename": "EntityResponseWrapper",
+       "data": {
+        "__typename": "Entity",
+        "consumptionExperienceTrait": {
+         "__typename": "ConsumptionExperienceTrait",
+         "contentRatings": [],
+         "duration": {
+          "nanoSeconds": 0,
+          "seconds": 242
+         },
+         "formats": [
+          "FORMAT_AUDIO",
+          "FORMAT_VIDEO",
+          "FORMAT_LOSSLESS"
+         ]
+        },
+        "identityTrait": {
+         "__typename": "IdentityTrait",
+         "contentHierarchyParent": {
+          "__typename": "Entity",
+          "identityTrait": {
+           "__typename": "IdentityTrait",
+           "name": "True Blue"
+          },
+          "publishingMetadataTrait": {
+           "__typename": "PublishingMetadataTrait",
+           "firstPublishedAt": {
+            "isoString": "1986-06-30",
+            "precision": "DAY"
+           }
+          },
+          "uri": "spotify:album:6fmnT17jc2Sc69q3nza1eD"
+         },
+         "contributors": {
+          "items": [
+           {
+            "name": "Madonna",
+            "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+           }
+          ],
+          "totalCount": 1
+         },
+         "description": "",
+         "name": "La Isla Bonita",
+         "type": "Song"
+        },
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "uri": "spotify:track:6r8k1vznHrzlEKYxL4dZEe",
+        "visualIdentityTrait": {
+         "__typename": "VisualIdentityTrait",
+         "sixteenByNineCoverImage": {
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 360,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000052b6a5d7de903b3e473bf362c893"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 720,
+              "maxWidth": 1280,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000053b6a5d7de903b3e473bf362c893"
+             }
+            ]
+           }
+          }
+         },
+         "squareCoverImage": {
+          "extractedColorSet": {
+           "encoreBaseSetTextColor": {
+            "alpha": 255,
+            "blue": 241,
+            "green": 190,
+            "red": 148
+           },
+           "highContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 129,
+             "green": 84,
+             "red": 46
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 92,
+             "green": 50,
+             "red": 11
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 209,
+             "red": 166
+            }
+           },
+           "higherContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 95,
+             "green": 53,
+             "red": 14
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 132,
+             "green": 87,
+             "red": 49
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 96,
+             "green": 215,
+             "red": 30
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 209,
+             "red": 166
+            }
+           },
+           "minContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 176,
+             "green": 128,
+             "red": 88
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 147,
+             "green": 101,
+             "red": 62
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            }
+           }
+          },
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 640,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000075a0de3094d98b62340d3268c7bc"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 64,
+              "maxWidth": 64,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000090d5de3094d98b62340d3268c7bc"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 300,
+              "maxWidth": 300,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000ab87de3094d98b62340d3268c7bc"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "uid": "36336534336238303561613339616630"
+     },
+     {
+      "addedAt": {
+       "isoString": "2026-07-09T14:06:14.326Z"
+      },
+      "addedBy": null,
+      "attributes": [
+       {
+        "key": "shuffle.average_position",
+        "value": "0"
+       },
+       {
+        "key": "decision_id",
+        "value": "ssp~065d522306c618a1dc048ce9ba85d7c4eeb6"
+       }
+      ],
+      "itemV2": {
+       "__typename": "TrackResponseWrapper",
+       "data": {
+        "__typename": "Track",
+        "albumOfTrack": {
+         "artists": {
+          "items": [
+           {
+            "profile": {
+             "name": "Bonnie Tyler"
+            },
+            "uri": "spotify:artist:0SD4eZCN4Kr0wQk56hCdh2"
+           }
+          ]
+         },
+         "coverArt": {
+          "sources": [
+           {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e028cefe8e2f2cfd63ce073fa96",
+            "width": 300
+           },
+           {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d000048518cefe8e2f2cfd63ce073fa96",
+            "width": 64
+           },
+           {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b2738cefe8e2f2cfd63ce073fa96",
+            "width": 640
+           }
+          ]
+         },
+         "date": {
+          "isoString": "2009-03-26T00:00:00Z",
+          "precision": "DAY"
+         },
+         "name": "The Very Best of Bonnie Tyler",
+         "uri": "spotify:album:0VJI3wpebzRyVHq0eZQidb"
+        },
+        "artists": {
+         "items": [
+          {
+           "profile": {
+            "name": "Bonnie Tyler"
+           },
+           "uri": "spotify:artist:0SD4eZCN4Kr0wQk56hCdh2"
+          }
+         ]
+        },
+        "associationsV3": {
+         "audioAssociations": {
+          "__typename": "TrackAudioAssociationPage",
+          "items": []
+         },
+         "videoAssociations": {
+          "totalCount": 1
+         }
+        },
+        "contentRating": {
+         "label": "NONE"
+        },
+        "discNumber": 1,
+        "trackDuration": {
+         "totalMilliseconds": 267360
+        },
+        "mediaType": "AUDIO",
+        "name": "Total Eclipse of the Heart",
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "playcount": "1282722590",
+        "playlistAudioAttributes": {
+         "bpm": 130.14100646972656,
+         "key": {
+          "camelotKey": {
+           "color": "#deca73",
+           "value": "4B"
+          },
+          "key": "G#",
+          "mode": "MODE_MAJOR"
+         }
+        },
+        "trackNumber": 48,
+        "uri": "spotify:track:7wuJGgpTNzbUyn26IOY6rj"
+       }
+      },
+      "itemV3": {
+       "__typename": "EntityResponseWrapper",
+       "data": {
+        "__typename": "Entity",
+        "consumptionExperienceTrait": {
+         "__typename": "ConsumptionExperienceTrait",
+         "contentRatings": [],
+         "duration": {
+          "nanoSeconds": 0,
+          "seconds": 267
+         },
+         "formats": [
+          "FORMAT_AUDIO",
+          "FORMAT_VIDEO",
+          "FORMAT_LOSSLESS"
+         ]
+        },
+        "identityTrait": {
+         "__typename": "IdentityTrait",
+         "contentHierarchyParent": {
+          "__typename": "Entity",
+          "identityTrait": {
+           "__typename": "IdentityTrait",
+           "name": "The Very Best of Bonnie Tyler"
+          },
+          "publishingMetadataTrait": {
+           "__typename": "PublishingMetadataTrait",
+           "firstPublishedAt": {
+            "isoString": "2009-03-26",
+            "precision": "DAY"
+           }
+          },
+          "uri": "spotify:album:0VJI3wpebzRyVHq0eZQidb"
+         },
+         "contributors": {
+          "items": [
+           {
+            "name": "Bonnie Tyler",
+            "uri": "spotify:artist:0SD4eZCN4Kr0wQk56hCdh2"
+           }
+          ],
+          "totalCount": 1
+         },
+         "description": "",
+         "name": "Total Eclipse of the Heart",
+         "type": "Song"
+        },
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "uri": "spotify:track:7wuJGgpTNzbUyn26IOY6rj",
+        "visualIdentityTrait": {
+         "__typename": "VisualIdentityTrait",
+         "sixteenByNineCoverImage": {
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 360,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000052b6a41e5b11d07186314a3c76c3"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 720,
+              "maxWidth": 1280,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000053b6a41e5b11d07186314a3c76c3"
+             }
+            ]
+           }
+          }
+         },
+         "squareCoverImage": {
+          "extractedColorSet": {
+           "encoreBaseSetTextColor": {
+            "alpha": 255,
+            "blue": 184,
+            "green": 184,
+            "red": 195
+           },
+           "highContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 48,
+             "green": 48,
+             "red": 56
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 82,
+             "green": 82,
+             "red": 90
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 203,
+             "green": 203,
+             "red": 213
+            }
+           },
+           "higherContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 48,
+             "green": 48,
+             "red": 56
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 82,
+             "green": 82,
+             "red": 90
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 96,
+             "green": 215,
+             "red": 30
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 203,
+             "green": 203,
+             "red": 213
+            }
+           },
+           "minContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 48,
+             "green": 48,
+             "red": 56
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 82,
+             "green": 82,
+             "red": 90
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            }
+           }
+          },
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 640,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000075a08cefe8e2f2cfd63ce073fa96"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 64,
+              "maxWidth": 64,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000090d58cefe8e2f2cfd63ce073fa96"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 300,
+              "maxWidth": 300,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000ab878cefe8e2f2cfd63ce073fa96"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "uid": "64313133313337666139336439323464"
+     },
+     {
+      "addedAt": {
+       "isoString": "2026-07-09T14:06:14.326Z"
+      },
+      "addedBy": null,
+      "attributes": [
+       {
+        "key": "shuffle.average_position",
+        "value": "0"
+       },
+       {
+        "key": "decision_id",
+        "value": "ssp~065d522306c618a1dc048ce9ba85d7c4eeb6"
+       }
+      ],
+      "itemV2": {
+       "__typename": "TrackResponseWrapper",
+       "data": {
+        "__typename": "Track",
+        "albumOfTrack": {
+         "artists": {
+          "items": [
+           {
+            "profile": {
+             "name": "Belinda Carlisle"
+            },
+            "uri": "spotify:artist:7xkAwz0bQTGDSbkofyQt3U"
+           }
+          ]
+         },
+         "coverArt": {
+          "sources": [
+           {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02e0f0aa947770fe74049dbba3",
+            "width": 300
+           },
+           {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851e0f0aa947770fe74049dbba3",
+            "width": 64
+           },
+           {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273e0f0aa947770fe74049dbba3",
+            "width": 640
+           }
+          ]
+         },
+         "date": {
+          "isoString": "1987-01-01T00:00:00Z",
+          "precision": "YEAR"
+         },
+         "name": "Greatest Vol.1 - Belinda Carlisle",
+         "uri": "spotify:album:3fzHLg5RfRXzQlHlR4F7JG"
+        },
+        "artists": {
+         "items": [
+          {
+           "profile": {
+            "name": "Belinda Carlisle"
+           },
+           "uri": "spotify:artist:7xkAwz0bQTGDSbkofyQt3U"
+          }
+         ]
+        },
+        "associationsV3": {
+         "audioAssociations": {
+          "__typename": "TrackAudioAssociationPage",
+          "items": []
+         },
+         "videoAssociations": {
+          "totalCount": 0
+         }
+        },
+        "contentRating": {
+         "label": "NONE"
+        },
+        "discNumber": 1,
+        "trackDuration": {
+         "totalMilliseconds": 246520
+        },
+        "mediaType": "AUDIO",
+        "name": "Heaven Is A Place On Earth",
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "playcount": "794365389",
+        "playlistAudioAttributes": {
+         "bpm": 122.9020004272461,
+         "key": {
+          "camelotKey": {
+           "color": "#04ebeb",
+           "value": "12B"
+          },
+          "key": "E",
+          "mode": "MODE_MAJOR"
+         }
+        },
+        "trackNumber": 1,
+        "uri": "spotify:track:37Q5anxoGWYdRsyeXkkNoI"
+       }
+      },
+      "itemV3": {
+       "__typename": "EntityResponseWrapper",
+       "data": {
+        "__typename": "Entity",
+        "consumptionExperienceTrait": {
+         "__typename": "ConsumptionExperienceTrait",
+         "contentRatings": [],
+         "duration": {
+          "nanoSeconds": 0,
+          "seconds": 233
+         },
+         "formats": [
+          "FORMAT_AUDIO",
+          "FORMAT_VIDEO",
+          "FORMAT_LOSSLESS"
+         ]
+        },
+        "identityTrait": {
+         "__typename": "IdentityTrait",
+         "contentHierarchyParent": {
+          "__typename": "Entity",
+          "identityTrait": {
+           "__typename": "IdentityTrait",
+           "name": "Greatest Vol.1 - Belinda Carlisle"
+          },
+          "publishingMetadataTrait": {
+           "__typename": "PublishingMetadataTrait",
+           "firstPublishedAt": {
+            "isoString": "1987",
+            "precision": "YEAR"
+           }
+          },
+          "uri": "spotify:album:3fzHLg5RfRXzQlHlR4F7JG"
+         },
+         "contributors": {
+          "items": [
+           {
+            "name": "Belinda Carlisle",
+            "uri": "spotify:artist:7xkAwz0bQTGDSbkofyQt3U"
+           }
+          ],
+          "totalCount": 1
+         },
+         "description": "",
+         "name": "Heaven Is A Place On Earth",
+         "type": "Song"
+        },
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "uri": "spotify:track:37Q5anxoGWYdRsyeXkkNoI",
+        "visualIdentityTrait": {
+         "__typename": "VisualIdentityTrait",
+         "sixteenByNineCoverImage": {
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 360,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000052b6b242c0feefecbb0b1138b0be"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 720,
+              "maxWidth": 1280,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000053b6b242c0feefecbb0b1138b0be"
+             }
+            ]
+           }
+          }
+         },
+         "squareCoverImage": {
+          "extractedColorSet": {
+           "encoreBaseSetTextColor": {
+            "alpha": 255,
+            "blue": 249,
+            "green": 200,
+            "red": 48
+           },
+           "highContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 122,
+             "green": 88,
+             "red": 0
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 84,
+             "green": 52,
+             "red": 0
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 254,
+             "green": 216,
+             "red": 128
+            }
+           },
+           "higherContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 87,
+             "green": 55,
+             "red": 0
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 124,
+             "green": 90,
+             "red": 42
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 96,
+             "green": 215,
+             "red": 30
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 254,
+             "green": 216,
+             "red": 128
+            }
+           },
+           "minContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 211,
+             "green": 164,
+             "red": 0
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 182,
+             "green": 137,
+             "red": 0
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            }
+           }
+          },
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 640,
+              "maxWidth": 640,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d000075a0e0f0aa947770fe74049dbba3"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 64,
+              "maxWidth": 64,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d000090d5e0f0aa947770fe74049dbba3"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 300,
+              "maxWidth": 300,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d0000ab87e0f0aa947770fe74049dbba3"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "uid": "61653431323062323639303538636636"
+     },
+     {
+      "addedAt": {
+       "isoString": "2026-07-09T14:06:14.326Z"
+      },
+      "addedBy": null,
+      "attributes": [
+       {
+        "key": "shuffle.average_position",
+        "value": "0"
+       },
+       {
+        "key": "decision_id",
+        "value": "ssp~065d522306c618a1dc048ce9ba85d7c4eeb6"
+       }
+      ],
+      "itemV2": {
+       "__typename": "TrackResponseWrapper",
+       "data": {
+        "__typename": "Track",
+        "albumOfTrack": {
+         "artists": {
+          "items": [
+           {
+            "profile": {
+             "name": "Michael Jackson"
+            },
+            "uri": "spotify:artist:3fMbdgg4jU18AjLCKBhRSm"
+           }
+          ]
+         },
+         "coverArt": {
+          "sources": [
+           {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e024121faee8df82c526cbab2be",
+            "width": 300
+           },
+           {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d000048514121faee8df82c526cbab2be",
+            "width": 64
+           },
+           {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b2734121faee8df82c526cbab2be",
+            "width": 640
+           }
+          ]
+         },
+         "date": {
+          "isoString": "2008-02-08T00:00:00Z",
+          "precision": "DAY"
+         },
+         "name": "Thriller 25 Super Deluxe Edition",
+         "uri": "spotify:album:1C2h7mLntPSeVYciMRTF4a"
+        },
+        "artists": {
+         "items": [
+          {
+           "profile": {
+            "name": "Michael Jackson"
+           },
+           "uri": "spotify:artist:3fMbdgg4jU18AjLCKBhRSm"
+          }
+         ]
+        },
+        "associationsV3": {
+         "audioAssociations": {
+          "__typename": "TrackAudioAssociationPage",
+          "items": []
+         },
+         "videoAssociations": {
+          "totalCount": 0
+         }
+        },
+        "contentRating": {
+         "label": "NONE"
+        },
+        "discNumber": 1,
+        "trackDuration": {
+         "totalMilliseconds": 293826
+        },
+        "mediaType": "AUDIO",
+        "name": "Billie Jean",
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "playcount": "3291379518",
+        "playlistAudioAttributes": {
+         "bpm": 117.0459976196289,
+         "key": {
+          "camelotKey": {
+           "color": "#89e3f9",
+           "value": "11A"
+          },
+          "key": "F#",
+          "mode": "MODE_MINOR"
+         }
+        },
+        "trackNumber": 6,
+        "uri": "spotify:track:5ChkMS8OtdzJeqyybCc9R5"
+       }
+      },
+      "itemV3": {
+       "__typename": "EntityResponseWrapper",
+       "data": {
+        "__typename": "Entity",
+        "consumptionExperienceTrait": {
+         "__typename": "ConsumptionExperienceTrait",
+         "contentRatings": [],
+         "duration": {
+          "nanoSeconds": 0,
+          "seconds": 293
+         },
+         "formats": [
+          "FORMAT_AUDIO",
+          "FORMAT_VIDEO",
+          "FORMAT_LOSSLESS"
+         ]
+        },
+        "identityTrait": {
+         "__typename": "IdentityTrait",
+         "contentHierarchyParent": {
+          "__typename": "Entity",
+          "identityTrait": {
+           "__typename": "IdentityTrait",
+           "name": "Thriller 25 Super Deluxe Edition"
+          },
+          "publishingMetadataTrait": {
+           "__typename": "PublishingMetadataTrait",
+           "firstPublishedAt": {
+            "isoString": "2008-02-08",
+            "precision": "DAY"
+           }
+          },
+          "uri": "spotify:album:1C2h7mLntPSeVYciMRTF4a"
+         },
+         "contributors": {
+          "items": [
+           {
+            "name": "Michael Jackson",
+            "uri": "spotify:artist:3fMbdgg4jU18AjLCKBhRSm"
+           }
+          ],
+          "totalCount": 1
+         },
+         "description": "",
+         "name": "Billie Jean",
+         "type": "Song"
+        },
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "uri": "spotify:track:5ChkMS8OtdzJeqyybCc9R5",
+        "visualIdentityTrait": {
+         "__typename": "VisualIdentityTrait",
+         "sixteenByNineCoverImage": {
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 360,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000052b6854e9c1b65eeb19182529a10"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 720,
+              "maxWidth": 1280,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000053b6854e9c1b65eeb19182529a10"
+             }
+            ]
+           }
+          }
+         },
+         "squareCoverImage": {
+          "extractedColorSet": {
+           "encoreBaseSetTextColor": {
+            "alpha": 255,
+            "blue": 155,
+            "green": 161,
+            "red": 255
+           },
+           "highContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 32,
+             "green": 24,
+             "red": 144
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 1,
+             "green": 0,
+             "red": 80
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 183,
+             "green": 189,
+             "red": 255
+            }
+           },
+           "higherContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 3,
+             "green": 0,
+             "red": 101
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 44,
+             "green": 52,
+             "red": 147
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 96,
+             "green": 215,
+             "red": 30
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 183,
+             "green": 189,
+             "red": 255
+            }
+           },
+           "minContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 32,
+             "green": 24,
+             "red": 144
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 1,
+             "green": 0,
+             "red": 80
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            }
+           }
+          },
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 640,
+              "maxWidth": 640,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d000075a04121faee8df82c526cbab2be"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 64,
+              "maxWidth": 64,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d000090d54121faee8df82c526cbab2be"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 300,
+              "maxWidth": 300,
+              "url": "https://image-cdn-ak.spotifycdn.com/image/ab67616d0000ab874121faee8df82c526cbab2be"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "uid": "39386563306339396138646133313061"
+     },
+     {
+      "addedAt": {
+       "isoString": "2026-07-09T14:06:14.326Z"
+      },
+      "addedBy": null,
+      "attributes": [
+       {
+        "key": "shuffle.average_position",
+        "value": "0"
+       },
+       {
+        "key": "decision_id",
+        "value": "ssp~065d522306c618a1dc048ce9ba85d7c4eeb6"
+       }
+      ],
+      "itemV2": {
+       "__typename": "TrackResponseWrapper",
+       "data": {
+        "__typename": "Track",
+        "albumOfTrack": {
+         "artists": {
+          "items": [
+           {
+            "profile": {
+             "name": "Madonna"
+            },
+            "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+           }
+          ]
+         },
+         "coverArt": {
+          "sources": [
+           {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02744ce5f9db16330eb4027f26",
+            "width": 300
+           },
+           {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851744ce5f9db16330eb4027f26",
+            "width": 64
+           },
+           {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273744ce5f9db16330eb4027f26",
+            "width": 640
+           }
+          ]
+         },
+         "date": {
+          "isoString": "1989-03-21T00:00:00Z",
+          "precision": "DAY"
+         },
+         "name": "Like a Prayer",
+         "uri": "spotify:album:48AGkmM7iO4jrELRnNZGPV"
+        },
+        "artists": {
+         "items": [
+          {
+           "profile": {
+            "name": "Madonna"
+           },
+           "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+          }
+         ]
+        },
+        "associationsV3": {
+         "audioAssociations": {
+          "__typename": "TrackAudioAssociationPage",
+          "items": []
+         },
+         "videoAssociations": {
+          "totalCount": 1
+         }
+        },
+        "contentRating": {
+         "label": "NONE"
+        },
+        "discNumber": 1,
+        "trackDuration": {
+         "totalMilliseconds": 340866
+        },
+        "mediaType": "AUDIO",
+        "name": "Like a Prayer",
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "playcount": "909551169",
+        "playlistAudioAttributes": {
+         "bpm": 111.93499755859375,
+         "key": {
+          "camelotKey": {
+           "color": "#ff80b4",
+           "value": "7B"
+          },
+          "key": "F",
+          "mode": "MODE_MAJOR"
+         }
+        },
+        "trackNumber": 1,
+        "uri": "spotify:track:2v7ywbUzCgcVohHaKUcacV"
+       }
+      },
+      "itemV3": {
+       "__typename": "EntityResponseWrapper",
+       "data": {
+        "__typename": "Entity",
+        "consumptionExperienceTrait": {
+         "__typename": "ConsumptionExperienceTrait",
+         "contentRatings": [],
+         "duration": {
+          "nanoSeconds": 0,
+          "seconds": 340
+         },
+         "formats": [
+          "FORMAT_AUDIO",
+          "FORMAT_VIDEO",
+          "FORMAT_LOSSLESS"
+         ]
+        },
+        "identityTrait": {
+         "__typename": "IdentityTrait",
+         "contentHierarchyParent": {
+          "__typename": "Entity",
+          "identityTrait": {
+           "__typename": "IdentityTrait",
+           "name": "Like a Prayer"
+          },
+          "publishingMetadataTrait": {
+           "__typename": "PublishingMetadataTrait",
+           "firstPublishedAt": {
+            "isoString": "1989-03-21",
+            "precision": "DAY"
+           }
+          },
+          "uri": "spotify:album:48AGkmM7iO4jrELRnNZGPV"
+         },
+         "contributors": {
+          "items": [
+           {
+            "name": "Madonna",
+            "uri": "spotify:artist:6tbjWDEIzxoDsBA1FuhfPW"
+           }
+          ],
+          "totalCount": 1
+         },
+         "description": "",
+         "name": "Like a Prayer",
+         "type": "Song"
+        },
+        "playability": {
+         "playable": true,
+         "reason": "PLAYABLE"
+        },
+        "uri": "spotify:track:2v7ywbUzCgcVohHaKUcacV",
+        "visualIdentityTrait": {
+         "__typename": "VisualIdentityTrait",
+         "sixteenByNineCoverImage": {
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 360,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000052b68041eecd170e1ebb1e5a806e"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 720,
+              "maxWidth": 1280,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab6742d3000053b68041eecd170e1ebb1e5a806e"
+             }
+            ]
+           }
+          }
+         },
+         "squareCoverImage": {
+          "extractedColorSet": {
+           "encoreBaseSetTextColor": {
+            "alpha": 255,
+            "blue": 182,
+            "green": 182,
+            "red": 202
+           },
+           "highContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 56,
+             "green": 56,
+             "red": 72
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 87,
+             "green": 87,
+             "red": 104
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 201,
+             "green": 201,
+             "red": 221
+            }
+           },
+           "higherContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 49,
+             "green": 49,
+             "red": 65
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 82,
+             "green": 82,
+             "red": 99
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 96,
+             "green": 215,
+             "red": 30
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 201,
+             "green": 201,
+             "red": 221
+            }
+           },
+           "minContrast": {
+            "backgroundBase": {
+             "alpha": 255,
+             "blue": 56,
+             "green": 56,
+             "red": 72
+            },
+            "backgroundTintedBase": {
+             "alpha": 255,
+             "blue": 87,
+             "green": 87,
+             "red": 104
+            },
+            "textBase": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textBrightAccent": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            },
+            "textSubdued": {
+             "alpha": 255,
+             "blue": 255,
+             "green": 255,
+             "red": 255
+            }
+           }
+          },
+          "image": {
+           "data": {
+            "__typename": "ImageV2",
+            "sources": [
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 640,
+              "maxWidth": 640,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000075a0744ce5f9db16330eb4027f26"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 64,
+              "maxWidth": 64,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d000090d5744ce5f9db16330eb4027f26"
+             },
+             {
+              "imageFormat": "WEBP",
+              "maxHeight": 300,
+              "maxWidth": 300,
+              "url": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000ab87744ce5f9db16330eb4027f26"
+             }
+            ]
+           }
+          }
+         }
+        }
+       }
+      },
+      "uid": "64656539666633636537303566393537"
+     }
+    ],
+    "pagingInfo": {
+     "limit": 25,
+     "offset": 0
+    },
+    "totalCount": 150
+   },
+   "abuseReportingEnabled": false,
+   "attributes": [
+    {
+     "key": "uri",
+     "value": "spotify:user:spotify:playlist:37i9dQZF1DX4UtSsGT1Sbe"
+    },
+    {
+     "key": "status",
+     "value": "PUBLISHED"
+    },
+    {
+     "key": "isAlgotorial",
+     "value": "true"
+    },
+    {
+     "key": "moveFollowersJobId",
+     "value": "b23b7e5b-25ce-4fb5-95db-b617ed77bb5e"
+    },
+    {
+     "key": "primary_color",
+     "value": "#ffffff"
+    },
+    {
+     "key": "autoplay",
+     "value": "spotify:playlist:37i9dQZF1DX0mziTeNtU34"
+    },
+    {
+     "key": "is_video_first",
+     "value": "false"
+    },
+    {
+     "key": "correlation-id",
+     "value": "ssp~065d5224760e3c40d725941a5f07125cc17c"
+    }
+   ],
+   "basePermission": "VIEWER",
+   "currentUserCapabilities": {
+    "canAbuseReport": true,
+    "canAdministratePermissions": false,
+    "canCancelMembership": false,
+    "canEditItems": false,
+    "canEditMetadata": false,
+    "canMixPlaylist": false,
+    "canView": true
+   },
+   "description": "The biggest songs of the 1980s. Cover: Madonna",
+   "followers": 12049464,
+   "following": false,
+   "format": "editorial",
+   "images": {
+    "items": [
+     {
+      "sources": [
+       {
+        "height": null,
+        "url": "https://i.scdn.co/image/ab67706f00000002fb8e01f2c022ab1a32e2c5a0",
+        "width": null
+       }
+      ]
+     }
+    ]
+   },
+   "members": {
+    "items": [
+     {
+      "isOwner": true,
+      "permissionLevel": "CONTRIBUTOR",
+      "user": {
+       "data": {
+        "__typename": "User",
+        "avatar": {
+         "sources": [
+          {
+           "height": 64,
+           "url": "https://i.scdn.co/image/ab67757000003b8255c25988a6ac314394d3fbf5",
+           "width": 64
+          },
+          {
+           "height": 300,
+           "url": "https://i.scdn.co/image/ab6775700000ee8555c25988a6ac314394d3fbf5",
+           "width": 300
+          }
+         ]
+        },
+        "name": "Spotify",
+        "socialHandle": null,
+        "uri": "spotify:user:spotify",
+        "username": "spotify"
+       }
+      }
+     }
+    ],
+    "totalCount": 1
+   },
+   "name": "All Out 80s",
+   "ownerV2": {
+    "data": {
+     "__typename": "User",
+     "avatar": {
+      "sources": [
+       {
+        "height": 64,
+        "url": "https://i.scdn.co/image/ab67757000003b8255c25988a6ac314394d3fbf5",
+        "width": 64
+       },
+       {
+        "height": 300,
+        "url": "https://i.scdn.co/image/ab6775700000ee8555c25988a6ac314394d3fbf5",
+        "width": 300
+       }
+      ]
+     },
+     "name": "Spotify",
+     "socialHandle": null,
+     "uri": "spotify:user:spotify",
+     "username": "spotify"
+    }
+   },
+   "revisionId": "AAAAADInj0d7zR4leYY27Cm5SSDvbjq6",
+   "sharingInfo": {
+    "shareId": "75jaV7kSTEeYAH-Qgq2jrg",
+    "shareUrl": "https://open.spotify.com/playlist/37i9dQZF1DX4UtSsGT1Sbe?si=75jaV7kSTEeYAH-Qgq2jrg"
+   },
+   "uri": "spotify:playlist:37i9dQZF1DX4UtSsGT1Sbe",
+   "visualIdentity": {
+    "squareCoverImage": {
+     "__typename": "VisualIdentityImage",
+     "extractedColorSet": {
+      "encoreBaseSetTextColor": {
+       "alpha": 255,
+       "blue": 207,
+       "green": 187,
+       "red": 177
+      },
+      "highContrast": {
+       "backgroundBase": {
+        "alpha": 255,
+        "blue": 80,
+        "green": 64,
+        "red": 56
+       },
+       "backgroundTintedBase": {
+        "alpha": 255,
+        "blue": 111,
+        "green": 94,
+        "red": 86
+       },
+       "textBase": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       },
+       "textBrightAccent": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       },
+       "textSubdued": {
+        "alpha": 255,
+        "blue": 226,
+        "green": 206,
+        "red": 196
+       }
+      },
+      "higherContrast": {
+       "backgroundBase": {
+        "alpha": 255,
+        "blue": 69,
+        "green": 53,
+        "red": 46
+       },
+       "backgroundTintedBase": {
+        "alpha": 255,
+        "blue": 103,
+        "green": 86,
+        "red": 78
+       },
+       "textBase": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       },
+       "textBrightAccent": {
+        "alpha": 255,
+        "blue": 96,
+        "green": 215,
+        "red": 30
+       },
+       "textSubdued": {
+        "alpha": 255,
+        "blue": 226,
+        "green": 206,
+        "red": 196
+       }
+      },
+      "minContrast": {
+       "backgroundBase": {
+        "alpha": 255,
+        "blue": 80,
+        "green": 64,
+        "red": 56
+       },
+       "backgroundTintedBase": {
+        "alpha": 255,
+        "blue": 111,
+        "green": 94,
+        "red": 86
+       },
+       "textBase": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       },
+       "textBrightAccent": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       },
+       "textSubdued": {
+        "alpha": 255,
+        "blue": 255,
+        "green": 255,
+        "red": 255
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

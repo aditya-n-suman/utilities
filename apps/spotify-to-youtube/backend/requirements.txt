@@ -1,0 +1,9 @@
+fastapi==0.142.4
+uvicorn[standard]==0.54.0
+httpx==0.28.1
+sse-starlette==3.5.0
+ytmusicapi==1.12.3
+yt-dlp==2026.8.19
+rapidfuzz==3.14.6
+# Optional: only for the headless web-player fallback (run `playwright install chromium` if used).
+playwright==1.63.0
