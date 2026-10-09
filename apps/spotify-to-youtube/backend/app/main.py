@@ -25,6 +25,7 @@ from .youtube.playlist import SaveFailed, playlist_urls, save_playlist, temp_lin
 from .youtube.search import Searcher, SearchFailed
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+log = logging.getLogger("app")
 
 SESSION_COOKIE = "s2y_sid"
 FRONTEND_DIST = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
@@ -64,6 +65,7 @@ def _session(response: Response, sid: str | None) -> str:
 class ConvertRequest(BaseModel):
     url: str | None = None
     text: str | None = None
+    name: str | None = None  # display name for pasted lists (e.g. the CSV filename)
 
     @model_validator(mode="after")
     def one_input(self):
@@ -84,7 +86,7 @@ async def convert(body: ConvertRequest, request: Request):
             parse_playlist_id(body.url)
         except InvalidPlaylistLink as exc:
             raise HTTPException(400, {"code": "invalid_link", "message": str(exc)}) from None
-    job = _jobs(request).create(link=body.url and body.url.strip(), text=body.text)
+    job = _jobs(request).create(link=body.url and body.url.strip(), text=body.text, name=body.name)
     return {"job_id": job.id}
 
 
@@ -140,6 +142,26 @@ async def edit_match(job_id: str, index: int, body: EditRequest, request: Reques
     return {"match": match.public(), "counts": job.counts()}
 
 
+@app.get("/api/jobs/{job_id}/matches/{index}/search")
+async def match_search(job_id: str, index: int, q: str, request: Request):
+    job = _job(request, job_id)
+    if not 0 <= index < len(job.matches):
+        raise HTTPException(404, "No such track.")
+    if not q.strip():
+        raise HTTPException(400, "Empty query.")
+    try:
+        results = await _jobs(request).search_for(job, index, q.strip()[:200])
+    except SearchFailed as exc:
+        raise HTTPException(503, {"code": "search_unavailable", "message": str(exc)}) from None
+    return {"results": [c.public() for c in results]}
+
+
+@app.post("/api/jobs/{job_id}/retry-errors")
+async def retry_errors(job_id: str, request: Request):
+    job = _job(request, job_id)
+    return {"queued": _jobs(request).retry_errors(job), "counts": job.counts()}
+
+
 @app.get("/api/search")
 async def manual_search(q: str, request: Request):
     if not q.strip():
@@ -192,6 +214,9 @@ async def auth_start(request: Request, response: Response, s2y_sid: str | None =
         flow = await asyncio.to_thread(auth.start_flow)
     except auth.AuthNotConfigured as exc:
         raise HTTPException(501, {"code": "save_disabled", "message": str(exc)}) from None
+    except Exception as exc:  # bad client id/secret, Google unreachable, …
+        log.warning("Google sign-in could not start: %s", exc)
+        raise HTTPException(502, {"code": "save_failed", "message": "Google sign-in isn't available right now."}) from None
     request.app.state.auth.get(sid).flow = flow
     return {"user_code": flow.user_code, "verification_url": flow.verification_url, "interval": flow.interval, "expires_at": flow.expires_at}
 
@@ -205,7 +230,11 @@ async def auth_poll(request: Request, s2y_sid: str | None = Cookie(None)):
         return {"status": "authorized"}
     if not state.flow:
         raise HTTPException(409, "No sign-in in progress.")
-    status, token = await asyncio.to_thread(auth.poll_flow, state.flow)
+    try:
+        status, token = await asyncio.to_thread(auth.poll_flow, state.flow)
+    except Exception as exc:
+        log.warning("Google sign-in poll failed: %s", exc)
+        raise HTTPException(502, {"code": "save_failed", "message": "Google sign-in failed."}) from None
     if token:
         state.token, state.flow = token, None
     return {"status": status}
@@ -248,6 +277,9 @@ async def save(job_id: str, body: SaveRequest, request: Request, s2y_sid: str | 
         )
     except SaveFailed as exc:
         raise HTTPException(502, {"code": "save_failed", "message": str(exc)}) from None
+    except Exception as exc:  # expired/revoked token, YouTube errors
+        log.warning("Saving playlist failed: %s", exc)
+        raise HTTPException(502, {"code": "save_failed", "message": "YouTube didn't accept the playlist."}) from None
     return {"playlist_id": playlist_id, "urls": playlist_urls(playlist_id), "video_count": len(ids)}
 
 

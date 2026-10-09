@@ -60,5 +60,6 @@ A web app where a user pastes a public Spotify playlist link and gets back a You
 - [x] 2. Backend: search and matching, with tests
 - [x] 3. Backend: job pipeline, SSE stream, temporary links, CSV report, CLI smoke script
 - [x] 4. Backend: save to account (device-code sign-in). **Needs a Google OAuth client to verify live.**
-- [ ] 5. Frontend from the Claude Design output
-- [ ] 6. End-to-end testing, polish, deployment notes
+- [x] 5. Frontend from the Claude Design output (`frontend/`, built from `design/Playlist Bridge.dc.html`)
+- [x] 6. End-to-end browser test of the full flow against live Spotify/YouTube, plus light/dark/mobile checks
+- [ ] 7. Verify "save to account" with a real Google OAuth client, then deploy

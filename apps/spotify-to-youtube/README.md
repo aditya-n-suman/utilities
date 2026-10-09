@@ -11,8 +11,9 @@ No Spotify or YouTube API keys are needed for converting. Saving to an account n
 apps/spotify-to-youtube/
 ├── REQUIREMENTS.md     agreed scope, flow, feasibility findings
 ├── DESIGN_BRIEF.md     UI/UX brief + API contract for the frontend
+├── design/             Claude Design prototype the UI is built from (reference only)
 ├── backend/            Python 3.11+ / FastAPI
-└── frontend/           React + Vite (to be built from the Claude Design output)
+└── frontend/           React 18 + Vite + TypeScript ("Playlist Bridge" UI)
 ```
 
 ## Quick start (backend)
@@ -35,6 +36,29 @@ pytest
 ```
 
 The smoke script prints every match with its confidence, then the temporary YouTube link(s).
+
+## Frontend
+
+```bash
+cd apps/spotify-to-youtube/frontend
+npm install
+npm run dev        # http://localhost:5173, proxies /api to the backend on :8000
+npm test           # unit tests (vitest)
+npm run build      # outputs dist/
+```
+
+Once `frontend/dist` exists, the backend serves the app itself, so in production you only run
+`uvicorn app.main:app` and open http://localhost:8000.
+
+The UI follows the Claude Design prototype in `design/Playlist Bridge.dc.html`:
+- landing (link or pasted list / CSV)
+- fetching
+- live matching
+- review (filters, swap / search / preview / remove)
+- result (temporary links, save to account, summary)
+- error screens
+
+It has light and dark themes and is fully keyboard-accessible.
 
 ## How it works
 
@@ -77,11 +101,13 @@ Searches run with limited concurrency, retry with backoff, and are cached in SQL
 | Method | Path | Purpose |
 |---|---|---|
 | GET | `/api/health` | `{ok, save_enabled, max_tracks}` |
-| POST | `/api/convert` | `{url}` or `{text}` → `{job_id}` (202). Returns 400 `invalid_link` for anything that isn't a Spotify playlist link |
+| POST | `/api/convert` | `{url}` or `{text, name?}` → `{job_id}` (202). Returns 400 `invalid_link` for anything that isn't a Spotify playlist link |
 | GET | `/api/jobs/{id}` | full snapshot: status, playlist, matches, counts |
-| GET | `/api/jobs/{id}/events` | **SSE** with events `playlist`, `match`, `done` and `failed`. Supports `Last-Event-ID` |
+| GET | `/api/jobs/{id}/events` | **SSE** with events `fetching` (early metadata), `playlist`, `match`, `done` and `failed`. Supports `Last-Event-ID` |
 | PATCH | `/api/jobs/{id}/matches/{i}` | `{action: choose\|remove\|restore\|retry, candidate?}` |
-| GET | `/api/search?q=` | manual search from the review screen |
+| GET | `/api/jobs/{id}/matches/{i}/search?q=` | manual search, ranked against that track |
+| POST | `/api/jobs/{id}/retry-errors` | re-run every failed search in the background |
+| GET | `/api/search?q=` | unranked manual search |
 | POST | `/api/jobs/{id}/links` | the temporary playlist link(s) |
 | GET | `/api/jobs/{id}/report.csv` | match report |
 | GET/POST/DELETE | `/api/auth/youtube[/start\|/poll]` | device-code sign-in status, start, poll and sign-out |

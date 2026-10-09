@@ -6,6 +6,7 @@ Tier 3: headless web player, only when tier 2 is broken
 """
 
 import logging
+from collections.abc import Callable
 
 import httpx
 
@@ -29,13 +30,22 @@ __all__ = [
 ]
 
 
-async def fetch_playlist(link: str, *, max_tracks: int | None = None) -> Playlist:
+async def fetch_playlist(
+    link: str,
+    *,
+    max_tracks: int | None = None,
+    on_metadata: Callable[[Playlist, bool], None] | None = None,
+) -> Playlist:
+    """`on_metadata(playlist, loading_more)` fires once the embed page is parsed, before paging."""
     max_tracks = max_tracks or settings.max_tracks
     async with httpx.AsyncClient(timeout=20) as client:
         playlist_id = await resolve_playlist_id(link, client)
         embed = await fetch_embed(playlist_id, client)
         playlist = embed.playlist
-        if not embed.maybe_truncated or len(playlist.tracks) >= max_tracks:
+        loading_more = embed.maybe_truncated and len(playlist.tracks) < max_tracks
+        if on_metadata:
+            on_metadata(playlist, loading_more)
+        if not loading_more:
             playlist.tracks = playlist.tracks[:max_tracks]
             return playlist
 

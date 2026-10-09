@@ -65,6 +65,7 @@ class Match(BaseModel):
     chosen: Candidate | None = None
     alternatives: list[Candidate] = Field(default_factory=list)
     error: str | None = None
+    picked: bool = False  # chosen by the user during review
 
     def public(self) -> dict:
         data = self.model_dump(exclude={"chosen", "alternatives"})

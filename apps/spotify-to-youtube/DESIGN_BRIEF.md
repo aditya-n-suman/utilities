@@ -42,13 +42,15 @@ This is the prompt given to Claude Design, plus the data the UI will receive fro
               "duration_s": 243, "source": "ytmusic_video", "score": 1.0,
               "thumbnail": "https://i.ytimg.com/vi/zpzdgmqIHOQ/mqdefault.jpg",
               "url": "https://www.youtube.com/watch?v=zpzdgmqIHOQ" },
-  "alternatives": [ /* up to 4 candidates, same shape as chosen */ ] }
+  "alternatives": [ /* up to 4 other candidates (never the chosen one), same shape */ ] }
 ```
 - `status` is one of `pending | matched | not_found | removed | error`.
 - `confidence` is one of `high | medium | low | none`.
 - `album` and `cover_url` are present for playlists over 100 tracks and absent for shorter ones, so per-track artwork must be optional in the design.
 
-**Counts:** `{ total, done, high, medium, low, not_found, removed }`
+**Counts:** `{ total, done, high, medium, low, not_found, removed, error }`
+
+**Match** also carries `picked: true` after the user chooses a candidate during review.
 
 **Temporary links:** `{ "links": [{ "part": 1, "of": 2, "url": "…" }], "video_count": 87 }`
 

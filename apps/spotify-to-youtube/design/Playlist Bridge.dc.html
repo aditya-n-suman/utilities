@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root,[data-theme="light"]{--bg:#F6F5F1;--surface:#FFFFFF;--surface-2:#EFEEE9;--line:#E2E0D9;--ink:#16151A;--ink-2:#55535C;--ink-3:#75737B;--green:oklch(0.68 0.17 152);--red:oklch(0.6 0.21 27);--focus:oklch(0.55 0.15 152);--hi-fg:oklch(0.42 0.12 150);--hi-bg:oklch(0.94 0.05 150);--md-fg:oklch(0.47 0.1 75);--md-bg:oklch(0.95 0.07 88);--lo-fg:oklch(0.5 0.15 45);--lo-bg:oklch(0.94 0.05 52);--nf-fg:oklch(0.5 0.19 27);--nf-bg:oklch(0.94 0.04 27);--shadow:0 1px 2px rgba(20,20,25,.04),0 8px 24px rgba(20,20,25,.06);--skel:#E8E6E0}
+[data-theme="dark"]{--bg:#0E0E10;--surface:#17171A;--surface-2:#212125;--line:#2D2D32;--ink:#F3F2EE;--ink-2:#AEACB4;--ink-3:#8B8991;--green:oklch(0.74 0.17 152);--red:oklch(0.66 0.2 27);--focus:oklch(0.78 0.15 152);--hi-fg:oklch(0.84 0.14 150);--hi-bg:oklch(0.32 0.07 150);--md-fg:oklch(0.86 0.13 85);--md-bg:oklch(0.34 0.07 80);--lo-fg:oklch(0.82 0.13 52);--lo-bg:oklch(0.33 0.08 45);--nf-fg:oklch(0.8 0.13 27);--nf-bg:oklch(0.33 0.09 27);--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3);--skel:#26262B}
+html,body{margin:0;background:var(--bg)}
+*{box-sizing:border-box}
+a{color:var(--ink);text-underline-offset:3px}
+a:hover{color:var(--ink-2)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+button{font:inherit;color:inherit}
+input,textarea{font:inherit;color:inherit}
+@keyframes pb-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+@keyframes pb-spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+
+<div data-theme="{{ theme }}" style="min-height:100vh;background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk',system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;transition:background .2s,color .2s;">
+
+  <sc-if value="{{ showDemoBar }}" hint-placeholder-val="{{ true }}">
+    <nav aria-label="Prototype states" style="display:flex;flex-direction:column;gap:6px;padding:8px clamp(16px,4vw,40px);background:var(--surface-2);border-bottom:1px solid var(--line);font-size:12px;">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
+        <span style="width:56px;color:var(--ink-3);font-family:'Geist Mono',monospace;">FLOW</span>
+        <sc-for list="{{ demoFlow }}" as="d" hint-placeholder-count="6">
+          <button type="button" onClick="{{ d.onClick }}" aria-pressed="{{ d.active }}" style="border:1px solid var(--line);background:{{ d.bg }};color:{{ d.fg }};border-radius:999px;padding:3px 10px;cursor:pointer;font-size:12px;">{{ d.label }}</button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px;">
+        <span style="width:56px;color:var(--ink-3);font-family:'Geist Mono',monospace;">ERRORS</span>
+        <sc-for list="{{ demoErr }}" as="d" hint-placeholder-count="10">
+          <button type="button" onClick="{{ d.onClick }}" aria-pressed="{{ d.active }}" style="border:1px solid var(--line);background:{{ d.bg }};color:{{ d.fg }};border-radius:999px;padding:3px 10px;cursor:pointer;font-size:11px;font-family:'Geist Mono',monospace;">{{ d.label }}</button>
+        </sc-for>
+      </div>
+    </nav>
+  </sc-if>
+
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(16px,4vw,40px);max-width:1120px;margin:0 auto;">
+    <button type="button" onClick="{{ goHome }}" aria-label="Playlist Bridge, start over" style="display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;">
+      <span aria-hidden="true" style="display:flex;align-items:center;">
+        <span style="width:12px;height:12px;border-radius:50%;background:var(--green);"></span>
+        <span style="width:18px;height:2px;background:linear-gradient(90deg,var(--green),var(--red));"></span>
+        <span style="width:12px;height:12px;border-radius:50%;background:var(--red);"></span>
+      </span>
+      <span style="font-weight:700;font-size:17px;letter-spacing:-0.01em;">Playlist Bridge</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <sc-if value="{{ notLanding }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ goHome }}" style="background:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;font-size:14px;color:var(--ink-2);">Start over</button>
+      </sc-if>
+      <button type="button" onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}" style="width:36px;height:36px;display:grid;place-items:center;background:none;border:1px solid var(--line);border-radius:999px;cursor:pointer;font-size:15px;">{{ themeIcon }}</button>
+    </div>
+  </header>
+
+  <main id="main" style="max-width:1040px;margin:0 auto;padding:0 clamp(16px,4vw,40px) 64px;">
+    <div aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;">{{ live }}</div>
+
+    <!-- LANDING -->
+    <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+      <section aria-labelledby="hero-h" data-screen-label="01 Landing" style="padding:clamp(40px,10vh,120px) 0 40px;max-width:760px;margin:0 auto;">
+        <p style="margin:0 0 16px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--ink-3);display:flex;align-items:center;gap:8px;"><span aria-hidden="true" style="width:28px;height:2px;background:linear-gradient(90deg,var(--green),var(--red));"></span>SPOTIFY → YOUTUBE</p>
+        <h1 id="hero-h" style="margin:0 0 14px;font-size:clamp(36px,6vw,60px);line-height:1.02;letter-spacing:-0.035em;font-weight:700;text-wrap:balance;">Spotify playlist in, YouTube playlist out.</h1>
+        <p style="margin:0 0 36px;font-size:18px;color:var(--ink-2);max-width:560px;text-wrap:pretty;">Paste a link. We find every song on YouTube, you check the matches, and you get a playlist to open or save.</p>
+
+        <form onSubmit="{{ convert }}" novalidate style="display:flex;flex-direction:column;gap:10px;">
+          <label for="pl-url" style="font-weight:600;font-size:14px;">Paste a Spotify playlist link</label>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;padding:8px;background:var(--surface);border:1.5px solid {{ inputBorder }};border-radius:18px;box-shadow:var(--shadow);">
+            <input id="pl-url" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="open.spotify.com/playlist/…" value="{{ url }}" onChange="{{ onUrl }}" aria-invalid="{{ hasUrlError }}" aria-describedby="pl-url-help" style="flex:1 1 260px;min-width:0;height:52px;border:0;outline:none;background:transparent;font-size:18px;padding:0 12px;">
+            <button type="submit" style="flex:0 0 auto;height:52px;padding:0 26px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:16px;cursor:pointer;" style-hover="opacity:.88">Convert</button>
+          </div>
+          <div id="pl-url-help" style="min-height:22px;">
+            <sc-if value="{{ hasUrlError }}" hint-placeholder-val="{{ false }}">
+              <p role="alert" style="margin:0;color:var(--nf-fg);font-size:14px;display:flex;gap:6px;align-items:baseline;"><span aria-hidden="true">●</span><span>{{ urlError }}</span></p>
+            </sc-if>
+            <sc-if value="{{ noUrlError }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;color:var(--ink-3);font-size:14px;display:flex;flex-wrap:wrap;gap:6px 14px;">
+                <span>Public playlists only.</span>
+                <button type="button" onClick="{{ useExample }}" style="background:none;border:0;padding:0;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:14px;">Try an example link</button>
+              </p>
+            </sc-if>
+          </div>
+        </form>
+
+        <div style="margin-top:28px;border-top:1px solid var(--line);padding-top:20px;">
+          <button type="button" onClick="{{ togglePaste }}" aria-expanded="{{ showPaste }}" aria-controls="paste-panel" style="background:none;border:0;padding:0;cursor:pointer;color:var(--ink-2);font-size:15px;display:flex;align-items:center;gap:8px;">
+            <span>or paste a track list / upload CSV</span><span aria-hidden="true" style="font-size:12px;">{{ pasteChevron }}</span>
+          </button>
+          <sc-if value="{{ showPaste }}" hint-placeholder-val="{{ false }}">
+            <form id="paste-panel" onSubmit="{{ convertList }}" style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;">
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <label for="paste-ta" style="font-size:14px;font-weight:600;">Track list</label>
+                <textarea id="paste-ta" rows="7" value="{{ pasteText }}" onChange="{{ onPaste }}" placeholder="Artist – Title, one per line&#10;Mara Vey – Paper Rivers&#10;Lowtide Club – Neon Motel" style="resize:vertical;min-height:168px;padding:12px 14px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface);font-size:14px;line-height:1.6;outline:none;"></textarea>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;">
+                <span id="drop-l" style="font-size:14px;font-weight:600;">CSV file</span>
+                <label onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" onDrop="{{ onDrop }}" style="flex:1;min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;padding:16px;border:1.5px dashed {{ dropBorder }};border-radius:14px;background:{{ dropBg }};cursor:pointer;color:var(--ink-2);font-size:14px;">
+                  <input type="file" accept=".csv,text/csv" onChange="{{ onFile }}" aria-labelledby="drop-l" style="position:absolute;width:1px;height:1px;opacity:0;">
+                  <span style="font-weight:600;color:var(--ink);">{{ dropTitle }}</span>
+                  <span>{{ dropSub }}</span>
+                </label>
+              </div>
+              <div style="grid-column:1/-1;display:flex;justify-content:flex-end;">
+                <button type="submit" style="height:44px;padding:0 20px;border:1.5px solid var(--ink);border-radius:12px;background:transparent;font-weight:600;cursor:pointer;">Convert list</button>
+              </div>
+            </form>
+          </sc-if>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- PLAYLIST HEADER -->
+    <sc-if value="{{ showPlaylistCard }}" hint-placeholder-val="{{ false }}">
+      <section aria-label="Playlist" style="margin-top:24px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;">
+          <div aria-hidden="true" style="width:96px;height:96px;flex:0 0 96px;border-radius:12px;background:linear-gradient(135deg, var(--green), oklch(0.45 0.1 280) 55%, var(--red));"></div>
+          <div style="flex:1 1 220px;min-width:0;">
+            <p style="margin:0 0 4px;font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-3);">SPOTIFY PLAYLIST</p>
+            <h1 style="margin:0 0 4px;font-size:clamp(22px,3vw,30px);letter-spacing:-0.02em;line-height:1.1;">{{ playlist.name }}</h1>
+            <p style="margin:0;color:var(--ink-2);font-size:14px;">by {{ playlist.owner }} · {{ playlist.track_count }} tracks</p>
+          </div>
+          <sc-if value="{{ isMatchingOrReview }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+                <span style="font-size:14px;color:var(--ink-2);">{{ progressLabel }}</span>
+                <span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:500;">{{ progressCount }}</span>
+              </div>
+              <div role="progressbar" aria-label="Matching progress" aria-valuemin="0" aria-valuemax="{{ counts.total }}" aria-valuenow="{{ counts.done }}" style="height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden;">
+                <div style="height:100%;width:{{ progressPct }};background:linear-gradient(90deg,var(--green),var(--red));border-radius:99px;transition:width .25s ease;"></div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ isCapped }}" hint-placeholder-val="{{ false }}">
+          <p role="note" style="margin:0;padding:10px 14px;border-radius:12px;background:var(--surface-2);font-size:14px;color:var(--ink-2);">This playlist has <strong style="color:var(--ink);">{{ playlist.total }}</strong> tracks. We'll convert the first <strong style="color:var(--ink);">{{ playlist.track_count }}</strong>.</p>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <!-- FETCHING -->
+    <sc-if value="{{ isFetching }}" hint-placeholder-val="{{ false }}">
+      <section aria-busy="true" aria-label="Loading tracks" data-screen-label="02 Fetching" style="margin-top:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin:0 0 12px;color:var(--ink-2);font-size:14px;">
+          <span aria-hidden="true" style="width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:pb-spin .8s linear infinite;"></span>
+          <span>{{ fetchNote }}</span>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 20px;">
+          <sc-for list="{{ skeletons }}" as="s" hint-placeholder-count="8">
+            <div aria-hidden="true" style="display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);animation:pb-pulse 1.4s ease-in-out infinite;">
+              <span style="width:20px;height:10px;border-radius:4px;background:var(--skel);"></span>
+              <div style="flex:1;display:flex;flex-direction:column;gap:7px;">
+                <span style="width:{{ s.w1 }};height:12px;border-radius:4px;background:var(--skel);"></span>
+                <span style="width:{{ s.w2 }};height:10px;border-radius:4px;background:var(--skel);"></span>
+              </div>
+              <span style="width:34px;height:10px;border-radius:4px;background:var(--skel);"></span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- MATCHING / REVIEW -->
+    <sc-if value="{{ isMatchingOrReview }}" hint-placeholder-val="{{ false }}">
+      <section aria-label="{{ listLabel }}" data-screen-label="{{ listScreenLabel }}" style="margin-top:20px;">
+
+        <sc-if value="{{ slowed }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between;margin-bottom:16px;padding:16px 18px;border-radius:16px;background:var(--md-bg);color:var(--md-fg);">
+            <div style="min-width:0;flex:1 1 300px;">
+              <p style="margin:0 0 2px;font-weight:600;">YouTube search slowed down</p>
+              <p style="margin:0;font-size:14px;">We paused at {{ progressCount }}. The matches so far are kept.</p>
+            </div>
+            <button type="button" onClick="{{ retrySlowed }}" style="height:40px;padding:0 18px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;">Retry</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ partial }}" hint-placeholder-val="{{ false }}">
+          <div role="status" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between;margin-bottom:16px;padding:16px 18px;border-radius:16px;background:var(--lo-bg);color:var(--lo-fg);">
+            <div style="min-width:0;flex:1 1 300px;">
+              <p style="margin:0 0 2px;font-weight:600;">Partial results</p>
+              <p style="margin:0;font-size:14px;">{{ partialText }}</p>
+            </div>
+            <button type="button" onClick="{{ retryErrors }}" style="height:40px;padding:0 18px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;">Retry failed tracks</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isMatchingDone }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding:16px 18px;border-radius:16px;background:var(--surface);border:1px solid var(--line);">
+            <p style="margin:0;font-size:15px;"><strong>All {{ counts.total }} tracks searched.</strong> <span style="color:var(--ink-2);">{{ doneSummary }}</span></p>
+            <button type="button" onClick="{{ goReview }}" style="height:44px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;">Review matches →</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+          <div role="tablist" aria-label="Filter tracks" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+            <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="3">
+              <button type="button" role="tab" aria-selected="{{ tab.active }}" aria-controls="track-list" onClick="{{ tab.onClick }}" style="display:flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:999px;border:1px solid {{ tab.border }};background:{{ tab.bg }};color:{{ tab.fg }};cursor:pointer;font-weight:500;font-size:14px;">
+                <span>{{ tab.label }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;opacity:.75;">{{ tab.count }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <div style="background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:0 20px;">
+          <div aria-hidden="true" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:0 28px;padding:14px 0 10px;border-bottom:1px solid var(--line);font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-3);">
+            <span style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--green);"></span>SPOTIFY</span>
+            <span style="display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);"></span>YOUTUBE</span>
+          </div>
+
+          <sc-if value="{{ listEmpty }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:48px 0;text-align:center;color:var(--ink-2);">
+              <p style="margin:0 0 4px;font-weight:600;color:var(--ink);">{{ emptyTitle }}</p>
+              <p style="margin:0;font-size:14px;">Switch to All to see the full list.</p>
+            </div>
+          </sc-if>
+
+          <div id="track-list" role="list" aria-label="Tracks">
+            <sc-for list="{{ rows }}" as="row" hint-placeholder-count="6">
+              <div role="listitem" style="content-visibility:auto;contain-intrinsic-size:auto 84px;border-bottom:1px solid var(--line);padding:14px 0;">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px 28px;align-items:center;opacity:{{ row.opacity }};">
+                  <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+                    <span style="width:26px;flex:0 0 26px;font-family:'Geist Mono',monospace;font-size:12px;color:var(--ink-3);text-align:right;">{{ row.num }}</span>
+                    <sc-if value="{{ row.hasArt }}" hint-placeholder-val="{{ false }}">
+                      <span aria-hidden="true" style="width:40px;height:40px;flex:0 0 40px;border-radius:6px;background:{{ row.artBg }};"></span>
+                    </sc-if>
+                    <div style="min-width:0;flex:1;">
+                      <div style="display:flex;align-items:center;gap:6px;min-width:0;">
+                        <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.title }}</span>
+                        <sc-if value="{{ row.explicit }}" hint-placeholder-val="{{ false }}">
+                          <span aria-label="Explicit" title="Explicit" style="flex:0 0 auto;display:grid;place-items:center;width:16px;height:16px;border-radius:3px;background:var(--surface-2);color:var(--ink-2);font-size:10px;font-weight:700;">E</span>
+                        </sc-if>
+                      </div>
+                      <div style="font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.subtitle }}</div>
+                    </div>
+                    <span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--ink-3);">{{ row.dur }}</span>
+                  </div>
+
+                  <div style="min-width:0;">
+                    <sc-if value="{{ row.isPending }}" hint-placeholder-val="{{ false }}">
+                      <div aria-label="Searching YouTube" style="display:flex;align-items:center;gap:12px;animation:pb-pulse 1.4s ease-in-out infinite;">
+                        <span style="width:80px;height:45px;flex:0 0 80px;border-radius:8px;background:var(--skel);"></span>
+                        <div style="flex:1;display:flex;flex-direction:column;gap:7px;"><span style="width:75%;height:11px;border-radius:4px;background:var(--skel);"></span><span style="width:40%;height:10px;border-radius:4px;background:var(--skel);"></span></div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.isFound }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+                        <span aria-hidden="true" style="width:80px;height:45px;flex:0 0 80px;border-radius:8px;background:{{ row.thumbBg }};"></span>
+                        <div style="min-width:0;flex:1;">
+                          <div style="font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.ytTitle }}</div>
+                          <div style="font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ row.channel }} <span style="color:var(--ink-3);">· {{ row.source }}</span></div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto;">
+                          <span style="padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:{{ row.chipBg }};color:{{ row.chipFg }};">{{ row.chipLabel }}</span>
+                          <span aria-label="{{ row.diffAria }}" style="font-family:'Geist Mono',monospace;font-size:11px;color:var(--ink-3);">{{ row.diffLabel }}</span>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.isNone }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:12px;">
+                        <span aria-hidden="true" style="width:80px;height:45px;flex:0 0 80px;border-radius:8px;border:1.5px dashed var(--line);"></span>
+                        <div style="flex:1;font-size:14px;color:var(--ink-2);">No confident match on YouTube</div>
+                        <span style="padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:var(--nf-bg);color:var(--nf-fg);">Not found</span>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.isError }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:12px;">
+                        <span aria-hidden="true" style="width:80px;height:45px;flex:0 0 80px;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;color:var(--ink-3);font-weight:700;">!</span>
+                        <div style="flex:1;font-size:14px;color:var(--ink-2);">Search didn't finish</div>
+                        <button type="button" onClick="{{ row.onRetry }}" aria-label="{{ row.retryAria }}" style="height:30px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:12px;font-weight:600;">Retry</button>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.isRemoved }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:var(--ink-2);">
+                        <span>Removed from playlist</span>
+                        <button type="button" onClick="{{ row.onUndo }}" aria-label="{{ row.undoAria }}" style="background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:14px;color:var(--ink);">Undo</button>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+
+                <sc-if value="{{ row.showActions }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;padding-left:38px;justify-content:flex-end;align-items:center;">
+                    <sc-if value="{{ row.picked }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:12px;color:var(--ink-3);margin-right:auto;">✓ Picked by you</span>
+                    </sc-if>
+                    <sc-if value="{{ row.canSwap }}" hint-placeholder-val="{{ false }}">
+                      <button type="button" onClick="{{ row.onSwap }}" aria-expanded="{{ row.swapOpen }}" aria-label="{{ row.swapAria }}" style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:{{ row.swapBg }};cursor:pointer;font-size:13px;">Swap match ▾</button>
+                    </sc-if>
+                    <button type="button" onClick="{{ row.onSearch }}" aria-expanded="{{ row.searchOpen }}" aria-label="{{ row.searchAria }}" style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:{{ row.searchBg }};cursor:pointer;font-size:13px;">Search</button>
+                    <button type="button" onClick="{{ row.onRemove }}" aria-label="{{ row.removeAria }}" style="height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:13px;color:var(--ink-2);" style-hover="color:var(--nf-fg)">Remove</button>
+                  </div>
+                </sc-if>
+
+                <sc-if value="{{ row.panelOpen }}" hint-placeholder-val="{{ false }}">
+                  <div role="region" aria-label="{{ row.panelAria }}" style="margin-top:12px;background:var(--surface-2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;">
+                    <sc-if value="{{ row.searchOpen }}" hint-placeholder-val="{{ false }}">
+                      <form onSubmit="{{ row.onSearchSubmit }}" style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <label for="{{ row.searchId }}" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Search YouTube</label>
+                        <input id="{{ row.searchId }}" ref="{{ searchRef }}" type="search" value="{{ query }}" onChange="{{ onQuery }}" placeholder="Search YouTube" style="flex:1 1 220px;min-width:0;height:40px;padding:0 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);outline:none;">
+                        <button type="submit" style="height:40px;padding:0 16px;border:0;border-radius:10px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;">Search</button>
+                      </form>
+                    </sc-if>
+                    <sc-if value="{{ row.hasPreview }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;">
+                        <div role="img" aria-label="{{ row.previewAria }}" style="position:relative;width:min(100%,360px);aspect-ratio:16/9;border-radius:10px;background:{{ row.previewBg }};overflow:hidden;">
+                          <span aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:40px;border-radius:12px;background:rgba(0,0,0,.6);display:grid;place-items:center;color:#fff;font-size:16px;">▶</span>
+                          <div style="position:absolute;left:0;right:0;bottom:0;padding:24px 10px 8px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:12px;">
+                            <div style="height:3px;border-radius:2px;background:rgba(255,255,255,.3);margin-bottom:6px;"><div style="width:22%;height:100%;background:var(--red);border-radius:2px;"></div></div>
+                            <span style="font-family:'Geist Mono',monospace;">0:07 / {{ row.previewDur }}</span>
+                          </div>
+                        </div>
+                        <div style="flex:1 1 180px;min-width:0;display:flex;flex-direction:column;gap:4px;">
+                          <span style="font-family:'Geist Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--ink-3);">PREVIEW</span>
+                          <span style="font-weight:600;font-size:14px;">{{ row.previewTitle }}</span>
+                          <span style="font-size:13px;color:var(--ink-2);">{{ row.previewChannel }}</span>
+                          <button type="button" onClick="{{ closePreview }}" style="align-self:flex-start;margin-top:6px;background:none;border:0;padding:0;text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:13px;color:var(--ink-2);">Close preview</button>
+                        </div>
+                      </div>
+                    </sc-if>
+                    <p style="margin:2px 0 0;font-size:12px;color:var(--ink-3);">{{ row.panelHint }}</p>
+                    <sc-for list="{{ row.alts }}" as="alt" hint-placeholder-count="3">
+                      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:8px;border-radius:10px;background:{{ alt.bg }};">
+                        <span aria-hidden="true" style="width:64px;height:36px;flex:0 0 64px;border-radius:6px;background:{{ alt.thumbBg }};"></span>
+                        <div style="flex:1 1 180px;min-width:0;">
+                          <div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ alt.title }}</div>
+                          <div style="font-size:12px;color:var(--ink-2);">{{ alt.channel }} · {{ alt.source }} · <span style="font-family:'Geist Mono',monospace;">{{ alt.diffLabel }}</span></div>
+                        </div>
+                        <span style="padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:{{ alt.chipBg }};color:{{ alt.chipFg }};">{{ alt.chipLabel }}</span>
+                        <div style="display:flex;gap:6px;">
+                          <button type="button" onClick="{{ alt.onPreview }}" aria-label="{{ alt.previewAria }}" aria-pressed="{{ alt.isPreview }}" style="height:30px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:12px;">▶ Preview</button>
+                          <button type="button" onClick="{{ alt.onUse }}" aria-label="{{ alt.useAria }}" disabled="{{ alt.current }}" style="height:30px;padding:0 12px;border-radius:8px;border:0;background:var(--ink);color:var(--bg);cursor:pointer;font-size:12px;font-weight:600;opacity:{{ alt.useOpacity }};">{{ alt.useLabel }}</button>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+          <div style="position:sticky;bottom:0;z-index:5;margin:0 calc(-1 * clamp(16px,4vw,40px));padding:14px clamp(16px,4vw,40px);background:var(--bg);border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+            <p style="margin:0;font-size:14px;color:var(--ink-2);"><strong style="color:var(--ink);font-family:'Geist Mono',monospace;font-weight:500;">{{ matchedCount }}</strong> videos will be added · {{ reviewCount }} need review · {{ counts.not_found }} not found</p>
+            <button type="button" onClick="{{ createPlaylist }}" disabled="{{ cannotCreate }}" style="height:48px;padding:0 24px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:15px;cursor:pointer;">Create playlist</button>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <!-- RESULT -->
+    <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+      <section aria-labelledby="res-h" data-screen-label="05 Result" style="margin-top:24px;display:flex;flex-direction:column;gap:16px;">
+        <div style="position:relative;overflow:hidden;padding:clamp(24px,4vw,40px);background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);">
+          <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--green),var(--red));"></div>
+          <p style="margin:0 0 8px;font-family:'Geist Mono',monospace;font-size:12px;letter-spacing:.08em;color:var(--ink-3);">{{ playlist.name }} · {{ links.video_count }} VIDEOS</p>
+          <h1 id="res-h" style="margin:0 0 8px;font-size:clamp(28px,4vw,42px);letter-spacing:-0.03em;line-height:1.05;">Your YouTube playlist is ready</h1>
+          <sc-if value="{{ isSplit }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;color:var(--ink-2);max-width:560px;">{{ splitNote }}</p>
+          </sc-if>
+          <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px;">
+            <sc-for list="{{ parts }}" as="p" hint-placeholder-count="1">
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:12px 12px 12px 16px;border-radius:14px;background:var(--surface-2);">
+                <sc-if value="{{ isSplit }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-weight:600;">{{ p.label }}</span>
+                </sc-if>
+                <span style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--ink-2);flex:1 1 160px;">{{ p.count }}</span>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                  <a href="{{ p.url }}" target="_blank" rel="noopener" aria-label="{{ p.openAria }}" style="display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none;">Open on YouTube ↗</a>
+                  <button type="button" onClick="{{ p.onCopy }}" aria-label="{{ p.copyAria }}" style="height:44px;padding:0 18px;border-radius:12px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer;min-width:110px;">{{ p.copyLabel }}</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:16px;align-items:start;">
+          <sc-if value="{{ saveEnabled }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:20px;">
+              <h2 style="margin:0 0 4px;font-size:19px;letter-spacing:-0.01em;">Save to my YouTube account</h2>
+              <p style="margin:0 0 16px;color:var(--ink-2);font-size:14px;">One playlist with all {{ links.video_count }} videos and a permanent link you can share.</p>
+              <sc-if value="{{ notSaved }}" hint-placeholder-val="{{ true }}">
+                <sc-if value="{{ hasSaveError }}" hint-placeholder-val="{{ false }}">
+                  <div role="alert" style="margin:0 0 14px;padding:12px 14px;border-radius:12px;background:var(--nf-bg);color:var(--nf-fg);font-size:14px;">
+                    <p style="margin:0 0 2px;font-weight:600;">{{ saveErr.title }}</p>
+                    <p style="margin:0;">{{ saveErr.body }}</p>
+                  </div>
+                </sc-if>
+                <div role="radiogroup" aria-label="Playlist visibility" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:12px;background:var(--surface-2);margin-bottom:8px;">
+                  <sc-for list="{{ privacyOpts }}" as="o" hint-placeholder-count="3">
+                    <button type="button" role="radio" aria-checked="{{ o.active }}" onClick="{{ o.onClick }}" onKeyDown="{{ onPrivacyKey }}" tabIndex="{{ o.tab }}" style="height:38px;border:0;border-radius:9px;background:{{ o.bg }};box-shadow:{{ o.shadow }};cursor:pointer;font-weight:{{ o.weight }};font-size:14px;">{{ o.label }}</button>
+                  </sc-for>
+                </div>
+                <p style="margin:0 0 16px;font-size:13px;color:var(--ink-3);">{{ privacyHint }}</p>
+                <button type="button" onClick="{{ openSignIn }}" style="width:100%;height:46px;border-radius:12px;border:1.5px solid var(--ink);background:transparent;font-weight:600;cursor:pointer;">{{ signInLabel }}</button>
+              </sc-if>
+              <sc-if value="{{ isSaved }}" hint-placeholder-val="{{ false }}">
+                <div role="status" style="display:flex;flex-direction:column;gap:10px;">
+                  <p style="margin:0;font-size:14px;"><span style="color:var(--hi-fg);font-weight:600;">✓ Saved</span> {{ saved.video_count }} videos as a {{ privacyLower }} playlist.</p>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px 8px 8px 14px;border-radius:12px;background:var(--surface-2);">
+                    <span style="flex:1 1 180px;min-width:0;font-family:'Geist Mono',monospace;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ savedLinkText }}</span>
+                    <button type="button" onClick="{{ copySaved }}" aria-label="Copy permanent playlist link" style="height:36px;padding:0 14px;border-radius:9px;border:0;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;font-size:13px;">{{ savedCopyLabel }}</button>
+                  </div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <a href="{{ saved.urls.youtube }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;">Open on YouTube ↗</a>
+                    <a href="{{ saved.urls.youtube_music }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;height:40px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line);font-weight:600;font-size:14px;text-decoration:none;">Open in YouTube Music ↗</a>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <div style="padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:20px;">
+            <h2 style="margin:0 0 16px;font-size:19px;letter-spacing:-0.01em;">Summary</h2>
+            <dl style="margin:0 0 10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+              <div style="padding:12px;border-radius:12px;background:var(--hi-bg);color:var(--hi-fg);"><dt style="font-size:13px;">Matched</dt><dd style="margin:2px 0 0;font-family:'Geist Mono',monospace;font-size:26px;font-weight:500;">{{ matchedCount }}</dd></div>
+              <div style="padding:12px;border-radius:12px;background:var(--surface-2);"><dt style="font-size:13px;color:var(--ink-2);">Skipped</dt><dd style="margin:2px 0 0;font-family:'Geist Mono',monospace;font-size:26px;font-weight:500;">{{ skippedCount }}</dd></div>
+              <div style="padding:12px;border-radius:12px;background:var(--nf-bg);color:var(--nf-fg);"><dt style="font-size:13px;">Not found</dt><dd style="margin:2px 0 0;font-family:'Geist Mono',monospace;font-size:26px;font-weight:500;">{{ counts.not_found }}</dd></div>
+            </dl>
+            <p style="margin:0 0 20px;font-size:13px;color:var(--ink-2);font-family:'Geist Mono',monospace;">{{ counts.high }} high · {{ counts.medium }} medium · {{ counts.low }} low</p>
+            <button type="button" onClick="{{ downloadCsv }}" style="width:100%;height:44px;border-radius:12px;border:1.5px solid var(--line);background:transparent;font-weight:600;cursor:pointer;">↓ Download match report (CSV)</button>
+          </div>
+        </div>
+      </section>
+    </sc-if>
+
+    <!-- ERROR SCREEN -->
+    <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+      <section role="alert" aria-labelledby="err-h" data-screen-label="{{ err.screenLabel }}" style="max-width:560px;margin:clamp(40px,10vh,100px) auto 0;padding:32px;background:var(--surface);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);">
+        <span aria-hidden="true" style="display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:{{ err.iconBg }};color:{{ err.iconFg }};font-size:20px;font-weight:700;margin-bottom:18px;">{{ err.icon }}</span>
+        <h1 id="err-h" style="margin:0 0 8px;font-size:26px;letter-spacing:-0.02em;">{{ err.title }}</h1>
+        <p style="margin:0 0 24px;color:var(--ink-2);text-wrap:pretty;">{{ err.body }}</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <button type="button" onClick="{{ err.onPrimary }}" style="height:44px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;">{{ err.primary }}</button>
+          <sc-if value="{{ err.hasSecondary }}" hint-placeholder-val="{{ true }}">
+            <button type="button" onClick="{{ err.onSecondary }}" style="height:44px;padding:0 20px;border:1.5px solid var(--line);border-radius:12px;background:transparent;font-weight:600;cursor:pointer;">{{ err.secondary }}</button>
+          </sc-if>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+
+  <!-- DEVICE CODE MODAL -->
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:50;background:rgba(10,10,12,.55);display:grid;place-items:center;padding:16px;" onClick="{{ onBackdrop }}">
+      <div role="dialog" aria-modal="true" aria-labelledby="dlg-h" tabIndex="-1" ref="{{ dialogRef }}" style="width:min(100%,440px);padding:28px;background:var(--surface);color:var(--ink);border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.35);outline:none;">
+        <sc-if value="{{ modalCode }}" hint-placeholder-val="{{ true }}">
+          <h2 id="dlg-h" style="margin:0 0 8px;font-size:21px;letter-spacing:-0.01em;">Sign in with Google</h2>
+          <p style="margin:0 0 20px;color:var(--ink-2);font-size:15px;">Go to <a href="{{ signin.verification_url }}" target="_blank" rel="noopener" style="font-weight:600;">{{ verifyHost }}</a> and enter</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 16px 20px;border-radius:14px;background:var(--surface-2);margin-bottom:18px;">
+            <span aria-label="{{ codeAria }}" style="font-family:'Geist Mono',monospace;font-size:30px;font-weight:500;letter-spacing:.08em;">{{ signin.user_code }}</span>
+            <button type="button" onClick="{{ copyCode }}" style="height:36px;padding:0 14px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-weight:600;cursor:pointer;font-size:13px;">{{ codeCopyLabel }}</button>
+          </div>
+          <p role="status" style="margin:0 0 4px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2);"><span aria-hidden="true" style="width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:pb-spin .8s linear infinite;"></span>Waiting for you to approve on your device…</p>
+          <p style="margin:0 0 20px 24px;font-size:13px;color:var(--ink-3);font-family:'Geist Mono',monospace;">Code expires in {{ expiresIn }}</p>
+        </sc-if>
+        <sc-if value="{{ modalSaving }}" hint-placeholder-val="{{ false }}">
+          <h2 id="dlg-h" style="margin:0 0 8px;font-size:21px;">Saving your playlist</h2>
+          <p role="status" style="margin:0 0 20px;display:flex;align-items:center;gap:10px;color:var(--ink-2);"><span aria-hidden="true" style="width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:pb-spin .8s linear infinite;"></span>Adding {{ links.video_count }} videos as {{ privacyLower }}…</p>
+        </sc-if>
+        <sc-if value="{{ modalExpired }}" hint-placeholder-val="{{ false }}">
+          <h2 id="dlg-h" style="margin:0 0 8px;font-size:21px;">The code expired</h2>
+          <p role="alert" style="margin:0 0 20px;color:var(--ink-2);">It wasn't entered in time. Get a new code to keep going.</p>
+          <button type="button" onClick="{{ openSignIn }}" style="height:44px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;margin-right:8px;">Get a new code</button>
+        </sc-if>
+        <sc-if value="{{ modalDenied }}" hint-placeholder-val="{{ false }}">
+          <h2 id="dlg-h" style="margin:0 0 8px;font-size:21px;">Access wasn't granted</h2>
+          <p role="alert" style="margin:0 0 20px;color:var(--ink-2);">Google says access was denied. To save the playlist, try again and choose Allow.</p>
+          <button type="button" onClick="{{ openSignIn }}" style="height:44px;padding:0 20px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;cursor:pointer;margin-right:8px;">Try again</button>
+        </sc-if>
+        <button type="button" onClick="{{ closeModal }}" style="height:40px;padding:0 16px;border:0;border-radius:10px;background:transparent;color:var(--ink-2);cursor:pointer;font-weight:500;">{{ cancelLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;initialTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;},&quot;saveEnabled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Server (/api/health)&quot;},&quot;trackCap&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:200,&quot;min&quot;:50,&quot;max&quot;:1000,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Server (/api/health)&quot;},&quot;playlistSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:87,&quot;min&quot;:10,&quot;max&quot;:400,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Demo&quot;},&quot;showDemoBar&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Demo&quot;}}">
+const ADJ=['Golden','Paper','Neon','Quiet','Silver','Velvet','Midnight','Slow','Electric','Hollow','Northern','Glass','Static','Lucky','Borrowed','Second','Wild','Faded','Open','Little'];
+const NOUN=['Hours','Rivers','Signals','Summer','Motel','Echoes','Daylight','Satellites','Highway','Lanterns','Tides','Weather','Telephone','Gardens','Engines','Postcards','Heart','Rooms','Ghosts','Lights'];
+const ARTISTS=['Lowtide Club','Mara Vey','The Hollow Pines','Juno Park','Saffron Ave','Kite Theory','Ola Brenn','Nightswim','Cass & the Embers','Teo Marlow','Velvet Arcade','Rue Kensington','Paloma Sun','Fieldnotes','Ivy Okafor','Bright Harbour'];
+const CH=['Lyrics Daily','Sound Archive','Night Drive FM','Cover Club','Indie Vault','Slowed Tapes'];
+const QUAL={high:{label:'High',fg:'var(--hi-fg)',bg:'var(--hi-bg)'},medium:{label:'Medium',fg:'var(--md-fg)',bg:'var(--md-bg)'},low:{label:'Low',fg:'var(--lo-fg)',bg:'var(--lo-bg)'},none:{label:'Not found',fg:'var(--nf-fg)',bg:'var(--nf-bg)'}};
+const SRC={ytmusic_song:'YouTube Music',ytmusic_video:'YouTube Music',youtube:'YouTube'};
+const PRIV={private:'Only you can see it.',unlisted:'Anyone with the link can watch. It won\u2019t appear in search.',public:'Anyone can find and watch it.'};
+const INVALID='That doesn\u2019t look like a Spotify playlist link. It should start with open.spotify.com/playlist/';
+const ERR={
+  playlist_unavailable:{label:'Private playlist',icon:'?',tone:'nf',title:'We can\u2019t see this playlist',body:'It\u2019s private, or it no longer exists. Make it public in Spotify and try again, or paste the track list instead.',primary:['Paste a track list','paste'],secondary:['Try another link','home']},
+  spotify_changed:{label:'Spotify changed',icon:'!',tone:'md',title:'Spotify links aren\u2019t working right now',body:'Spotify changed how playlists load, and we\u2019re catching up. Pasting a track list or uploading a CSV still works.',primary:['Paste a track list','paste'],secondary:['Try another link','home']},
+  spotify_unreachable:{label:'Spotify fetch failed',icon:'!',tone:'md',title:'Spotify didn\u2019t respond',body:'We couldn\u2019t load the playlist. This is usually temporary, so try again in a moment.',primary:['Try again','retry'],secondary:['Paste a track list','paste']},
+  empty:{label:'Empty playlist',icon:'0',tone:'neutral',title:'This playlist is empty',body:'There are no tracks to convert. Add some songs in Spotify, or try a different playlist.',primary:['Try another link','home'],secondary:null},
+};
+const SAVE_ERR={
+  not_signed_in:{title:'You\u2019re signed out',body:'Your Google sign-in ended before we could save. Sign in again to finish.',btn:'Sign in again'},
+  save_failed:{title:'Couldn\u2019t save to YouTube',body:'YouTube didn\u2019t accept the playlist. Your temporary links above still work.',btn:'Try again'},
+};
+const TONE={nf:['var(--nf-bg)','var(--nf-fg)'],md:['var(--md-bg)','var(--md-fg)'],neutral:['var(--surface-2)','var(--ink-2)']};
+function rng(seed){let s=seed%2147483647||1;return()=>{s=(s*16807)%2147483647;return(s-1)/2147483646;};}
+function fmt(sec){sec=Math.round(sec);return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');}
+function grad(h){return `linear-gradient(135deg, oklch(0.66 0.12 ${h}), oklch(0.36 0.1 ${(h+50)%360}))`;}
+function confOf(score){return score>=0.85?'high':score>=0.6?'medium':'low';}
+function vid(r){let s='';const c='abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789_-';for(let i=0;i<11;i++)s+=c[Math.floor(r()*c.length)];return s;}
+function cand(r,band,a,t,durS){
+  const pick=arr=>arr[Math.floor(r()*arr.length)];
+  let title,channel,diff,score,source;
+  if(band==='high'){title=`${a} - ${t} ${pick(['(Official Video)','(Official Audio)','[Visualizer]'])}`;channel=pick([a,a+' - Topic']);diff=Math.floor(r()*4);score=0.86+r()*0.14;source=pick(['ytmusic_song','ytmusic_video']);}
+  else if(band==='medium'){title=pick([`${t} (Lyric Video) - ${a}`,`${a} - ${t} (Remastered)`,`${t} – ${a} [HQ]`]);channel=pick(CH);diff=4+Math.floor(r()*9);score=0.6+r()*0.24;source=pick(['ytmusic_video','youtube']);}
+  else{title=pick([`${t} (Live Session)`,`${t} - acoustic cover`,`${a} - ${t} (Sped Up)`,`${t} slowed + reverb`]);channel=pick(CH);diff=15+Math.floor(r()*45);score=0.3+r()*0.29;source='youtube';}
+  const id=vid(r);
+  return {video_id:id,title,channel,duration_s:durS+(r()<.5?-diff:diff),source,score:+score.toFixed(2),thumbnail:`https://i.ytimg.com/vi/${id}/mqdefault.jpg`,url:`https://www.youtube.com/watch?v=${id}`,_hue:Math.floor(r()*360)};
+}
+function makeMatches(n,withArt){
+  const r=rng(42+n),out=[];
+  for(let i=0;i<n;i++){
+    const title=ADJ[Math.floor(r()*ADJ.length)]+' '+NOUN[Math.floor(r()*NOUN.length)];
+    const a=ARTISTS[Math.floor(r()*ARTISTS.length)];
+    const f=r()<0.2?ARTISTS[Math.floor(r()*ARTISTS.length)]:null;
+    const durS=150+Math.floor(r()*150);
+    const track={title,artists:f&&f!==a?[a,f]:[a],duration_ms:durS*1000+Math.floor(r()*999),explicit:r()<0.14};
+    if(withArt){track.album=NOUN[Math.floor(r()*NOUN.length)]+' & '+NOUN[Math.floor(r()*NOUN.length)];track.cover_url='https://i.scdn.co/image/mock'+i;track._hue=Math.floor(r()*360);}
+    const q=r(),band=q<0.7?'high':q<0.85?'medium':q<0.92?'low':'none';
+    const nAlt=2+Math.floor(r()*3);
+    const pool=[cand(r,band==='none'?'low':band,a,title,durS),cand(r,'medium',a,title,durS),cand(r,'low',a,title,durS),cand(r,'low',a,title,durS),cand(r,'medium',a,title,durS)].slice(0,nAlt+1).sort((x,y)=>y.score-x.score);
+    const final=band==='none'?{status:'not_found',confidence:'none',chosen:null,alternatives:pool.slice(0,Math.min(2,pool.length))}:{status:'matched',confidence:band,chosen:pool[0],alternatives:pool.slice(1,5)};
+    out.push({index:i,status:'pending',confidence:null,error:null,track,chosen:null,alternatives:[],_final:final,_prev:null,confirmed:false});
+  }
+  return out;
+}
+function counts(ms){
+  const c={total:ms.length,done:0,high:0,medium:0,low:0,not_found:0,removed:0,error:0};
+  ms.forEach(m=>{if(m.status!=='pending')c.done++;if(m.status==='matched')c[m.confidence]++;else if(m.status in c)c[m.status]++;});
+  return c;
+}
+const resolve=m=>({...m,...m._final,error:null});
+
+class Component extends DCLogic {
+  state={theme:'light',screen:'landing',demo:'landing',url:'',urlError:'',showPaste:false,pasteText:'',fileName:'',dragging:false,matches:[],playlist:null,filter:'all',panelId:null,panelMode:'swap',query:'',searchResults:null,previewKey:null,slowed:false,errorCode:null,privacy:'unlisted',modal:null,signin:null,now:Date.now(),saved:null,saveError:null,saveDisabled:false,copied:'',live:''};
+  dialogRef=React.createRef();
+  searchRef=React.createRef();
+
+  componentDidMount(){
+    this.setState({theme:this.props.initialTheme||'light'});
+    this.onKey=e=>{if(e.key!=='Escape')return;if(this.state.modal)this.closeModal();else if(this.state.panelId!==null)this.setState({panelId:null,previewKey:null});};
+    window.addEventListener('keydown',this.onKey);
+  }
+  componentDidUpdate(){
+    const s=this.state,p=this._prev||{};
+    if(this.props.initialTheme&&p.theme!==undefined&&p.theme!==this.props.initialTheme)this.setState({theme:this.props.initialTheme});
+    if(!p.modal&&s.modal)setTimeout(()=>this.dialogRef.current&&this.dialogRef.current.focus(),0);
+    if(s.panelMode==='search'&&s.panelId!==null&&(p.panelId!==s.panelId||p.panelMode!=='search'))setTimeout(()=>this.searchRef.current&&this.searchRef.current.focus(),0);
+    this._prev={theme:this.props.initialTheme,modal:s.modal,panelId:s.panelId,panelMode:s.panelMode};
+  }
+  componentWillUnmount(){window.removeEventListener('keydown',this.onKey);this.clearTimers();}
+  clearTimers(){clearTimeout(this.t);clearInterval(this.iv);this.clearModalTimers();clearTimeout(this.ct);}
+  clearModalTimers(){clearTimeout(this.mt);clearInterval(this.clk);}
+
+  size(){return Number(this.props.playlistSize)||87;}
+  cap(){return Number(this.props.trackCap)||200;}
+  makePlaylist(total,name){
+    const track_count=Math.min(total,this.cap());
+    return {matches:makeMatches(track_count,track_count>100),playlist:{id:'37i9dQZF1DX4UtSsGT1Sbe',name:name||'Late Night Drive',owner:name?'You':'mara.k',cover_url:'https://i.scdn.co/image/mock',total,track_count,source:'pathfinder'}};
+  }
+  base(extra){return Object.assign({urlError:'',slowed:false,errorCode:null,saved:null,saveError:null,saveDisabled:false,filter:'all',panelId:null,previewKey:null,searchResults:null,modal:null,live:''},extra);}
+  startFetch(total,name,auto=true,demo=null){
+    this.clearTimers();
+    const p=this.makePlaylist(total||this.size(),name);
+    this.setState(this.base({screen:'fetching',demo,...p,live:'Loading playlist'}));
+    if(auto)this.t=setTimeout(()=>{this.setState({screen:'matching'});this.runTick();},p.playlist.track_count>100?3800:2000);
+  }
+  runTick(){
+    clearInterval(this.iv);
+    this.iv=setInterval(()=>{
+      if(this.state.slowed)return;
+      const ms=this.state.matches.slice();
+      let i=ms.findIndex(m=>m.status==='pending');
+      if(i<0){clearInterval(this.iv);return;}
+      const step=ms.length>100?3:1;
+      for(let k=0;k<step&&i<ms.length;k++,i++)if(ms[i].status==='pending')ms[i]=resolve(ms[i]);
+      const c=counts(ms),q=x=>Math.floor(x/c.total*4);
+      const live=c.done===c.total?`All ${c.total} tracks searched`:(q(c.done)!==q(c.done-step)?`${c.done} of ${c.total} tracks searched`:this.state.live);
+      this.setState({matches:ms,live});
+    },60);
+  }
+  withDone(k,rest='pending',total){
+    const p=this.makePlaylist(total||this.size());
+    p.matches=p.matches.map((m,i)=>i<k?resolve(m):rest==='error'?{...m,status:'error',error:'search_unavailable'}:m);
+    return p;
+  }
+  jump(key){
+    this.clearTimers();
+    const n=this.size(),D={demo:key};
+    if(ERR[key])return this.setState(this.base({screen:'error',errorCode:key,...D}));
+    switch(key){
+      case'landing':return this.setState(this.base({screen:'landing',url:'',showPaste:false,...D}));
+      case'fetching':return this.startFetch(n,null,false,key);
+      case'large':return this.startFetch(300,'All Night Long',true,key);
+      case'matching':this.setState(this.base({screen:'matching',...D,...this.withDone(Math.round(n*0.48))}));return this.runTick();
+      case'review':return this.setState(this.base({screen:'review',...D,...this.withDone(n)}));
+      case'result':return this.setState(this.base({screen:'result',...D,...this.withDone(n)}));
+      case'invalid_link':return this.setState(this.base({screen:'landing',url:'spotify.com/artist/4Z8W4fKeB5',urlError:INVALID,...D}));
+      case'search_unavailable':this.setState(this.base({screen:'matching',slowed:true,...D,...this.withDone(Math.round(n*0.57))}));return this.runTick();
+      case'partial':return this.setState(this.base({screen:'review',...D,...this.withDone(Math.round(n*0.7),'error')}));
+      case'save_disabled':return this.setState(this.base({screen:'result',...D,...this.withDone(n),saveDisabled:true}));
+      case'not_signed_in':case'save_failed':return this.setState(this.base({screen:'result',...D,...this.withDone(n),saveError:key}));
+      case'expired':case'denied':this.setState(this.base({screen:'result',...D,...this.withDone(n)}));return this.openSignIn(key);
+    }
+  }
+  update(index,fn){this.setState(s=>({matches:s.matches.map(m=>m.index===index?{...m,...fn(m)}:m)}));}
+  retry(indexes){
+    this.setState(s=>({matches:s.matches.map(m=>indexes.includes(m.index)?{...m,status:'pending',error:null}:m),live:'Retrying'}));
+    if(this.state.screen==='matching')return this.runTick();
+    setTimeout(()=>this.setState(s=>({matches:s.matches.map(m=>indexes.includes(m.index)&&m.status==='pending'?resolve(m):m)})),700);
+  }
+  copy(text,key){
+    try{navigator.clipboard&&navigator.clipboard.writeText(text);}catch(e){}
+    clearTimeout(this.ct);this.setState({copied:key,live:'Copied'});
+    this.ct=setTimeout(()=>this.setState({copied:''}),1600);
+  }
+  openSignIn=(forced)=>{
+    this.clearModalTimers();
+    const signin={user_code:'ABCD-EFGH',verification_url:'https://google.com/device',interval:5,expires_at:new Date(Date.now()+15*60000).toISOString()};
+    const poll=typeof forced==='string'?forced:'pending';
+    this.setState({modal:poll==='pending'?'code':poll,signin,now:Date.now(),saveError:null});
+    if(poll!=='pending')return;
+    this.clk=setInterval(()=>this.setState({now:Date.now()}),1000);
+    this.mt=setTimeout(()=>{clearInterval(this.clk);this.setState({modal:'saving'});
+      this.mt=setTimeout(()=>{const id='PLb7Rdg3LtN4dQ2xk9';this.setState({modal:null,live:'Playlist saved to your YouTube account',saved:{playlist_id:id,urls:{youtube:'https://www.youtube.com/playlist?list='+id,youtube_music:'https://music.youtube.com/playlist?list='+id},video_count:counts(this.state.matches).high+counts(this.state.matches).medium+counts(this.state.matches).low}});},1600);
+    },6000);
+  };
+  closeModal=()=>{this.clearModalTimers();this.setState({modal:null});};
+  downloadCsv=()=>{
+    const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+    const rows=[['#','Title','Artists','Album','Duration','Status','Confidence','YouTube title','Channel','URL','Duration diff (s)']];
+    this.state.matches.forEach(m=>{const c=m.chosen,ds=Math.round(m.track.duration_ms/1000);
+      rows.push([m.index+1,m.track.title,m.track.artists.join('; '),m.track.album||'',fmt(ds),m.status,m.confidence||'',c?c.title:'',c?c.channel:'',c?c.url:'',c?Math.abs(c.duration_s-ds):'']);});
+    const blob=new Blob([rows.map(r=>r.map(esc).join(',')).join('\n')],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='playlist-bridge-report.csv';document.body.appendChild(a);a.click();a.remove();
+  };
+
+  renderVals(){
+    const s=this.state,scr=s.screen,ms=s.matches;
+    const isReview=scr==='review',isMatching=scr==='matching';
+    const c=counts(ms),matchedCount=c.high+c.medium+c.low;
+    const needs=m=>m.status==='error'||(m.status==='matched'&&m.confidence!=='high'&&!m.confirmed);
+    const reviewCount=ms.filter(needs).length;
+    const ink='var(--ink)',bg='var(--bg)';
+
+    const visible=ms.filter(m=>!isReview||s.filter==='all'||(s.filter==='review'?needs(m):m.status==='not_found'));
+    const rows=visible.map(m=>{
+      const t=m.track,ch=m.chosen,open=s.panelId===m.index,ds=Math.round(t.duration_ms/1000);
+      const label=`${t.title} by ${t.artists.join(', ')}`;
+      const pool=[ch,...m.alternatives].filter(Boolean);
+      const row={key:m.index,num:m.index+1,title:t.title,explicit:!!t.explicit,subtitle:t.artists.join(', ')+(t.album?' · '+t.album:''),dur:fmt(ds),
+        hasArt:!!t.cover_url,artBg:t.cover_url?grad(t._hue||0):'none',
+        isPending:m.status==='pending',isFound:m.status==='matched'&&!!ch,isNone:m.status==='not_found',isError:m.status==='error',isRemoved:m.status==='removed',
+        opacity:m.status==='removed'?0.55:1,showActions:isReview&&['matched','not_found','error'].includes(m.status),picked:m.confirmed,canSwap:pool.length>0,
+        swapOpen:open&&s.panelMode==='swap',searchOpen:open&&s.panelMode==='search',panelOpen:open,
+        swapBg:open&&s.panelMode==='swap'?'var(--surface-2)':'transparent',searchBg:open&&s.panelMode==='search'?'var(--surface-2)':'transparent',
+        swapAria:`Swap match for ${label}`,searchAria:`Search YouTube by hand for ${label}`,removeAria:`Remove ${label}`,undoAria:`Undo removing ${label}`,retryAria:`Retry search for ${label}`,
+        panelAria:`Candidates for ${label}`,searchId:'search-'+m.index,
+        onSwap:()=>this.setState({panelId:open&&s.panelMode==='swap'?null:m.index,panelMode:'swap',previewKey:null,searchResults:null}),
+        onSearch:()=>this.setState({panelId:open&&s.panelMode==='search'?null:m.index,panelMode:'search',previewKey:null,searchResults:null,query:`${t.artists[0]} ${t.title}`}),
+        onRemove:()=>{this.update(m.index,x=>({_prev:x.status,status:'removed'}));this.setState({panelId:null,live:`Removed ${t.title}`});},
+        onUndo:()=>{this.update(m.index,x=>({status:x._prev||'matched',_prev:null}));this.setState({live:`Restored ${t.title}`});},
+        onRetry:()=>this.retry([m.index]),
+      };
+      if(ch){const q=QUAL[m.confidence]||QUAL.low,d=Math.abs(ch.duration_s-ds);Object.assign(row,{ytTitle:ch.title,channel:ch.channel,source:SRC[ch.source]||'YouTube',thumbBg:grad(ch._hue),chipLabel:q.label,chipFg:q.fg,chipBg:q.bg,diffLabel:'±'+d+'s',diffAria:`Duration differs by ${d} seconds`});}
+      row.alts=[];
+      if(open){
+        const list=s.panelMode==='search'?(s.searchResults||[]):pool;
+        row.panelHint=s.panelMode==='search'?(s.searchResults?`${list.length} results`:'Edit the search and press Enter.'):`${list.length} candidates, best first`;
+        row.onSearchSubmit=e=>{e.preventDefault();const r=rng(s.query.length*97+m.index+1);this.setState({searchResults:['high','medium','low'].map(b=>cand(r,b,t.artists[0],t.title,ds)),previewKey:null,live:'3 results'});};
+        row.alts=list.map((alt,i)=>{
+          const q=QUAL[confOf(alt.score)],pk=m.index+':'+s.panelMode+':'+alt.video_id,cur=!!ch&&ch.video_id===alt.video_id,d=Math.abs(alt.duration_s-ds);
+          if(s.previewKey===pk)Object.assign(row,{hasPreview:true,previewBg:grad(alt._hue),previewTitle:alt.title,previewChannel:alt.channel,previewDur:fmt(alt.duration_s),previewAria:`Preview of ${alt.title}`});
+          return {key:alt.video_id,title:alt.title,channel:alt.channel,source:SRC[alt.source]||'YouTube',thumbBg:grad(alt._hue),chipLabel:q.label,chipFg:q.fg,chipBg:q.bg,diffLabel:'±'+d+'s',
+            bg:s.previewKey===pk?'var(--surface)':'transparent',isPreview:s.previewKey===pk,current:cur,useOpacity:cur?0.4:1,useLabel:cur?'Current':'Use this',
+            previewAria:`Preview ${alt.title}`,useAria:`Use ${alt.title} for ${t.title}`,
+            onPreview:()=>this.setState({previewKey:s.previewKey===pk?null:pk}),
+            onUse:()=>{const rest=[...pool,...(s.searchResults||[])].filter(x=>x.video_id!==alt.video_id).slice(0,4);
+              this.update(m.index,()=>({status:'matched',confidence:confOf(alt.score),chosen:alt,alternatives:rest,confirmed:true,error:null}));
+              this.setState({panelId:null,previewKey:null,live:`Match updated for ${t.title}`});}};
+        });
+      }
+      return row;
+    });
+
+    const tabs=[['all','All',c.total-c.removed],['review','Needs review',reviewCount],['notfound','Not found',c.not_found]].map(([k,l,n])=>{const a=s.filter===k;return {key:k,label:l,count:n,active:a,bg:a?ink:'transparent',fg:a?bg:'var(--ink-2)',border:a?ink:'var(--line)',onClick:()=>this.setState({filter:k,panelId:null})};});
+
+    const ids=ms.filter(m=>m.status==='matched');
+    const per=50,of=Math.max(1,Math.ceil(ids.length/per));
+    const links={links:Array.from({length:of},(_,i)=>({part:i+1,of,url:'https://www.youtube.com/watch_videos?video_ids='+ids.slice(i*per,(i+1)*per).map(m=>m.chosen.video_id).join(',')})),video_count:ids.length};
+    const parts=links.links.map(l=>{const k='part'+l.part,n=Math.min(per,ids.length-(l.part-1)*per);
+      return {key:l.part,url:l.url,label:`Part ${l.part} of ${l.of}`,count:`${n} videos`,openAria:l.of>1?`Open part ${l.part} of ${l.of} on YouTube`:'Open on YouTube',copyAria:l.of>1?`Copy link to part ${l.part}`:'Copy playlist link',copyLabel:s.copied===k?'Copied ✓':'Copy link',onCopy:()=>this.copy(l.url,k)};});
+
+    const chip=(k,l)=>({key:k,label:l,active:s.demo===k,bg:s.demo===k?ink:'var(--surface)',fg:s.demo===k?bg:'var(--ink-2)',onClick:()=>this.jump(k)});
+    const demoFlow=[['landing','Landing'],['fetching','Fetching'],['matching','Matching'],['review','Review'],['result','Result'],['large','300-track playlist']].map(([k,l])=>chip(k,l));
+    const demoErr=['invalid_link','playlist_unavailable','spotify_changed','spotify_unreachable','empty','search_unavailable','partial','expired','denied','not_signed_in','save_failed','save_disabled'].map(k=>chip(k,k));
+
+    const pl=s.playlist||{name:'',owner:'',total:0,track_count:0};
+    const isDone=isMatching&&ms.length>0&&ms.every(m=>m.status!=='pending');
+    const ec=ERR[s.errorCode];
+    const act=a=>a==='paste'?()=>this.setState(this.base({screen:'landing',showPaste:true,demo:null})):a==='retry'?()=>this.startFetch():()=>this.jump('landing');
+    const err=ec?{screenLabel:'06 '+ec.label,icon:ec.icon,iconBg:TONE[ec.tone][0],iconFg:TONE[ec.tone][1],title:ec.title,body:ec.body,primary:ec.primary[0],onPrimary:act(ec.primary[1]),hasSecondary:!!ec.secondary,secondary:ec.secondary?ec.secondary[0]:'',onSecondary:ec.secondary?act(ec.secondary[1]):null}:{};
+    const se=SAVE_ERR[s.saveError];
+    const rem=s.signin?Math.max(0,Math.round((Date.parse(s.signin.expires_at)-s.now)/1000)):0;
+    const sig=s.signin||{user_code:'',verification_url:''};
+
+    return {
+      theme:s.theme,themeIcon:s.theme==='dark'?'☀':'☾',themeLabel:s.theme==='dark'?'Switch to light mode':'Switch to dark mode',
+      toggleTheme:()=>this.setState({theme:s.theme==='dark'?'light':'dark'}),
+      showDemoBar:this.props.showDemoBar??true,demoFlow,demoErr,live:s.live,
+      notLanding:scr!=='landing',goHome:()=>this.jump('landing'),
+      isLanding:scr==='landing',isFetching:scr==='fetching',isMatchingOrReview:isMatching||isReview,isReview,isResult:scr==='result',isError:scr==='error',err,
+      url:s.url,urlError:s.urlError,hasUrlError:!!s.urlError,noUrlError:!s.urlError,inputBorder:s.urlError?'var(--nf-fg)':'var(--line)',
+      onUrl:e=>this.setState({url:e.target.value,urlError:''}),
+      useExample:()=>this.setState({url:'https://open.spotify.com/playlist/37i9dQZF1DX4UtSsGT1Sbe',urlError:''}),
+      convert:e=>{e.preventDefault();const u=s.url.trim();
+        if(!u)return this.setState({urlError:'Paste a Spotify playlist link to start.'});
+        if(!/(open\.spotify\.com\/(intl-[a-z]+\/)?playlist\/[A-Za-z0-9]+)|(spotify:playlist:[A-Za-z0-9]+)/i.test(u))return this.setState({urlError:INVALID});
+        const hit=[['private','playlist_unavailable'],['missing','playlist_unavailable'],['changed','spotify_changed'],['fail','spotify_unreachable'],['empty','empty']].find(([w])=>u.toLowerCase().includes(w));
+        if(hit)return this.jump(hit[1]);
+        this.startFetch();},
+      showPaste:s.showPaste,pasteChevron:s.showPaste?'▲':'▼',togglePaste:()=>this.setState({showPaste:!s.showPaste}),
+      pasteText:s.pasteText,onPaste:e=>this.setState({pasteText:e.target.value}),
+      onFile:e=>{const f=e.target.files&&e.target.files[0];if(f)this.setState({fileName:f.name});},
+      onDragOver:e=>{e.preventDefault();if(!s.dragging)this.setState({dragging:true});},
+      onDragLeave:()=>this.setState({dragging:false}),
+      onDrop:e=>{e.preventDefault();const f=e.dataTransfer.files&&e.dataTransfer.files[0];this.setState({dragging:false,fileName:f?f.name:''});},
+      dropBorder:s.dragging?'var(--green)':'var(--line)',dropBg:s.dragging?'var(--hi-bg)':'var(--surface)',
+      dropTitle:s.fileName||(s.dragging?'Drop to upload':'Drop a CSV here'),dropSub:s.fileName?'Ready to convert':'or click to choose a file',
+      convertList:e=>{e.preventDefault();const lines=s.pasteText.split('\n').filter(l=>l.trim()).length;if(!lines&&!s.fileName)return;this.startFetch(lines||42,s.fileName?s.fileName.replace(/\.csv$/i,''):'Pasted list');},
+      showPlaylistCard:!!s.playlist&&(scr==='fetching'||isMatching||isReview),playlist:pl,isCapped:pl.total>pl.track_count,
+      fetchNote:pl.track_count>100?`Loading full playlist… ${pl.track_count} tracks`:'Fetching tracks from Spotify…',
+      skeletons:[['62%','38%'],['48%','30%'],['70%','42%'],['55%','26%'],['64%','36%'],['44%','32%'],['58%','40%'],['50%','28%']].map(([w1,w2],i)=>({key:i,w1,w2})),
+      counts:c,progressPct:(c.total?c.done/c.total*100:0)+'%',
+      progressCount:`${matchedCount} / ${c.total} matched`,
+      progressLabel:isReview?'Matching complete':s.slowed?'Paused':isDone?'Done':'Searching YouTube…',
+      isMatchingDone:isDone&&!s.slowed&&c.error===0,doneSummary:`${matchedCount} found, ${reviewCount} worth a look, ${c.not_found} not found.`,goReview:()=>this.setState({screen:'review'}),
+      listLabel:isReview?'Review matches':'Live matching results',listScreenLabel:isReview?'04 Review':'03 Matching',
+      slowed:s.slowed,retrySlowed:()=>{this.setState({slowed:false,live:'Resuming search'});this.runTick();},
+      partial:c.error>0&&!s.slowed,partialText:`${c.error} of ${c.total} tracks couldn\u2019t be searched because YouTube stopped responding. Retry them, or create the playlist with what\u2019s here.`,
+      retryErrors:()=>this.retry(ms.filter(m=>m.status==='error').map(m=>m.index)),
+      tabs,rows,listEmpty:rows.length===0&&isReview,
+      emptyTitle:s.filter==='review'?'Nothing needs review':'Every track was found',
+      searchRef:this.searchRef,query:s.query,onQuery:e=>this.setState({query:e.target.value}),closePreview:()=>this.setState({previewKey:null}),
+      matchedCount,reviewCount,skippedCount:c.removed+c.error,cannotCreate:matchedCount===0,
+      createPlaylist:()=>{this.clearTimers();this.setState({screen:'result',panelId:null,live:'Your YouTube playlist is ready'});},
+      links,parts,isSplit:links.links.length>1,
+      splitNote:`Quick playlists hold up to ${per} videos, so yours is split into ${links.links.length} parts. Save it to your account to keep everything in one playlist.`,
+      saveEnabled:(this.props.saveEnabled??true)&&!s.saveDisabled,
+      hasSaveError:!!se,saveErr:se||{title:'',body:''},signInLabel:se?se.btn:'Sign in with Google to save',
+      privacyOpts:['private','unlisted','public'].map(k=>{const a=s.privacy===k;return {key:k,label:k[0].toUpperCase()+k.slice(1),active:a,tab:a?0:-1,bg:a?'var(--surface)':'transparent',shadow:a?'var(--shadow)':'none',weight:a?600:500,onClick:()=>this.setState({privacy:k})};}),
+      onPrivacyKey:e=>{const o=['private','unlisted','public'];let i=o.indexOf(s.privacy);if(e.key==='ArrowRight'||e.key==='ArrowDown')i=(i+1)%3;else if(e.key==='ArrowLeft'||e.key==='ArrowUp')i=(i+2)%3;else return;e.preventDefault();this.setState({privacy:o[i]});const sib=e.currentTarget.parentNode.children[i];sib&&sib.focus();},
+      privacyHint:PRIV[s.privacy],privacyLower:s.privacy,
+      notSaved:!s.saved,isSaved:!!s.saved,saved:s.saved||{video_count:0,urls:{youtube:'',youtube_music:''}},
+      savedLinkText:s.saved?s.saved.urls.youtube.replace('https://www.',''):'',
+      savedCopyLabel:s.copied==='saved'?'Copied ✓':'Copy link',copySaved:()=>this.copy(s.saved.urls.youtube,'saved'),
+      openSignIn:()=>this.openSignIn(),
+      signin:sig,verifyHost:sig.verification_url.replace(/^https?:\/\//,''),codeAria:'Code '+sig.user_code.split('').map(ch=>ch==='-'?'dash':ch).join(' '),
+      expiresIn:fmt(rem),
+      modalOpen:!!s.modal,modalCode:s.modal==='code',modalSaving:s.modal==='saving',modalExpired:s.modal==='expired',modalDenied:s.modal==='denied',
+      cancelLabel:s.modal==='expired'||s.modal==='denied'?'Close':'Cancel',
+      closeModal:this.closeModal,dialogRef:this.dialogRef,
+      onBackdrop:e=>{if(e.target===e.currentTarget)this.closeModal();},
+      codeCopyLabel:s.copied==='code'?'Copied ✓':'Copy',copyCode:()=>this.copy(sig.user_code,'code'),
+      downloadCsv:this.downloadCsv,
+    };
+  }
+}
+</script>
+</body>
+</html>
+
