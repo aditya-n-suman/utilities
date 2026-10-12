@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>nginx -T Explorer: open a dump</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F5F4}
+a{color:#16794A}a:hover{color:#0F5A36}
+</style>
+</helmet>
+<div style="min-height: 940px; background: #F3F5F4; color: #14181B; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 18px 32px; border-bottom: 1px solid #DCE1DE; background: #FFFFFF">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <div style="width: 34px; height: 34px; border-radius: 8px; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h2"></path><path d="M16 4h2a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-2"></path></svg>
+      </div>
+      <div style="display: flex; flex-direction: column">
+        <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 17px; letter-spacing: -0.2px">nginx -T Explorer</span>
+        <span style="font-size: 13px; color: #5B6469">Fold, follow and search the whole effective config</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #3F474C">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+      <span>Runs in your browser. The file never leaves your machine.</span>
+    </div>
+  </header>
+
+  <main style="flex: 1; width: 100%; max-width: 1120px; margin: 0 auto; box-sizing: border-box; padding: 56px 24px 64px; display: flex; flex-direction: column; gap: 40px">
+
+    <div style="display: flex; flex-direction: column; gap: 12px; max-width: 760px">
+      <h1 style="margin: 0; font-size: 44px; line-height: 1.1; font-weight: 700; letter-spacing: -0.8px">Read a 5,000-line nginx dump one block at a time.</h1>
+      <p style="margin: 0; font-size: 18px; line-height: 1.5; color: #3F474C">Open the output of <code style="font-family: 'JetBrains Mono', monospace; font-size: 16px; background: #E6EBE8; padding: 2px 6px; border-radius: 4px">nginx -T</code>. Every <code style="font-family: 'JetBrains Mono', monospace; font-size: 16px">{ }</code> block folds like a JSON viewer, and every <code style="font-family: 'JetBrains Mono', monospace; font-size: 16px">include</code> opens in place, so you see only the part you are working on.</p>
+    </div>
+
+    <sc-if value="{{showDrop}}" hint-placeholder-val="{{ true }}">
+      <section aria-label="Open a file" style="border: 2px dashed #9FB3A8; border-radius: 14px; background: #FFFFFF; padding: 48px 24px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: #E3F1E9; color: {{accent}}; display: flex; align-items: center; justify-content: center">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <h2 style="margin: 0; font-size: 22px; font-weight: 600">Drop your nginx -T output here</h2>
+          <p style="margin: 0; font-size: 15px; color: #5B6469">Any plain-text file: <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">.txt</span>, <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">.log</span>, <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px">.conf</span>, or no extension at all. A single nginx.conf works too.</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px">
+          <a href="Explorer.dc.html" style="min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px; padding: 0 20px; border-radius: 8px; background: {{accent}}; color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>
+            Choose file
+          </a>
+          <button type="button" onClick="{{openPaste}}" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 0 20px; border-radius: 8px; border: 1px solid #C5CEC9; background: #FFFFFF; color: #14181B; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="3" width="8" height="4" rx="1"></rect><path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"></path></svg>
+            Paste text
+          </button>
+          <a href="Explorer.dc.html" style="min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 12px; font-weight: 600; font-size: 15px">Try a sample config</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{showPaste}}" hint-placeholder-val="{{ false }}">
+      <section aria-label="Paste text" style="border: 1px solid #C5CEC9; border-radius: 14px; background: #FFFFFF; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+        <label for="paste-box" style="font-size: 15px; font-weight: 600">Paste the output of nginx -T</label>
+        <textarea id="paste-box" rows="10" placeholder="nginx: the configuration file /etc/nginx/nginx.conf syntax is ok&#10;nginx: configuration file /etc/nginx/nginx.conf test is successful&#10;# configuration file /etc/nginx/nginx.conf:&#10;user www-data;&#10;…" style="width: 100%; box-sizing: border-box; resize: vertical; border: 1px solid #C5CEC9; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 14px; line-height: 1.5; color: #14181B; background: #F8FAF9"></textarea>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end">
+          <button type="button" onClick="{{closePaste}}" style="min-height: 44px; padding: 0 18px; border-radius: 8px; border: 1px solid #C5CEC9; background: #FFFFFF; color: #14181B; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer">Cancel</button>
+          <a href="Explorer.dc.html" style="min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; padding: 0 20px; border-radius: 8px; background: {{accent}}; color: #FFFFFF; font-weight: 600; font-size: 15px; text-decoration: none">Explore</a>
+        </div>
+      </section>
+    </sc-if>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px">
+      <section style="background: #FFFFFF; border: 1px solid #DCE1DE; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 12px">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 600">Get the file</h3>
+        <p style="margin: 0; font-size: 14px; color: #5B6469; line-height: 1.5">Run one of these where nginx lives. It prints the test result and then every config file it loaded.</p>
+        <pre style="margin: 0; background: #14181B; color: #E6EBE8; border-radius: 8px; padding: 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; overflow-x: auto"><span style="color: #7FD3A6">$</span> sudo nginx -T &gt; nginx-full.txt
+<span style="color: #7FD3A6">$</span> docker exec web nginx -T &gt; nginx-full.txt
+<span style="color: #7FD3A6">$</span> kubectl exec deploy/web -- nginx -T &gt; nginx-full.txt</pre>
+      </section>
+
+      <section style="background: #FFFFFF; border: 1px solid #DCE1DE; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <h3 style="margin: 0; font-size: 16px; font-weight: 600">What you get</h3>
+        <div style="display: flex; gap: 12px; align-items: flex-start">
+          <div style="flex: none; width: 32px; height: 32px; border-radius: 8px; background: #E3F1E9; color: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Fold any block</span><span style="font-size: 14px; color: #5B6469; line-height: 1.45">http, server, location, upstream. Collapsed blocks still show their listen and server_name.</span></div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start">
+          <div style="flex: none; width: 32px; height: 32px; border-radius: 8px; background: #E3F1E9; color: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10"></path><path d="M10 12h10"></path><path d="M14 17h6"></path><path d="M4 7v10h6"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Follow includes in place</span><span style="font-size: 14px; color: #5B6469; line-height: 1.45">See conf.d and sites-enabled where nginx reads them, or browse file by file.</span></div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start">
+          <div style="flex: none; width: 32px; height: 32px; border-radius: 8px; background: #E3F1E9; color: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg></div>
+          <div style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Search everything</span><span style="font-size: 14px; color: #5B6469; line-height: 1.45">Matches open their parent blocks; step through them with Enter.</span></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#16794A","options":["#16794A","#1D4FB8","#0F6E78","#8A4B08"]},"$preview":{"width":1440,"height":940}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { paste: false };
+  }
+  renderVals() {
+    return {
+      accent: this.props.accent ?? '#16794A',
+      showDrop: !this.state.paste,
+      showPaste: this.state.paste,
+      openPaste: () => this.setState({ paste: true }),
+      closePaste: () => this.setState({ paste: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
