@@ -2,7 +2,7 @@
 
 _Branch `claude/fervent-bell-850qu2` · Chrome + Firefox (MV3) · separate from `apps/spotify-to-youtube`, which is unchanged_
 
-Read this first, then `design/Playlist Bridge Extension.dc.html` (UI spec). The web app's docs
+Read this first, then `README.md` (install, permissions, privacy), `SETUP.md` (manual checks, release) and `design/Playlist Bridge Extension.dc.html` (UI spec). The web app's docs
 (`apps/spotify-to-youtube/{README,STATUS,DESIGN_BRIEF}.md`) explain the matching logic this extension ports.
 
 ## Goal
@@ -30,12 +30,13 @@ The YouTube Music songs catalog returns nothing from datacenter IPs; it works fr
 | 3 | Fuzzy match + matcher (`src/engine/youtube/{fuzz,matcher,combining}.ts`): **exact** parity with Python on 580 real candidates | ✅ done |
 | 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting: full conversion runs in the extension | ✅ done |
 | 5 | Save via YouTube session + new save card (`youtube/session.ts`, `youtube/save.ts`, `ui/components/SaveCard.tsx`) | ✅ done: signed-out/waiting verified in Chromium; **signed-in save needs a check with a real account** |
-| 6 | Spotify page button, packaging, full docs | ⏳ next |
+| 6 | Spotify page button (`src/entrypoints/spotify.content/`), packaging (zips, AMO sources zip), e2e script, docs | ✅ done |
 
 ## Verified end to end (Chromium, headless, no backend)
 The 150-track "All Out 80s" playlist was matched in about 30 s (150 found, 6 to review), then: review, swap, manual search,
 remove, reload → "Pick up where you left off" → resume (edits kept), links (50/50/49), CSV, missing-playlist error
-→ paste fallback, and opening from Spotify via `app.html?url=…&name=…`. No console errors.
+→ paste fallback, and the "Convert to YouTube" button on a Spotify playlist page (opens the app and starts converting;
+re-attaches after in-app navigation). No console errors. Repeat with `./instruction.sh e2e` (`tests/e2e/e2e.py`).
 
 ## Engine (src/engine)
 - `sources/`: Spotify embed + pathfinder paging + query-hash recovery + paste/CSV
@@ -60,6 +61,7 @@ raw scores (1e-12), displayed scores and ranking for 58 tracks / 580 real YouTub
 - JS `\b`/`\w` are ASCII-only, so the matcher spells out Unicode word boundaries.
 
 ## Run
+`./instruction.sh setup|test|dev [firefox]|build|zip|lint|e2e`, or directly:
 ```bash
 cd extensions/playlist-bridge
 npm install            # .npmrc sets legacy-peer-deps (npm 10 bug with WXT's optional vitest peer)
@@ -76,11 +78,13 @@ node scripts/make-icons.mjs   # regenerate icons from the design spec
 wxt.config.ts            manifest for both browsers (hosts, permissions, DNR rules, Firefox id/min version)
 public/rules/            declarativeNetRequest: Origin/Referer rewrite for YouTube's internal API
 public/icons/            generated from the design (light + dark-toolbar variants)
-src/entrypoints/         background.ts (toolbar, context menu), app/ (UI), help/ (How it works)
+src/entrypoints/         background.ts (toolbar, context menu), app/ (UI), help/ (How it works),
+                         spotify.content/ (button on playlist pages, shadow-root UI next to data-testid="action-bar-row-actions")
 src/engine/              in-browser engine (index.ts = interface; filled in phases 2–5), types.ts
 src/platform/            site access + links (version, help, GitHub issue)
 src/ui/                  UI copied from apps/spotify-to-youtube/frontend, adapted
 design/                  Claude Design source for the extension UI
+tests/unit, tests/golden unit + matcher-parity tests (offline); tests/e2e/e2e.py live Playwright run
 ```
 
 ## Decisions
@@ -92,3 +96,12 @@ design/                  Claude Design source for the extension UI
 - Distribution: unpacked / self-distributed only.
 - Short links (spotify.link, spoti.fi) use *optional* host permissions, requested from the Convert click only when such a link is pasted.
 - If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).
+
+## Next steps
+1. **Signed-in save with a real account, in Chrome and Firefox** (SETUP.md → Manual checks). Unit-tested only; the
+   request shapes follow ytmusicapi, and creating plus deleting a playlist worked in phase 0.
+2. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
+   should stay installed.
+3. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in
+   `spotify.content/index.ts` (`findAnchor`). The right-click menu and pasting a link still work.
+4. Nice to have: a "copy all links" button, per-track album art for short playlists, multi-account (`X-Goog-AuthUser`) picker.
