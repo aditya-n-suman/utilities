@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>nginx -T Explorer: explore</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F5F4}
+a{color:#16794A}a:hover{color:#0F5A36}
+</style>
+</helmet>
+<div style="min-height: 1100px; background: #F3F5F4; color: #14181B; font-family: 'IBM Plex Sans', system-ui, sans-serif; display: flex; flex-direction: column">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 1px solid #DCE1DE; background: #FFFFFF">
+    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; min-width: 0">
+      <a href="Main.dc.html" aria-label="nginx -T Explorer home" style="width: 32px; height: 32px; border-radius: 8px; background: {{accent}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; text-decoration: none">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H6a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h2"></path><path d="M16 4h2a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-2"></path></svg>
+      </a>
+      <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 15px">nginx -T Explorer</span>
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 6px; background: #F3F5F4; border: 1px solid #DCE1DE; font-size: 13px; color: #3F474C">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>
+        <span style="font-family: 'JetBrains Mono', monospace; color: #14181B">nginx-full.txt</span>
+        <span>{{stats}}</span>
+      </span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: #E3F1E9; color: #0F5A36; font-size: 13px; font-weight: 600">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+        syntax is ok · test is successful
+      </span>
+    </div>
+    <a href="Main.dc.html" style="min-height: 40px; box-sizing: border-box; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 8px; border: 1px solid #C5CEC9; background: #FFFFFF; color: #14181B; font-weight: 600; font-size: 14px; text-decoration: none">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+      Open another
+    </a>
+  </header>
+
+  <div role="toolbar" aria-label="View controls" style="display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; padding: 10px 24px; border-bottom: 1px solid #DCE1DE; background: #FAFBFA">
+    <div style="display: inline-flex; padding: 3px; border-radius: 8px; background: #E6EBE8; gap: 2px">
+      <button type="button" onClick="{{setMerged}}" aria-pressed="{{mergedPressed}}" style="{{mergedTabStyle}}">Merged includes</button>
+      <button type="button" onClick="{{setFiles}}" aria-pressed="{{filesPressed}}" style="{{filesTabStyle}}">By file</button>
+    </div>
+    <div style="display: inline-flex; align-items: center; gap: 6px">
+      <button type="button" onClick="{{expandAll}}" style="min-height: 36px; padding: 0 12px; border-radius: 7px; border: 1px solid #C5CEC9; background: #FFFFFF; color: #14181B; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer">Expand all</button>
+      <button type="button" onClick="{{collapseAll}}" style="min-height: 36px; padding: 0 12px; border-radius: 7px; border: 1px solid #C5CEC9; background: #FFFFFF; color: #14181B; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer">Collapse all</button>
+    </div>
+    <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #5B6469">
+      <span>Level</span>
+      <sc-for list="{{levels}}" as="lv" hint-placeholder-count="3">
+        <button type="button" onClick="{{lv.pick}}" aria-label="{{lv.label}}" style="{{lv.style}}">{{lv.n}}</button>
+      </sc-for>
+    </div>
+    <label style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: #3F474C; cursor: pointer; min-height: 36px">
+      <input type="checkbox" checked="{{showComments}}" onChange="{{toggleComments}}" style="width: 16px; height: 16px; accent-color: {{accent}}; margin: 0">
+      Comments
+    </label>
+    <div style="flex: 1 1 280px; display: flex; justify-content: flex-end; min-width: 0">
+      <div style="display: flex; align-items: center; gap: 6px; width: 100%; max-width: 420px; border: 1px solid #C5CEC9; border-radius: 8px; background: #FFFFFF; padding: 0 6px 0 10px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5B6469" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+        <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search config</label>
+        <input id="q" type="search" value="{{query}}" onChange="{{onQuery}}" placeholder="Search directives, values, comments" style="flex: 1; min-width: 0; height: 36px; border: none; outline: none; background: transparent; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #14181B">
+        <span style="font-size: 12px; color: #5B6469; white-space: nowrap">{{matchLabel}}</span>
+        <button type="button" onClick="{{prevMatch}}" aria-label="Previous match" style="width: 30px; height: 30px; border: none; border-radius: 6px; background: transparent; color: #3F474C; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"></path></svg></button>
+        <button type="button" onClick="{{nextMatch}}" aria-label="Next match" style="width: 30px; height: 30px; border: none; border-radius: 6px; background: transparent; color: #3F474C; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 20px; padding: 20px 24px 40px; box-sizing: border-box">
+
+    <nav aria-label="Outline" style="flex: 1 1 260px; max-width: 300px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE1DE; border-radius: 12px; padding: 14px 10px; display: flex; flex-direction: column; gap: 4px">
+      <span style="padding: 0 8px 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: #5B6469">{{outlineTitle}}</span>
+      <sc-for list="{{outline}}" as="o" hint-placeholder-count="6">
+        <button type="button" onClick="{{o.jump}}" style="{{o.style}}">
+          <span style="display: flex; flex-direction: column; gap: 2px; min-width: 0; text-align: left">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: #14181B; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{o.label}}</span>
+            <span style="font-size: 12px; color: #5B6469; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{o.sub}}</span>
+          </span>
+          <span style="flex: none; font-size: 12px; color: #3F474C; background: #EEF1EF; border-radius: 999px; padding: 2px 8px">{{o.kind}}</span>
+        </button>
+      </sc-for>
+    </nav>
+
+    <section aria-label="Configuration tree" style="flex: 999 1 560px; min-width: 0; background: #FFFFFF; border: 1px solid #DCE1DE; border-radius: 12px; overflow: hidden">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid #E6EBE8; font-size: 13px; color: #5B6469">
+        <span>{{treeCaption}}</span>
+        <span style="display: inline-flex; align-items: center; gap: 14px; flex-wrap: wrap">
+          <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #16794A"></span>block</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #1D4FB8"></span>directive</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #7B3BB5"></span>$variable</span>
+          <span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #9A4A00"></span>string</span>
+        </span>
+      </div>
+      <div style="overflow-x: auto">
+        <div style="min-width: 760px; padding: 8px 0 14px; font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1">
+          <sc-for list="{{rows}}" as="row" hint-placeholder-count="18">
+            <div title="{{row.where}}" style="{{row.rowStyle}}">
+              <span style="flex: none; width: 52px; padding-right: 12px; box-sizing: border-box; text-align: right; color: #8A9297; font-size: 12px; user-select: none">{{row.line}}</span>
+              <span style="{{row.indentStyle}}"></span>
+              <sc-if value="{{row.hasCaret}}" hint-placeholder-val="{{ true }}">
+                <button type="button" onClick="{{row.toggle}}" aria-expanded="{{row.open}}" aria-label="{{row.toggleLabel}}" style="flex: none; width: 22px; height: 22px; margin-right: 4px; border: none; border-radius: 5px; background: transparent; color: #3F474C; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="{{row.caretStyle}}"><path d="M9 6l6 6-6 6"></path></svg>
+                </button>
+              </sc-if>
+              <sc-if value="{{row.noCaret}}" hint-placeholder-val="{{ false }}">
+                <span style="flex: none; width: 26px"></span>
+              </sc-if>
+              <sc-if value="{{row.isFile}}" hint-placeholder-val="{{ false }}">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3F474C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-right: 8px"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg>
+              </sc-if>
+              <span style="white-space: pre">
+                <sc-for list="{{row.segs}}" as="seg" hint-placeholder-count="3"><span style="{{seg.style}}">{{seg.text}}</span></sc-for>
+              </span>
+              <sc-if value="{{row.collapsed}}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{row.toggle}}" aria-label="{{row.toggleLabel}}" style="flex: none; margin-left: 8px; height: 22px; padding: 0 8px; border-radius: 5px; border: 1px solid #C5CEC9; background: #F3F5F4; color: #3F474C; font-family: 'JetBrains Mono', monospace; font-size: 12px; cursor: pointer">{{row.ellipsis}}</button>
+              </sc-if>
+              <sc-if value="{{row.hasSummary}}" hint-placeholder-val="{{ false }}">
+                <span style="flex: none; margin-left: 12px; font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 12.5px; color: #5B6469; white-space: nowrap">{{row.summary}}</span>
+              </sc-if>
+              <sc-if value="{{row.hasBadge}}" hint-placeholder-val="{{ false }}">
+                <span style="{{row.badgeStyle}}">{{row.badge}}</span>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#16794A","options":["#16794A","#1D4FB8","#0F6E78","#8A4B08"]},"startLevel":{"editor":"enum","options":[1,2,3],"default":2},"$preview":{"width":1440,"height":1100}}'>
+var DUMP = [
+  'nginx: the configuration file /etc/nginx/nginx.conf syntax is ok',
+  'nginx: configuration file /etc/nginx/nginx.conf test is successful',
+  '# configuration file /etc/nginx/nginx.conf:',
+  'user www-data;',
+  'worker_processes auto;',
+  'pid /run/nginx.pid;',
+  'include /etc/nginx/modules-enabled/*.conf;',
+  '',
+  'events {',
+  '    worker_connections 768;',
+  '    multi_accept on;',
+  '}',
+  '',
+  'http {',
+  '    # Basic settings',
+  '    sendfile on;',
+  '    tcp_nopush on;',
+  '    types_hash_max_size 2048;',
+  '    server_tokens off;',
+  '    include /etc/nginx/mime.types;',
+  '    default_type application/octet-stream;',
+  '',
+  '    ssl_protocols TLSv1.2 TLSv1.3;',
+  '    ssl_prefer_server_ciphers on;',
+  '    log_format main \'$remote_addr - $remote_user [$time_local] "$request" $status\';',
+  '    access_log /var/log/nginx/access.log main;',
+  '    error_log /var/log/nginx/error.log warn;',
+  '    gzip on;',
+  '',
+  '    upstream app_backend {',
+  '        server 10.0.1.12:8080 max_fails=3 fail_timeout=10s;',
+  '        server 10.0.1.13:8080 max_fails=3 fail_timeout=10s;',
+  '        keepalive 32;',
+  '    }',
+  '',
+  '    include /etc/nginx/conf.d/*.conf;',
+  '    include /etc/nginx/sites-enabled/*;',
+  '}',
+  '',
+  '# configuration file /etc/nginx/modules-enabled/50-mod-http-geoip2.conf:',
+  'load_module modules/ngx_http_geoip2_module.so;',
+  '',
+  '# configuration file /etc/nginx/mime.types:',
+  'types {',
+  '    text/html html htm shtml;',
+  '    text/css css;',
+  '    text/xml xml;',
+  '    image/gif gif;',
+  '    image/jpeg jpeg jpg;',
+  '    application/javascript js;',
+  '    application/json json;',
+  '    image/png png;',
+  '    image/svg+xml svg svgz;',
+  '    image/webp webp;',
+  '    font/woff2 woff2;',
+  '    application/pdf pdf;',
+  '}',
+  '',
+  '# configuration file /etc/nginx/conf.d/rate-limit.conf:',
+  '# Shared zones for the API',
+  'limit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;',
+  'limit_conn_zone $binary_remote_addr zone=perip:10m;',
+  '',
+  '# configuration file /etc/nginx/sites-enabled/example.com:',
+  'server {',
+  '    listen 80;',
+  '    listen [::]:80;',
+  '    server_name example.com www.example.com;',
+  '    return 301 https://$host$request_uri;',
+  '}',
+  '',
+  'server {',
+  '    listen 443 ssl http2;',
+  '    server_name example.com www.example.com;',
+  '    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;',
+  '    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;',
+  '    include snippets/security-headers.conf;',
+  '    root /var/www/example.com/public;',
+  '',
+  '    location / {',
+  '        try_files $uri $uri/ @app;',
+  '    }',
+  '',
+  '    location @app {',
+  '        proxy_pass http://app_backend;',
+  '        proxy_set_header Host $host;',
+  '        proxy_set_header X-Real-IP $remote_addr;',
+  '        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;',
+  '    }',
+  '',
+  '    location /api/ {',
+  '        limit_req zone=api burst=20 nodelay;',
+  '        limit_conn perip 20;',
+  '        proxy_read_timeout 60s;',
+  '        proxy_pass http://app_backend;',
+  '    }',
+  '',
+  '    location ~* \\.(css|js|png|svg|woff2)$ {',
+  '        expires 30d;',
+  '        add_header Cache-Control "public, immutable";',
+  '        access_log off;',
+  '    }',
+  '}',
+  '',
+  '# configuration file /etc/nginx/snippets/security-headers.conf:',
+  'add_header X-Frame-Options "SAMEORIGIN" always;',
+  'add_header X-Content-Type-Options "nosniff" always;',
+  'add_header Strict-Transport-Security "max-age=31536000" always;',
+  '',
+  '# configuration file /etc/nginx/sites-enabled/admin.internal:',
+  'server {',
+  '    listen 8443 ssl;',
+  '    server_name admin.internal;',
+  '    allow 10.0.0.0/8;',
+  '    deny all;',
+  '',
+  '    location / {',
+  '        auth_basic "Restricted";',
+  '        auth_basic_user_file /etc/nginx/.htpasswd;',
+  '        proxy_pass http://127.0.0.1:9000;',
+  '    }',
+  '}',
+  ''
+].join('\n');
+
+var PREFIX = '/etc/nginx/';
+var BLOCK_NAMES = { http: 1, server: 1, location: 1, upstream: 1, events: 1, types: 1, map: 1, 'if': 1, geo: 1, limit_except: 1, stream: 1, mail: 1 };
+var C = {
+  ink: '#14181B', muted: '#5B6469', block: '#16794A', dir: '#1D4FB8', str: '#9A4A00',
+  vari: '#7B3BB5', num: '#0F6E78', cmt: '#6A7176', regex: '#B0306A'
+};
+
+function splitFiles(text) {
+  var lines = text.split(/\r?\n/);
+  var files = [];
+  var cur = null;
+  for (var i = 0; i < lines.length; i++) {
+    var m = /^# configuration file (.+):$/.exec(lines[i]);
+    if (m) { cur = { path: m[1], lines: [] }; files.push(cur); continue; }
+    if (cur) cur.lines.push(lines[i]);
+  }
+  return files;
+}
+
+function parseFile(file) {
+  var root = [];
+  var stack = [root];
+  var words = [];
+  var startLine = 0;
+  var src = file.lines;
+  for (var ln = 0; ln < src.length; ln++) {
+    var s = src[ln];
+    var i = 0;
+    while (i < s.length) {
+      var ch = s[i];
+      if (ch === ' ' || ch === '\t') { i++; continue; }
+      if (ch === '#') {
+        if (words.length === 0) stack[stack.length - 1].push({ type: 'comment', text: s.slice(i), line: ln + 1, file: file.path });
+        i = s.length; continue;
+      }
+      if (ch === ';' || ch === '{') {
+        var node = { type: ch === '{' ? 'block' : 'dir', name: words[0] || '', args: words.slice(1), line: startLine, file: file.path, children: [] };
+        stack[stack.length - 1].push(node);
+        if (ch === '{') stack.push(node.children);
+        words = []; i++; continue;
+      }
+      if (ch === '}') { if (stack.length > 1) stack.pop(); i++; continue; }
+      if (words.length === 0) startLine = ln + 1;
+      var j = i;
+      if (ch === '"' || ch === "'") {
+        j = i + 1;
+        while (j < s.length && s[j] !== ch) { if (s[j] === '\\') j++; j++; }
+        j++;
+      } else {
+        while (j < s.length && ' \t;{}'.indexOf(s[j]) < 0) j++;
+      }
+      words.push(s.slice(i, j));
+      i = j;
+    }
+  }
+  return root;
+}
+
+function globToRe(p) {
+  var full = p.charAt(0) === '/' ? p : PREFIX + p;
+  var re = full.replace(/[.+^${}()|\\]/g, '\\$&').replace(/\*/g, '[^/]*').replace(/\?/g, '[^/]');
+  return new RegExp('^' + re + '$');
+}
+
+function countLeaves(nodes) {
+  var n = 0;
+  for (var i = 0; i < nodes.length; i++) {
+    var c = nodes[i];
+    if (c.type === 'comment') continue;
+    n += 1;
+    if (c.children && c.children.length) n += countLeaves(c.children);
+  }
+  return n;
+}
+
+function firstArg(nodes, name) {
+  for (var i = 0; i < nodes.length; i++) if (nodes[i].name === name) return nodes[i].args.join(' ');
+  return '';
+}
+
+function summarize(node) {
+  if (node.type === 'file') return countLeaves(node.children) + ' directives';
+  if (node.type === 'include') return node.children.length ? node.children.length + (node.children.length === 1 ? ' file' : ' files') : '';
+  var kids = node.children.filter(function (c) { return c.type !== 'comment'; });
+  if (node.name === 'server' && node.parentName !== 'upstream') {
+    var parts = [];
+    var listen = firstArg(kids, 'listen');
+    var names = firstArg(kids, 'server_name');
+    if (listen) parts.push('listen ' + listen);
+    if (names) parts.push(names);
+    var locs = kids.filter(function (c) { return c.name === 'location'; }).length;
+    if (locs) parts.push(locs + (locs === 1 ? ' location' : ' locations'));
+    return parts.join(' · ');
+  }
+  if (node.name === 'upstream') {
+    var srv = kids.filter(function (c) { return c.name === 'server'; }).length;
+    return srv + (srv === 1 ? ' server' : ' servers');
+  }
+  if (node.name === 'types') return kids.length + ' mime types';
+  return countLeaves(node.children) + (countLeaves(node.children) === 1 ? ' directive' : ' directives');
+}
+
+function build(files, merged) {
+  var parsed = {};
+  files.forEach(function (f) { parsed[f.path] = parseFile(f); });
+  var paths = files.map(function (f) { return f.path; });
+
+  function decorate(nodes, parentId, parentName, seen) {
+    return nodes.map(function (n, i) {
+      var id = parentId + '.' + i;
+      var out = { id: id, type: n.type, name: n.name, args: n.args, text: n.text, line: n.line, file: n.file, parentName: parentName, children: [] };
+      if (n.type === 'block') out.children = decorate(n.children, id, n.name, seen);
+      if (merged && n.type === 'dir' && n.name === 'include') {
+        var re = globToRe(n.args[0] || '');
+        var hits = paths.filter(function (p) { return re.test(p) && seen.indexOf(p) < 0; });
+        out.type = 'include';
+        out.children = hits.map(function (p, k) {
+          var fid = id + '>' + k;
+          return { id: fid, type: 'file', name: p, args: [], line: 0, file: p, children: decorate(parsed[p], fid, parentName, seen.concat([p])) };
+        });
+        out.missing = hits.length === 0;
+      }
+      return out;
+    });
+  }
+
+  if (merged) {
+    var main = paths[0];
+    return decorate(parsed[main], 'm', '', [main]);
+  }
+  return paths.map(function (p, k) {
+    var fid = 'f' + k;
+    return { id: fid, type: 'file', name: p, args: [], line: 0, file: p, children: decorate(parsed[p], fid, '', [p]) };
+  });
+}
+
+function argStyle(a) {
+  if (/^["']/.test(a)) return C.str;
+  if (a.indexOf('$') >= 0) return C.vari;
+  if (/^(on|off|all|always)$/.test(a)) return C.num;
+  if (/^~\*?$|^=$|^\^~$/.test(a)) return C.regex;
+  if (/^[0-9.]+[a-z]*$/i.test(a)) return C.num;
+  return C.ink;
+}
+
+function isContainer(n) { return n.type === 'block' || n.type === 'include' || n.type === 'file'; }
+
+function walkAll(nodes, fn, ancestors) {
+  nodes.forEach(function (n) {
+    fn(n, ancestors);
+    if (n.children && n.children.length) walkAll(n.children, fn, ancestors.concat([n.id]));
+  });
+}
+
+function nodeText(n) {
+  if (n.type === 'comment') return n.text;
+  return (n.name + ' ' + n.args.join(' ')).trim();
+}
+
+function openToLevel(tree, level) {
+  var open = {};
+  walkAll(tree, function (n, anc) {
+    if (isContainer(n) && anc.length < level) open[n.id] = true;
+  }, []);
+  return open;
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    var files = splitFiles(DUMP);
+    var merged = build(files, true);
+    var byFile = build(files, false);
+    var lvl = Number(props.startLevel ?? 2);
+    this.files = files;
+    this.trees = { merged: merged, files: byFile };
+    this.state = {
+      view: 'merged', level: lvl, open: openToLevel(merged, lvl),
+      comments: true, query: '', matchIdx: 0, focus: ''
+    };
+  }
+
+  setView(view) {
+    var lvl = this.state.level;
+    this.setState({ view: view, open: openToLevel(this.trees[view], view === 'files' ? lvl - 1 : lvl), focus: '', matchIdx: 0 });
+  }
+
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var accent = this.props.accent ?? '#16794A';
+    var tree = this.trees[st.view];
+    var q = st.query.trim().toLowerCase();
+
+    var matches = [];
+    var forced = {};
+    if (q) {
+      walkAll(tree, function (n, anc) {
+        if (n.type === 'comment' && !st.comments) return;
+        if (nodeText(n).toLowerCase().indexOf(q) >= 0) {
+          matches.push(n.id);
+          anc.forEach(function (a) { forced[a] = true; });
+        }
+      }, []);
+    }
+    var idx = matches.length ? ((st.matchIdx % matches.length) + matches.length) % matches.length : 0;
+    var current = matches.length ? matches[idx] : '';
+    var matchSet = {};
+    matches.forEach(function (m) { matchSet[m] = true; });
+
+    function toggle(id) {
+      return function () {
+        var o = Object.assign({}, self.state.open);
+        if (o[id]) delete o[id]; else o[id] = true;
+        self.setState({ open: o, focus: '' });
+      };
+    }
+
+    function hl(text, color, extra) {
+      var base = 'color: ' + color + ';' + (extra || '');
+      if (!q) return [{ text: text, style: base }];
+      var out = [];
+      var low = text.toLowerCase();
+      var at = 0;
+      var k = low.indexOf(q);
+      while (k >= 0) {
+        if (k > at) out.push({ text: text.slice(at, k), style: base });
+        out.push({ text: text.slice(k, k + q.length), style: base + ' background: #FFD25E; border-radius: 2px' });
+        at = k + q.length;
+        k = low.indexOf(q, at);
+      }
+      if (at < text.length) out.push({ text: text.slice(at), style: base });
+      return out;
+    }
+
+    var rows = [];
+    function pushRows(nodes, depth) {
+      nodes.forEach(function (n) {
+        if (n.type === 'comment' && !st.comments) return;
+        var container = isContainer(n) && (n.children.length > 0);
+        var open = container && (!!st.open[n.id] || !!forced[n.id]);
+        var segs = [];
+        if (n.type === 'comment') {
+          segs = hl(n.text, C.cmt, ' font-style: italic;');
+        } else if (n.type === 'file') {
+          segs = hl(n.name, C.ink, ' font-weight: 700;');
+        } else {
+          var nameColor = n.type === 'block' && BLOCK_NAMES[n.name] ? C.block : C.dir;
+          segs = hl(n.name, nameColor, n.type === 'block' ? ' font-weight: 700;' : '');
+          n.args.forEach(function (a) {
+            segs.push({ text: ' ', style: '' });
+            segs = segs.concat(hl(a, argStyle(a), ''));
+          });
+          if (n.type === 'block') segs.push({ text: ' {', style: 'color: ' + C.muted });
+          else segs.push({ text: ';', style: 'color: ' + C.muted });
+        }
+        var isMatch = !!matchSet[n.id];
+        var isCurrent = n.id === current || n.id === st.focus;
+        var bg = isCurrent ? '#FFF1C2' : (isMatch ? '#FFF8E0' : (n.type === 'file' ? '#F5F8F6' : 'transparent'));
+        var bar = isCurrent ? accent : 'transparent';
+        var badge = '';
+        var badgeStyle = '';
+        if (n.type === 'include' && n.missing) {
+          badge = 'not in dump';
+          badgeStyle = 'flex: none; margin-left: 12px; font-family: \'IBM Plex Sans\', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: #8A3B00; background: #FDEBD8; border-radius: 999px; padding: 3px 9px';
+        } else if (st.view === 'merged' && n.type === 'file') {
+          badge = 'included';
+          badgeStyle = 'flex: none; margin-left: 12px; font-family: \'IBM Plex Sans\', system-ui, sans-serif; font-size: 12px; font-weight: 600; color: #0F5A36; background: #E3F1E9; border-radius: 999px; padding: 3px 9px';
+        }
+        var summary = container && !open ? summarize(n) : (n.type === 'file' && open ? summarize(n) : '');
+        rows.push({
+          segs: segs,
+          line: n.type === 'file' ? '' : String(n.line),
+          where: n.type === 'file' ? n.name : n.file + ':' + n.line,
+          rowStyle: 'display: flex; align-items: center; min-height: 28px; padding-right: 16px; background: ' + bg + '; box-shadow: inset 3px 0 0 ' + bar + ';' + (n.type === 'file' ? ' border-top: 1px solid #E6EBE8; margin-top: 4px;' : ''),
+          indentStyle: 'flex: none; width: ' + (depth * 22) + 'px; align-self: stretch; background-image: repeating-linear-gradient(to right, #E1E6E3 0 1px, transparent 1px 22px); background-position: 10px 0;',
+          hasCaret: container,
+          noCaret: !container,
+          isFile: n.type === 'file',
+          open: open ? 'true' : 'false',
+          toggle: toggle(n.id),
+          toggleLabel: (open ? 'Collapse ' : 'Expand ') + nodeText(n),
+          caretStyle: 'transition: transform 120ms; transform: rotate(' + (open ? 90 : 0) + 'deg)',
+          collapsed: container && !open && n.type === 'block',
+          ellipsis: '… }',
+          hasSummary: !!summary,
+          summary: summary,
+          hasBadge: !!badge,
+          badge: badge,
+          badgeStyle: badgeStyle
+        });
+        if (open) {
+          pushRows(n.children, depth + 1);
+          if (n.type === 'block') {
+            rows.push({
+              segs: [{ text: '}', style: 'color: ' + C.muted }],
+              line: '', where: n.file, rowStyle: 'display: flex; align-items: center; min-height: 24px; padding-right: 16px',
+              indentStyle: 'flex: none; width: ' + (depth * 22) + 'px; align-self: stretch; background-image: repeating-linear-gradient(to right, #E1E6E3 0 1px, transparent 1px 22px); background-position: 10px 0;',
+              hasCaret: false, noCaret: true, isFile: false, collapsed: false, hasSummary: false, hasBadge: false
+            });
+          }
+        }
+      });
+    }
+    pushRows(tree, 0);
+
+    var outline = [];
+    function jumpTo(id, anc) {
+      return function () {
+        var o = Object.assign({}, self.state.open);
+        anc.forEach(function (a) { o[a] = true; });
+        self.setState({ open: o, focus: id });
+      };
+    }
+    var outlineStyle = function (id) {
+      var on = id === st.focus;
+      return 'display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 48px; padding: 6px 8px; border: none; border-radius: 8px; cursor: pointer; font: inherit; background: ' + (on ? '#E3F1E9' : 'transparent') + '; box-shadow: inset 3px 0 0 ' + (on ? accent : 'transparent');
+    };
+    if (st.view === 'merged') {
+      walkAll(tree, function (n, anc) {
+        if (n.type !== 'block') return;
+        if (n.name === 'server' && n.parentName !== 'upstream') {
+          var kids = n.children;
+          outline.push({ label: firstArg(kids, 'server_name').split(' ')[0] || '(no server_name)', sub: 'listen ' + firstArg(kids, 'listen') + ' · ' + n.file.replace(PREFIX, ''), kind: 'server', jump: jumpTo(n.id, anc), style: outlineStyle(n.id) });
+        } else if (n.name === 'upstream') {
+          outline.push({ label: n.args.join(' '), sub: summarize(n), kind: 'upstream', jump: jumpTo(n.id, anc), style: outlineStyle(n.id) });
+        }
+      }, []);
+    } else {
+      tree.forEach(function (f) {
+        outline.push({ label: f.name.replace(PREFIX, ''), sub: summarize(f), kind: 'file', jump: jumpTo(f.id, []), style: outlineStyle(f.id) });
+      });
+    }
+
+    var totalLines = this.files.reduce(function (s, f) { return s + f.lines.length; }, 0);
+    var tabBase = 'min-height: 32px; padding: 0 14px; border: none; border-radius: 6px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; ';
+    var on = tabBase + 'background: #FFFFFF; color: #14181B; box-shadow: 0 1px 2px rgba(20,24,27,0.12)';
+    var off = tabBase + 'background: transparent; color: #3F474C';
+    var lvlStyle = function (n) {
+      var active = n === st.level;
+      return 'width: 32px; height: 32px; border-radius: 7px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid ' + (active ? accent : '#C5CEC9') + '; background: ' + (active ? accent : '#FFFFFF') + '; color: ' + (active ? '#FFFFFF' : '#14181B');
+    };
+
+    return {
+      accent: accent,
+      stats: this.files.length + ' files · ' + totalLines + ' lines',
+      setMerged: function () { self.setView('merged'); },
+      setFiles: function () { self.setView('files'); },
+      mergedPressed: st.view === 'merged' ? 'true' : 'false',
+      filesPressed: st.view === 'files' ? 'true' : 'false',
+      mergedTabStyle: st.view === 'merged' ? on : off,
+      filesTabStyle: st.view === 'files' ? on : off,
+      expandAll: function () { self.setState({ open: openToLevel(tree, 99), level: 0 }); },
+      collapseAll: function () { self.setState({ open: {}, level: 0, focus: '' }); },
+      levels: [1, 2, 3].map(function (n) {
+        return { n: n, label: 'Expand to level ' + n, style: lvlStyle(n), pick: function () { self.setState({ level: n, open: openToLevel(tree, st.view === 'files' ? n : n), focus: '' }); } };
+      }),
+      showComments: st.comments,
+      toggleComments: function () { self.setState({ comments: !self.state.comments }); },
+      query: st.query,
+      onQuery: function (e) { self.setState({ query: e.target.value, matchIdx: 0, focus: '' }); },
+      matchLabel: q ? (matches.length ? (idx + 1) + ' of ' + matches.length : 'no matches') : '',
+      prevMatch: function () { self.setState({ matchIdx: self.state.matchIdx - 1 }); },
+      nextMatch: function () { self.setState({ matchIdx: self.state.matchIdx + 1 }); },
+      outlineTitle: st.view === 'merged' ? 'Servers & upstreams' : 'Files in this dump',
+      outline: outline,
+      treeCaption: st.view === 'merged' ? 'Starting at /etc/nginx/nginx.conf, every include opened where nginx reads it' : 'Each file as nginx -T printed it',
+      rows: rows
+    };
+  }
+}
+</script>
+</body>
+</html>
