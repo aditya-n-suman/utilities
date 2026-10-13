@@ -50,6 +50,10 @@ re-attaches after in-app navigation). No console errors. Repeat with `./instruct
   `Authorization: SAPISIDHASH <ts>_<sha1(ts SAPISID origin)>` (same as ytmusicapi). Saving creates the playlist with
   the first 50 videos, then adds 50 at a time (`browse/edit_playlist`); a failed batch returns a partial save, and
   "Add the rest" continues the same playlist (`Job.saveState`).
+- The save card follows sign-in and sign-out in other tabs by polling the SAPISID cookie every 2 s
+  (`onSessionChange`; a local read, and the account check runs only on a change), and re-checks on tab focus.
+  `cookies.onChanged` was tried and gets no events: Chrome only sends them with host access to the cookie's domain
+  (`.youtube.com`), and the extension asks only for `www.` and `music.`.
 
 ## Matcher parity (keep it)
 `matcher.ts` is a line-by-line port of `apps/spotify-to-youtube/backend/app/youtube/matcher.py`; `fuzz.ts` ports

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { savePlaylist, type SaveState } from "@/engine/youtube/save";
-import { getSession, NotSignedIn, parseAccountMenu, sapisidHash } from "@/engine/youtube/session";
+import { getSession, NotSignedIn, onSessionChange, parseAccountMenu, sapisidHash } from "@/engine/youtube/session";
 
 const cookie = async () => "AbCdEf123/XyZ";
 const noCookie = async () => null;
@@ -93,5 +93,33 @@ describe("savePlaylist", () => {
   it("treats 401 as an expired sign-in", async () => {
     vi.stubGlobal("fetch", async () => new Response("", { status: 401 }));
     await expect(savePlaylist(ids(3), { title: "x", privacy: "private" }, { playlistId: null, added: 0 }, () => {}, cookie)).rejects.toMatchObject({ code: "not_signed_in" });
+  });
+});
+
+describe("onSessionChange", () => {
+  afterEach(() => vi.useRealTimers());
+
+  it("fires when the SAPISID cookie appears, changes or goes away, not on the first read", async () => {
+    vi.useFakeTimers();
+    let value: string | null = null;
+    const cb = vi.fn();
+    const stop = onSessionChange(cb, 1000, async () => value);
+    await vi.advanceTimersByTimeAsync(3000);
+    expect(cb).not.toHaveBeenCalled();
+
+    value = "signed-in"; // signed in in another tab
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(cb).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(3000);
+    expect(cb).toHaveBeenCalledTimes(1);
+
+    value = null; // signed out
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(cb).toHaveBeenCalledTimes(2);
+
+    stop();
+    value = "again";
+    await vi.advanceTimersByTimeAsync(3000);
+    expect(cb).toHaveBeenCalledTimes(2);
   });
 });

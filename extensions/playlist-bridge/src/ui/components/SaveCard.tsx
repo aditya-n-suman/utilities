@@ -39,39 +39,61 @@ export function SaveCard({ jobId, title, videoCount, announce, copied, copy }: P
   const [progress, setProgress] = useState<SaveProgress>({ added: 0, total: videoCount });
   const [saved, setSaved] = useState<Saved | null>(null);
   const [partial, setPartial] = useState<PartialSave | null>(null);
-  const recheckOnReturn = useRef(false);
+  const ytRef = useRef(yt);
+  const phaseRef = useRef(phase);
+  ytRef.current = yt;
+  phaseRef.current = phase;
+  const inFlight = useRef(false);
+  const again = useRef(false);
 
-  const check = useCallback(async (fallback: YtState) => {
+  /** Reads the browser's YouTube session. A failed lookup keeps the current state, except on the first check. */
+  const check = useCallback(async function check(): Promise<void> {
+    if (["saving", "saved", "partial"].includes(phaseRef.current)) return;
+    if (inFlight.current) {
+      again.current = true; // the session changed mid-check: look again once this one finishes
+      return;
+    }
+    inFlight.current = true;
     try {
       const s = await api.session();
-      setSession(s);
-      setYt(s.signed_in ? "in" : fallback);
+      if (["saving", "saved", "partial"].includes(phaseRef.current)) return;
+      if (s.signed_in) {
+        setSession(s);
+        setYt("in");
+        setPhase((p) => (p === "expired" ? "idle" : p));
+      } else {
+        setYt((y) => (y === "waiting" ? "waiting" : "out"));
+        setPhase((p) => (p === "failed" ? "idle" : p));
+      }
     } catch {
-      setYt(fallback);
+      setYt((y) => (y === "checking" ? "out" : y));
+    } finally {
+      inFlight.current = false;
+    }
+    if (again.current) {
+      again.current = false;
+      await check();
     }
   }, []);
 
+  // Keep the card in step with YouTube: re-check when the sign-in cookies change (signing in, out or
+  // switching account in any tab) and whenever the user comes back to this tab.
   useEffect(() => {
-    void check("out");
-  }, [check]);
-
-  // After "Sign in to YouTube ↗" or "Not you?", check again when the user comes back to this tab.
-  useEffect(() => {
+    void check();
     const onReturn = () => {
-      if (document.visibilityState !== "visible" || !recheckOnReturn.current) return;
-      recheckOnReturn.current = false;
-      void check(yt === "waiting" ? "waiting" : "out");
+      if (document.visibilityState === "visible") void check();
     };
+    const stopWatching = api.onSessionChange(() => void check());
     document.addEventListener("visibilitychange", onReturn);
     window.addEventListener("focus", onReturn);
     return () => {
+      stopWatching();
       document.removeEventListener("visibilitychange", onReturn);
       window.removeEventListener("focus", onReturn);
     };
-  }, [check, yt]);
+  }, [check]);
 
   const startSignIn = () => {
-    recheckOnReturn.current = true;
     setYt("waiting");
     setPhase("idle");
   };
@@ -132,7 +154,7 @@ export function SaveCard({ jobId, title, videoCount, announce, copied, copy }: P
             <div className="account-name ellipsis">{session.name}</div>
             {session.handle && <div className="account-handle ellipsis">{session.handle}</div>}
           </div>
-          <a href={YOUTUBE} target="_blank" rel="noopener noreferrer" onClick={() => (recheckOnReturn.current = true)} aria-label="Not you? Switch YouTube account" className="not-you">
+          <a href={YOUTUBE} target="_blank" rel="noopener noreferrer" aria-label="Not you? Switch YouTube account" className="not-you">
             Not you?
           </a>
         </div>
@@ -154,11 +176,11 @@ export function SaveCard({ jobId, title, videoCount, announce, copied, copy }: P
               <span aria-hidden="true" className="spinner red" />
               Waiting for you to sign in…
             </span>
-            <button type="button" className="btn-link" onClick={() => void check("waiting")}>
+            <button type="button" className="btn-link" onClick={() => void check()}>
               Check again
             </button>
           </div>
-          <p className="muted-13 after">We’ll check again when you come back to this tab.</p>
+          <p className="muted-13 after">This updates by itself once you’ve signed in.</p>
         </>
       )}
 

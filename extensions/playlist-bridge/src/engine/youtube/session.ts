@@ -76,3 +76,25 @@ export async function getSession(getSapisid: SapisidLookup = cookieSapisid): Pro
     throw e;
   }
 }
+
+/**
+ * Calls `callback` when the browser's YouTube sign-in changes (signed in, signed out or a new session),
+ * in any tab. It polls the SAPISID cookie: a local read, no network. `cookies.onChanged` would need host
+ * access to all of youtube.com, because the sign-in cookies are set on `.youtube.com`. Returns a stop function.
+ */
+export function onSessionChange(callback: () => void, intervalMs = 2000, getSapisid: SapisidLookup = cookieSapisid): () => void {
+  let last: string | null | undefined;
+  let stopped = false;
+  const tick = async () => {
+    const now = await getSapisid();
+    if (stopped) return;
+    if (last !== undefined && now !== last) callback();
+    last = now;
+  };
+  void tick();
+  const timer = setInterval(() => void tick(), intervalMs);
+  return () => {
+    stopped = true;
+    clearInterval(timer);
+  };
+}

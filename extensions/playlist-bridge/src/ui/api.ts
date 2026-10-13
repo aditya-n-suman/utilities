@@ -13,6 +13,7 @@ export const api = {
   retryErrors: (jobId: string) => engine.retryErrors(jobId),
   links: (jobId: string) => engine.links(jobId),
   session: () => engine.session(),
+  onSessionChange: (callback: () => void) => engine.onSessionChange(callback),
   save: (jobId: string, body: { privacy: Privacy; title?: string }, onProgress: (p: SaveProgress) => void) =>
     engine.save(jobId, body, onProgress),
   resumable: () => engine.resumable(),

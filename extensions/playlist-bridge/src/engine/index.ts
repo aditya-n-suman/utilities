@@ -21,7 +21,7 @@ import {
 } from "./types";
 import { savePlaylist } from "./youtube/save";
 import { Searcher } from "./youtube/search";
-import { getSession } from "./youtube/session";
+import { getSession, onSessionChange } from "./youtube/session";
 
 export type ConvertInput = { url: string } | { text: string; name?: string };
 export type EditAction = "choose" | "remove" | "restore" | "retry";
@@ -37,6 +37,8 @@ export interface Engine {
   reportCsv(jobId: string): Promise<{ filename: string; csv: string }>;
   setStage(jobId: string, stage: Stage): void;
   session(): Promise<Session>;
+  /** Notifies when the browser's YouTube sign-in changes (any tab). Returns an unsubscribe function. */
+  onSessionChange(callback: () => void): () => void;
   save(
     jobId: string,
     options: { privacy: Privacy; title?: string },
@@ -115,6 +117,7 @@ export function createEngine(): Engine {
       }
     },
     session: wrap(() => getSession()),
+    onSessionChange: (callback) => onSessionChange(callback),
     save: wrap(async (jobId: string, options: { privacy: Privacy; title?: string }, onProgress: (p: SaveProgress) => void) => {
       const job = jobs.get(jobId);
       const ids = job.videoIds();

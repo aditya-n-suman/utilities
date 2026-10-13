@@ -25,8 +25,9 @@ Do these in **both Chrome and Firefox**, with the build loaded and signed in to 
 2. **Save** as Private. The card ends with "Saved" and Open on YouTube / YouTube Music links. Open them and check the
    videos and their order.
 3. Do the same with a playlist of more than 50 tracks. That covers the batched adds.
-4. Sign out of YouTube in another tab, then click Save. The card should say to sign in again. Sign back in and the
-   card should recover on its own when you return to the tab.
+4. Leave the result screen open and sign out of YouTube in another tab. Within a couple of seconds the card should
+   switch to "Sign in to YouTube…" without a click. Sign back in and it should show your account again. Clicking Save
+   while signed out should say to sign in again.
 5. On a Spotify playlist page, check that the "Convert to YouTube" button sits next to the action bar's ⋯, and that the
    right-click menu works on a playlist link.
 
