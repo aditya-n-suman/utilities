@@ -1,0 +1,14 @@
+@import "@/ui/fonts.css";
+:root{--bg:#F6F5F1;--ink:#16151A;--ink-2:#55535C;--ink-3:#75737B;--line:#E2E0D9;--surface-2:#EFEEE9;--green:oklch(0.68 0.17 152);--red:oklch(0.6 0.21 27);color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0E0E10;--ink:#F3F2EE;--ink-2:#AEACB4;--ink-3:#8B8991;--line:#2D2D32;--surface-2:#212125;--green:oklch(0.74 0.17 152);--red:oklch(0.66 0.2 27);color-scheme:dark}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:680px;margin:0 auto;padding:clamp(32px,8vh,80px) 16px 64px}
+.kicker{margin:0 0 14px;font:12px 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.kicker span{width:28px;height:2px;background:linear-gradient(90deg,var(--green),var(--red))}
+h1{margin:0 0 12px;font-size:clamp(32px,5vw,44px);line-height:1.05;letter-spacing:-0.03em}
+.lede{margin:0 0 32px;font-size:18px;color:var(--ink-2)}
+h2{margin:32px 0 8px;font-size:19px;letter-spacing:-0.01em}
+p,li{color:var(--ink-2)}
+strong{color:var(--ink)}
+code{font:14px 'Geist Mono',ui-monospace,monospace;background:var(--surface-2);padding:1px 6px;border-radius:6px;color:var(--ink)}
+ul{padding-left:20px}

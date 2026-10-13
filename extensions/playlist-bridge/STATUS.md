@@ -1,0 +1,65 @@
+# STATUS: Playlist Bridge browser extension
+
+_Branch `claude/fervent-bell-850qu2` · Chrome + Firefox (MV3) · separate from `apps/spotify-to-youtube`, which is unchanged_
+
+Read this first, then `design/Playlist Bridge Extension.dc.html` (UI spec). The web app's docs
+(`apps/spotify-to-youtube/{README,STATUS,DESIGN_BRIEF}.md`) explain the matching logic this extension ports.
+
+## Goal
+The web app's full functionality with **no backend, no API keys and no quotas**:
+- Spotify: public embed page + web-player GraphQL, called from the extension.
+- YouTube: internal YouTube Music / YouTube search APIs.
+- Save: the user's own YouTube session (SAPISIDHASH), not Google OAuth.
+
+## Phase 0 feasibility: ✅ passed in Chrome 138 and Firefox 152 (2026-10-13)
+| Check | Result |
+|---|---|
+| Spotify embed + pathfinder paging | 150 / 150 tracks |
+| YouTube Music songs and videos, YouTube search | Results (needs the Origin/Referer rewrite, else 403) |
+| YouTube session (account menu) | Name, handle, avatar |
+| Create + delete private playlist | Works |
+| Spotify query-hash recovery | `"fetchPlaylist","query","<sha256>"` in `open.spotifycdn.com/cdn/build/web-player/web-player.*.js` |
+
+The YouTube Music songs catalog returns nothing from datacenter IPs; it works from home connections.
+
+## Phases
+| # | Phase | State |
+|---|---|---|
+| 1 | Scaffold: WXT, manifests, copied UI, access screen, settings popover, icons, help page | ✅ done |
+| 2 | Spotify sources ported + fixture tests | ⏳ next |
+| 3 | Fuzzy match + matcher, golden parity vs Python | |
+| 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting | |
+| 5 | Save via YouTube session + new save card | |
+| 6 | Spotify page button, packaging, full docs | |
+
+## Run
+```bash
+cd extensions/playlist-bridge
+npm install            # .npmrc sets legacy-peer-deps (npm 10 bug with WXT's optional vitest peer)
+npm test               # vitest
+npm run typecheck
+npm run build          # .output/chrome-mv3  → chrome://extensions → Load unpacked
+npm run build:firefox  # .output/firefox-mv3 → about:debugging → Load Temporary Add-on (manifest.json)
+npm run lint:firefox   # web-ext lint; only React's innerHTML warnings are expected
+node scripts/make-icons.mjs   # regenerate icons from the design spec
+```
+
+## Layout
+```
+wxt.config.ts            manifest for both browsers (hosts, permissions, DNR rules, Firefox id/min version)
+public/rules/            declarativeNetRequest: Origin/Referer rewrite for YouTube's internal API
+public/icons/            generated from the design (light + dark-toolbar variants)
+src/entrypoints/         background.ts (toolbar, context menu), app/ (UI), help/ (How it works)
+src/engine/              in-browser engine (index.ts = interface; filled in phases 2–5), types.ts
+src/platform/            site access + links (version, help, GitHub issue)
+src/ui/                  UI copied from apps/spotify-to-youtube/frontend, adapted
+design/                  Claude Design source for the extension UI
+```
+
+## Decisions
+- Five sites, asked for up front: open.spotify.com, api-partner.spotify.com, open.spotifycdn.com, music.youtube.com, www.youtube.com. Reasons in `src/platform/access.ts`.
+- The UI is copied, not shared, with the web app. Changes don't propagate.
+- Fonts are bundled locally (@fontsource), with no Google Fonts call.
+- Firefox MV3 (`--mv3`), minimum Firefox 142 (needed for `data_collection_permissions`).
+- "Report a problem" opens a GitHub issue on aditya-n-suman/utilities.
+- Distribution: unpacked / self-distributed only.
