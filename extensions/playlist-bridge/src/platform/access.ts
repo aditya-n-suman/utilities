@@ -38,3 +38,16 @@ export function onAccessChange(callback: (granted: boolean) => void): () => void
     browser.permissions.onRemoved.removeListener(handler);
   };
 }
+
+const SHORT_LINK_ORIGINS = ["https://spotify.link/*", "https://spoti.fi/*"];
+
+/** Optional permission for spotify.link / spoti.fi. Call straight from a click handler. */
+export async function ensureShortLinkAccess(): Promise<boolean> {
+  // No await before request(): Firefox only allows it synchronously inside the click.
+  // request() resolves true straight away when access is already granted.
+  try {
+    return await browser.permissions.request({ origins: SHORT_LINK_ORIGINS });
+  } catch {
+    return false;
+  }
+}

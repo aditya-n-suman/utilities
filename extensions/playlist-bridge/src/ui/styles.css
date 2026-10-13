@@ -306,3 +306,18 @@ input,textarea{font:inherit;color:inherit}
 .spinner.on-ink{border-color:rgba(128,128,128,.5);border-top-color:var(--bg)}
 .access-card p.access-waiting{margin:12px 0 0;font-size:13px;color:var(--ink-3)}
 .access-card p.why-text{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--ink-2);text-wrap:pretty}
+.recovering{margin:-4px 0 12px;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3)}
+.spinner.amber{width:12px;height:12px;flex:0 0 12px;border-top-color:var(--md-fg)}
+.resume{max-width:760px;margin:24px auto 0;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between;padding:14px 14px 14px 16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow)}
+.resume-main{display:flex;align-items:center;gap:14px;min-width:0;flex:1 1 320px}
+.resume-art{width:44px;height:44px;flex:0 0 44px;border-radius:8px;background:linear-gradient(135deg,var(--green),oklch(0.45 0.1 280) 55%,var(--red))}
+.resume p{margin:0;font-size:15px;text-wrap:pretty}
+.resume .resume-sub{margin:2px 0 0;font-size:13px;color:var(--ink-3)}
+.resume-btns{display:flex;gap:4px}
+.resume-btns .btn{height:40px;padding:0 18px;border-radius:10px}
+.resume-btns .ghost{height:40px;padding:0 14px;border:0;border-radius:10px;background:transparent;color:var(--ink-2);font-weight:500;cursor:pointer}
+.from-chip{display:inline-flex;align-items:center;gap:8px;max-width:100%;height:32px;padding:0 4px 0 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:13px;align-self:flex-start}
+.from-chip .dot{width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:var(--green)}
+.from-chip .text{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.from-chip .from{color:var(--ink-2)}
+.from-chip button{width:24px;height:24px;flex:0 0 24px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--surface-2);cursor:pointer;font-size:14px;line-height:1}

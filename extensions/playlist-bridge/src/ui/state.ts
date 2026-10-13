@@ -8,6 +8,8 @@ export interface JobState {
   jobId: string | null;
   playlist: PlaylistInfo | null;
   loadingMore: boolean;
+  /** Spotify's query hash went stale and we're re-reading it ("Reconnecting…"). */
+  recovering: boolean;
   matches: Match[];
   counts: Counts;
   /** the initial matching pass has finished (retries may still be running) */
@@ -22,6 +24,7 @@ export const initialJob: JobState = {
   jobId: null,
   playlist: null,
   loadingMore: false,
+  recovering: false,
   matches: [],
   counts: emptyCounts,
   finished: false,
@@ -31,8 +34,8 @@ export const initialJob: JobState = {
 export type JobAction =
   | { type: "reset" }
   | { type: "started"; jobId: string }
-  | { type: "fetching"; playlist: PlaylistInfo; loadingMore: boolean }
-  | { type: "playlist"; playlist: PlaylistInfo; matches: Match[] }
+  | { type: "fetching"; playlist: PlaylistInfo; loadingMore: boolean; recovering?: boolean }
+  | { type: "playlist"; playlist: PlaylistInfo; matches: Match[]; counts?: Counts }
   | { type: "match"; match: Match; counts: Counts }
   | { type: "done"; counts: Counts }
   | { type: "failed"; code: string }
@@ -45,15 +48,16 @@ export function jobReducer(state: JobState, action: JobAction): JobState {
     case "started":
       return { ...initialJob, screen: "fetching", jobId: action.jobId };
     case "fetching":
-      return { ...state, playlist: action.playlist, loadingMore: action.loadingMore };
+      return { ...state, playlist: action.playlist, loadingMore: action.loadingMore, recovering: !!action.recovering };
     case "playlist":
       return {
         ...state,
         screen: state.screen === "fetching" ? "matching" : state.screen,
         playlist: action.playlist,
         loadingMore: false,
+        recovering: false,
         matches: action.matches,
-        counts: { ...emptyCounts, total: action.matches.length },
+        counts: action.counts ?? { ...emptyCounts, total: action.matches.length },
       };
     case "match": {
       const i = action.match.index;

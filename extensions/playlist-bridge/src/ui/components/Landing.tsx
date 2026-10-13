@@ -1,6 +1,13 @@
 import { useState, type DragEvent, type FormEvent } from "react";
+import type { ResumeSnapshot } from "../api";
 import { EMPTY_LINK, EXAMPLE_LINK, INVALID_LINK } from "../copy";
 import { looksLikePlaylistLink } from "../state";
+
+/** Set when the app was opened from Spotify (right-click menu or the button on a playlist page). */
+export interface FromSpotify {
+  link: string;
+  name?: string;
+}
 
 interface Props {
   url: string;
@@ -12,6 +19,43 @@ interface Props {
   busy: boolean;
   onConvertUrl: (url: string) => void;
   onConvertList: (text: string, name: string) => void;
+  fromSpotify: FromSpotify | null;
+  onClearFrom: () => void;
+  resume: ResumeSnapshot | null;
+  onResume: () => void;
+  onDiscard: () => void;
+}
+
+function ResumeBanner({ resume, onResume, onDiscard }: { resume: ResumeSnapshot; onResume: () => void; onDiscard: () => void }) {
+  const meta = resume.stage === "result" ? `${resume.matched} videos ready` : `${resume.matched} / ${resume.total} matched`;
+  const sub =
+    resume.stage === "result"
+      ? "Finished, but not saved to your YouTube account yet."
+      : resume.stage === "review"
+        ? "Matches are waiting for your review."
+        : "Matching stopped when you left.";
+  return (
+    <div role="region" aria-label="Unfinished conversion" className="resume">
+      <div className="resume-main">
+        <span aria-hidden="true" className="resume-art" />
+        <div style={{ minWidth: 0 }}>
+          <p>
+            Pick up where you left off? <strong>{resume.playlist_name}</strong> ·{" "}
+            <span className="mono" style={{ fontSize: 14 }}>{meta}</span>
+          </p>
+          <p className="resume-sub">{sub}</p>
+        </div>
+      </div>
+      <div className="resume-btns">
+        <button type="button" className="btn btn-primary" onClick={onResume}>
+          Resume
+        </button>
+        <button type="button" className="ghost" onClick={onDiscard}>
+          Discard
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export function Landing(props: Props) {
@@ -51,6 +95,8 @@ export function Landing(props: Props) {
   };
 
   return (
+    <>
+    {props.resume && <ResumeBanner resume={props.resume} onResume={props.onResume} onDiscard={props.onDiscard} />}
     <section aria-labelledby="hero-h" className="landing">
       <p className="kicker">
         <span aria-hidden="true" className="kicker-line" />
@@ -67,6 +113,26 @@ export function Landing(props: Props) {
         <label htmlFor="pl-url" className="field-label">
           Paste a Spotify playlist link
         </label>
+        {props.fromSpotify && (
+          <span className="from-chip">
+            <span aria-hidden="true" className="dot" />
+            <span className="text">
+              <span className="from">From Spotify ·</span>{" "}
+              {props.fromSpotify.name ? (
+                <strong style={{ fontWeight: 600 }}>{props.fromSpotify.name}</strong>
+              ) : (
+                <span className="mono" style={{ fontSize: 12 }}>{props.fromSpotify.link.replace(/^https?:\/\//, "")}</span>
+              )}
+            </span>
+            <button
+              type="button"
+              onClick={props.onClearFrom}
+              aria-label={props.fromSpotify.name ? "Clear the playlist opened from Spotify" : "Clear the link opened from Spotify"}
+            >
+              ×
+            </button>
+          </span>
+        )}
         <div className={`url-box${urlError ? " invalid" : ""}`}>
           <input
             id="pl-url"
@@ -170,5 +236,6 @@ export function Landing(props: Props) {
         )}
       </div>
     </section>
+    </>
   );
 }

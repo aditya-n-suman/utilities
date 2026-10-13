@@ -28,9 +28,24 @@ The YouTube Music songs catalog returns nothing from datacenter IPs; it works fr
 | 1 | Scaffold: WXT, manifests, copied UI, access screen, settings popover, icons, help page | ✅ done |
 | 2 | Spotify sources ported + fixture tests (`src/engine/sources/`, 36 tests incl. stale-hash recovery) | ✅ done |
 | 3 | Fuzzy match + matcher (`src/engine/youtube/{fuzz,matcher,combining}.ts`): **exact** parity with Python on 580 real candidates | ✅ done |
-| 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting | ⏳ next |
-| 5 | Save via YouTube session + new save card | |
+| 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting: full conversion runs in the extension | ✅ done |
+| 5 | Save via YouTube session + new save card | ⏳ next |
 | 6 | Spotify page button, packaging, full docs | |
+
+## Verified end to end (Chromium, headless, no backend)
+The 150-track "All Out 80s" playlist was matched in about 30 s (150 found, 6 to review), then: review, swap, manual search,
+remove, reload → "Pick up where you left off" → resume (edits kept), links (50/50/49), CSV, missing-playlist error
+→ paste fallback, and opening from Spotify via `app.html?url=…&name=…`. No console errors.
+
+## Engine (src/engine)
+- `sources/`: Spotify embed + pathfinder paging + query-hash recovery + paste/CSV
+- `youtube/innertube.ts`: YouTube Music / YouTube search requests and parsers (videos checked against ytmusicapi output)
+- `youtube/search.ts`: search order songs → videos → youtube.com, breaker, retries (port of search.py)
+- `youtube/matcher.ts`, `fuzz.ts`: exact port of the Python matcher
+- `jobs.ts`: job runner (port of jobs.py), same events as the web app's SSE; persists a resume snapshot
+- `cache.ts` / `store.ts`: IndexedDB match cache (30 days) and the "current conversion" slot (7 days)
+- `report.ts`: temporary links (50 per link) and the CSV report
+- Searches send no cookies (`credentials: "omit"`); only Save will use the YouTube session.
 
 ## Matcher parity (keep it)
 `matcher.ts` is a line-by-line port of `apps/spotify-to-youtube/backend/app/youtube/matcher.py`; `fuzz.ts` ports

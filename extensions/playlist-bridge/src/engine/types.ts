@@ -112,7 +112,7 @@ export interface ResumeSnapshot {
 /** Events a job emits, in order: fetching? → playlist → match* → done, or failed at any point. */
 export type JobEvent =
   | { type: "fetching"; data: { playlist: PlaylistInfo; loading_more: boolean; recovering?: boolean } }
-  | { type: "playlist"; data: { playlist: PlaylistInfo; matches: Match[] } }
+  | { type: "playlist"; data: { playlist: PlaylistInfo; matches: Match[]; counts?: Counts } }
   | { type: "match"; data: { match: Match; counts: Counts } }
   | { type: "done"; data: { counts: Counts } }
   | { type: "failed"; data: { code: string; message: string } };

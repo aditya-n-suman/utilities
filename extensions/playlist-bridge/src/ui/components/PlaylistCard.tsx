@@ -78,13 +78,19 @@ const SKELETONS: [string, string][] = [
   ["64%", "36%"], ["44%", "32%"], ["58%", "40%"], ["50%", "28%"],
 ];
 
-export function Fetching({ loadingMore }: { loadingMore: boolean }) {
+export function Fetching({ loadingMore, recovering }: { loadingMore: boolean; recovering?: boolean }) {
   return (
     <section aria-busy="true" aria-label="Loading tracks" className="fetching">
       <div className="fetch-note">
         <span aria-hidden="true" className="spinner" />
         <span>{loadingMore ? "Loading full playlist…" : "Fetching tracks from Spotify…"}</span>
       </div>
+      {recovering && (
+        <p role="status" className="recovering">
+          <span aria-hidden="true" className="spinner amber" />
+          Spotify changed something on their side. Reconnecting…
+        </p>
+      )}
       <div className="card skel-list">
         {SKELETONS.map(([w1, w2], i) => (
           <div key={i} aria-hidden="true" className="skel-row">

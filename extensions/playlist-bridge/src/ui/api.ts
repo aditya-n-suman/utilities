@@ -16,6 +16,8 @@ export const api = {
   save: (jobId: string, body: { privacy: Privacy; title?: string }, onProgress: (p: SaveProgress) => void) =>
     engine.save(jobId, body, onProgress),
   resumable: () => engine.resumable(),
+  resume: (jobId: string) => engine.resume(jobId),
+  setStage: (jobId: string, stage: "matching" | "review" | "result") => engine.setStage(jobId, stage),
   discard: (jobId: string) => engine.discard(jobId),
   clearCache: () => engine.clearCache(),
   /** Builds the match report in the browser and downloads it. */

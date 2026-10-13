@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { browser } from "wxt/browser";
-import { hasAccess, onAccessChange, requestAccess } from "@/platform/access";
-import { api, ApiError, type Candidate, type TempLinks } from "./api";
+import { isShortLink } from "@/engine/sources/resolve";
+import { ensureShortLinkAccess, hasAccess, onAccessChange, requestAccess } from "@/platform/access";
+import { api, ApiError, type Candidate, type ResumeSnapshot, type TempLinks } from "./api";
 import { AccessLostBanner, AccessScreen } from "./components/Access";
 import { ErrorScreen } from "./components/ErrorScreen";
 import { Header } from "./components/Header";
-import { Landing } from "./components/Landing";
+import { Landing, type FromSpotify } from "./components/Landing";
 import { MatchList } from "./components/MatchList";
 import { Fetching, PlaylistCard } from "./components/PlaylistCard";
 import { Result } from "./components/Result";
@@ -40,6 +41,9 @@ export default function App() {
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
   const [access, setAccess] = useState<Access>("checking");
+  const [fromSpotify, setFromSpotify] = useState<FromSpotify | null>(null);
+  const [resume, setResume] = useState<ResumeSnapshot | null>(null);
+  const resumeStage = useRef<ResumeSnapshot["stage"] | null>(null);
   const [live, setLive] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
   const jobIdRef = useRef<string | null>(null);
@@ -75,11 +79,28 @@ export default function App() {
     return api.subscribe(job.jobId, (event) => {
       switch (event.type) {
         case "fetching":
-          dispatch({ type: "fetching", playlist: event.data.playlist, loadingMore: event.data.loading_more });
+          dispatch({
+            type: "fetching",
+            playlist: event.data.playlist,
+            loadingMore: event.data.loading_more,
+            recovering: event.data.recovering,
+          });
           break;
         case "playlist":
-          dispatch({ type: "playlist", playlist: event.data.playlist, matches: event.data.matches });
+          dispatch({ type: "playlist", playlist: event.data.playlist, matches: event.data.matches, counts: event.data.counts });
           announce(`Found ${event.data.matches.length} tracks. Searching YouTube…`);
+          if (resumeStage.current === "review") dispatch({ type: "screen", screen: "review" });
+          if (resumeStage.current === "result") {
+            const id = jobIdRef.current!;
+            void api.links(id).then(
+              (l) => {
+                setLinks(l);
+                dispatch({ type: "screen", screen: "result" });
+              },
+              () => dispatch({ type: "screen", screen: "review" }),
+            );
+          }
+          resumeStage.current = null;
           break;
         case "match":
           dispatch({ type: "match", match: event.data.match, counts: event.data.counts });
@@ -89,7 +110,10 @@ export default function App() {
           announce(`All ${event.data.counts.total} tracks searched`);
           break;
         case "failed":
-          dispatch({ type: "failed", code: event.data.code });
+          if (event.data.code === "invalid_link") {
+            dispatch({ type: "reset" });
+            setUrlError(INVALID_LINK);
+          } else dispatch({ type: "failed", code: event.data.code });
           break;
       }
     });
@@ -105,11 +129,17 @@ export default function App() {
   const start = useCallback(
     async (input: ConvertInput) => {
       lastInput.current = input;
+      // Must run before any other await so the browser still treats it as part of the click.
+      if ("url" in input && isShortLink(input.url) && !(await ensureShortLinkAccess())) {
+        setUrlError("Allow access to Spotify short links to open this one, or paste the full open.spotify.com link.");
+        return;
+      }
       setBusy(true);
       try {
         const { job_id } = await api.convert(input);
         resetView();
         dispatch({ type: "started", jobId: job_id });
+        setResume(null);
         announce("Loading playlist");
       } catch (e) {
         if (e instanceof ApiError && e.code === "invalid_link") setUrlError(INVALID_LINK);
@@ -131,6 +161,7 @@ export default function App() {
     if (link) {
       history.replaceState(null, "", location.pathname);
       setUrl(link);
+      setFromSpotify({ link, name: params.get("name") ?? undefined });
       void startFromSpotify.current({ url: link });
     }
   }, []);
@@ -138,12 +169,13 @@ export default function App() {
   screenRef.current = job.screen;
   useEffect(() => {
     const onMessage = (message: unknown): Promise<boolean> | undefined => {
-      const m = message as { type?: string; url?: string };
+      const m = message as { type?: string; url?: string; name?: string };
       if (m?.type !== "pb:open") return undefined;
       // Never interrupt a conversion in progress; the background opens a new tab instead.
       if (!["landing", "result", "error"].includes(screenRef.current)) return Promise.resolve(false);
       if (m.url) {
         setUrl(m.url);
+        setFromSpotify({ link: m.url, name: m.name });
         void startFromSpotify.current({ url: m.url });
       }
       void browser.tabs.getCurrent().then((tab) => {
@@ -156,10 +188,35 @@ export default function App() {
     return () => browser.runtime.onMessage.removeListener(onMessage);
   }, []);
 
+  // Offer to resume the last unfinished conversion whenever the landing page shows.
+  useEffect(() => {
+    if (job.screen !== "landing" || access !== "ok") return;
+    let live = true;
+    void api.resumable().then((r) => live && setResume(r));
+    return () => {
+      live = false;
+    };
+  }, [job.screen, access]);
+
+  const resumeLast = async () => {
+    if (!resume) return;
+    try {
+      const { job_id, stage } = await api.resume(resume.job_id);
+      resetView();
+      resumeStage.current = stage;
+      dispatch({ type: "started", jobId: job_id });
+      setResume(null);
+      announce(`Resuming ${resume.playlist_name}`);
+    } catch {
+      setResume(null);
+    }
+  };
+
   const goHome = useCallback(() => {
     resetView();
     setUrlError("");
     setShowPaste(false);
+    setFromSpotify(null);
     dispatch({ type: "reset" });
   }, []);
 
@@ -250,6 +307,7 @@ export default function App() {
     setCreateError("");
     try {
       setLinks(await api.links(job.jobId));
+      api.setStage(job.jobId, "result");
       setPanel(null);
       dispatch({ type: "screen", screen: "result" });
       announce("Your YouTube playlist is ready");
@@ -299,6 +357,18 @@ export default function App() {
             busy={busy}
             onConvertUrl={(u) => start({ url: u })}
             onConvertList={(text, name) => start({ text, name })}
+            fromSpotify={fromSpotify}
+            onClearFrom={() => {
+              setFromSpotify(null);
+              setUrl("");
+            }}
+            resume={resume}
+            onResume={() => void resumeLast()}
+            onDiscard={() => {
+              if (resume) void api.discard(resume.job_id);
+              setResume(null);
+              announce("Discarded");
+            }}
           />
         )}
 
@@ -317,7 +387,7 @@ export default function App() {
           />
         )}
 
-        {scr === "fetching" && <Fetching loadingMore={job.loadingMore} />}
+        {scr === "fetching" && <Fetching loadingMore={job.loadingMore} recovering={job.recovering} />}
 
         {isList && (
           <MatchList
@@ -335,6 +405,7 @@ export default function App() {
             searchRef={searchRef}
             onRetryErrors={retryErrors}
             onReview={() => {
+              if (job.jobId) api.setStage(job.jobId, "review");
               dispatch({ type: "screen", screen: "review" });
               announce("Review matches");
             }}
