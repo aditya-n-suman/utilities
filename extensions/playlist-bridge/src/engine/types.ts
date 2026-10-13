@@ -116,3 +116,16 @@ export type JobEvent =
   | { type: "match"; data: { match: Match; counts: Counts } }
   | { type: "done"; data: { counts: Counts } }
   | { type: "failed"; data: { code: string; message: string } };
+
+/** A playlist as the engine holds it (the UI only sees PlaylistInfo + matches). */
+export interface Playlist {
+  id?: string | null;
+  name: string;
+  owner?: string | null;
+  description?: string | null;
+  cover_url?: string | null;
+  /** Size of the source playlist; `tracks` may be capped. */
+  total: number;
+  source: "embed" | "pathfinder" | "paste";
+  tracks: Track[];
+}

@@ -26,8 +26,8 @@ The YouTube Music songs catalog returns nothing from datacenter IPs; it works fr
 | # | Phase | State |
 |---|---|---|
 | 1 | Scaffold: WXT, manifests, copied UI, access screen, settings popover, icons, help page | ✅ done |
-| 2 | Spotify sources ported + fixture tests | ⏳ next |
-| 3 | Fuzzy match + matcher, golden parity vs Python | |
+| 2 | Spotify sources ported + fixture tests (`src/engine/sources/`, 36 tests incl. stale-hash recovery) | ✅ done |
+| 3 | Fuzzy match + matcher, golden parity vs Python | ⏳ next |
 | 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting | |
 | 5 | Save via YouTube session + new save card | |
 | 6 | Spotify page button, packaging, full docs | |
@@ -63,3 +63,5 @@ design/                  Claude Design source for the extension UI
 - Firefox MV3 (`--mv3`), minimum Firefox 142 (needed for `data_collection_permissions`).
 - "Report a problem" opens a GitHub issue on aditya-n-suman/utilities.
 - Distribution: unpacked / self-distributed only.
+- Short links (spotify.link, spoti.fi) use *optional* host permissions, requested from the Convert click only when such a link is pasted.
+- If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).

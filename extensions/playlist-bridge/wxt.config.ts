@@ -17,6 +17,8 @@ export default defineConfig({
     description: "Turn a Spotify playlist into a YouTube playlist. Runs entirely in your browser.",
     permissions: ["declarativeNetRequestWithHostAccess", "cookies", "contextMenus", "storage"],
     host_permissions: HOSTS,
+    // Only needed to follow spotify.link / spoti.fi short links; requested when one is pasted.
+    optional_host_permissions: ["https://spotify.link/*", "https://spoti.fi/*"],
     icons: { 16: "icons/16.png", 32: "icons/32.png", 48: "icons/48.png", 128: "icons/128.png" },
     action: {
       default_title: "Open Playlist Bridge",
