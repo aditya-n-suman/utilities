@@ -29,7 +29,7 @@ The YouTube Music songs catalog returns nothing from datacenter IPs; it works fr
 | 2 | Spotify sources ported + fixture tests (`src/engine/sources/`, 36 tests incl. stale-hash recovery) | ✅ done |
 | 3 | Fuzzy match + matcher (`src/engine/youtube/{fuzz,matcher,combining}.ts`): **exact** parity with Python on 580 real candidates | ✅ done |
 | 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting: full conversion runs in the extension | ✅ done |
-| 5 | Save via YouTube session + new save card (`youtube/session.ts`, `youtube/save.ts`, `ui/components/SaveCard.tsx`) | ✅ done: signed-out/waiting verified in Chromium; **signed-in save needs a check with a real account** |
+| 5 | Save via YouTube session + new save card (`youtube/session.ts`, `youtube/save.ts`, `ui/components/SaveCard.tsx`) | ✅ done: the product owner verified signed-in save and sign-in/out (including from other tabs) with a real account |
 | 6 | Spotify page button (`src/entrypoints/spotify.content/`), packaging (zips, AMO sources zip), e2e script, docs | ✅ done |
 
 ## Verified end to end (Chromium, headless, no backend)
@@ -102,10 +102,8 @@ tests/unit, tests/golden unit + matcher-parity tests (offline); tests/e2e/e2e.py
 - If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).
 
 ## Next steps
-1. **Signed-in save with a real account, in Chrome and Firefox** (SETUP.md → Manual checks). Unit-tested only; the
-   request shapes follow ytmusicapi, and creating plus deleting a playlist worked in phase 0.
-2. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
+1. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
    should stay installed.
-3. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in
+2. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in
    `spotify.content/index.ts` (`findAnchor`). The right-click menu and pasting a link still work.
-4. Nice to have: a "copy all links" button, per-track album art for short playlists, multi-account (`X-Goog-AuthUser`) picker.
+3. Nice to have: a "copy all links" button, per-track album art for short playlists, multi-account (`X-Goog-AuthUser`) picker.
