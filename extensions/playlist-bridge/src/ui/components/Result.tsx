@@ -1,5 +1,6 @@
 import { api, type Counts, type TempLinks } from "../api";
 import { useCopy } from "../copy";
+import { SaveCard } from "./SaveCard";
 
 interface Props {
   jobId: string;
@@ -68,7 +69,7 @@ export function Result({ jobId, playlistName, links, counts: c, announce }: Prop
       </div>
 
       <div className="result-grid">
-        {/* Phase 5: <SaveCard> (save with the browser's YouTube session) */}
+        <SaveCard jobId={jobId} title={playlistName} videoCount={links.video_count} announce={announce} copied={copied} copy={copy} />
         <div className="card side-card">
           <h2 className="summary-h">Summary</h2>
           <dl className="stats">

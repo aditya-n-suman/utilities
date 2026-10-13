@@ -52,19 +52,10 @@ export const JOB_ERRORS: Record<string, ErrorCopy> = {
 // Unknown failures (internal errors, lost job) read like a fetch failure: retrying is the right move.
 export const errorCopy = (code: string | null): ErrorCopy => JOB_ERRORS[code ?? ""] ?? JOB_ERRORS.spotify_unreachable!;
 
-export const SAVE_ERRORS: Record<string, { title: string; body: string; btn: string }> = {
-  not_signed_in: {
-    title: "You’re signed out", body: "Your Google sign-in ended before we could save. Sign in again to finish.", btn: "Sign in again",
-  },
-  save_failed: {
-    title: "Couldn’t save to YouTube", body: "YouTube didn’t accept the playlist. Your temporary links above still work.", btn: "Try again",
-  },
-  signin_failed: {
-    title: "Google sign-in isn’t available",
-    body: "We couldn’t start the sign-in. Try again in a moment. Your temporary links above still work.",
-    btn: "Try again",
-  },
-};
+export const SAVE_ERRORS = {
+  expired: "Your YouTube sign-in expired. Sign in again to finish.",
+  failed: "Couldn’t save to YouTube. Your temporary links above still work.",
+} as const;
 
 /** Copy-to-clipboard with a short-lived "Copied ✓" key. */
 export function useCopy(announce: (msg: string) => void) {

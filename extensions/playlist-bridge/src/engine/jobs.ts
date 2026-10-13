@@ -4,6 +4,7 @@ import { EngineError } from "./errors";
 import { fetchPlaylist, parseTrackText } from "./sources";
 import type { Candidate, Counts, JobEvent, Match, Playlist, PlaylistInfo, ResumeSnapshot } from "./types";
 import { confidenceFor, rank } from "./youtube/matcher";
+import type { SaveState } from "./youtube/save";
 import { Searcher } from "./youtube/search";
 
 export type Stage = ResumeSnapshot["stage"];
@@ -53,6 +54,8 @@ export class Job {
   finished = false;
   stage: Stage = "matching";
   saved = false;
+  /** Progress of "Save to my YouTube account", kept so a retry continues the same playlist. */
+  saveState: SaveState = { playlistId: null, added: 0 };
   readonly events: JobEvent[] = [];
   private listeners = new Set<Listener>();
 

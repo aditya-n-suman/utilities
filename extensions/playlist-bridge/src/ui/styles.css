@@ -321,3 +321,33 @@ input,textarea{font:inherit;color:inherit}
 .from-chip .text{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .from-chip .from{color:var(--ink-2)}
 .from-chip button{width:24px;height:24px;flex:0 0 24px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--surface-2);cursor:pointer;font-size:14px;line-height:1}
+.account{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:14px;border-radius:12px;background:var(--surface-2)}
+.account.checking{margin-bottom:0}
+.avatar{width:32px;height:32px;flex:0 0 32px;border-radius:50%;object-fit:cover}
+.avatar.initial{background:linear-gradient(135deg,oklch(0.7 0.12 300),oklch(0.5 0.12 250));display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+.avatar.skel-circle{background:var(--skel);animation:pb-pulse 1.4s ease-in-out infinite}
+.account-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.account.checking .account-text{gap:6px}
+.account-name{font-weight:600;font-size:14px}
+.account-handle{font-size:13px;color:var(--ink-2)}
+.not-you{font-size:13px;color:var(--ink-2)}
+.muted-13{font-size:13px;color:var(--ink-3)}
+.muted-13.after{margin:8px 0 0}
+.save-note{margin:0 0 14px;font-size:14px}
+a.btn.wide{display:flex;height:46px}
+.waiting-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-radius:12px;background:var(--surface-2)}
+.waiting-box > span{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-2)}
+.waiting-box .btn-link{color:var(--ink);font-size:14px}
+.save-alert{padding:14px 16px;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;font-size:14px}
+.save-alert p{margin:0;font-weight:600}
+.save-alert.nf{background:var(--nf-bg);color:var(--nf-fg)}
+.save-alert.lo{background:var(--lo-bg);color:var(--lo-fg)}
+.save-alert.nf + .segmented,.save-alert + .saving-box{margin-top:14px}
+.save-alert .btn.small{height:38px;padding:0 16px;border-radius:10px}
+.save-alert-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+.save-alert-row a{color:inherit;font-size:14px}
+.saving-box{display:flex;flex-direction:column;gap:10px;padding:6px 0 2px}
+.saving-row{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.saving-row .muted{color:var(--ink-3)}
+.thin-track{height:4px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.thin-track .progress-fill{transition:width .2s ease}

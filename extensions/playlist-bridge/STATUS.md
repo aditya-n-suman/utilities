@@ -29,8 +29,8 @@ The YouTube Music songs catalog returns nothing from datacenter IPs; it works fr
 | 2 | Spotify sources ported + fixture tests (`src/engine/sources/`, 36 tests incl. stale-hash recovery) | ✅ done |
 | 3 | Fuzzy match + matcher (`src/engine/youtube/{fuzz,matcher,combining}.ts`): **exact** parity with Python on 580 real candidates | ✅ done |
 | 4 | YouTube search, jobs, cache, resume, "From Spotify" chip, reconnecting: full conversion runs in the extension | ✅ done |
-| 5 | Save via YouTube session + new save card | ⏳ next |
-| 6 | Spotify page button, packaging, full docs | |
+| 5 | Save via YouTube session + new save card (`youtube/session.ts`, `youtube/save.ts`, `ui/components/SaveCard.tsx`) | ✅ done: signed-out/waiting verified in Chromium; **signed-in save needs a check with a real account** |
+| 6 | Spotify page button, packaging, full docs | ⏳ next |
 
 ## Verified end to end (Chromium, headless, no backend)
 The 150-track "All Out 80s" playlist was matched in about 30 s (150 found, 6 to review), then: review, swap, manual search,
@@ -45,7 +45,10 @@ remove, reload → "Pick up where you left off" → resume (edits kept), links (
 - `jobs.ts`: job runner (port of jobs.py), same events as the web app's SSE; persists a resume snapshot
 - `cache.ts` / `store.ts`: IndexedDB match cache (30 days) and the "current conversion" slot (7 days)
 - `report.ts`: temporary links (50 per link) and the CSV report
-- Searches send no cookies (`credentials: "omit"`); only Save will use the YouTube session.
+- Searches send no cookies (`credentials: "omit"`). Only Save uses the YouTube session: the SAPISID cookie plus
+  `Authorization: SAPISIDHASH <ts>_<sha1(ts SAPISID origin)>` (same as ytmusicapi). Saving creates the playlist with
+  the first 50 videos, then adds 50 at a time (`browse/edit_playlist`); a failed batch returns a partial save, and
+  "Add the rest" continues the same playlist (`Job.saveState`).
 
 ## Matcher parity (keep it)
 `matcher.ts` is a line-by-line port of `apps/spotify-to-youtube/backend/app/youtube/matcher.py`; `fuzz.ts` ports

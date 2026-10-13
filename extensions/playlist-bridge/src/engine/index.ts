@@ -19,7 +19,9 @@ import {
   type Session,
   type TempLinks,
 } from "./types";
+import { savePlaylist } from "./youtube/save";
 import { Searcher } from "./youtube/search";
+import { getSession } from "./youtube/session";
 
 export type ConvertInput = { url: string } | { text: string; name?: string };
 export type EditAction = "choose" | "remove" | "restore" | "retry";
@@ -112,9 +114,15 @@ export function createEngine(): Engine {
         /* job gone */
       }
     },
-    session: async () => ({ signed_in: false }), // phase 5
-    save: wrap(async () => {
-      throw new EngineError("save_failed", "Saving isn't built yet.");
+    session: wrap(() => getSession()),
+    save: wrap(async (jobId: string, options: { privacy: Privacy; title?: string }, onProgress: (p: SaveProgress) => void) => {
+      const job = jobs.get(jobId);
+      const ids = job.videoIds();
+      if (!ids.length) throw new EngineError("no_matches", "No matched tracks to save.");
+      const title = options.title ?? job.playlist?.name ?? "Converted playlist";
+      const result = await savePlaylist(ids, { title, privacy: options.privacy }, job.saveState, onProgress);
+      if (!("failed" in result)) jobs.markSaved(job);
+      return result;
     }),
     resumable: async () => {
       const s = await store.load();
