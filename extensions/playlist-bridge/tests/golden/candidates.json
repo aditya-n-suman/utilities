@@ -1,0 +1,5512 @@
+[
+ {
+  "track": {
+   "title": "Bohemian Rhapsody - Remastered 2011",
+   "artists": [
+    "Queen"
+   ],
+   "album": null,
+   "duration_ms": 354000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "5zLnaNY58j8",
+    "title": "Queen - Bohemian Rhapsody (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 355,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "fJ9rUzIMcZQ",
+    "title": "Bohemian Rhapsody (Live At Wembley Stadium / Saturday 12th July 1986)",
+    "channel": "Queen",
+    "duration_s": 360,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Vsum-2Cs2gI",
+    "title": "Queen - Bohemian Rhapsody (Lyrics)",
+    "channel": "Vibe Tracks",
+    "duration_s": 361,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "nY-v09TT1SQ",
+    "title": "Queen - Bohemian Rhapsody [Boyband RoadTrip]",
+    "channel": "Roadtrip",
+    "duration_s": 371,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Ba-3gSzT83w",
+    "title": "Queen - Bohemian Rhapsody (Live HD) Legendado em PT-BR",
+    "channel": "Clube do Amor",
+    "duration_s": 337,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "fJ9rUzIMcZQ",
+    "title": "Queen – Bohemian Rhapsody (Official Video Remastered)",
+    "channel": "Queen Official",
+    "duration_s": 360,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "vbvyNnw8Qjg",
+    "title": "Queen - Bohemian Rhapsody (Live Aid 1985)",
+    "channel": "Live Aid and Queen Official",
+    "duration_s": 165,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "5zLnaNY58j8",
+    "title": "Queen - Bohemian Rhapsody (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 355,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PadKCVBIN94",
+    "title": "Queen - Bohemian Rhapsody 1981 Live Video Full HD",
+    "channel": "NEA ZIXNH",
+    "duration_s": 316,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "9Lxm0iSnKNc",
+    "title": "Queen - Bohemian Rhapsody (Karaoke Version)",
+    "channel": "Sing King",
+    "duration_s": 375,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Bohemian Rhapsody - Live Aid",
+   "artists": [
+    "Queen"
+   ],
+   "album": null,
+   "duration_ms": 165000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "vbvyNnw8Qjg",
+    "title": "Queen - Bohemian Rhapsody (Live Aid 1985)",
+    "channel": "Live Aid",
+    "duration_s": 165,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "frdBb9Slu1A",
+    "title": "Queen - Live Aid 1985 Full Concert",
+    "channel": "uploader.JP8",
+    "duration_s": 1266,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ClhWNV1Avk8",
+    "title": "Queen - Bohemian Rhapsody (Live in Budapest 1986)",
+    "channel": "John Deacon",
+    "duration_s": 321,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "xWskhneM3rM",
+    "title": "Queen Bohemian Rhapsody live at Wembley Stadium 1986 VHS RARE",
+    "channel": "Queen fan and DM and Mj",
+    "duration_s": 323,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "-2VPKWwl5Rw",
+    "title": "Bohemian Rhapsody - Queen [Subtitulos Español][Traducido]",
+    "channel": "Pablo Moscato",
+    "duration_s": 326,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "vbvyNnw8Qjg",
+    "title": "Queen - Bohemian Rhapsody (Live Aid 1985)",
+    "channel": "Live Aid and Queen Official",
+    "duration_s": 165,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "frdBb9Slu1A",
+    "title": "Queen - Live Aid 1985 Full Concert",
+    "channel": "uploader.JP8",
+    "duration_s": 1266,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "QXbqiAZgeCE",
+    "title": "Bohemian Rhapsody 2018 BONUS Complete Live Aid Performance 1080p BluRay x264 DTS FGT",
+    "channel": "Rulli Haerul",
+    "duration_s": 1316,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "u8A_7jOOQiI",
+    "title": "Queen   Bohemian Rhapsody + Radio Gaga Live Aid 1985",
+    "channel": "gwoonbruce",
+    "duration_s": 402,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "dDYzUqUpbQU",
+    "title": "Queen - Live Aid 1985 _ (Concert Remastered)",
+    "channel": "Queen4K",
+    "duration_s": 1512,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Despacito (feat. Daddy Yankee)",
+   "artists": [
+    "Luis Fonsi",
+    "Daddy Yankee"
+   ],
+   "album": null,
+   "duration_ms": 229000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "GFE9UeS_xDg",
+    "title": "Despacito   Luis Fonsi ft  Daddy Yankee   Marlon Alves Dance MAs",
+    "channel": "The Berna 4k",
+    "duration_s": 238,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "eYFSDIwncmE",
+    "title": "Luis Fonsi ft. Daddy Yankee - Despacito (Video Oficial)",
+    "channel": "Soni2Music -",
+    "duration_s": 232,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "eGpCZd5f8VA",
+    "title": "Luis Fonsi - Despacito (Lyrics) ft. Daddy Yankee",
+    "channel": "MVPE Music",
+    "duration_s": 253,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ekxlwkIooYU",
+    "title": "Luis Fonsi _ Despacito _ Daddy Yankee _ (Lyrics)",
+    "channel": "Echola Lyricazy ",
+    "duration_s": 282,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "VNVP4L81az4",
+    "title": "Despacito - Luis Fonsi & Daddy Yankee | Versión Karaoke | KaraFun",
+    "channel": "KaraFun Karaoke",
+    "duration_s": 230,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "kJQP7kiw5Fk",
+    "title": "Luis Fonsi - Despacito ft. Daddy Yankee",
+    "channel": "Luis Fonsi",
+    "duration_s": 282,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "gm3-m2CFVWM",
+    "title": "Luis Fonsi ‒ Despacito (Lyrics / Lyric Video) ft. Daddy Yankee",
+    "channel": "Taz Network",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "dr_GAJZviR0",
+    "title": "Luis Fonsi, Daddy Yankee - Despacito ft. Justin Bieber",
+    "channel": "MasterDumb",
+    "duration_s": 251,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "tQDV9WzHcds",
+    "title": "Luis Fonsi - Despacito (Letra / Lyrics) ft. Daddy Yankee",
+    "channel": "Musica Milagrosa",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "72UO0v5ESUo",
+    "title": "Luis Fonsi, Daddy Yankee - Despacito (Audio) ft. Justin Bieber",
+    "channel": "Luis Fonsi",
+    "duration_s": 229,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Beyoncé",
+   "artists": [
+    "Rosalía"
+   ],
+   "album": null,
+   "duration_ms": null,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "f5omY8jVrSM",
+    "title": "LA NOCHE DE ANOCHE",
+    "channel": "Bad Bunny, ROSALÍA",
+    "duration_s": 218,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "00v5Eiz1C5o",
+    "title": "Mi Gente -  J  Balvin Featuring Beyonce Ft. Beyonce , Willy William (Lyrics)",
+    "channel": "Aurora",
+    "duration_s": 216,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "zg4DHy1USZU",
+    "title": "Beyoncé x Arca - Alien Superstar (Mashup)",
+    "channel": "Arina Belova",
+    "duration_s": 56,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "hjgjwaW_BTg",
+    "title": "Rosalia, Karol G, Becky G, Natti Natasha, TINI - Reggaeton Mix 2023 - Pop Latino 2023 Lo Mas Nuevo",
+    "channel": "Latino Exitos",
+    "duration_s": 3609,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "IwmYMHGAfew",
+    "title": "Melani imita a Beyoncé en \"‘Love on top’ y ‘Crazy in love’!\" - Tu Cara Me Suena",
+    "channel": "Antena 3",
+    "duration_s": 178,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "2j3x0VYnehg",
+    "title": "ROSALÍA, Ozuna - Yo x Ti, Tu x Mi (Official Video)",
+    "channel": "ROSALÍA",
+    "duration_s": 208,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "P-HZYqHdcBg",
+    "title": "¿BEYONCÉ se inspira en ROSALÍA y su MOTOMAMI TOUR en su nueva gira: RENAISSANCE World TOUR? |EL PAÍS",
+    "channel": "EL PAÍS",
+    "duration_s": 91,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "iomlQiEkoQ0",
+    "title": "Rosalia - Di mi nombre (MTV EMA 2019)",
+    "channel": "mtvspain",
+    "duration_s": 210,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "mc1P4jnHEAw",
+    "title": "Rosalía stories karaoke. Cantando por Lola Flores, Beyoncé, Billie Eilish, Dua Lipa, Daddy Yankee",
+    "channel": "Antonio Junco",
+    "duration_s": 309,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "e_mKpEAlqTo",
+    "title": "Beyoncé y Rosalía se proclaman reinas de los Grammy I MARCA",
+    "channel": "MARCA",
+    "duration_s": 109,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Smalltown Boy",
+   "artists": [],
+   "album": null,
+   "duration_ms": null,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "88sARuFu-tc",
+    "title": "Smalltown Boy",
+    "channel": "Bronski Beat",
+    "duration_s": 304,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "xuupcrJSrys",
+    "title": "Bronski Beat - Smalltown Boy (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 300,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "CJRabXfnHNo",
+    "title": "Bronski Beat – 'Smalltown boy' ● Clément Corrillon | Blinds | The Voice Belgique Saison 11",
+    "channel": "The Voice Belgique",
+    "duration_s": 135,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ENzaEGktZpc",
+    "title": "josé gonzalez - smalltown boy",
+    "channel": "mikhail dead",
+    "duration_s": 145,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "F83Zl_b5eBg",
+    "title": "Bronski Beat - Smalltown Boy (DJ Monster Cover Edit)",
+    "channel": "VP",
+    "duration_s": 359,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "88sARuFu-tc",
+    "title": "Bronski Beat - Smalltown Boy (Official Video)",
+    "channel": "London Records",
+    "duration_s": 304,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xuupcrJSrys",
+    "title": "Bronski Beat - Smalltown Boy (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 300,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "E5i2Wa7daDA",
+    "title": "Bronski Beat - Smalltown Boy (Official Audio)",
+    "channel": "London Records",
+    "duration_s": 304,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PS-z3V6sTQQ",
+    "title": "Bronski Beat - Smalltown Boy (Top Of The Pops, 07.06.1984)",
+    "channel": "Jimmy Somerville OFFICIAL",
+    "duration_s": 229,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "alIRDysk3jk",
+    "title": "Jimmy Somerville - Smalltown Boy (Live in Berlin, 2019)",
+    "channel": "Jimmy Somerville OFFICIAL",
+    "duration_s": 337,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Tum Hi Ho",
+   "artists": [
+    "Arijit Singh",
+    "Mithoon"
+   ],
+   "album": null,
+   "duration_ms": 262000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "myN11olI2a4",
+    "title": "Arijit Singh Live at Indian Idol Junior | Tum Hi Ho | Soulful Performance | PM Music",
+    "channel": "PM Music",
+    "duration_s": 301,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "R9NhDMnJyPg",
+    "title": "Broken Heart Mashup | Tum Hi Ho | Ijazat | Arijit Singh | Emraan Hashmi | Best of 2023 | Sad Songs",
+    "channel": "AJ Music",
+    "duration_s": 393,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "jfh7ZKHxNTI",
+    "title": "Meri Aashiqui (Lyrical) - Arijit Singh & Palak Muchhal |Ashiqui 2| Bollywood Songs",
+    "channel": "SB Melody Corner",
+    "duration_s": 267,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "YipYZY3mmO0",
+    "title": "Meri Aashiqui",
+    "channel": "Palak Muchhal",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Umqb9KENgmk",
+    "title": "Tum Hi Ho",
+    "channel": "Arijit Singh",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Umqb9KENgmk",
+    "title": "तुम ही हो  आशिकी 2 पूरा गाना बोल के साथ  | आदित्य रॉय कपूर, श्रद्धा कपूर",
+    "channel": "T-Series",
+    "duration_s": 268,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "10iV-krF-6g",
+    "title": "Tum Hi Ho (Lyrics)|Arijit Singh|Aashiqui 2|@tseries",
+    "channel": "Sankalp",
+    "duration_s": 251,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NUo8CKI34o4",
+    "title": "आशिकी 2 का गाना तुम ही हो | मिथुन का संगीत | आदित्य रॉय कपूर, श्रद्धा कपूर",
+    "channel": "T-Series",
+    "duration_s": 141,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "81qmmlsIE3k",
+    "title": "Aashiqui 2: Tum Hi Ho 8K Full Song | Aditya Roy Kapur | Shraddha Kapoor | Arijit Singh | Mithoon",
+    "channel": "T-Series",
+    "duration_s": 300,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "myN11olI2a4",
+    "title": "Arijit Singh Live at Indian Idol Junior | Tum Hi Ho | Soulful Performance | PM Music",
+    "channel": "PM Music",
+    "duration_s": 301,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "तुम ही हो",
+   "artists": [
+    "अरिजीत सिंह"
+   ],
+   "album": null,
+   "duration_ms": 262000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "Umqb9KENgmk",
+    "title": "Tum Hi Ho",
+    "channel": "Arijit Singh",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "h8Qfxi7pFoA",
+    "title": "तुम ही हो (Tum hi Ho) | Arijit Singh",
+    "channel": "Pattanshetty",
+    "duration_s": 218,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "2G4GXGyDbJY",
+    "title": "तुम ही हो TUM HI HO Hindi Lyrics – Aashiqui 2  Arijit Singh",
+    "channel": "Dhirendra Kumar",
+    "duration_s": 261,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "izy2tV-Ssj8",
+    "title": "Aashiqui 2 Mashup(Remix By Kiran Kamath)",
+    "channel": "Ankit Tiwari",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Ud8xkX5X7KM",
+    "title": "Tum Hi Ho(तुम ही हो) | Piano Cover-Aashiqui-2 | Arijit Singh | Aadesh S",
+    "channel": "Aadesh S",
+    "duration_s": 207,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Umqb9KENgmk",
+    "title": "तुम ही हो  आशिकी 2 पूरा गाना बोल के साथ  | आदित्य रॉय कपूर, श्रद्धा कपूर",
+    "channel": "T-Series",
+    "duration_s": 268,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "10iV-krF-6g",
+    "title": "Tum Hi Ho (Lyrics)|Arijit Singh|Aashiqui 2|@tseries",
+    "channel": "Sankalp",
+    "duration_s": 251,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NUo8CKI34o4",
+    "title": "आशिकी 2 का गाना तुम ही हो | मिथुन का संगीत | आदित्य रॉय कपूर, श्रद्धा कपूर",
+    "channel": "T-Series",
+    "duration_s": 141,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "81qmmlsIE3k",
+    "title": "Aashiqui 2: Tum Hi Ho 8K Full Song | Aditya Roy Kapur | Shraddha Kapoor | Arijit Singh | Mithoon",
+    "channel": "T-Series",
+    "duration_s": 300,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HLW8DepLaEg",
+    "title": "Tum Hi Ho (Slowed + Reverb)",
+    "channel": "Vansh Lofi",
+    "duration_s": 316,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Africa",
+   "artists": [
+    "TOTO"
+   ],
+   "album": null,
+   "duration_ms": 295000,
+   "explicit": false,
+   "spotify_uri": null,
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "sr2kFaVlH0w",
+    "title": "Africa",
+    "channel": "The Lounge Kittens",
+    "duration_s": 271,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "U1LB_OerHCE",
+    "title": "Africa",
+    "channel": "Toto",
+    "duration_s": 295,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "p-1YXwdGO7c",
+    "title": "toto - africa ( slowed + reverb )",
+    "channel": "rafway",
+    "duration_s": 288,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "WEMZX0ygHwk",
+    "title": "Coolest cover of Toto's \"Africa\" on the Internet",
+    "channel": "Brandon D'Eon",
+    "duration_s": 302,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "aymnC9PR7AQ",
+    "title": "Toto - Africa (Live in Paris 2007)",
+    "channel": "Thomas Andre Hjelleset",
+    "duration_s": 377,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "FTQbiNvZqaY",
+    "title": "Toto - Africa (Official HD Video)",
+    "channel": "TOTO",
+    "duration_s": 272,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "U1LB_OerHCE",
+    "title": "Toto - Africa (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 295,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Kb7lAMjFuA0",
+    "title": "Toto - Africa (Official Audio)",
+    "channel": "Nielson Lucas",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "07OWseh4qDg",
+    "title": "Toto - Africa [Live]",
+    "channel": "GIGS",
+    "duration_s": 679,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "w2bJ5CGplB4",
+    "title": "Toto - Africa (2003) [HD] (CC)",
+    "channel": "Gerald Chen",
+    "duration_s": 428,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "La Isla Bonita",
+   "artists": [
+    "Madonna"
+   ],
+   "album": null,
+   "duration_ms": 242733,
+   "explicit": false,
+   "spotify_uri": "spotify:track:6r8k1vznHrzlEKYxL4dZEe",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "zpzdgmqIHOQ",
+    "title": "La Isla Bonita",
+    "channel": "Madonna",
+    "duration_s": 242,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "F5qnkcPSOnI",
+    "title": "Madonna - La Isla Bonita (1987) (Ingo & Micaele Remix)",
+    "channel": "OldSkoolFunkn80s",
+    "duration_s": 286,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "UWov7-qFxKk",
+    "title": "La Isla Bonita",
+    "channel": "Madonna",
+    "duration_s": 241,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "X-Ol6jX7TYs",
+    "title": "Madonna - La Isla Bonita (Video clip) 4K Upscale & AI Repair",
+    "channel": "Greatest Hits",
+    "duration_s": 208,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "H0VIhJjP17g",
+    "title": "Madonna - La Isla Bonita (Who's That Girl Tour) [Backtrack + Instrumental] REMAKE",
+    "channel": "QueenMStudio",
+    "duration_s": 348,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "zpzdgmqIHOQ",
+    "title": "Madonna - La Isla Bonita (Video Oficial)",
+    "channel": "Madonna",
+    "duration_s": 242,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "UWov7-qFxKk",
+    "title": "Madonna - La Isla Bonita (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xq-aTe77bkA",
+    "title": "Alizée - La Isla Bonita",
+    "channel": "Alizée",
+    "duration_s": 228,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "eSvTrIywZBo",
+    "title": "Madonna - La Isla Bonita (Live In Concert Ciao Italia).HD",
+    "channel": "MrOsvaldomty67",
+    "duration_s": 348,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8scfVcIh6zY",
+    "title": "Madonna - La Isla Bonita (Moreno J Remix)",
+    "channel": "Moreno J Remixes",
+    "duration_s": 450,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Total Eclipse of the Heart",
+   "artists": [
+    "Bonnie Tyler"
+   ],
+   "album": null,
+   "duration_ms": 267360,
+   "explicit": false,
+   "spotify_uri": "spotify:track:7wuJGgpTNzbUyn26IOY6rj",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "Mq-odPpNetw",
+    "title": "О чём на самом деле «Total Eclipse of the Heart»? Эквиритмический перевод | Трибьют Бонни Тайлер",
+    "channel": "Миша Биркин",
+    "duration_s": 325,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "FW_LDUP0NDQ",
+    "title": "Bonnie Tyler - Total eclipse of the heart 2008",
+    "channel": "fritz51305",
+    "duration_s": 228,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "rcmHj_PhcDA",
+    "title": "bonnie tyler - total eclipse of the heart (slowed + reverb)",
+    "channel": "slow songs to be sad",
+    "duration_s": 394,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "cQKvErKAQ4U",
+    "title": "Bonnie   tyler     total Eclipse of thy Heart مترجمه كسوف كلي للقلب",
+    "channel": "Alexandra Daddario",
+    "duration_s": 322,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AZyDhpwmWSw",
+    "title": "Songwriter REACTS: Missioned Souls - Total Eclipse of the Heart (Bonnie Tyler cover)",
+    "channel": "FAANA MUSIC",
+    "duration_s": 916,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "lcOxhH8N3Bo",
+    "title": "Bonnie Tyler - Total Eclipse of the Heart (Turn Around) (Official Video)",
+    "channel": "Bonnie Tyler",
+    "duration_s": 334,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "f5t2-Q-nO14",
+    "title": "Bonnie Tyler - Total Eclipse of the Heart (Lyrics)",
+    "channel": "Vibe Music",
+    "duration_s": 268,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "LSYGIljR6sQ",
+    "title": "Bonnie Tyler - Turn Around (Total Eclipse Of The Heart Official Audio)",
+    "channel": "Bonnie Tyler",
+    "duration_s": 420,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "plVuZGAMrpU",
+    "title": "Bonnie Tyler - Total Eclipse of the Heart (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 268,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "5yziRK36wTU",
+    "title": "Bonnie Tyler - Total Eclipse of the Heart (Live from Tim Rice, 1983)",
+    "channel": "Bonnie Tyler",
+    "duration_s": 259,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Heaven Is A Place On Earth",
+   "artists": [
+    "Belinda Carlisle"
+   ],
+   "album": null,
+   "duration_ms": 246520,
+   "explicit": false,
+   "spotify_uri": "spotify:track:37Q5anxoGWYdRsyeXkkNoI",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "j2F4INQFjEI",
+    "title": "Heaven Is A Place On Earth",
+    "channel": "Belinda Carlisle",
+    "duration_s": 245,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "mIrB6fQwAGs",
+    "title": "Belinda Carlisle - Heaven Is A Place On Earth (tradução em PT/BR)",
+    "channel": "~theBunny~",
+    "duration_s": 246,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "NOGEyBeoBGM",
+    "title": "Heaven Is A Place On Earth (Official Music Video)",
+    "channel": "Belinda Carlisle",
+    "duration_s": 244,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "kTESmfBWCO0",
+    "title": "\"Heaven Is A Place On Earth\" METAL COVER - Belinda Carlisle",
+    "channel": "Dan Vasc",
+    "duration_s": 248,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "2s4C3MHKAT0",
+    "title": "【Belinda Carlisle】Heaven Is A Place On Earth | Professional Drum Cover",
+    "channel": "Keiji Masuoka MTV Drum Cover Channel",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "j2F4INQFjEI",
+    "title": "Belinda Carlisle - Heaven Is A Place On Earth (Official Music Video) (4K Remaster)",
+    "channel": "Belinda Carlisle",
+    "duration_s": 245,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "EqXd7mBDteo",
+    "title": "Belinda Carlisle - Heaven Is A Place On Earth (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 253,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "mMyHOK5-zbY",
+    "title": "Belinda Carlisle - Heaven is a Place on Earth (Top of the Pops, 17/12/1987) [TOTP HD]",
+    "channel": "Belinda Carlisle",
+    "duration_s": 188,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "qxWqEwVS7ig",
+    "title": "Belinda Carlisle - Heaven on Earth (Full Album)(Official Audio)",
+    "channel": "DemonMusicGroup",
+    "duration_s": 2611,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "05V4CgSL0lw",
+    "title": "Belinda Carlisle - Heaven Is a Place on Earth Lyrics",
+    "channel": "Jenny música ",
+    "duration_s": 255,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Billie Jean",
+   "artists": [
+    "Michael Jackson"
+   ],
+   "album": null,
+   "duration_ms": 293826,
+   "explicit": false,
+   "spotify_uri": "spotify:track:5ChkMS8OtdzJeqyybCc9R5",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "mRlxjW28TeI",
+    "title": "Funny Cover Song | Michael Jackson - Billie Jean #michaeljackson #shorts #billiejean",
+    "channel": "The Singing Bin Man",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "tSi6Dn1H36Y",
+    "title": "Michael Jackson - Billie Jean (Live) - 1983",
+    "channel": "allanwv",
+    "duration_s": 299,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "u-NQRrLC6To",
+    "title": "Michael Jackson (Billie Jean) Super Bowl 1993 #kingofpopmjcoolbj",
+    "channel": "King of pop",
+    "duration_s": 62,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "op9GFteboH8",
+    "title": "Como cantar Billie Jean do Michael Jackson | Pronúncia + Tradução",
+    "channel": "Carolina Camara",
+    "duration_s": 62,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZkvYN9zg0FU",
+    "title": "Michael Jackson - Billie Jean (Lyrics)",
+    "channel": "LyricsZone",
+    "duration_s": 295,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Zi_XLOBDo_Y",
+    "title": "Michael Jackson - Billie Jean (Official Video)",
+    "channel": "Michael Jackson",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "tSi6Dn1H36Y",
+    "title": "Michael Jackson - Billie Jean (Live) - 1983",
+    "channel": "allanwv",
+    "duration_s": 299,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "QRidtXn0u7k",
+    "title": "Billie Jean - Michael Jackson (Lyrics)",
+    "channel": "Pizza Music",
+    "duration_s": 295,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "VOj_xsc-EBM",
+    "title": "Michael Jackson - Billie Jean - Live Munich 1997 - Widescreen HD",
+    "channel": "LiveMJHD",
+    "duration_s": 638,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Fv2vixtkFu0",
+    "title": "Michael Jackson - Billie Jean (Live 2001 HD)",
+    "channel": "Andrew Lucas",
+    "duration_s": 487,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Like a Prayer",
+   "artists": [
+    "Madonna"
+   ],
+   "album": null,
+   "duration_ms": 340866,
+   "explicit": false,
+   "spotify_uri": "spotify:track:2v7ywbUzCgcVohHaKUcacV",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "79fzeNUqQbQ",
+    "title": "Like a Prayer",
+    "channel": "Madonna",
+    "duration_s": 338,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "aVPngx-m5tI",
+    "title": "Madonna - Like a prayer (Live) - Rebel Heart Tour",
+    "channel": "DANIEL BALUCH",
+    "duration_s": 280,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "7mrOWqznXYE",
+    "title": "Madonna - Like a Prayer (Afro House Remix) | 80s-90s Nostalgia 2026",
+    "channel": "The Afrobeat Version",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Do5lC6tlC7M",
+    "title": "Madonna - Like a Prayer Subtitulado Español e Ingles Lyrics!",
+    "channel": "SubMusic AF",
+    "duration_s": 330,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "hUgoIVt00HU",
+    "title": "Like A Prayer - Madonna (Karaoke Version)",
+    "channel": "EasyKaraoke",
+    "duration_s": 341,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "79fzeNUqQbQ",
+    "title": "Madonna - Like A Prayer (Official Video)",
+    "channel": "Madonna",
+    "duration_s": 338,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "JaB-JUaeVpA",
+    "title": "Madonna - Like A Prayer (Lyrics)",
+    "channel": "VibersVibin",
+    "duration_s": 244,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NdzOv1t8Ie4",
+    "title": "Madonna - Like A Prayer (Choir Version) [Vinyl Visualizer]",
+    "channel": "Madonna",
+    "duration_s": 156,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "pG6FB2p0TcU",
+    "title": "Madonna - Like A Prayer (Live 8 2005)",
+    "channel": "Live 8",
+    "duration_s": 370,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "qp8jfnQmMgY",
+    "title": "Madonna - Like A Prayer (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 339,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Livin' On A Prayer",
+   "artists": [
+    "Bon Jovi"
+   ],
+   "album": null,
+   "duration_ms": 249293,
+   "explicit": false,
+   "spotify_uri": "spotify:track:37ZJ0p5Jm13JPevGcx4SkF",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "sSj5jnmOFG8",
+    "title": "Bon Jovi   Livin' on a Prayer Instrumental",
+    "channel": "Digital Split",
+    "duration_s": 262,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "f5KWiqoeACE",
+    "title": "Bon Jovi - Livin' on a Prayer live at Wembley Stadium London England 9.9.2026",
+    "channel": "Ville-Markus",
+    "duration_s": 325,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "RqtXh0s6c3g",
+    "title": "Bon Jovi - Livin’ On A Prayer - Live @ Wembley 9/9/2026",
+    "channel": "Thomas Spall",
+    "duration_s": 162,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AhvZ08ildDw",
+    "title": "[TAB / Lv.6] Bon Jovi - Livin’ on a Prayer │Guitar Cover",
+    "channel": "Guitar TAB Master",
+    "duration_s": 248,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "_v-oCviVe1U",
+    "title": "Livin' on a Prayer by Bon Jovi play along with scrolling guitar chords and lyrics",
+    "channel": "Joanne Cooper Play Along Videos",
+    "duration_s": 249,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "lDK9QqIzhwk",
+    "title": "Bon Jovi - Livin' On A Prayer",
+    "channel": "Bon Jovi",
+    "duration_s": 249,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "2ognf_oRQWM",
+    "title": "Bon Jovi - Livin' On A Prayer",
+    "channel": "RockHype",
+    "duration_s": 263,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "CuUefy9bT9U",
+    "title": "Bon Jovi - Livin' On A Prayer",
+    "channel": "Chris R",
+    "duration_s": 250,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "keZ0vigZz3Y",
+    "title": "Bon Jovi - Livin' on a Prayer (Hyde Park 2011)",
+    "channel": "Damned TV",
+    "duration_s": 327,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "2MHuIoX0xn4",
+    "title": "Bon Jovi - Livin on a prayer - live from Switzerland 2000",
+    "channel": "Jamie Camilleri",
+    "duration_s": 351,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Born in the U.S.A.",
+   "artists": [
+    "Bruce Springsteen"
+   ],
+   "album": null,
+   "duration_ms": 279786,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0dOg1ySSI7NkpAe89Zo0b9",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "lOP4FvV-Kz0",
+    "title": "Bruce Springsteen - Born In The Usa - Tradução",
+    "channel": "Traduções Anos 80 90 20 - Brazil",
+    "duration_s": 282,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "MJByldlc-U0",
+    "title": "Bruce Springsteen – Born in the USA | Cinematic Orchestral Rock Instrumental (French Horn & Strings)",
+    "channel": "Eletric Symphony",
+    "duration_s": 250,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "v8KiFyvEmu0",
+    "title": "Bruce Springsteen - Born in the U.S.A. (Subtitulada Español)",
+    "channel": "Bruce Springsteen: Esp",
+    "duration_s": 330,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "GCAwei1zFLw",
+    "title": "Bruce Springsteen - Born In The USA (live Australia 1985)",
+    "channel": "slydogmania",
+    "duration_s": 125,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "COiLCxswVYM",
+    "title": "Play Along to Born In The U.S.A. by Bruce Springsteen | Guitar Lesson / Cover",
+    "channel": "Shaded Soul",
+    "duration_s": 299,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "EPhWR4d3FJQ",
+    "title": "Bruce Springsteen - Born in the U.S.A. (Official Video)",
+    "channel": "Bruce Springsteen",
+    "duration_s": 284,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "MUx5Vu2XRqA",
+    "title": "Bruce Springsteen - Born In The U.S.A. [Audio HQ]",
+    "channel": "GoldenMusic",
+    "duration_s": 281,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "vDCP8m78FhQ",
+    "title": "Born in the U.S.A. - Bruce Springsteen - [LYRICS] [HQ]",
+    "channel": "LyricsByMe",
+    "duration_s": 232,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "SHIOcg4I3dk",
+    "title": "Bruce Springsteen - Born In the U.S.A. (from Born In The U.S.A. Live: London 2013)",
+    "channel": "Bruce Springsteen",
+    "duration_s": 282,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "x6-kF2yWuMI",
+    "title": "Bruce Springsteen - Born In The U.S.A (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 284,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Beat It",
+   "artists": [
+    "Michael Jackson"
+   ],
+   "album": null,
+   "duration_ms": 258040,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1OOtq8tRnDM8kG2gqUPjAj",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "JvXOO6zw6yE",
+    "title": "Michael Jackson - Beat It ( High Pitch+1 )",
+    "channel": "Michael Jackson Productions",
+    "duration_s": 247,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "eLx0r2rD15w",
+    "title": "MICHAEL JACKSON - BEAT IT (INGLES FACIL / FACIL PRONUNCIACION / LETRA FACIl)",
+    "channel": "Canta en Inglés",
+    "duration_s": 259,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "nU-vqxvCInc",
+    "title": "Michael Jackson - Beat It (Lyrics)",
+    "channel": "360PROMO",
+    "duration_s": 259,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "J_AD2QXWAZk",
+    "title": "beat it - michael jackson but there's a violin solo and more strings on top",
+    "channel": "KurtTheViolinist",
+    "duration_s": 69,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "YzC7aZEcLw8",
+    "title": "Michael Jackson - Beat It (Bass Boosted)",
+    "channel": "Doge - King of Bass",
+    "duration_s": 258,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "oRdxUFDoQe0",
+    "title": "Michael Jackson - Beat It (Official 4K Video)",
+    "channel": "Michael Jackson",
+    "duration_s": 299,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8fO8jVZ3T9g",
+    "title": "Beat It - Michael Jackson (Lyrics)",
+    "channel": "Art of Yourself",
+    "duration_s": 259,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "aV4ZFhIUGEU",
+    "title": "Michael Jackson - Beat It (Official Video) [4K Remastered]",
+    "channel": "MASTER RJ",
+    "duration_s": 299,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "hlJp0etLDcM",
+    "title": "Michael Jackson - Beat It (Live HIStory Tour In Munich) (Remastered 4K Upscale)",
+    "channel": "ZahidMJ",
+    "duration_s": 504,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ftCalx6_pYA",
+    "title": "Michael Jackson - Beat It (Official Audio)",
+    "channel": "Nielson Lucas",
+    "duration_s": 259,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Eyes Without A Face - Remastered 1999",
+   "artists": [
+    "Billy Idol"
+   ],
+   "album": null,
+   "duration_ms": 297426,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3HCah9Waf9Jby9gLIWN4MI",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "BVvj5bDQH_8",
+    "title": "eyes without a face - billy idol cover",
+    "channel": "Kayla McKay",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "-KHhZ9Zi8WU",
+    "title": "Billy Idol - Eyes Without a Face (Tradução/Legendado)",
+    "channel": "Dona Legendas",
+    "duration_s": 247,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "b8AVE9-icwY",
+    "title": "Billy Idol - Eyes Without A Face (Slowed + Reverb) (Taxi Driver) (Music Video)",
+    "channel": "Michael Constantine",
+    "duration_s": 201,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "RVKtc1rkeYc",
+    "title": "Eyes Without A Face - A true 80s masterpiece #billyidol #80s #viral",
+    "channel": "Remembering Hits",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "qaFdvpd9pmU",
+    "title": "Billy Idol - Eyes Without a Face (Live)  (sampler)",
+    "channel": "reedit",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9OFpfTd0EIs",
+    "title": "Billy Idol - Eyes Without A Face",
+    "channel": "Billy Idol",
+    "duration_s": 295,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rXUK48JKjrY",
+    "title": "Billy Idol - Eyes Without A Face (Lyrics)",
+    "channel": "Cassiopeia",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "MBWvITZxjG4",
+    "title": "Billy Idol - Eyes Without A Face (Remastered)",
+    "channel": "Galactocerebrósido",
+    "duration_s": 300,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "z1ve2iXn0Vc",
+    "title": "Billy Idol - Eyes Without A Face (Loop and Extended)",
+    "channel": "LoopMusic",
+    "duration_s": 1040,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "opYXf2WXKFE",
+    "title": "Billy Idol - Eyes Without a Face | LIVE Performance | The Spectrum | SiriusXM",
+    "channel": "SiriusXM",
+    "duration_s": 351,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Take on Me",
+   "artists": [
+    "a-ha"
+   ],
+   "album": null,
+   "duration_ms": 225280,
+   "explicit": false,
+   "spotify_uri": "spotify:track:2WfaOiMkCvy7F5fcp2zZ8L",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "djV11Xbc914",
+    "title": "Take On Me",
+    "channel": "a-ha",
+    "duration_s": 244,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "RLOfGqAHzt0",
+    "title": "A-ha  Take On Me",
+    "channel": "Concert Shots CAMM",
+    "duration_s": 293,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "RrL7OPkdiYQ",
+    "title": "A-Ha - Take On Me  (Dominatrix Retrologic Rmx)",
+    "channel": "silence 1975",
+    "duration_s": 382,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Nl17j9ABs_s",
+    "title": "A Ha ft Ingrid Helene Havik   The Sun Always Shines On TV ( Unplugged)",
+    "channel": "DJPANCHOBERMUDEZ",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Z1b-ITPXmdY",
+    "title": "a-ha ➡️  Take On Me  (Unplugged)ᴴᴰ",
+    "channel": "Rewind ‘80s-‘90s",
+    "duration_s": 214,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "djV11Xbc914",
+    "title": "a-ha - Take On Me (Official Video) [4K]",
+    "channel": "a-ha",
+    "duration_s": 244,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "kmDBDn8Ju6w",
+    "title": "a-ha - Take On Me (Lyrics)",
+    "channel": "7clouds Acoustic",
+    "duration_s": 227,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "hyPudrPNSuQ",
+    "title": "A-ha - Take on Me (MTV Unplugged - Summer Solstice) [Tradução]",
+    "channel": "Mais 1 Clipe Com Legenda",
+    "duration_s": 235,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "QchhC4yhdhc",
+    "title": "A-ha  Take On Me live 2017",
+    "channel": "Our memory",
+    "duration_s": 325,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "3meKlaJL3qo",
+    "title": "a-ha - Take On Me (Live 8 2005)",
+    "channel": "Live 8",
+    "duration_s": 301,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Material Girl - 2024 Remaster",
+   "artists": [
+    "Madonna"
+   ],
+   "album": null,
+   "duration_ms": 242337,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4tcauy2xyIv1q0ckvQmc4H",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "6p-lDYPR2P8",
+    "title": "Material Girl",
+    "channel": "Madonna",
+    "duration_s": 286,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "aHXTblCCRIs",
+    "title": "Madonna - Material Girl (Tradução) (Legendado)",
+    "channel": "LOVESONGS93",
+    "duration_s": 235,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "LvVCddPLSLI",
+    "title": "Material Girl_Madonna_Bass Cover",
+    "channel": "김미의 기분좋은일",
+    "duration_s": 241,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Kk91DmSc4CA",
+    "title": "Madonna Material Girl (Spanish Version)",
+    "channel": "MadonnaGreatestMusik",
+    "duration_s": 193,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "uGRknBIJQcs",
+    "title": "Madonna - Material Girl [Extended Dance Remix]",
+    "channel": "MadonnaUnusual",
+    "duration_s": 368,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "6p-lDYPR2P8",
+    "title": "Madonna - Material Girl (Official Video) [HD]",
+    "channel": "Madonna",
+    "duration_s": 286,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "KapHTsjh_Nw",
+    "title": "Madonna - Material Girl (Lyrics) Cause we are living in a material world",
+    "channel": "Dan Music",
+    "duration_s": 240,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "XbrFLyleb0Q",
+    "title": "Madonna - Material Girl (Lyrics)",
+    "channel": "VibersVibin",
+    "duration_s": 236,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PJ0sdXc4CmI",
+    "title": "Madonna - Material Girl (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Ehs_tp-qNQ4",
+    "title": "Madonna - Material Girl (Karaoke Version)",
+    "channel": "Sing King",
+    "duration_s": 267,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "The Winner Takes It All",
+   "artists": [
+    "ABBA"
+   ],
+   "album": null,
+   "duration_ms": 294720,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3oEkrIfXfSh9zGnE7eBzSV",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "H-CO2Pkz304",
+    "title": "ᯓ★ 𝙏𝙝𝙖𝙩 𝙋𝙖𝙧𝙩 𝙤𝙛 ❛𝐓𝐡𝐞 𝐖𝐢𝐧𝐧𝐞𝐫 𝐓𝐚𝐤𝐞𝐬 𝐈𝐭 𝐀𝐥𝐥❜ 𝙗𝙪𝙩 𝙞𝙩’𝙨 𝒔𝒍𝒐𝒘𝒆𝒅",
+    "channel": "𝑳𝒖𝒍𝒖",
+    "duration_s": 121,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "K643ZIiG-18",
+    "title": "The Winner Takes It All - ABBA - Fingerstyle Guitar Tutorial + TAB & Lyrics",
+    "channel": "yunus guitarist",
+    "duration_s": 224,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "8tE0GjSQpes",
+    "title": "ABBA - The Winner Takes It All (1980)",
+    "channel": "skv90s",
+    "duration_s": 267,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "j10kh32LlRU",
+    "title": "Abba - The Winner Takes It All Tradução Legendado",
+    "channel": "Musica&Poesia",
+    "duration_s": 297,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "EK5pbf05tX0",
+    "title": "The Winner Takes It All - Abba  #shorts  #music #abba  #musicapop #youtubeshorts",
+    "channel": "Mandabraza",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "92cwKCU8Z5c",
+    "title": "ABBA - The Winner Takes It All",
+    "channel": "ABBA",
+    "duration_s": 298,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "81WhM9dOcYI",
+    "title": "ABBA - The Winner Takes It All (Official Lyric Video)",
+    "channel": "ABBA",
+    "duration_s": 298,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "594smhY4o6U",
+    "title": "ABBA - The Winner Takes It All (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8tE0GjSQpes",
+    "title": "ABBA - The Winner Takes It All (1980)",
+    "channel": "skv90s",
+    "duration_s": 267,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "9cqZy-hRb1o",
+    "title": "The Winner Takes It All - ABBA (Slowed + reverb + Best part loop)",
+    "channel": "Ryan",
+    "duration_s": 155,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Holding Out for a Hero - From \"Footloose\" Soundtrack",
+   "artists": [
+    "Bonnie Tyler"
+   ],
+   "album": null,
+   "duration_ms": 348333,
+   "explicit": false,
+   "spotify_uri": "spotify:track:5Hyr47BBGpvOfcykSCcaw9",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "Hq5mVt-iozQ",
+    "title": "Holding Out for a Hero",
+    "channel": "Bonnie Tyler",
+    "duration_s": 341,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "My3AaSmx4eE",
+    "title": "Holding out for a Hero - Bonnie Tyler & David Copperfield #bonnietyler #davidcopperfield #magic",
+    "channel": "BoHemius X",
+    "duration_s": 291,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9QC_cgPYEXg",
+    "title": "Bonnie Tyler - Holding Out For A Hero (Bass Boosted By Dj Qs)",
+    "channel": "DJ NorthMan",
+    "duration_s": 345,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "eVg5HwUthkA",
+    "title": "50 Jahre Rock I Bonnie Tyler Holding Out For A Hero",
+    "channel": "rammsaubuchloe",
+    "duration_s": 300,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "tVCnA9MIhAE",
+    "title": "Bonnie Tyler - Holding out for a Hero | F-4 Phantom",
+    "channel": "torino",
+    "duration_s": 278,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "bWcASV2sey0",
+    "title": "Bonnie Tyler - Holding Out For A Hero (Official HD Video)",
+    "channel": "Bonnie Tyler",
+    "duration_s": 285,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Hq5mVt-iozQ",
+    "title": "Bonnie Tyler - Holding Out For A Hero (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 341,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "vA48rDXh1_4",
+    "title": "Bonnie Tyler - Holding Out For A Hero [Top Of The Pops 1985]",
+    "channel": "Bonnie Tyler",
+    "duration_s": 249,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "kPZRb4_G7sc",
+    "title": "Bonnie Tyler - I Need a Hero (Lyrics)",
+    "channel": "mevuelvoalos80",
+    "duration_s": 350,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "CPK2HwYzjkA",
+    "title": "Bonnie Tyler - Holding Out for a Hero (Official Lyric Video)",
+    "channel": "Bonnie Tyler",
+    "duration_s": 350,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Holiday",
+   "artists": [
+    "Madonna"
+   ],
+   "album": null,
+   "duration_ms": 370426,
+   "explicit": false,
+   "spotify_uri": "spotify:track:7arHM2KZ0KzIZXFVDRGClI",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "5Rswx2Z7SDw",
+    "title": "Madonna - Holiday [Official Music Video]",
+    "channel": "ChynnaDahl",
+    "duration_s": 236,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "lgxQjPmexJQ",
+    "title": "Madonna - Holiday (Extended Mix)",
+    "channel": "One Mix",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yd2kRqvQSUw",
+    "title": "Madonna - Holiday (Sub. español)",
+    "channel": "Pokatito",
+    "duration_s": 232,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pJa3pvgBs3k",
+    "title": "Madonna - Holiday (1985 Live Performance) Lower Key Karaoke",
+    "channel": "Chris Jackson Music - Professional Backing Tracks",
+    "duration_s": 341,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AJErYDcicp4",
+    "title": "Madonna | Holiday | Karaoke",
+    "channel": "Reekies Karaoke",
+    "duration_s": 245,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "5Rswx2Z7SDw",
+    "title": "Madonna - Holiday [Official Music Video]",
+    "channel": "ChynnaDahl",
+    "duration_s": 236,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "3SIeLnc0ZuQ",
+    "title": "Madonna Holiday (Official ) 1983.",
+    "channel": "Fabricio Feliciano",
+    "duration_s": 246,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "q9OC1mDwqh0",
+    "title": "Madonna - Holiday (Lyrics HD)",
+    "channel": "Song Lyrics HD",
+    "duration_s": 246,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "p7cjMjgPHzM",
+    "title": "Madonna - Holiday (7\" Version) [2022 Remaster]",
+    "channel": "Madonna",
+    "duration_s": 259,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "7jC9SWuKHpc",
+    "title": "Madonna - Holiday (Live Aid 1985)",
+    "channel": "Live Aid",
+    "duration_s": 371,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Human Nature",
+   "artists": [
+    "Michael Jackson"
+   ],
+   "album": null,
+   "duration_ms": 245837,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4cgjA7B4fJBHyB9Ya2bu0t",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "kbRljSVmRIM",
+    "title": "Michael Jackson | Human nature - BAD World Tour - instrumental/studio version",
+    "channel": "A Slave Of The Rhythm",
+    "duration_s": 296,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "bC8B0ZbH1eo",
+    "title": "Human Nature - Michael Jackson - Half-Step Down (Lower Pitch)",
+    "channel": "Rinmarc",
+    "duration_s": 247,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "X5-Ngn8tliA",
+    "title": "Michael Jackson - Human Nature (Live at Wembley ’88) #drums #michaeljackson #80s",
+    "channel": "Severi Sorjonen",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "lZGg_1c7kKg",
+    "title": "Michael Jackson- Human Nature (Soundcheck At The Musikverein in Vienna)",
+    "channel": "NATALIE TENENBAUM",
+    "duration_s": 89,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "v-qdEfKoV4Y",
+    "title": "Michael Jackson - Human Nature | Lyrics | Tradução",
+    "channel": "AJ Edits",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ElN_4vUvTPs",
+    "title": "Michael Jackson - Human Nature (Official Audio)",
+    "channel": "Michael Jackson",
+    "duration_s": 248,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "YNzuiRuQNYY",
+    "title": "Michael Jackson - Human Nature (Official Video)",
+    "channel": "Michael Jackson",
+    "duration_s": 267,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "UxnvqXGYpvY",
+    "title": "Michael Jackson - Human Nature (Lyrics Video) 🎤",
+    "channel": "Blomma Joe",
+    "duration_s": 245,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "zN0_6zjba9c",
+    "title": "Michael Jackson: Human Nature Live at Wembley 1988 | 4K REMASTERED",
+    "channel": "P4Ks",
+    "duration_s": 312,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "6woZey07zjM",
+    "title": "Michael (2026) 4K - Human Nature (9/11) | Movieclips",
+    "channel": "Movieclips",
+    "duration_s": 272,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Africa",
+   "artists": [
+    "TOTO"
+   ],
+   "album": null,
+   "duration_ms": 295282,
+   "explicit": false,
+   "spotify_uri": "spotify:track:2374M0fQpWi3dLnB54qaLX",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "sr2kFaVlH0w",
+    "title": "Africa",
+    "channel": "The Lounge Kittens",
+    "duration_s": 271,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "p-1YXwdGO7c",
+    "title": "toto - africa ( slowed + reverb )",
+    "channel": "rafway",
+    "duration_s": 288,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "U1LB_OerHCE",
+    "title": "Africa",
+    "channel": "Toto",
+    "duration_s": 295,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "WEMZX0ygHwk",
+    "title": "Coolest cover of Toto's \"Africa\" on the Internet",
+    "channel": "Brandon D'Eon",
+    "duration_s": 302,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "aymnC9PR7AQ",
+    "title": "Toto - Africa (Live in Paris 2007)",
+    "channel": "Thomas Andre Hjelleset",
+    "duration_s": 377,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "FTQbiNvZqaY",
+    "title": "Toto - Africa (Official HD Video)",
+    "channel": "TOTO",
+    "duration_s": 272,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "U1LB_OerHCE",
+    "title": "Toto - Africa (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 295,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Kb7lAMjFuA0",
+    "title": "Toto - Africa (Official Audio)",
+    "channel": "Nielson Lucas",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "w2bJ5CGplB4",
+    "title": "Toto - Africa (2003) [HD] (CC)",
+    "channel": "Gerald Chen",
+    "duration_s": 428,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "UQn-7GCh2r0",
+    "title": "Toto - Africa",
+    "channel": "Günter Bauer Spielbach",
+    "duration_s": 690,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Heaven",
+   "artists": [
+    "Bryan Adams"
+   ],
+   "album": null,
+   "duration_ms": 243360,
+   "explicit": false,
+   "spotify_uri": "spotify:track:7Ewz6bJ97vUqk5HdkvguFQ",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "3eT464L1YRA",
+    "title": "Heaven",
+    "channel": "Bryan Adams",
+    "duration_s": 241,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9f06QZCVUHg",
+    "title": "Bryan Adams - Summer Of 69 (Official Music Video)",
+    "channel": "Bryan Adams",
+    "duration_s": 208,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "DTyElCQGfk4",
+    "title": "Bryan Adams - Heaven (DJ Sammy remix), arr. by Master Keyz",
+    "channel": "The Flaming Piano",
+    "duration_s": 269,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ImCTOtOJyi0",
+    "title": "Bryan Adams - Straight From The Heart (Classic Version)",
+    "channel": "Bryan Adams",
+    "duration_s": 209,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "No0v1Xf653U",
+    "title": "Bryan Adams  - Heaven - Rodrigo Project Oficial (Mix)",
+    "channel": "RODRIGO PROJECT",
+    "duration_s": 279,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "3eT464L1YRA",
+    "title": "Bryan Adams - Heaven (Official Music Video)",
+    "channel": "Bryan Adams",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZwDf-NMnUPA",
+    "title": "Bryan Adams - Heaven (Live At Wembley 1996)",
+    "channel": "Bryan Adams",
+    "duration_s": 279,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "vf3zFvcKQkw",
+    "title": "Bryan Adams - Heaven (Classic Version)",
+    "channel": "Bryan Adams",
+    "duration_s": 271,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Z7b37l_B4vI",
+    "title": "Bryan Adams - Heaven - Acoustic Live",
+    "channel": "Bryan Adams",
+    "duration_s": 285,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "p4ELdp8lOKQ",
+    "title": "Bryan Adams - Heaven - Live at Slane Castle, Ireland.",
+    "channel": "Bryan Adams",
+    "duration_s": 292,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Back In Black",
+   "artists": [
+    "AC/DC"
+   ],
+   "album": null,
+   "duration_ms": 256000,
+   "explicit": false,
+   "spotify_uri": "spotify:track:08mG3Y1vljYA6bvDt4Wqkj",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "W0FrI2rsItc",
+    "title": "A.C.D.C Greatest Hits  - Top Best Songs Of A.C.D.C",
+    "channel": "Classic Rock Collection",
+    "duration_s": 5161,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "LMuDrj5BpM0",
+    "title": "AC/DC - Highway to Hell (lyrics)",
+    "channel": "Wind Music",
+    "duration_s": 211,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "rrim6_9VSeM",
+    "title": "Back In Black",
+    "channel": "AC/DC",
+    "duration_s": 252,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "onXa5lKjcCc",
+    "title": "🥁BACK IN BLACK - AC/DC | Drum Cover + Partitura GRATIS (BATERÍA)",
+    "channel": "PichuDrummer",
+    "duration_s": 250,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "4u2XwOOhBro",
+    "title": "AC-DC - Back In Black (Live At River Plate, December 2009) (FLAC)",
+    "channel": "FIXER - Wave",
+    "duration_s": 255,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pAgnJDJN4VA",
+    "title": "AC/DC - Back In Black (Official 4K Video)",
+    "channel": "AC/DC",
+    "duration_s": 254,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rrim6_9VSeM",
+    "title": "AC/DC - Back In Black (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 252,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "kYzbBPzyWrc",
+    "title": "AC/DC - Back In Black",
+    "channel": "Rock And Metal Tv",
+    "duration_s": 256,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "j5rGm3kdTuk",
+    "title": "AC/DC - Back In Black (Live At River Plate, December 2009)",
+    "channel": "AC/DC",
+    "duration_s": 241,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "6vImyP5EYc8",
+    "title": "AC/DC - Back In Black (Live at Donington, 8/17/91)",
+    "channel": "AC/DC",
+    "duration_s": 257,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Sweet Dreams (Are Made of This) - 2005 Remaster",
+   "artists": [
+    "Eurythmics, Annie Lennox, Dave Stewart"
+   ],
+   "album": null,
+   "duration_ms": 216933,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1TfqLAPs4K3s2rJMoCokcS",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "hYY11DFG-CU",
+    "title": "Eurythmics   Sweet Dreams 1983 subtitulado español",
+    "channel": "RETRO MIX",
+    "duration_s": 220,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "EuWMfULhUmA",
+    "title": "Sweet Dreams (Are Made of This) [2018 Remastered]",
+    "channel": "Eurythmics",
+    "duration_s": 218,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "PDrikzmYjvQ",
+    "title": "Sweet Dreams (Are Made of This) [2018 Remastered]",
+    "channel": "Eurythmics",
+    "duration_s": 221,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "phtex9JCvuc",
+    "title": "Sweet Dreams (Are Made of This) [2018 Remastered]",
+    "channel": "Eurythmics",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "8PxxTVGlP68",
+    "title": "Eurythmics - Sweet Dreams (Extended Video)",
+    "channel": "Eduardo Montenegro M1",
+    "duration_s": 280,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "qeMFqkcPYcg",
+    "title": "Eurythmics, Annie Lennox, Dave Stewart - Sweet Dreams (Are Made Of This) (Official Video)",
+    "channel": "Eurythmics",
+    "duration_s": 215,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "bG9z-atG7gc",
+    "title": "Eurythmics - Sweet Dreams (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 212,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "6KR52lEWLEM",
+    "title": "Eurythmics - Sweet Dreams (Are Made Of This) (Official Video), Full HD (Remastered and Upscaled)",
+    "channel": "Enhanced Music Videos",
+    "duration_s": 198,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "qLfqA2igdUI",
+    "title": "Eurythmics - Sweet Dreams (Are Made Of This) Feat. Annie Lennox & Dave Stewart (Tradução/Legendado)",
+    "channel": "Dona Legendas",
+    "duration_s": 216,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NNJeKXr1I2w",
+    "title": "Eurythmics - Sweet Dreams (1983)",
+    "channel": "Oxygene 80",
+    "duration_s": 200,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "I Want to Know What Love Is - 1999 Remaster",
+   "artists": [
+    "Foreigner"
+   ],
+   "album": null,
+   "duration_ms": 304786,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1JLn8RhQzHz3qDqsChcmBl",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "r3Pr1_v7hsw",
+    "title": "I Want to Know What Love Is",
+    "channel": "Foreigner",
+    "duration_s": 301,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "4hzftmmMlg4",
+    "title": "I Want to Know What Love Is - Foreigner【和訳】フォリナー「アイ・ウォナ・ノウ」1984年",
+    "channel": "KTstiletto 洋楽和訳",
+    "duration_s": 298,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9JmwHWHiZwg",
+    "title": "PLAY ALONG \"I WANT TO KNOW WHAT LOVE IS\" FOREIGNER | Guitar Pilgrim",
+    "channel": "Guitar Pilgrim",
+    "duration_s": 223,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "X8fT5To_IkU",
+    "title": "Foreigner - \"Quiero Saber Si Es Amor\" feat. Joy Huerta - Official Visualizer (feat. Joy)",
+    "channel": "Foreigner",
+    "duration_s": 265,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "rlTxcl0C9aE",
+    "title": "Foreigner - I Want to Know What Love Is (1984 12-Inch Extended Version) HQ",
+    "channel": "Clay Culver",
+    "duration_s": 383,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "r3Pr1_v7hsw",
+    "title": "Foreigner - I Want To Know What Love Is (Official Music Video)",
+    "channel": "RHINO",
+    "duration_s": 301,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "JW93ar9kdv0",
+    "title": "Foreigner - I Want to Know What Love Is (Letra/Lyrics)",
+    "channel": "Majestic Sounds",
+    "duration_s": 305,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HNGbhnF8ufs",
+    "title": "Foreigner - I Want To Know What Love Is (Live at Farm Aid 1985)",
+    "channel": "Farm Aid",
+    "duration_s": 364,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "raNGeq3_DtM",
+    "title": "Foreigner - 'I Want To Know What Love Is' [Official Music Video]",
+    "channel": "ApplePie Music",
+    "duration_s": 291,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NVFfjWqfui8",
+    "title": "FOREIGNER:I Want to Know What Love Is 2011 Live in Chicago",
+    "channel": "mimigebon",
+    "duration_s": 429,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "I Wanna Dance with Somebody (Who Loves Me)",
+   "artists": [
+    "Whitney Houston"
+   ],
+   "album": null,
+   "duration_ms": 292875,
+   "explicit": false,
+   "spotify_uri": "spotify:track:2tUBqZG2AbRi7Q0BIrVrEj",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "YPQxv_qWj5g",
+    "title": "I WANNA DANCE WITH SOMEBODY | ZIGGY IN THA HOUSE REMIX | DANCE WORKOUT | RFDF",
+    "channel": "RFDF (DANCE FITNESS)",
+    "duration_s": 212,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "oKWPYxXkAS0",
+    "title": "I Wanna Dance With Somebody (Who Loves Me) (Single Version)",
+    "channel": "Whitney Houston",
+    "duration_s": 289,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "b_KsQmXV1Sw",
+    "title": "Whitney Houston - I Wanna Dance with Somebody (Who Loves Me) (Tradução/Legendado)",
+    "channel": "🦋A Dona Traduções🦋",
+    "duration_s": 315,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pbbQVt-xAVM",
+    "title": "\"I wanna dance\" with #calumscott",
+    "channel": "Tim music off",
+    "duration_s": 154,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "D4fGBavx414",
+    "title": "I WANNA DANCE WITH SOMEBODY + Lyrics | WHITNEY HOUSTON",
+    "channel": "Sing with A Life with Love",
+    "duration_s": 295,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "eH3giaIzONA",
+    "title": "Whitney Houston - I Wanna Dance With Somebody (Who Loves Me) (Official 4K Video)",
+    "channel": "Whitney Houston",
+    "duration_s": 315,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "oKWPYxXkAS0",
+    "title": "Whitney Houston - I Wanna Dance With Somebody (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 289,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "id2-K3daNRQ",
+    "title": "I Wanna Dance with Somebody (Who Loves Me)",
+    "channel": "Whitney Houston",
+    "duration_s": 292,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "QzZ-mtE1EHc",
+    "title": "Whitney Houston - I Wanna Dance With Somebody",
+    "channel": "RicDiOlive",
+    "duration_s": 286,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "XSzmOKg1WIY",
+    "title": "I Wanna Dance with Somebody (Live from the Arista Records 15th Anniversary Concert)",
+    "channel": "Whitney Houston",
+    "duration_s": 338,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Maneater",
+   "artists": [
+    "Daryl Hall & John Oates"
+   ],
+   "album": null,
+   "duration_ms": 273173,
+   "explicit": false,
+   "spotify_uri": "spotify:track:7j74lucZ59vqN67Ipe2ZcY",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "-SS3VBrMfx4",
+    "title": "Daryl Hall & John Oates - Maneater (Lyrics)",
+    "channel": "LyrixHD",
+    "duration_s": 274,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "HZzeXkr2cWg",
+    "title": "Daryl Hall & John Oates - Maneater",
+    "channel": "NiBro.{1984}.",
+    "duration_s": 273,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Fp1xQXzqf08",
+    "title": "Hall & Oates Maneater Bass Cover with Notes & Tablature",
+    "channel": "Constantine Isslamow",
+    "duration_s": 272,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "hh1mhJXVIkw",
+    "title": "Out of Touch",
+    "channel": "Hall & Oates",
+    "duration_s": 245,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "fDdO3Q9oxEc",
+    "title": "Daryl Hall & John Oates - Maneater Instrumental",
+    "channel": "DisruptiveRocktar43",
+    "duration_s": 280,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yRYFKcMa_Ek",
+    "title": "Daryl Hall & John Oates - Maneater (Official Video)",
+    "channel": "Daryl Hall & John Oates",
+    "duration_s": 265,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "IqF7S3zXl1A",
+    "title": "Daryl Hall & John Oates - Maneater (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 270,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "vXIPiKb-D2g",
+    "title": "Maneater (1995) - Hall&Oates",
+    "channel": "konekoxox",
+    "duration_s": 281,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "TFhjplnlBzo",
+    "title": "Daryl Hall & John Oates - Maneater (Remastered Audio) UHD 4K",
+    "channel": "Happy Charlie",
+    "duration_s": 270,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "3tShcEWbrMw",
+    "title": "Hall & Oates - Maneater (Audio Remastered) (HQ)",
+    "channel": "Laura Aurelia",
+    "duration_s": 271,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Everybody Wants To Rule The World",
+   "artists": [
+    "Tears For Fears"
+   ],
+   "album": null,
+   "duration_ms": 251488,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4RvWPyQ5RL0ao9LPZeSouE",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "3IOotZ9owJE",
+    "title": "Tears For Fears - Everybody Wants To Rule The World [Live On Wogan , 1985]",
+    "channel": "‏zuzusi‏",
+    "duration_s": 233,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "SFU1GeGFpzY",
+    "title": "Tears For Fears - Everybody Wants To Rule The World",
+    "channel": "Rewind Music Group",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "1aNck0aEpBk",
+    "title": "Tears For Fears - Everybody Wants To Rule The World Reaction!",
+    "channel": "Black Pegasus",
+    "duration_s": 705,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yHPShElKeRM",
+    "title": "Everybody Wants To Rule The World (Tears For Fears) SKA COVER",
+    "channel": "Skatune Network",
+    "duration_s": 237,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "uZptM4AGBUk",
+    "title": "Tears for Fears - Everybody wants to rule the world (instrumental)",
+    "channel": "FASTESTMOTION",
+    "duration_s": 254,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "aGCdLKXNF3w",
+    "title": "Tears For Fears - Everybody Wants To Rule The World (Official Music Video)",
+    "channel": "Tears For Fears",
+    "duration_s": 291,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "znDgBy2mHbc",
+    "title": "Tears For Fears - Everybody Wants To Rule The World (Official Archive Video)",
+    "channel": "Tears For Fears",
+    "duration_s": 252,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "SFU1GeGFpzY",
+    "title": "Tears For Fears - Everybody Wants To Rule The World",
+    "channel": "Rewind Music Group",
+    "duration_s": 251,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "tSBWmxwT8So",
+    "title": "Tears For Fears - Everybody Wants To Rule The World (Lyrics)",
+    "channel": "Taj Tracks",
+    "duration_s": 262,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Pkgd3tER1yI",
+    "title": "Tears for Fears — Everybody Wants to Rule the World | LIVE Performance | SiriusXM",
+    "channel": "SiriusXM",
+    "duration_s": 273,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Uptown Girl",
+   "artists": [
+    "Billy Joel"
+   ],
+   "album": null,
+   "duration_ms": 198294,
+   "explicit": false,
+   "spotify_uri": "spotify:track:5zA8vzDGqPl2AzZkEYQGKh",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "ddI3Tb2yUoE",
+    "title": "Billy Joel - Uptown Girl - PUNK ROCK Cover",
+    "channel": "Punk Rock Matt",
+    "duration_s": 138,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AFwICGnLjSI",
+    "title": "Billy Joel - Uptown Girl (Lyrics)",
+    "channel": "Monstafluff Music",
+    "duration_s": 194,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "bBduUhdIhnI",
+    "title": "Billy Joel Uptown Girl Instrumental Original",
+    "channel": "John Doe",
+    "duration_s": 204,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "NlI6W_BYnos",
+    "title": "BILLY JOEL - Uptown Girl (Lyric Video)",
+    "channel": "Big Chuck Lyric Video",
+    "duration_s": 196,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "BsVSVdqGIkg",
+    "title": "Billy Joel - Uptown girl [instrumental]",
+    "channel": "magnums extended mixes ",
+    "duration_s": 205,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "hCuMWrfXG4E",
+    "title": "Billy Joel - Uptown Girl (Official Video)",
+    "channel": "Billy Joel",
+    "duration_s": 203,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "o-0Oect0nVQ",
+    "title": "Billy Joel - Uptown Girl (Official Audio)",
+    "channel": "Billy Joel",
+    "duration_s": 200,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xUZ2TYsEM5Y",
+    "title": "Billy Joel - Uptown Girl (Lyrics)",
+    "channel": "7clouds Rock",
+    "duration_s": 194,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "RsIPjV6yGp4",
+    "title": "Billy Joel - Uptown Girl (from A Matter of Trust - The Bridge to Russia)",
+    "channel": "Billy Joel",
+    "duration_s": 184,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "pAlkDyu2Gcg",
+    "title": "Billy Joel - Uptown Girl",
+    "channel": "Top Squad",
+    "duration_s": 195,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Forever Young",
+   "artists": [
+    "Alphaville"
+   ],
+   "album": null,
+   "duration_ms": 226706,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4S1VYqwfkLit9mKVY3MXoo",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "oNjQXmoxiQ8",
+    "title": "Forever Young",
+    "channel": "Alphaville",
+    "duration_s": 223,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "HIkN9HWUYiw",
+    "title": "Alphaville - Forever Young Remix 2022 | mSOLO Viral Music Videos [Official Video Re-upload]",
+    "channel": "mSOLO",
+    "duration_s": 148,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Q3D_EU0qQj0",
+    "title": "Mads Heimdal Henriksen | Forever Young (Alphaville) | Blind Auditions | The Voice Norway 2026",
+    "channel": "The Voice Norway",
+    "duration_s": 134,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "q_gERYywpks",
+    "title": "Alphaville - Forever Young (Tradução/Legendado)",
+    "channel": "Traduções Anos 80",
+    "duration_s": 224,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "tl6u2NASUzU",
+    "title": "Big In Japan (Official Music Video)",
+    "channel": "Alphaville",
+    "duration_s": 238,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "oNjQXmoxiQ8",
+    "title": "Alphaville - Forever Young (Official Music Video)",
+    "channel": "RHINO and Alphaville (official)",
+    "duration_s": 223,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "-ym0I1D8PfA",
+    "title": "Alphaville - Forever Young (Lyrics)",
+    "channel": "Pizza Music",
+    "duration_s": 228,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "YHRvDo8rUoQ",
+    "title": "Alphaville - Forever Young (Official Video HD)",
+    "channel": "Alphaville (official)",
+    "duration_s": 222,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "pFBTUJ5T108",
+    "title": "Alphaville - Forever Young (Thommys Popshow extra, 08.12.1984)",
+    "channel": "Alphaville (official)",
+    "duration_s": 224,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "gjPEkIqOCvA",
+    "title": "Alphaville - Forever Young (Goldene Europa 1984)",
+    "channel": "Alphaville (official)",
+    "duration_s": 213,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Another Day in Paradise - 2016 Remaster",
+   "artists": [
+    "Phil Collins"
+   ],
+   "album": null,
+   "duration_ms": 322133,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1NCuYqMc8hKMb4cpNTcJbD",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "Qt2mbGP6vFI",
+    "title": "Another Day In Paradise (Live)",
+    "channel": "Phil Collins",
+    "duration_s": 291,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "531e-6fz9N4",
+    "title": "Phil Collins - Another Day In Paradise (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 323,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "hsbUegZ1Kt8",
+    "title": "Another Day in Paradise (LYRICS) by Phil Collins ♪",
+    "channel": "Maverick51",
+    "duration_s": 321,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yjp9VsO1Bt8",
+    "title": "\"Another Day in Paradise” do Phil Collins",
+    "channel": "Leo Eymard",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "76o8TrzksNA",
+    "title": "Another Day in Paradise (with Ray J) (feat. Ray J)",
+    "channel": "Brandy",
+    "duration_s": 274,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Qt2mbGP6vFI",
+    "title": "Phil Collins - Another Day In Paradise (Official Music Video) [HD Upgrade]",
+    "channel": "Phil Collins",
+    "duration_s": 291,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "eaFlJQGtBeM",
+    "title": "Phil Collins - Another Day In Paradise [Audio HQ] HD",
+    "channel": "Phil Collins Music",
+    "duration_s": 323,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "531e-6fz9N4",
+    "title": "Phil Collins - Another Day In Paradise (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 323,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZdEZ3Y8c4Ho",
+    "title": "Phil Collins - Another Day in Paradise (Seriously Live in Berlin 1990)",
+    "channel": "Phil Collins",
+    "duration_s": 340,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "G2pTPOi8hHg",
+    "title": "Phil Collins - Another Day In Paradise (Lyrics)",
+    "channel": "RouxioMusic",
+    "duration_s": 319,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "There Is a Light That Never Goes Out - 2011 Remaster",
+   "artists": [
+    "The Smiths"
+   ],
+   "album": null,
+   "duration_ms": 244586,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0WQiDwKJclirSYG9v5tayI",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "N6ikT_D5rcg",
+    "title": "The Smiths-There Is a Light That Never Goes Out  (lyrics)",
+    "channel": "world of lyrics",
+    "duration_s": 241,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "siO6dkqidc4",
+    "title": "There Is a Light That Never Goes Out",
+    "channel": "The Smiths",
+    "duration_s": 245,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "b5xtddssmGc",
+    "title": "Morrissey - There Is a Light That Never Goes Out @ Radio City Music Hall - 09/16/2025",
+    "channel": "alleyc8cat",
+    "duration_s": 300,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "5Uf9D9Q0_uw",
+    "title": "Citizen - There Is A Light That Never Goes Out (The Smiths cover)",
+    "channel": "mizu",
+    "duration_s": 219,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Y4rbl3pVs_c",
+    "title": "Neil Finn & Friends - There is a Light That Never Goes Out (Live from 7 Worlds Collide)",
+    "channel": "nettwerkbackstage",
+    "duration_s": 258,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "siO6dkqidc4",
+    "title": "The Smiths - There Is A Light That Never Goes Out (Official Audio)",
+    "channel": "The Smiths",
+    "duration_s": 245,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "RFTbeQ_O8U0",
+    "title": "There Is a Light That Never Goes Out - The Smiths - lyrics",
+    "channel": "Lyric&Tradução",
+    "duration_s": 255,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "hb0jH0ce1NQ",
+    "title": "The Smiths - There Is A Light That Never Goes Out",
+    "channel": "The Smiths",
+    "duration_s": 245,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "56KEwU-IcVM",
+    "title": "Morrissey - There is a Light that Never Goes Out (Move Festival, Manchester 2004)",
+    "channel": "NudeAvenger",
+    "duration_s": 253,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "D0kHXMK0sOA",
+    "title": "The Smiths - There Is a Light That Never Goes Out | Lyrics",
+    "channel": "Rock Overdrive",
+    "duration_s": 244,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Smalltown Boy",
+   "artists": [
+    "Bronski Beat"
+   ],
+   "album": null,
+   "duration_ms": 302413,
+   "explicit": false,
+   "spotify_uri": "spotify:track:5vmRQ3zELMLUQPo2FLQ76x",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "88sARuFu-tc",
+    "title": "Smalltown Boy",
+    "channel": "Bronski Beat",
+    "duration_s": 304,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "W50HGix6eR4",
+    "title": "Bronski Beat - Smalltown Boy (Sub Español)",
+    "channel": "dimemarti 🧲💖",
+    "duration_s": 302,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yPRf-F8sXsw",
+    "title": "Bronski Beat   Smalltown Boy TOTP   1984 HD   HQ360P",
+    "channel": "Alex hugo Delgado orellana",
+    "duration_s": 301,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "WWK-nL9bAeI",
+    "title": "Bronski Beat - Smalltown Boy (Live ORS 1984)",
+    "channel": "VisualMusicMind",
+    "duration_s": 237,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "EFeWEOP-KnU",
+    "title": "Bronski Beat - Smalltown Boy (Runaway) (CH4YN Remix)",
+    "channel": "tech tunes hd",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "88sARuFu-tc",
+    "title": "Bronski Beat - Smalltown Boy (Official Video)",
+    "channel": "London Records",
+    "duration_s": 304,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "E5i2Wa7daDA",
+    "title": "Bronski Beat - Smalltown Boy (Official Audio)",
+    "channel": "London Records",
+    "duration_s": 304,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xuupcrJSrys",
+    "title": "Bronski Beat - Smalltown Boy (Lyrics)",
+    "channel": "7clouds",
+    "duration_s": 300,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PS-z3V6sTQQ",
+    "title": "Bronski Beat - Smalltown Boy (Top Of The Pops, 07.06.1984)",
+    "channel": "Jimmy Somerville OFFICIAL",
+    "duration_s": 229,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "byrjqf8pv78",
+    "title": "smalltown boy - bronski beat [slowed + reverb]",
+    "channel": "aestheticboy",
+    "duration_s": 353,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "9 to 5",
+   "artists": [
+    "Dolly Parton"
+   ],
+   "album": null,
+   "duration_ms": 166749,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4w3tQBXhn5345eUXDGBWZG",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "KnUxLwSOyEk",
+    "title": "9 to 5",
+    "channel": "Dolly Parton",
+    "duration_s": 166,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "8H5wW7UpnO4",
+    "title": "Dolly Parton - 9 To 5 (Live) The Dolly Show",
+    "channel": "chicagovidmaker",
+    "duration_s": 139,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "wzSiB2xRTPw",
+    "title": "9 TO 5 x WE FOUND LOVE (ALTÉGO MIX)",
+    "channel": "ALTÉGO",
+    "duration_s": 216,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "q9Yc5zMerKU",
+    "title": "Dolly Parton - Jolene (Lyrics)",
+    "channel": "Dolly Parton",
+    "duration_s": 160,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "cDNzfGSSwy4",
+    "title": "9 to 5 — Dolly Parton | Jodi DiPiazza",
+    "channel": "Jodi DiPiazza",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "UbxUSsFXYo4",
+    "title": "Dolly Parton - 9 To 5 (Official Video)",
+    "channel": "Dolly Parton",
+    "duration_s": 154,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Pcm2yDp8XxI",
+    "title": "Dolly Parton - 9 To 5 (Lyrics)",
+    "channel": "7clouds Country",
+    "duration_s": 166,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "3mzW6L1GTu8",
+    "title": "Dolly Parton - 9 To 5",
+    "channel": "LatinHype",
+    "duration_s": 182,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xQv3Lk1HESI",
+    "title": "Dolly Parton 9 to 5 (Live 2019 Performance from 50 year anniversary)",
+    "channel": "Brian Penny",
+    "duration_s": 154,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Lq1JD-bcGTo",
+    "title": "Dolly Parton - 9 To 5 (Lyrics)",
+    "channel": "Young Pilgrim Music",
+    "duration_s": 181,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Summer Of '69",
+   "artists": [
+    "Bryan Adams"
+   ],
+   "album": null,
+   "duration_ms": 216053,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0GONea6G2XdnHWjNZd6zt3",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "9f06QZCVUHg",
+    "title": "Bryan Adams - Summer Of 69 (Official Music Video)",
+    "channel": "Bryan Adams",
+    "duration_s": 208,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yfl0NAnlwkI",
+    "title": "Tommy Novak & Richard Marx - Summer of '69 (Bryan Adams) - The Voice Australia 2026 Grand Final",
+    "channel": "Australian Tunes",
+    "duration_s": 122,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "3_99S31D_KE",
+    "title": "Bryan Adams - Summer Of 69 .",
+    "channel": "Tony's Vinyl and CD Selection",
+    "duration_s": 213,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Y0pdQU87dc8",
+    "title": "(Everything I Do) I Do It For You",
+    "channel": "Bryan Adams",
+    "duration_s": 393,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ygsGqDPifMY",
+    "title": "Bryan Adams - Summer of '69 #music #rock #bryanadams",
+    "channel": "MúsIcA Digital",
+    "duration_s": 75,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9f06QZCVUHg",
+    "title": "Bryan Adams - Summer Of 69 (Official Music Video)",
+    "channel": "Bryan Adams",
+    "duration_s": 208,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "1i0i5lG6Ojc",
+    "title": "Bryan Adams - Summer of 69 (Classic Version)",
+    "channel": "Bryan Adams",
+    "duration_s": 249,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "sOmovvrwNWc",
+    "title": "Bryan Adams - Summer of 69 (Live At The Royal Albert Hall - 2024)",
+    "channel": "Bryan Adams",
+    "duration_s": 301,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "NgpcwYooLO0",
+    "title": "Bryan Adams - Summer Of 69 (Live)",
+    "channel": "Bryan Adams",
+    "duration_s": 463,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HtipPCt317Y",
+    "title": "Bryan Adams - Summer of 69 (Live At Wembley 1996)",
+    "channel": "Bryan Adams",
+    "duration_s": 418,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Tera Mera Rishta - New Version (From \"Awarapan 2\")",
+   "artists": [
+    "Mithoon, Pritam, Mustafa Zahid, Sayeed Quadri, Saaj Bhatt, Subodhh Sharma"
+   ],
+   "album": null,
+   "duration_ms": 365294,
+   "explicit": false,
+   "spotify_uri": "spotify:track:5uvG5xETXhVkBSr09RBjyC",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "6rvUyBiBtik",
+    "title": "Tera Mera Rishta",
+    "channel": "Sayeed Quadri, Mustafa Zahid, Pritam",
+    "duration_s": 372,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "G-XoWeer2rw",
+    "title": "Tera Mera Rishta - New Version | Awarapan2 |Emraan, Disha | Mithoon, Saaj, Sayeed, Mustafa ",
+    "channel": "Musicalindia🎶",
+    "duration_s": 363,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ox7hFYz-RtU",
+    "title": "Tera Mera Rishta - New Version |Awarapan2 | Emraan, Disha | Mithoon, Saaj, Sayeed,Mustafa",
+    "channel": "Md Kaif ",
+    "duration_s": 372,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "WK7LAnc7Hso",
+    "title": "Tera Mera Rishta - New Version · Mithoon · Pritam · Mustafa Zahid · Saaj Bhatt · Subodhh Sharma",
+    "channel": "SHRAvity",
+    "duration_s": 366,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pnpEOzADsjQ",
+    "title": "Tera Mera Rishta - New Version | Awarapan 2 | Emraan, Disha | Mithoon, Saaj, Sayeed, Mustafa",
+    "channel": "wander & whisky",
+    "duration_s": 349,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "6rvUyBiBtik",
+    "title": "Tera Mera Rishta - New Version | Awarapan 2 | Emraan, Disha | Mithoon, Saaj, Sayeed, Mustafa",
+    "channel": "Sony Music India and Vishesh Films",
+    "duration_s": 372,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "b5aMbsJq_EI",
+    "title": "Tera Mera Rishta 2.0 - Mustafa Zahid ",
+    "channel": "Mustafa Zahid",
+    "duration_s": 277,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "N-1a88_euQg",
+    "title": "Mustafa Zahid - Tera Mera Rishta - New Version | Awarapan 2 | Emraan, Disha | Mithoon, Saaj, Sayeed",
+    "channel": "DJ MRA",
+    "duration_s": 288,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "2ATDav3eApE",
+    "title": "Tera Mera Rishta- Sufi Version | Awarapan 2 | Niazi Nizami Brothers, Mithoon, Pritam, Mustafa",
+    "channel": "Sony Music India and Vishesh Films",
+    "duration_s": 275,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "sAvbiRVbyBs",
+    "title": "Tera Mera Rishta Continues | Extended Rap Version | Awarapan 2 | Emraan, Disha | Mithoon, Sayeed",
+    "channel": "MC GULKAAK",
+    "duration_s": 402,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Khat",
+   "artists": [
+    "Navjot Ahuja"
+   ],
+   "album": null,
+   "duration_ms": 296222,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3gixnmepHSsyAuho34rprN",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "g5teO9DHlQ0",
+    "title": "Navjot Ahuja - Khat (Official Audio) #khat #song #hindisong #trending #viral #viralsong #audio",
+    "channel": "kahani jaduu ",
+    "duration_s": 284,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "LUgpPmj6nR8",
+    "title": "Khat",
+    "channel": "Navjot Ahuja",
+    "duration_s": 297,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "8Dtvzn2A3Vs",
+    "title": "Navjot Ahuja - Khat (Lyrics)",
+    "channel": "desibeats",
+    "duration_s": 297,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "n3ucIkJ41NU",
+    "title": "Navjot Ahuja - Khat | cover | Bengali Version | Raj Halder",
+    "channel": "RJ Music Series ",
+    "duration_s": 52,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "kDJBbbYWuFI",
+    "title": "|khat| anushka gautam | navjot ahuja| guitar cover |",
+    "channel": "Anushka Gautam",
+    "duration_s": 68,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "LUgpPmj6nR8",
+    "title": "Navjot Ahuja - Khat (Official Audio) ",
+    "channel": "Navjot Ahuja",
+    "duration_s": 297,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "l6E16JAk_Fs",
+    "title": "Navjot Ahuja - Khat (Official Lyrical Video) ",
+    "channel": "Navjot Ahuja",
+    "duration_s": 297,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "0iBAgyPWK8A",
+    "title": "Navjot Ahuja - Aankhein (Official Lyrical Video)",
+    "channel": "Navjot Ahuja",
+    "duration_s": 316,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8Dtvzn2A3Vs",
+    "title": "Navjot Ahuja - Khat (Lyrics)",
+    "channel": "desibeats",
+    "duration_s": 297,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "LLrHnfqRCoo",
+    "title": "Navjot Ahuja - Aankhein (Official Audio)",
+    "channel": "Navjot Ahuja",
+    "duration_s": 316,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Arz Kiya Hai | Coke Studio Bharat",
+   "artists": [
+    "Anuv Jain"
+   ],
+   "album": null,
+   "duration_ms": 294500,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1bMkimTb47umgNP6xCi4A1",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "bP8ATWCvqzw",
+    "title": "Arz Kiya Hai",
+    "channel": "Anuv Jain",
+    "duration_s": 306,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "99CVvW16Lzk",
+    "title": "🎵 Arz Kiya Hai – Anuv Jain | Coke Studio Bharat#ArzKiyaHai #AnuvJain #CokeStudioBharat #SlowedReverb",
+    "channel": "slowed lofy",
+    "duration_s": 307,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "rhN7Aprreug",
+    "title": "Arz kiya hai | Anuv Jain | lost stories | Sarthak kalyani | Coke studio Bharat | Cover | sargam",
+    "channel": "Diwakar Khawas",
+    "duration_s": 85,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "MLIRcXhKrBk",
+    "title": "Arz Kiya Hai | Full Song | Anuv Jain | Coke Studio Bharat #song #anuvjain #arzkiyahai #peace",
+    "channel": "TrakReel ",
+    "duration_s": 291,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "dezSsqyX1C4",
+    "title": "Arz Kiya Hai — Full Song Decode ❤️ | Anuv Jain | Coke Studio Bharat ",
+    "channel": "Decode by Sunnyk",
+    "duration_s": 196,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "bP8ATWCvqzw",
+    "title": "Anuv Jain X Lost Stories - Arz Kiya Hai (Official Video) | Coke Studio Bharat",
+    "channel": "Coke Studio India  and Anuv Jain",
+    "duration_s": 306,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Kg8_ADYhYWE",
+    "title": "Anuv Jain - Arz Kiya Hai (Official Lyrical Video)",
+    "channel": "AnuvJainVEVO",
+    "duration_s": 295,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "LIEiEwpEhWM",
+    "title": "Arz Kiya Hai  -  Anuv Jain  | Aise tu lagay ki gulaab hai 🌹, aur waise hum toh tere hi gulaam hain 💫",
+    "channel": "Music hype",
+    "duration_s": 291,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "jKqCewZvECA",
+    "title": "ARZ KIYA HAI (Lyrics) - Anuv Jain | With Translation | Coke Studio | Anuv Jain New Song",
+    "channel": "Anuv Forever",
+    "duration_s": 294,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "0wlulIyVh0g",
+    "title": "Arz Kiya Hai (Lyrics) - Anuv Jain | Coke Studio ",
+    "channel": "Rival Vibes 🎶",
+    "duration_s": 303,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Tum Ho Toh (From \"Saiyaara\")",
+   "artists": [
+    "Vishal Mishra, Hansika Pareek, Raj Shekhar"
+   ],
+   "album": null,
+   "duration_ms": 318217,
+   "explicit": false,
+   "spotify_uri": "spotify:track:6G8vN5EUtcDxOXOXadF6kp",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "7Acvwht7p5M",
+    "title": "Vishal Mishra, Hansika Pareek - Tum Ho Toh (Lyrics)| Tum Ho Toh Sab Achha Hai",
+    "channel": "D-Muze India",
+    "duration_s": 318,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "iQ2AMoCEAdQ",
+    "title": "Tum Ho Toh💗| Song by Hansika Pareek, Raj Shekhar, and Vishal Mishra|| #viral #trending #vishalmishra",
+    "channel": "SPK Creations ",
+    "duration_s": 61,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "xna4scvp14A",
+    "title": "Tum Ho Toh  Lyrics - Vishal Mishra, Hansika Pareek / Saiyaara  / 8d with lyrics",
+    "channel": "8D With Lyrics",
+    "duration_s": 316,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "gr5WTcimbng",
+    "title": "Tum Ho Toh (Slowed + Reverb) | Vishal Mishra, Hansika Pareek | Saiyaara | VIKAS_EDIT_MUSIC",
+    "channel": "@VIKAS_EDIT_MUSIC",
+    "duration_s": 311,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "DvboTHzpq7c",
+    "title": "𝐓𝐮𝐦 𝐇𝐨 𝐓𝐨𝐡 ♫ (𝐋𝐲𝐫𝐢𝐜𝐬) | 𝐕𝐢𝐬𝐡𝐚𝐥 𝐌𝐢𝐬𝐡𝐫𝐚 • 𝐇𝐚𝐧𝐬𝐢𝐤𝐚 𝐏𝐚𝐫𝐞𝐞𝐤 | 𝐒𝐚𝐢𝐲𝐚𝐚𝐫𝐚",
+    "channel": "NMIXSTUDIO",
+    "duration_s": 317,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "7Acvwht7p5M",
+    "title": "Vishal Mishra, Hansika Pareek - Tum Ho Toh (Lyrics)| Tum Ho Toh Sab Achha Hai",
+    "channel": "D-Muze India",
+    "duration_s": 318,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rOUuGvJkBrQ",
+    "title": "Tum Ho Toh Song | Saiyaara | Ahaan Panday, Aneet Padda | Vishal Mishra, Hansika Pareek | Raj Shekhar",
+    "channel": "YRF",
+    "duration_s": 198,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8SYPKQMW_2Q",
+    "title": "Lyrical | Tum Ho Toh Song | Saiyaara | Ahaan, Aneet | Vishal Mishra, Hansika Pareek | Raj Shekhar",
+    "channel": "YRF",
+    "duration_s": 317,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "XT4Fd5xQuzg",
+    "title": "Tum ho toh - Saiyaara",
+    "channel": "Hansika Pareek",
+    "duration_s": 67,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "0US0CaDr7R4",
+    "title": "Tum Ho Toh Song | Saiyaara | Full Song Audio | Vishal Mishra, Hansika Pareek | Raj Shekhar",
+    "channel": "YRF Music",
+    "duration_s": 317,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Gehra Hua (From \"Dhurandhar\")",
+   "artists": [
+    "Shashwat Sachdev, Arijit Singh, Irshad Kamil, Armaan Khan"
+   ],
+   "album": null,
+   "duration_ms": 362400,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0Y6YW1552df031DjV8qBHv",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "MmnHXDHlhYg",
+    "title": "Gehra Hua FULL AUDIO (From \"Dhurandhar\")· Shashwat Sachdev · Arijit Singh ·Irshad Kamil· Armaan Khan",
+    "channel": "hypergaming",
+    "duration_s": 216,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "nUYzgvmw-Ys",
+    "title": "Gehra Hua Lyrics || Shashwat Sachdev,Arijit Singh,Irshad Kamil,Armaan Khan || Dhurandhar Movie",
+    "channel": "Lyrical Beatz HINDI",
+    "duration_s": 363,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "PuG4AyiEQC8",
+    "title": "Gehra Hua (From \"Dhurandhar\") - Arijit Singh | Shashwat Sachdev | Irshad Kamil| Armaan Khan",
+    "channel": "Hindi Musical BOSS",
+    "duration_s": 363,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "stqAfUqMRLY",
+    "title": "Gehra Hua (From “Dhurandhar”) - Arijit Singh | Shashwat Sachdev | Irshad Kamil | Armaan Khan",
+    "channel": "ANL YT",
+    "duration_s": 363,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "1621yG-T4QY",
+    "title": "Gehra Hua ❤️ | Dhurandhar | Arijit Singh, Armaan Khan | Shashwat Sachdev | Slowed + Reverb",
+    "channel": "Vishal Bhadoriya ",
+    "duration_s": 375,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "GX9x62kFsVU",
+    "title": "Gehra Hua | Dhurandhar | Ranveer Singh, Sara Arjun, Shashwat Sachdev, Arijit Singh, Irshad Kamil",
+    "channel": "Saregama Music",
+    "duration_s": 231,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "gkSO4JmJ8L4",
+    "title": "Gehra Hua - Eclipsa Audio | Dhurandhar | Ranveer Singh, Sara Arjun, Shashwat Sachdev, Arijit Singh",
+    "channel": "Saregama Music",
+    "duration_s": 364,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "GVizJ_jpUnw",
+    "title": "Gehra Hua - Lyrical (Full Version) | Dhurandhar, Ranveer Singh, Sara A,Shashwat Sachdev,Arijit Singh",
+    "channel": "Saregama Music",
+    "duration_s": 364,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "0KYJPoGJcMc",
+    "title": "Gehra Hua - Audio | Dhurandhar | Ranveer Singh, Sara Arjun, Shashwat Sachdev, Arijit Singh",
+    "channel": "Saregama Music",
+    "duration_s": 368,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "FG6FruLw18k",
+    "title": "Gehra Hua (Lyrics/English Translation)- Dhurandhar | Arijit Singh, Shashwat Sachdev, Irshad Kamil",
+    "channel": "Indic Lyrics",
+    "duration_s": 363,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Sanson Ki Mala - From “Mirzapur The Movie”",
+   "artists": [
+    "Madhur Sharma, Vaibhav Pani, Nusrat Fateh Ali Khan"
+   ],
+   "album": null,
+   "duration_ms": 188139,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3en2lZzcpnsHSFFWDErrll",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "CQfiSM81IoE",
+    "title": "SANSON KI MALA MASHUP | MIRZAPUR THE MOVIE | AWARI | MADHUR SHARMA",
+    "channel": "Melowave ",
+    "duration_s": 1352,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "b32Byt7xLnM",
+    "title": "Sanson ki Mala | Nusrat Fateh Ali Khan & Madhur Sharma | Pritam Ka Kuch Dosh Nahi  | Mirzapur",
+    "channel": "Romantic Melody Hub",
+    "duration_s": 189,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "vPg97uMHPk8",
+    "title": "SANSON KI MALA PE ( Reprise ) | Madhur Sharma x Diljit Dosanjh",
+    "channel": "MR Beats",
+    "duration_s": 205,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "3sdCtI8Q5jQ",
+    "title": "Sanson Ki Mala - Madhur Sharma |Mirzapur: The Movie | Divyenndu, ShriyaPilgaonkar, Ali Fazal | 4k",
+    "channel": "Toxic Raj ",
+    "duration_s": 200,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "mZfc1FkZKQ4",
+    "title": "Sanson Ki Mala 💗✨(Lyrical) Video| Mirzapur The Movie| HD Video New Song 2026",
+    "channel": "YKB's Hits",
+    "duration_s": 184,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "NqqXS-P0uBM",
+    "title": "Sanson ki Mala (Mirzapur The Movie) Nusrat Fateh Ali Khan & Madhur Sharma | Pritam Ka Kuch Dosh Nahi",
+    "channel": "Oriental Star Agencies Ltd",
+    "duration_s": 186,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HHngcMGK-KE",
+    "title": "Sanson Ki Mala - Lyrical Video | Mirzapur The Movie | In Cinemas Now",
+    "channel": "Excel Movies and Universal Music India",
+    "duration_s": 190,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rw0MxpLvJVc",
+    "title": "Sanson Ki Mala - Full Song | Mirzapur The Movie | Madhur Sharma | Vaibhav P | Nusrat Fateh Ali Khan",
+    "channel": "AA Films",
+    "duration_s": 189,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "m844fBy-6g0",
+    "title": "Sansonki Mala (MirzapurThe Movie)I MadhurSharma |Bollywood Song IBirju Lohar& BeenaTripathi",
+    "channel": "SNK Edition",
+    "duration_s": 200,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "8FoUPJXHI-g",
+    "title": "Sanson Ki Mala Pe - Slow And Reverb  I Mirzapur - The Movie | Madhur Sharma | Nusrat Fateh Ali Khan",
+    "channel": "Mohd Jaid",
+    "duration_s": 200,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Jaiye Sajana",
+   "artists": [
+    "Shashwat Sachdev, Jasmine Sandlas, Satinder Sartaaj"
+   ],
+   "album": null,
+   "duration_ms": 180004,
+   "explicit": false,
+   "spotify_uri": "spotify:track:6xwKNAUHeo2DbWNAPi8aEy",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "F2m4HPLvj-4",
+    "title": "Jaiye Sajana",
+    "channel": "Jasmine Sandlas",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "BZjKC6YQUPU",
+    "title": "Jaiye Sajana (Lyrical): Dhurandhar The Revenge | Shashwat Sachdev | Jasmine Sandlas,Satinder Sartaaj",
+    "channel": "Deep Music Nonstop 90's",
+    "duration_s": 201,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "9yfObDLzmKI",
+    "title": "JAIYE SAJANA (Video): Dhurandhar The Revenge | Shashwat Sachdev | Satinder Sartaaj | Jasmine Sandlas",
+    "channel": "Tere Ishq Mein ",
+    "duration_s": 244,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yKbEbX-TER4",
+    "title": "Jaiye Sajana LYRICS-Dhurandhar The Revenge | Jasmine Sandlas, Satinder Sartaaj",
+    "channel": "Sm Lyrics Hub",
+    "duration_s": 180,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "wqCbd7xYUXY",
+    "title": "JAIYE SAJANA (Video): Dhurandhar The Revenge | Shashwat Sachdev | Satinder Sartaaj | Jasmine Sandlas",
+    "channel": "Neon Soul Music",
+    "duration_s": 119,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "F2m4HPLvj-4",
+    "title": "JAIYE SAJANA (Video): Dhurandhar The Revenge | Ranveer Singh | Shashwat S | Satinder S | Jasmine S",
+    "channel": "T-Series and 2 more",
+    "duration_s": 152,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "WK_PlcL8Tzo",
+    "title": "Jaiye Sajana (Audio): Dhurandhar The Revenge | Shashwat Sachdev | Jasmine Sandlas, Satinder Sartaaj",
+    "channel": "T-Series",
+    "duration_s": 181,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "xV1-V1E5ZlQ",
+    "title": "Jaiye Sajana (Lyrical): Dhurandhar The Revenge | Ranveer Singh Shashwat Sachdev,Jasmine S,Satinder S",
+    "channel": "T-Series and 2 more",
+    "duration_s": 201,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "utm-FWimjoQ",
+    "title": "Jaiye Sajana (Live at Dhurandhar The Revenge - Music Album Launch)| Shashwat Sachdev,Jasmine Sandlas",
+    "channel": "T-Series",
+    "duration_s": 116,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "11M7U4DvMoc",
+    "title": "JAIYE SAJANA (Recreated) (Full Audio) | Satinder Sartaaj | Shashwat Sachdev | Jasmine Sandlas",
+    "channel": "T-Series",
+    "duration_s": 408,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Vaaroon Forever - From “Mirzapur The Movie”",
+   "artists": [
+    "Anand Bhaskar, Romy, Shreya Ghoshal, Ginny Diwan"
+   ],
+   "album": null,
+   "duration_ms": 252400,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3dcSec3fFteTR6QlQ194aI",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "xRgXX5odulg",
+    "title": "Vaaroon Forever | Full Song | Mirzapur The Movie | Shreya Ghoshal | Romy | Anand Bhaskar",
+    "channel": "DHRUV_EDIT • 289kviews • 9 hours ago ...       .",
+    "duration_s": 232,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "UO-SNBMS59o",
+    "title": "Vaaroon Forever | Full Song | Mirzapur The Movie | Shreya Ghoshal | Romy | Anand Bhaskar",
+    "channel": "DHRUV_EDIT • 289kviews • 9 hours ago ...       .",
+    "duration_s": 464,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "i0I2CAjWF4U",
+    "title": "Vaaroon Forever Lyrics Shreya x Romy #trending #lyricsvideo",
+    "channel": "HindiLyricsZone34",
+    "duration_s": 248,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AxEMT0T602I",
+    "title": "Vaaroon Forever (Official Video) | Mirzapur The Movie | Shreya Ghoshal, Romy | Anand B, Ginny D",
+    "channel": "i phone lyrics",
+    "duration_s": 251,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pxkO7uJfxF0",
+    "title": "Vaaroon Forever (Official Video) | Mirzapur The Movie | Shreya Ghoshal | Romy | Anand B | Ginny D",
+    "channel": "Galaxy Fact",
+    "duration_s": 254,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "SQ4jZ-EAL88",
+    "title": "Vaaroon Forever (Official Video) | Mirzapur The Movie | Shreya Ghoshal | Romy | Anand B | Ginny D",
+    "channel": "Excel Movies and Universal Music India",
+    "duration_s": 253,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "aCVW-2C4NXQ",
+    "title": "Vaaroon Forever | Mirzapur The Movie | Anand Bhaskar | Romy | Ginny Diwan | Shreya Ghoshal",
+    "channel": "Anand Bhaskar",
+    "duration_s": 255,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "BrKnJw82Lus",
+    "title": "Vaaroon - Mirzapur | Pankaj Tripathi, Ali Fazal, Divyenndu | Romy, Anand Bhaskar, Ginny D | Lyrical",
+    "channel": "Zee Music Company",
+    "duration_s": 366,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "2VuqX_ygwSc",
+    "title": "Vaaroon Forever - Full Song | Mirzapur The Movie | Shreya Ghoshal | Romy | Anand Bhaskar",
+    "channel": "AA Films",
+    "duration_s": 253,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZKqU4mqYq7g",
+    "title": "Vaaroon Forever - Romy & Shreya Ghoshal (Lyrics) | Lyrical Bam Hindi ",
+    "channel": "LYRICAL BAM HINDI",
+    "duration_s": 264,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Samjho Na - From \"The Vvaan\"",
+   "artists": [
+    "Tanishk Bagchi, Jubin Nautiyal, Suvarna Tiwari, Manoj Muntashir"
+   ],
+   "album": null,
+   "duration_ms": 253833,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1yQZfjUeKWs31AYV2IxN0V",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "Q_1Cae2EIb0",
+    "title": "Samjho Na Full Song | The Vvaan - Force Of The Forrest | Sidharth & Tamannaah | New Hindi Song 2026",
+    "channel": "World Music Series",
+    "duration_s": 311,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "E0TxgZWTZ7k",
+    "title": "Samjho Na | The Vvaan | Sidharth Malhotra & Tamannaah Bhatia | Jubin Nautiyal | New Hindi Song 2026",
+    "channel": "Heer2.7",
+    "duration_s": 264,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "erZZfagrm44",
+    "title": "Samjho Na ❤️ | Jubin Nautiyal | The Vvaan | New Hindi Song 2026",
+    "channel": "Shiva Nanda",
+    "duration_s": 260,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "RQRb_PMOqhE",
+    "title": "Samjho Na - THE VVAAN | Siddharth Malhotra & Tamannah | Jubin Nautiya , Tanishk B, Suvarn.... ",
+    "channel": "Masic music center",
+    "duration_s": 264,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "0jICHgYm0mM",
+    "title": "Samjho Na | The Vvaan | Sidharth Malhotra & Tamannaah Bhatia | Romantic Song 2026 | LafzX Official",
+    "channel": "LafzX Official",
+    "duration_s": 183,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "1IKsJiMLGu0",
+    "title": "Samjho Na - THE VVAAN | Sidharth Malhotra & Tamannaah | Jubin Nautiyal, Tanishk B, Suvarna, Manoj M",
+    "channel": "Zee Music Company",
+    "duration_s": 264,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "GstCwmaNme4",
+    "title": "Samjho Na | The Vvaan | Sidharth Malhotra, Tamannaah Bhatia | Jubin Nautiyal, Suvarna |Romantic Song",
+    "channel": "beats India",
+    "duration_s": 253,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PGlQ7lSUT30",
+    "title": "Samjho Na | The VVAAN | Sidharth Malhotra & Tamannaah | Jubin Nautiyal | Tanishk Bagchi ",
+    "channel": "K Series Music  and Beat Sindhu",
+    "duration_s": 214,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "DLNxnffrRF4",
+    "title": "Samjho Na - The Vvaan - Bagchi, Jubin Nautiyal, Suvarna Tiwari, Manoj Muntashir",
+    "channel": "Life is Music ",
+    "duration_s": 254,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Ay1z0Ugw8vU",
+    "title": "Samjho Na - THE VVAAN | Singers: Jubin Nautiyal & Suvarna Tiwari | Lyrics | ",
+    "channel": "7 Ehsaas",
+    "duration_s": 264,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Parvati",
+   "artists": [
+    "Sadhu Tiwari"
+   ],
+   "album": null,
+   "duration_ms": 284843,
+   "explicit": false,
+   "spotify_uri": "spotify:track:1Z3QzpDrOqINSkmJODoGnd",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "PwTcikeQ8Wg",
+    "title": "Parvati (Lyrical) | Jab Zid Pe Aa Gayi Parvati | Hanuman Ansh | Sadhu Tiwari | Shiv Parvati Song",
+    "channel": "Times Music",
+    "duration_s": 306,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "pCBaGUP7E84",
+    "title": "Parvati – Full Song | Hanuman Ansh | Sadhu Tiwari | Shobhinaw Satyaa | Official Video @justpinku1752",
+    "channel": "Trending vibee",
+    "duration_s": 286,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "94mntMF1i6c",
+    "title": "Parvati song ( Lyrics ) | lyrical video | Hanuman ansh | Sadhu Tiwari",
+    "channel": "ManMogra Lyrics",
+    "duration_s": 280,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Mx2hExPcjvU",
+    "title": "Parvati (full song)||Hanuman Ansh Movie Singer : Sadhu Tiwari",
+    "channel": "Hanu Man Chal Isha",
+    "duration_s": 301,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "GK_FtxdVp40",
+    "title": "parvati (Lyrical) jab zid pe aa    gyi parvati. | Hanuman Ansh sadhu tiwari shiv parvati songs",
+    "channel": "Gauri devi ",
+    "duration_s": 66,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "PwTcikeQ8Wg",
+    "title": "Parvati (Lyrical) | Jab Zid Pe Aa Gayi Parvati | Hanuman Ansh | Sadhu Tiwari | Shiv Parvati Song",
+    "channel": "Times Music and Times Music Spiritual",
+    "duration_s": 306,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rjfxLq3OQ0w",
+    "title": "Parvati (Full Song) | Jab Zid Pe Aa Gayi Parvati | Hanuman Ansh | Sadhu Tiwari | Shobhinaw Satyaa",
+    "channel": "Times Music",
+    "duration_s": 301,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "s2HYl12gmOY",
+    "title": "Parvati - Full Song | Hanuman Ansh | Sadhu Tiwari | Shobhinaw Satyaa | In Cinemas Now",
+    "channel": "Times Music Spiritual and 2 more",
+    "duration_s": 286,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZcG60FzsKEU",
+    "title": "Parvati (Full Audio) | Jab Zid Pe Aa Gayi Parvati | Hanuman Ansh |Sadhu Tiwari |Parvati Parvati Song",
+    "channel": "Times Music",
+    "duration_s": 285,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "SmTy12uKHJA",
+    "title": "Parvati -full song | hanuman Ansh |Sadhu tiwari#HanumanAnsh#parvati #song #youtube #trending #viral ",
+    "channel": "toonbox33🐣",
+    "duration_s": 281,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Pardesiya - From \"Param Sundari\"",
+   "artists": [
+    "Sachin-Jigar, Sonu Nigam, Krishnakali Saha, Amitabh Bhattacharya"
+   ],
+   "album": null,
+   "duration_ms": 231739,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0q84FggW57NXGtLHoetS0Y",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "48-gFOiHd2Q",
+    "title": "Sonu Nigam & Krishnakali Saha - Pardesiya | Official Lyrical Video",
+    "channel": "OddBoy Verse",
+    "duration_s": 238,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "jKDra9pJUDY",
+    "title": "Pardesiya | Sonu Nigam, Krishnakali Saha & Sachin-Jigar | Lofi Slowed + Reverb | 2025",
+    "channel": "Sunny",
+    "duration_s": 276,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "g-QsyOUczQ8",
+    "title": "Pardesiya - Param Sundari | Siddharth M, Januvia K | Sachin Jigar, Sonu Nigam, Krishnakali, Amitabh ",
+    "channel": "T _ series T_series",
+    "duration_s": 178,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "-dhAU-kx8f4",
+    "title": "Pardesiya 2 - Param Sundari | Sonu Nigam | Sidharth, Janhvi | T Sangeet Version | Hindi Song 2026",
+    "channel": "T Sangeet",
+    "duration_s": 301,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "f51nt4mEkxY",
+    "title": "Pardesiya - Param Sundari | Raaj , Tanushree | Sachin-Jigar, Sonu Nigam, Krishnakali, Amitabh B",
+    "channel": "HALDIA RJ STUDIO",
+    "duration_s": 179,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "N4wK3NtVRT0",
+    "title": "Pardesiya - Param Sundari | Sidharth M, Janhvi K | Sachin-Jigar, Sonu Nigam, Krishnakali, Amitabh B",
+    "channel": "Universal Music India",
+    "duration_s": 178,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "yTE0e7_9l5U",
+    "title": "Pardesiya (Lyrical) Param Sundari | Sidharth M, Janhvi K |Sachin-Jigar, Sonu, Krishnakali, Amitabh B",
+    "channel": "Universal Music India",
+    "duration_s": 229,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "3EVCqRLf2Vo",
+    "title": "Pardesiya (Film Version) Sidharth M, Janhvi K |Param Sundari|Sachin-Jigar, Sonu,Krishnakali,Amitabh",
+    "channel": "UMusicIndiaVEVO",
+    "duration_s": 235,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "_wjtdQs0cqc",
+    "title": "Pardesiya Lyrics - Param Sundari | Sachin-Jigar, Sonu Nigam, Krishnakali Saha",
+    "channel": "Vibe Bird",
+    "duration_s": 231,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "KjIJITnHIEc",
+    "title": "Pardesiya (Param Sundari) Sachin-Jigar, Sonu Nigam, Krishnakali S | Razmi & Fida | Cover Music Video",
+    "channel": "Universal Music India",
+    "duration_s": 231,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Bandhu 2.0 (From \"Cocktail 2\")",
+   "artists": [
+    "Pritam, Kavita Seth, Neeraj Shridhar, Irshad Kamil"
+   ],
+   "album": null,
+   "duration_ms": 221777,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4qnFfsCaMe2Nsg1VfFPxq9",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "HxGAKDyShXk",
+    "title": "Cocktail 2 - Bandhu 2.0(Lyrics)Pritam, Kavita Seth, Neeraj Shridhar #song #asthetic #viral ",
+    "channel": "TKDesign_Crafts",
+    "duration_s": 222,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "rIdkdJMd5YY",
+    "title": "Bandhu 2.0 (Lyrics) - Kavita Sheth and Neeraj Shridhar | Cocktail 2 | Pritam | ",
+    "channel": "ah edits editor",
+    "duration_s": 213,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "dC-idKdU6ts",
+    "title": "Cocktail 2 – Bandhu 2.0 (Lyrics)",
+    "channel": "Lyrical Titans",
+    "duration_s": 133,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "kbzOJ5blCRY",
+    "title": "Bandhu 2.0 Lyrical Video | Shahid Kapoor | Kriti Sanon | Rashmika Mandanna | Pritam",
+    "channel": "Stupendo Stories",
+    "duration_s": 223,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "o1RducJbUdc",
+    "title": "Tumhi Ho Bandhu",
+    "channel": "Kavita Seth, Neeraj Shridhar",
+    "duration_s": 295,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ecKlnySvef4",
+    "title": "Bandhu 2.0 (Lyrics) | Cocktail 2 | Kavita Seth | Neeraj Shridhar",
+    "channel": "LYRICS FOR YOU",
+    "duration_s": 220,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "fC59yiRQoK4",
+    "title": "Pritam - Bandhu 2.0 (Lyrics) ft. Kavita Seth, Neeraj Shridhar",
+    "channel": "seventyskye",
+    "duration_s": 222,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rze_LTtwI4Q",
+    "title": "Bandhu 2.0 | Cocktail 2 | Lyric Video | Shahid, Kriti, Rashmika | Pritam, Kavita, Neeraj, Irshad K",
+    "channel": "Sony Music India",
+    "duration_s": 181,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "PMpVJkT7DZg",
+    "title": "Bandhu 2.0 | Film Version | Cocktail 2 | Shahid, Kriti, Rashmika| Pritam, Kavita, Neeraj, Irshad K",
+    "channel": "Sony Music India",
+    "duration_s": 175,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "H13xcwrWMoU",
+    "title": "Pritam, Kavita Seth, Neeraj Shridhar - Bandhu 2.0 (Lyrics)",
+    "channel": "Vibe Bird",
+    "duration_s": 222,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Casa Tupka Anthemo",
+   "artists": [
+    "Yo Yo Honey Singh, Priyanshi Srivastava"
+   ],
+   "album": null,
+   "duration_ms": 183652,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0cbmbkbCIg97a0CTt2c0Y0",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "4txI3saPX-8",
+    "title": "Casa Tupka Anthemo | ‪@YoYoHoneySingh‬ feat. Priyanshi | Full Video",
+    "channel": "Amaze Studio",
+    "duration_s": 147,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "YfMaWfDk27E",
+    "title": "Casa Tupka Anthemo - Yo Yo Honey Singh | Priyanshi (Official Music Video) | New Song 2026",
+    "channel": " Music ",
+    "duration_s": 344,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "N_0ANP-bBhE",
+    "title": "CASA TUPKA ANTHEMO — Yo Yo Honey Singh, Priyanshi Srivastava ",
+    "channel": "Sachin Music Studio ",
+    "duration_s": 186,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "erDqgWHgbKQ",
+    "title": "Casa Tupka Anthemo | @YoYo Honey Singhfeat. Priyanshi | Full Video | New Official Song 2026",
+    "channel": "IMRAN IPSA ",
+    "duration_s": 344,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "CSAlc0V1oPY",
+    "title": "Casa Tupka (Anthemo 19's Version) - Yo Yo Honey Singh | Priyanshi Srivastava🔥",
+    "channel": "DardVerse",
+    "duration_s": 182,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "vRjaGgDsWSo",
+    "title": "Casa Tupka Anthemo | @YoYoHoneySingh  feat. Priyanshi | Full Video",
+    "channel": "Yo Yo Honey Singh",
+    "duration_s": 186,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "_VNAC8H7opY",
+    "title": "Casa Tupka Anthemo | ‪@YoYoHoneySingh‬ feat. Priyanshi | OFFICIAL MUSIC VIDEO | New Song 2026",
+    "channel": "Factoholyc",
+    "duration_s": 344,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "rL5ENuRpYwc",
+    "title": "Casa tupka anthemo | @YoYoHoneySingh feat. Priyanshi | full song music ",
+    "channel": "sk dance studio bhiwadi",
+    "duration_s": 183,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "FuLR3IZ_b9Q",
+    "title": "Casa Tupka Anthemo   YoYoHoneySingh  feat  Priyanshi  OFFICIAL MUSIC VIDEO",
+    "channel": "AI_Sound_hits",
+    "duration_s": 344,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "koahi2g4NO4",
+    "title": "Yo Yo Honey Singh - Casa Tupka Anthemo (Lyrics) ft. Priyanshi Srivastava",
+    "channel": "Indie India",
+    "duration_s": 184,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Banger",
+   "artists": [
+    "Badshah, Hiten, Sharvi Yadav"
+   ],
+   "album": null,
+   "duration_ms": 158095,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0Wm64vrNZTUxpo762vW1Ck",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "sY45iA7PFS8",
+    "title": "Banger",
+    "channel": "Badshah, Hiten, Sharvi Yadav",
+    "duration_s": 173,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "BfurHbn42QQ",
+    "title": "BANGER (Official Music )  Badshah x Sharvi x Hiten ft Aveera Singh | #desihiphop @badshahlive ",
+    "channel": "MP15 BEAT",
+    "duration_s": 173,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "BpbfQzLQDg0",
+    "title": "BANGER | Music Video 2 | @badshahliveX SHARVI YADAV x HITEN Ft AVEERA SINGH | #desihiphop#banger ",
+    "channel": "All__UpDaTeS",
+    "duration_s": 34,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "kyBX6T7zVks",
+    "title": "BANGAR (Oficial Music Video) Badshah, Sharvi Hiten ft Aveera Shingh #desihiphop",
+    "channel": "cvamsk",
+    "duration_s": 195,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "AG2F457hv5M",
+    "title": "BANGER Lyrical Video | Badshah ft. Sharvi & Hiten",
+    "channel": "JaiExpress",
+    "duration_s": 159,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "sY45iA7PFS8",
+    "title": "BANGER (Official Music Video)  Badshah x Sharvi x Hiten ft Aveera Singh | #desihiphop #viralsong",
+    "channel": "Badshah and 0075 Pentertainment",
+    "duration_s": 173,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ciLGHX_mq48",
+    "title": "Badshah - Daaku (Official Music Video) | Sharvi Yadav |  Hiten | EK THA RAJA",
+    "channel": "Badshah",
+    "duration_s": 168,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Zrt77f7nTqY",
+    "title": "Morni (Official Video) | Badshah | Sharvi Yadav | Preity Mukhundhan | Hiten",
+    "channel": "Saregama Music",
+    "duration_s": 200,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Ag1B6n8g13E",
+    "title": "Ho Ladke Super Man (Official Video) Badshah & Sharvi Yadav | Banger - Badshah | New Song 2026",
+    "channel": "JX Melodies",
+    "duration_s": 296,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "hK9IA2K0fZs",
+    "title": "BANGAR (Oficial Music Video) Badshah, Sharvi Hiten ft Aveera Shingh #desihiphop",
+    "channel": "GW ASIF FF YT",
+    "duration_s": 195,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Shararat (From \"Dhurandhar\")",
+   "artists": [
+    "Shashwat Sachdev, Madhubanti Bagchi, Jasmine Sandlas"
+   ],
+   "album": null,
+   "duration_ms": 224083,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0XGiT2TuYldtm59IweKDbg",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "axq4fdbCVGE",
+    "title": "‎SHARARAT (Lyrics)- Dhurandhar by Madhubanti Bagchi, Jasmine Sandlas| Shashwat Sachdev |Jiwan Rijal",
+    "channel": "Jiwan Rijal",
+    "duration_s": 221,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "iHpopSCgSDo",
+    "title": "Shararat | Shashwat Sachdev | Madhubanti Bagchi, Jasmine Sandlas | New Hindi Song 2026",
+    "channel": "dhoom🎵🎶",
+    "duration_s": 300,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "DKQmlJqEWWI",
+    "title": "Shararat — Shashwat Sachdev, Madhubanti Bagchi & Jasmine Sandlas | Official Lyrics Video | 4K",
+    "channel": "8Clouds",
+    "duration_s": 225,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "n1dwSXrAkKM",
+    "title": "SHARARAT 🔥Madhubanti Bagchi & Jasmine Sandlas 🎵1 MILLION VIEWS | 4K ULTRA HD",
+    "channel": "S. M. A. YouTuber 2026",
+    "duration_s": 181,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "o9Au2v9WDds",
+    "title": "Shararat Song ❤️ | Dhurandhar | Shashwat Sachdev, Madhubanti Bagchi, Jasmine Sandlas | Lyrics Video",
+    "channel": "Music world",
+    "duration_s": 175,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "YyepU5ztLf4",
+    "title": "Shararat | Dhurandhar | Ranveer, Aditya Dhar, Shashwat, Jasmine, Madhubanti, Ayesha, Krystle",
+    "channel": "Saregama Music",
+    "duration_s": 229,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "emCF66u7BHk",
+    "title": "Shararat - Audio | Dhurandhar | Ranveer Singh, Shashwat S, Jasmine, Madhubanti, Ayesha, Krystle",
+    "channel": "Saregama Music",
+    "duration_s": 228,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "v5jVX0QYwQo",
+    "title": "Shararat - 8K Video | Dhurandhar | Ranveer Singh, Shashwat S, Jasmine, Madhubanti, Ayesha, Krystle",
+    "channel": "Saregama Music",
+    "duration_s": 227,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "0PXEYzjZWlQ",
+    "title": "Shararat - Eclipsa Audio | Dhurandhar | Ranveer, Shashwat, Jasmine, Madhubanti, Ayesha, Krystle",
+    "channel": "Saregama Music",
+    "duration_s": 230,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "tkNvoR0dmGw",
+    "title": "Making of Shararat | BTS | Dhurandhar | Ranveer S, Shashwat, Jasmine, Madhubanti, Ayesha, Krystle",
+    "channel": "Saregama Music and 2 more",
+    "duration_s": 152,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Aavan Jaavan (From \"WAR 2\")",
+   "artists": [
+    "Pritam, Arijit Singh, Nikhita Gandhi, Amitabh Bhattacharya"
+   ],
+   "album": null,
+   "duration_ms": 225535,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0ayku1IzLHuA3cHY4HxOCN",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "ufZ-Ew_qZss",
+    "title": "Aavan Jaavan Lyrics - War 2 | Arijit Singh, Nikhita Gandhi",
+    "channel": "ClipVerse ",
+    "duration_s": 218,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "gBii5fBjdaM",
+    "title": "Aavan Jaavan Lyrics (Slowed+Reverb) - War 2 | Arijit Singh, Nikhita Gandhi",
+    "channel": "Mox MJ",
+    "duration_s": 249,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "uldmqbmUw5c",
+    "title": "Arijit Singh - Aavan Javan (Lyrics) | Pritam, Nikhita, Amitabh B | War 2",
+    "channel": "MelodiaFusion",
+    "duration_s": 232,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "PRCdcIYXhsE",
+    "title": "Aavan Jaavan - Arijit Singh & Nikhita Gandhi (Lyrics) | War 2",
+    "channel": "Katil vibes",
+    "duration_s": 245,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "93t0xUkVsRg",
+    "title": "Aavan Jaavan - WAR 2 | Pritam, Arijit Singh, Nikhita | Karaoke with sing-along Lyrics",
+    "channel": "DivVisionStudios",
+    "duration_s": 226,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "enjkcCdAlXc",
+    "title": "Aavan Jaavan Song | WAR 2 | Hrithik Roshan, Kiara Advani | Pritam, Arijit Singh, Nikhita | Amitabh B",
+    "channel": "YRF",
+    "duration_s": 240,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "SKek-mLl9L0",
+    "title": "Lyrical | Aavan Jaavan Song | War 2 | Hrithik Roshan, Kiara | Pritam, Arijit Singh, Nikhita, Amitabh",
+    "channel": "YRF",
+    "duration_s": 225,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Q04ixn2Jwyo",
+    "title": "Aavan Jaavan Lyrics - War 2 | Arijit Singh, Nikhita Gandhi ",
+    "channel": "Vibe Bird",
+    "duration_s": 224,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "RgqJl7lYSgs",
+    "title": "Aavan Jaavan (Slowed + Reverb) | Arijit Singh, Nikhita Gandhi | War 2 | SR Lofi",
+    "channel": "SR Lofi",
+    "duration_s": 251,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZIh5mM331xI",
+    "title": "Aavan Jaavan (Lyrics/English Translation)- Arijit Singh, Nikhita, Pritam | Hrithik, Kiara | War 2",
+    "channel": "Indic Lyrics",
+    "duration_s": 235,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Guzarish",
+   "artists": [
+    "Satinder Sartaaj"
+   ],
+   "album": null,
+   "duration_ms": 288030,
+   "explicit": false,
+   "spotify_uri": "spotify:track:45Gi7lLR8VI4hFyPeJpxH3",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "CEbB9kdu8ng",
+    "title": "GUZARISH (गुज़ारिश) - SATINDER SARTAAJ | BHUSHAN KUMAR",
+    "channel": null,
+    "duration_s": 291,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "YbtJo8nMQRI",
+    "title": "GUZARISH (गुज़ारिश) (Lyrical Video) | SATINDER SARTAAJ | BHUSHAN KUMAR",
+    "channel": null,
+    "duration_s": 298,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "lFIlXdC7T34",
+    "title": "GUZARISH (Rave Rythem Mix) | Satinder Sartaaj | Bhushan Kumar | DJ Remix 2026",
+    "channel": null,
+    "duration_s": 354,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yxgURK21rI0",
+    "title": "Guzarish (Slowed & Reverb) - Satinder Sartaaj | Soulful Sufi Chill Beats",
+    "channel": null,
+    "duration_s": 333,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "gtWwJekaTIQ",
+    "title": "GUZARISH – Punjabi Song 2026 Satinder Sartaaj | Romantic Punjabi Love Song | Punjabi Love Song",
+    "channel": null,
+    "duration_s": 252,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "CEbB9kdu8ng",
+    "title": "GUZARISH (गुज़ारिश) - SATINDER SARTAAJ | BHUSHAN KUMAR",
+    "channel": "T-Series and 2 more",
+    "duration_s": 291,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "IeLb8ibSRqg",
+    "title": "Guzarish - Satinder Sartaaj (Lyrics) | Nasha Akhiyon Mein Jyada Hai Sharab Se | Latest Punjabi Songs",
+    "channel": "HN Editz XYZ",
+    "duration_s": 289,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "_a4Maz-IRew",
+    "title": "Guzarish - Lofi (Slowed + Reverb) | Satinder Sartaaj | New Punjabi Song | RN Lofi Alone",
+    "channel": "RN Lofi Alone",
+    "duration_s": 297,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "YbtJo8nMQRI",
+    "title": "GUZARISH (गुज़ारिश) (Lyrical Video) | SATINDER SARTAAJ | BHUSHAN KUMAR",
+    "channel": "T-Series",
+    "duration_s": 298,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "9udS0mpi1L4",
+    "title": "Udaarian (Badi lambi hai kahani mere pyaar di) - Satinder Sartaaj | Love Songs | New Punjabi Songs",
+    "channel": "SagaHits",
+    "duration_s": 351,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Jai Jai Ram (From \"Ramayana\")",
+   "artists": [
+    "A.R. Rahman, Shreya Ghoshal, Arijit Singh, Kumar Vishwas"
+   ],
+   "album": null,
+   "duration_ms": 320136,
+   "explicit": false,
+   "spotify_uri": "spotify:track:4y1KR84zpSoU0aVOdiAGIT",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "6S6DNjp0vzw",
+    "title": "Jai Jai Ram | Arijit Singh, Shreya Ghoshal | A.R. Rahman | Ramayana",
+    "channel": "harsh ",
+    "duration_s": 129,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "GB3bSUXmfOw",
+    "title": "Jai Jai Ram (16D Audio) | Ramayana | Ranbir Kapoor, Sai Pallavi, Yash | Arijit Singh, Shreya Ghoshal",
+    "channel": "RahulSportlive",
+    "duration_s": 312,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "P0YsQ1Hi6m4",
+    "title": "RAMAYANA MOVIE TITLE TRACK - JAI JAI RAM...🙏 | Arijit Singh, Shreya Ghoshal, AR Rahman,Kumar Vishwas",
+    "channel": "MR. SR. SOULFUL MUSIC",
+    "duration_s": 316,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "g-Ns5ogxII8",
+    "title": "Jai jai Ram Non copyright song | Arijit Singh Shreya Ghoshal Romantic love song ramayana Ranbir Kapo",
+    "channel": "Rustam STAR ⭐",
+    "duration_s": 286,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Khf5cd_JjME",
+    "title": "Jai Jai Ram Song From Ramayana movie Vocals-Shreya ghoshal, Arijit Singh ",
+    "channel": "Verses ",
+    "duration_s": 321,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "yWNPxS0sXnE",
+    "title": "Ramayana: Jai Jai Ram (Song) | Namit M, Nitesh T | Ranbir, Yash | AR Rahman, Shreya, Arijit S, Kumar",
+    "channel": "T-Series and 2 more",
+    "duration_s": 129,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "dE7Onq6-oww",
+    "title": "Jai Jai Ram • A.R. Rahman • Shreya Ghoshal • Arijit Singh •Kumar Vishwas Ramayana ",
+    "channel": "Arijit singh.semran",
+    "duration_s": 321,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "-EfkNV7XOio",
+    "title": "Jai Jai Ram – Ramayana | Full Song Lyrical Video | Arijit Singh & Shreya Ghoshal | HUNNY ERA",
+    "channel": "Hunny Era",
+    "duration_s": 281,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "DM_osZjjfWI",
+    "title": "Jai Jai Ram (Song) | Ranbir | AR Rahman, Shreya, Arijit S, Kumar",
+    "channel": " Mr. Astro Panda हिन्दी",
+    "duration_s": 321,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "TfF4pI40tQQ",
+    "title": "Jai Jai Ram (Lyrics) - Shreya Ghoshal, Arijit Singh | Ramayana | Ranbir, Yash | 7Alfaaz",
+    "channel": "7Alfaaz",
+    "duration_s": 316,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Ve Junoon (From \"Awarapan 2\")",
+   "artists": [
+    "Mithoon, Sayeed Quadri, Subodhh Sharma"
+   ],
+   "album": null,
+   "duration_ms": 401834,
+   "explicit": false,
+   "spotify_uri": "spotify:track:0jfPsVkuCCqz8A9vDkWkMr",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "3OIIpag3OUM",
+    "title": "Ve Junoon | Awarapan 2 | Emraan Hashmi & Disha Patani | Mithoon | Subodhh Sharma | Full Video Song",
+    "channel": "Rainwave Studio 🌧️",
+    "duration_s": 223,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "UwcRz4PGn4k",
+    "title": "Ve Junoon (Rain Version)",
+    "channel": "Sayeed Quadri",
+    "duration_s": null,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ZonblnWstLo",
+    "title": "Ve Junoon | Awarapan 2 | Emraan Hashmi | Disha Patani | Mithoon | Subodhh Sharma | Vishesh Bhatt",
+    "channel": "Z-Series",
+    "duration_s": 263,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "qEAP4OE217o",
+    "title": "Ve Junoon | Awarapan 2 | Emraan Hashmi, Disha Patani | Vishesh Bhatt | Mithoon, Sayeed Q., Subodhh",
+    "channel": "ShakyaBeatsx AI",
+    "duration_s": 335,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "anqaUEC764E",
+    "title": "Ve Junoon | Awarapan 2 | Emraan Hashmi, Disha Patani | Mithoon | Sayeed Quadri | Subodhh",
+    "channel": "music.add56",
+    "duration_s": 315,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "JJZKMkADqTU",
+    "title": "Mithoon - Ve Junoon (Lyrics) ft. Subodhh Sharma, Sayeed Quadri",
+    "channel": "seventyskye",
+    "duration_s": 402,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "_CHjlPh4k_M",
+    "title": "Ve Junoon Raw Version | Mithoon | Sayeed Quadri | Subodhh Sharma | Vishesh Bhatt | Awarapan 2",
+    "channel": "Subodhh Sharma",
+    "duration_s": 148,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HX1EXb5kWwY",
+    "title": "Ve Junoon | Awarapan 2 | Emraan Hashmi, Disha Patani | Vishesh Bhatt | Mithoon, Sayeed Q., Subodhh",
+    "channel": "Sony Music India and Vishesh Films",
+    "duration_s": 223,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "qnDjNG_fL3k",
+    "title": "Ve Junoon | Lyrical Video | Awarapan 2 | Emraan Hashmi, Disha Patani |Mithoon, Sayeed Q., Subodhh",
+    "channel": "Sony Music India and Vishesh Films",
+    "duration_s": 405,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "HgI24MIxW0k",
+    "title": "Ve Junoon | Subodhh Sharma | Mithoon | Sayeed Quadri | Vishesh Bhatt | Awarapan 2",
+    "channel": "Subodhh Sharma",
+    "duration_s": 80,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ },
+ {
+  "track": {
+   "title": "Deewaniyat (From \"Ek Deewane Ki Deewaniyat\") - Original Motion Picture Soundtrack",
+   "artists": [
+    "Vishal Mishra, Kaushik-Guddu, Kunaal Vermaa"
+   ],
+   "album": null,
+   "duration_ms": 257826,
+   "explicit": false,
+   "spotify_uri": "spotify:track:3EKHZNd0qflQK8UImpUu3k",
+   "cover_url": null
+  },
+  "candidates": [
+   {
+    "video_id": "GbKD-0x27To",
+    "title": "Vishal Mishra, Kaushik Guddu, Kunaal Vermaa - Deewaniyat 8D music | Ek Deewane Ki Deewaniyat Movie",
+    "channel": "8D music point",
+    "duration_s": 238,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "75vhFDoGVy0",
+    "title": "Deewaniyat (Title track), Vishal Mishra,music kaushik, lyrics kunaal verma by ply dmf",
+    "channel": "SANTHAL SOUL",
+    "duration_s": 241,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "V44i4T-GgA8",
+    "title": "Deewaniyat | Ek Deewane Ki Deewaniyat | Vishal Mishra | Kaushik,Guddu | Kunaal Verma #vishalmishra",
+    "channel": "Raag Ved",
+    "duration_s": 258,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "Uj4_wQPqg1s",
+    "title": "Deewaniyat ( \"Ek Deewane Ki Deewaniyat Tittle Track\") VISHAL MISHRA, Kaushik-Guddu, Kunaal Verma | ",
+    "channel": "Saif creation ",
+    "duration_s": 258,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "ccKaOaPR630",
+    "title": "Deewaniyat 🎧 Slowed + Reverb | Vishal Mishra | Kaushik-Guddu | Chill Vibes 😌✨",
+    "channel": "Pavo Music",
+    "duration_s": 288,
+    "source": "ytmusic_video",
+    "score": 0.0
+   },
+   {
+    "video_id": "MJCYkFU82DM",
+    "title": "Vishal Mishra, Kaushik Guddu, Kunaal Vermaa - Deewaniyat (Lyrics) | Ek Deewane Ki Deewaniyat Movie",
+    "channel": "Indie India",
+    "duration_s": 258,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "Qo4IOTAbGAM",
+    "title": "DEEWANIYAT Title Track - Ek Deewane Ki Deewaniyat | Harshvardhan Sonam | Vishal ,KaushikGuddu,Kunaal",
+    "channel": "Play DMF and Vishal Mishra",
+    "duration_s": 240,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "6U6zWod3vT4",
+    "title": "Vishal Mishra, Kaushik-Guddu, Kunaal Vermaa - Deewaniyat (Lyrics) | 7clouds Hindi",
+    "channel": "7clouds Hindi",
+    "duration_s": 258,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "tGBr4dHFmx0",
+    "title": "Vishal Mishra, Kaushik Guddu, Kunaal Vermaa - Deewaniyat (Lyrics) | Ek Deewane Ki Deewaniyat Movie",
+    "channel": "Urban Bhangra Beats",
+    "duration_s": 258,
+    "source": "ytdlp",
+    "score": 0.0
+   },
+   {
+    "video_id": "B4yWIwmhbjo",
+    "title": "DEEWANIYAT (Title Track) |HarshvardhanRane, Sonam Bajwa |Vishal Mishra |Romantic Song 2025",
+    "channel": "Rahul ramani",
+    "duration_s": 294,
+    "source": "ytdlp",
+    "score": 0.0
+   }
+  ]
+ }
+]
