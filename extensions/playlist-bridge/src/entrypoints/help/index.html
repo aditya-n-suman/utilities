@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>How Playlist Bridge works</title>
+    <meta name="manifest.type" content="unlisted" />
+    <link rel="stylesheet" href="./help.css" />
+  </head>
+  <body>
+    <main>
+      <p class="kicker"><span aria-hidden="true"></span>PLAYLIST BRIDGE</p>
+      <h1>How it works</h1>
+      <p class="lede">Playlist Bridge turns a public Spotify playlist into a YouTube playlist. Everything runs inside your browser: there is no Playlist Bridge server, no account to create, and nothing is sent to us.</p>
+
+      <h2>1. Reading the playlist</h2>
+      <p>It opens the same public pages you would see on <code>open.spotify.com</code> and reads each song’s title, artists and length. Only public playlists can be read.</p>
+
+      <h2>2. Finding each song</h2>
+      <p>For every song it searches YouTube Music first (official audio), then YouTube. Each result is scored on title, artist and length, and versions like live, cover or sped-up are ranked lower unless the original is that version. Matches are remembered in this browser so converting again is faster.</p>
+
+      <h2>3. Checking the matches</h2>
+      <p>You can swap any match for another candidate, search by hand, preview a video, or remove a song before creating the playlist.</p>
+
+      <h2>4. Your playlist</h2>
+      <p><strong>Quick links</strong> open a temporary YouTube playlist (up to 50 videos per link) without signing in.</p>
+      <p><strong>Save to my YouTube account</strong> creates a real playlist using the YouTube account you’re already signed into in this browser. Nothing is saved until you press Save, and you choose whether it’s private, unlisted or public.</p>
+
+      <h2>Sites it uses</h2>
+      <ul>
+        <li><code>open.spotify.com</code>: read the playlist you open</li>
+        <li><code>api-partner.spotify.com</code>: load the full track list</li>
+        <li><code>open.spotifycdn.com</code>: reconnect when Spotify updates</li>
+        <li><code>music.youtube.com</code>: find each song and save your playlist</li>
+        <li><code>www.youtube.com</code>: search YouTube when a song isn’t on YouTube Music</li>
+      </ul>
+
+      <h2>Good to know</h2>
+      <ul>
+        <li>Spotify and YouTube can change their sites at any time. If something stops working, an update to the extension usually fixes it.</li>
+        <li>Keep the Playlist Bridge tab open while it converts. If you close it, you can pick up where you left off next time.</li>
+        <li>“Clear saved matches” in the ⋯ menu removes everything Playlist Bridge stored in this browser.</li>
+      </ul>
+    </main>
+  </body>
+</html>

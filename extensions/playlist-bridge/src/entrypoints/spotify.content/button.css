@@ -1,0 +1,15 @@
+/* Exact values from the extension design (BTN_STATES). System font: nothing extra loads on Spotify. */
+.pb-wrap{position:relative;display:inline-flex;margin-left:8px;vertical-align:middle}
+.pb-button{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 12px;border-radius:999px;background:#1F1F1F;border:1px solid #3E3E3E;color:#FFFFFF;font:600 13px/1 system-ui,-apple-system,'Segoe UI',sans-serif;cursor:pointer;transition:background .15s,border-color .15s,transform .1s;white-space:nowrap}
+.pb-button:hover{background:#2A2A2A;border-color:#5C5C5C}
+.pb-button:active{background:#333333;border-color:#5C5C5C;transform:scale(0.97)}
+.pb-button:focus{outline:none}
+.pb-button:focus-visible{outline:2px solid oklch(0.78 0.15 152);outline-offset:2px}
+.pb-mark{display:flex;align-items:center}
+.pb-dot{width:7px;height:7px;border-radius:50%}
+.pb-dot.g{background:oklch(0.76 0.17 152)}
+.pb-dot.r{background:oklch(0.68 0.2 27)}
+.pb-line{width:8px;height:2px;background:linear-gradient(90deg,oklch(0.76 0.17 152),oklch(0.68 0.2 27))}
+.pb-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#F3F2EE;color:#121212;font:500 12px/1.2 system-ui,-apple-system,'Segoe UI',sans-serif;padding:6px 8px;border-radius:6px;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.4);pointer-events:none;opacity:0;transition:opacity .12s}
+.pb-wrap:hover .pb-tip,.pb-button:focus-visible + .pb-tip,.pb-wrap:focus-within .pb-tip{opacity:1}
+@media (prefers-reduced-motion:reduce){.pb-button,.pb-tip{transition:none}}
