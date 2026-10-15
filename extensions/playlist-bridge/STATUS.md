@@ -85,10 +85,11 @@ public/icons/            generated from the design (light + dark-toolbar variant
 src/entrypoints/         background.ts (toolbar, context menu), app/ (UI), help/ (How it works),
                          spotify.content/ (button on playlist pages, shadow-root UI next to data-testid="action-bar-row-actions")
 src/engine/              in-browser engine (index.ts = interface; filled in phases 2–5), types.ts
-src/platform/            site access + links (version, help, GitHub issue)
+src/platform/            site access, links (version, help, GitHub issue), update check
 src/ui/                  UI copied from apps/spotify-to-youtube/frontend, adapted
 design/                  Claude Design source for the extension UI
 tests/unit, tests/golden unit + matcher-parity tests (offline); tests/e2e/e2e.py live Playwright run
+scripts/release.mjs      release zips + SHA256SUMS.txt (npm run release; also run by the release workflow)
 ```
 
 ## Decisions
@@ -97,11 +98,19 @@ tests/unit, tests/golden unit + matcher-parity tests (offline); tests/e2e/e2e.py
 - Fonts are bundled locally (@fontsource), with no Google Fonts call.
 - Firefox MV3 (`--mv3`), minimum Firefox 142 (needed for `data_collection_permissions`).
 - "Report a problem" opens a GitHub issue on aditya-n-suman/utilities.
-- Distribution: unpacked / self-distributed only.
+- Distribution: GitHub releases tagged `playlist-bridge-v<x.y.z>` (built by `.github/workflows/playlist-bridge-release.yml`),
+  installed unpacked ([INSTALL.md](INSTALL.md)). Chrome blocks off-store installs without Developer mode or enterprise
+  policy, so there's no one-click install. Two things make that workable:
+  - The Chrome manifest has a fixed `key`, so the ID (`eajdiknjbchmmmcdocfcoapelklimgff`) doesn't depend on the
+    folder. Never change it (SETUP.md → Extension IDs).
+  - `src/platform/updates.ts` checks GitHub's releases list once a day (cached in `storage.local`) and the header
+    shows "Update to x.y.z". This is the only request that doesn't go to Spotify or YouTube.
 - Short links (spotify.link, spoti.fi) use *optional* host permissions, requested from the Convert click only when such a link is pasted.
 - If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).
 
 ## Next steps
+0. Publish the first release: push the tag `playlist-bridge-v1.1.0` (SETUP.md → Release). Until a release exists the
+   update check finds nothing and stays silent.
 1. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
    should stay installed.
 2. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in

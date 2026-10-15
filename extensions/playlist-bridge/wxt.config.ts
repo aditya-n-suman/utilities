@@ -9,11 +9,18 @@ export const HOSTS = [
   "https://www.youtube.com/*",
 ];
 
+// Chrome derives an unpacked extension's ID from its folder path unless the manifest has a `key`. A fixed key keeps the
+// ID (and with it IndexedDB, storage and site access) the same wherever users unzip a release.
+// ID: eajdiknjbchmmmcdocfcoapelklimgff. Public key only; see SETUP.md → Extension ID.
+const CHROME_KEY =
+  "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq+7HwVUXBfQ9yGbVY2Jfo1o6LOIUGu2emnU4ZAct74JCQyUC72G6ysjzWqGYoKmsHl3UR4wqE3OUruUz5R4/wwaBXcppkVhf/MVgPS5SYZa9txmcSnjOeeUJdMucUHbEPybMgv/APmmwbebE4lAfwuOQ61YAshA9/HIMeHmZUlRbslQoH+VtkrJSWmq3eLfF/1/eu93tdTdyYEVsZQ0O/XE5p/JzBjtzsa7LMbozCla9mAcqOzGlqOzgc17C604Jby+OOJg8Q1i6XSuFhh3fU2PbYvSKXUfcSNK6HG4OTsIbJxCFLmXN8nMWWxwRFi9og4KAp1UUIOtlEyaY4Xxg+wIDAQAB";
+
 export default defineConfig({
   srcDir: "src",
   modules: ["@wxt-dev/module-react"],
   manifest: ({ browser }) => ({
     name: "Playlist Bridge",
+    ...(browser === "firefox" ? {} : { key: CHROME_KEY }),
     description: "Turn a Spotify playlist into a YouTube playlist. Runs entirely in your browser.",
     permissions: ["declarativeNetRequestWithHostAccess", "cookies", "contextMenus", "storage"],
     host_permissions: HOSTS,

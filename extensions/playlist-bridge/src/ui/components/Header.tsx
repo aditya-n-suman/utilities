@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { helpUrl, reportProblemUrl, version } from "@/platform/links";
+import type { Release } from "@/platform/updates";
 
 interface Props {
   theme: "light" | "dark";
@@ -9,9 +10,10 @@ interface Props {
   accessOk: boolean;
   onAllowAccess: () => void;
   onClearCache: () => Promise<void>;
+  update: Release | null;
 }
 
-export function Header({ theme, onToggleTheme, onHome, showStartOver, accessOk, onAllowAccess, onClearCache }: Props) {
+export function Header({ theme, onToggleTheme, onHome, showStartOver, accessOk, onAllowAccess, onClearCache, update }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -25,6 +27,11 @@ export function Header({ theme, onToggleTheme, onHome, showStartOver, accessOk, 
         <span className="brand-name">Playlist Bridge</span>
       </button>
       <div className="header-actions">
+        {update && (
+          <a className="pill update-pill" href={update.url} target="_blank" rel="noopener noreferrer">
+            Update to {update.version}
+          </a>
+        )}
         {showStartOver && (
           <button type="button" className="pill" onClick={onHome}>
             Start over
@@ -50,7 +57,13 @@ export function Header({ theme, onToggleTheme, onHome, showStartOver, accessOk, 
           ⋯
         </button>
         {open && (
-          <Settings accessOk={accessOk} onAllowAccess={onAllowAccess} onClearCache={onClearCache} onClose={() => setOpen(false)} />
+          <Settings
+            accessOk={accessOk}
+            onAllowAccess={onAllowAccess}
+            onClearCache={onClearCache}
+            onClose={() => setOpen(false)}
+            update={update}
+          />
         )}
       </div>
     </header>
@@ -62,11 +75,13 @@ function Settings({
   onAllowAccess,
   onClearCache,
   onClose,
+  update,
 }: {
   accessOk: boolean;
   onAllowAccess: () => void;
   onClearCache: () => Promise<void>;
   onClose: () => void;
+  update: Release | null;
 }) {
   const dialog = useRef<HTMLDivElement>(null);
   const [clear, setClear] = useState<"idle" | "confirm" | "done">("idle");
@@ -92,6 +107,15 @@ function Settings({
         <div>
           <h2 id="set-h">Playlist Bridge</h2>
           <p className="mono settings-version">Version {version()}</p>
+          {update && (
+            <p className="settings-update">
+              Version {update.version} is out.{" "}
+              <a href={update.url} target="_blank" rel="noopener noreferrer">
+                Download it
+              </a>
+              , then replace the files in your Playlist Bridge folder and click reload in the extensions page.
+            </p>
+          )}
         </div>
         <button type="button" className="settings-close" onClick={onClose} aria-label="Close">
           ×
