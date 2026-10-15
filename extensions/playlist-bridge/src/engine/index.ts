@@ -1,4 +1,5 @@
 // The in-browser engine: everything the web app's FastAPI backend did, running inside the extension page.
+import { clearLyricsCache } from "./lyrics/cache";
 import { IdbMatchCache } from "./cache";
 import { EngineError, InvalidPlaylistLink } from "./errors";
 import { JobManager, type Stage } from "./jobs";
@@ -147,6 +148,7 @@ export function createEngine(): Engine {
     discard: async (jobId) => store.remove(jobId).catch(() => {}),
     clearCache: async () => {
       await cache.clear().catch(() => {});
+      await clearLyricsCache();
       const s = await store.load();
       if (s) await store.remove(s.id).catch(() => {});
     },

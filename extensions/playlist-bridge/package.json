@@ -1,7 +1,7 @@
 {
   "name": "playlist-bridge-extension",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Playlist Bridge: convert a Spotify playlist into a YouTube playlist, entirely in your browser.",
   "type": "module",
   "scripts": {

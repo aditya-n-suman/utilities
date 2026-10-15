@@ -131,7 +131,11 @@ export async function runLyrics(rawLines: string[], deps: Deps, o: RunOptions): 
       const online = needOnline ? await deps.online(line) : null;
       if (wantTranslation) result.translation = translate ? await translate(line) : online!.translation;
       if (wantTransliteration && online) {
-        if (!isLatin(line)) result.transliteration = online.transliteration;
+        if (!isLatin(line)) {
+          // Only gtx transliterates; the fallback endpoint (used when gtx rate-limits) doesn't.
+          if (!online.transliteration) throw new Error("no transliteration");
+          result.transliteration = online.transliteration;
+        }
         else if (/-latn$/i.test(online.extended) && NATIVE_SCRIPT_LANGS.has(baseLanguage(online.extended))) {
           result.transliteration = (await deps.native(line, baseLanguage(online.extended))) ?? undefined;
         }

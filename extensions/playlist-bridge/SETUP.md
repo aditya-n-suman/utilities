@@ -30,6 +30,12 @@ Do these in **both Chrome and Firefox**, with the build loaded and signed in to 
    while signed out should say to sign in again.
 5. On a Spotify playlist page, check that the "Convert to YouTube" button sits next to the action bar's ⋯, and that the
    right-click menu works on a playlist link.
+6. On YouTube Music, open the Lyrics tab of a non-English song (for example Urdu or Hindi), then:
+   - **Translate:** in Chrome the first use asks to download the model. Lines then show their English under them.
+   - **Transliterate:** it asks to allow Google online, then shows Latin letters. Check a romanised Hindi song too: it
+     should show Devanagari.
+   - Skip to the next song. The bar keeps the mode and redoes the lyrics.
+   - Click **Off**: YouTube's own lyrics come back.
 
 ## Troubleshooting
 | Symptom | Cause / fix |

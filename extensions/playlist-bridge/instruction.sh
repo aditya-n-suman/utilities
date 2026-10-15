@@ -27,6 +27,6 @@ case "${1:-}" in
   zip) setup; npm run zip; npm run zip:firefox; ls -1 .output/*.zip ;;
   release) setup; npm run release ;;
   lint) setup; npm run build:firefox; npm run lint:firefox ;;
-  e2e) setup; npm run build; python3 tests/e2e/e2e.py .output/chrome-mv3 "${@:2}" ;;
+  e2e) setup; npm run build; python3 tests/e2e/e2e.py .output/chrome-mv3 "${@:2}"; python3 tests/e2e/lyrics.py .output/chrome-mv3 ;;
   *) sed -n '2,11p' "$0"; exit 1 ;;
 esac
