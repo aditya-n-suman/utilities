@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "r
 import { browser } from "wxt/browser";
 import { isShortLink } from "@/engine/sources/resolve";
 import { ensureShortLinkAccess, hasAccess, onAccessChange, requestAccess } from "@/platform/access";
+import { checkForUpdate, type Release } from "@/platform/updates";
 import { api, ApiError, type Candidate, type ResumeSnapshot, type TempLinks } from "./api";
 import { AccessLostBanner, AccessScreen } from "./components/Access";
 import { ErrorScreen } from "./components/ErrorScreen";
@@ -45,6 +46,7 @@ export default function App() {
   const [resume, setResume] = useState<ResumeSnapshot | null>(null);
   const resumeStage = useRef<ResumeSnapshot["stage"] | null>(null);
   const [live, setLive] = useState("");
+  const [update, setUpdate] = useState<Release | null>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const jobIdRef = useRef<string | null>(null);
   const lastInput = useRef<ConvertInput | null>(null);
@@ -60,6 +62,10 @@ export default function App() {
       /* storage unavailable */
     }
   }, [theme]);
+
+  useEffect(() => {
+    void checkForUpdate().then(setUpdate);
+  }, []);
 
   // Site access: Chrome grants it at install; Firefox asks on first run. Either can be revoked later.
   useEffect(() => {
@@ -334,6 +340,7 @@ export default function App() {
         accessOk={access === "ok"}
         onAllowAccess={() => void allowAccess()}
         onClearCache={() => api.clearCache()}
+        update={update}
       />
       <main id="main" className="main">
         <div aria-live="polite" className="sr-only">

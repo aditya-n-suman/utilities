@@ -19,16 +19,24 @@ If you close the tab, your progress is kept: the next time you open the extensio
 for up to 7 days.
 
 ## Install (unpacked / self-distributed)
-Build it first (Node 20+):
+**Users:** follow [INSTALL.md](INSTALL.md). Download the Chrome zip from the
+[releases](https://github.com/aditya-n-suman/utilities/releases?q=playlist-bridge&expanded=true), unzip it into a
+folder you'll keep, and load it with **Load unpacked** in Developer mode.
+
+Why not a one-click install: Chrome on Windows and macOS only installs extensions from outside the Web Store through
+Developer mode or enterprise policy on managed machines. Because of that:
+- **The extension ID is fixed** by a `key` in the Chrome manifest (`wxt.config.ts`). Otherwise Chrome derives the ID
+  from the folder path, and unzipping an update somewhere else would lose saved matches, the unfinished conversion
+  and settings.
+- **Updates are announced in the app.** Once a day it reads this repo's public releases list from GitHub and shows
+  "Update to x.y.z" when a newer `playlist-bridge-v*` release exists.
+
+**From source** (Node 20+):
 ```bash
 cd extensions/playlist-bridge
 ./instruction.sh build        # → .output/chrome-mv3 and .output/firefox-mv3
 ```
-
-**Chrome / Edge / Brave**
-1. Open `chrome://extensions` and turn on **Developer mode**.
-2. Click **Load unpacked** and pick `.output/chrome-mv3`.
-3. Click the toolbar icon and allow the five sites.
+Then load `.output/chrome-mv3` with **Load unpacked**.
 
 **Firefox 142+**
 - *Try it:* open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on…** and pick
@@ -52,11 +60,12 @@ See [SETUP.md](SETUP.md) for the manual checks, troubleshooting and how to relea
 | `declarativeNetRequestWithHostAccess` | YouTube's internal API refuses requests without its own Origin/Referer, so the extension sets them on `/youtubei/` calls it makes (`public/rules/youtube-headers.json`) |
 | `cookies` | Read YouTube's `SAPISID` cookie to sign the save request, the same way youtube.com does |
 | `contextMenus` | "Convert with Playlist Bridge" on right-click |
-| `storage` | Remember the Spotify query hash if Spotify changes it |
+| `storage` | Remember the Spotify query hash if Spotify changes it, and when it last checked for updates |
 | *optional:* `spotify.link`, `spoti.fi` | Only requested when you paste a short link |
 
 ## Privacy
-- Nothing leaves your browser except requests to Spotify and YouTube. There's no analytics and no server of ours.
+- Nothing leaves your browser except requests to Spotify and YouTube, plus one update check a day to GitHub's public
+  releases list (`api.github.com`, no cookies). There's no analytics and no server of ours.
 - **Searches are sent without cookies**, so they don't touch your YouTube history or recommendations.
 - Only **Save** uses your YouTube session. It creates one playlist and adds the videos to it, and does nothing else.
 - The match cache (30 days) and the unfinished conversion (7 days) are kept in the extension's IndexedDB. You can
@@ -66,7 +75,7 @@ See [SETUP.md](SETUP.md) for the manual checks, troubleshooting and how to relea
 - This tool uses Spotify's and YouTube's **internal, undocumented** endpoints. Either site can change them without
   notice. Spotify query-hash changes are recovered automatically. Anything else needs a code update, so use
   ⋯ → **Report a problem**.
-- It's meant for personal use, which is why it's distributed unpacked only and not listed in the stores.
+- It's meant for personal use, which is why it's distributed through GitHub releases and not listed in the stores.
 - Only public playlists work. Up to 500 tracks are converted per run.
 - Saving uses the first signed-in Google account in the browser (`X-Goog-AuthUser: 0`). YouTube brand accounts and
   channel switching aren't supported.

@@ -41,12 +41,26 @@ Do these in **both Chrome and Firefox**, with the build loaded and signed in to 
 | Firefox: "This add-on could not be installed because it has not been verified" | Release Firefox needs a signed build. See Install in README |
 
 ## Release
-1. Bump `version` in `package.json`.
-2. Run `./instruction.sh test`, `./instruction.sh lint` and `./instruction.sh e2e`, then do the manual checks above.
-3. Run `./instruction.sh zip`. It writes to `.output/`:
-   - `playlist-bridge-extension-<v>-chrome.zip`
-   - `…-firefox.zip` + `…-sources.zip`. For AMO unlisted signing, upload both. The sources zip is the review build
-     input, and reviewers build it with `npm install && npm run build:firefox`.
-4. Share the Chrome zip, which users unzip and load unpacked, and the signed Firefox `.xpi`.
+Releases are GitHub releases tagged `playlist-bridge-v<version>`. Installed copies look for that tag prefix
+(`src/platform/updates.ts`) and offer the update, so keep the prefix and plain `x.y.z` versions.
 
-Firefox add-on id: `playlist-bridge@utilities.aditya-n-suman`. Keep it, because updates of a signed add-on must use the same id.
+1. Bump `version` in `package.json`, and commit it to `master`.
+2. Run `./instruction.sh test`, `./instruction.sh lint` and `./instruction.sh e2e`, then do the manual checks above.
+3. Tag and push: `git tag playlist-bridge-v<version> && git push origin playlist-bridge-v<version>`.
+   `.github/workflows/playlist-bridge-release.yml` checks the tag matches `package.json`, runs the tests, runs
+   `npm run release` and publishes the release with:
+   - `playlist-bridge-extension-<v>-chrome.zip`: what users download (see [INSTALL.md](INSTALL.md))
+   - `…-firefox.zip` + `…-sources.zip`: for AMO unlisted signing. The sources zip is the review build input, and
+     reviewers build it with `npm install && npm run build:firefox`
+   - `SHA256SUMS.txt`
+4. Firefox: sign the Firefox zip as unlisted on AMO and attach the signed `.xpi` to the same release.
+
+`./instruction.sh release` makes the same files locally in `.output/` if you'd rather upload by hand. Name the release
+tag the same way, or installed copies won't see it.
+
+## Extension IDs
+- **Chrome:** `eajdiknjbchmmmcdocfcoapelklimgff`, fixed by `CHROME_KEY` (a public key) in `wxt.config.ts`. Never
+  change or remove it: every installed copy would get a new ID and lose its saved data. The matching private key isn't
+  in the repo. Unpacked installs don't need it. It's only needed to sign a `.crx` or a Web Store upload with this ID.
+  Versions before 1.1.0 had no key, so updating from one of them changes the ID once.
+- **Firefox:** `playlist-bridge@utilities.aditya-n-suman`. Keep it, because updates of a signed add-on must use the same id.
