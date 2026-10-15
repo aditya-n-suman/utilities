@@ -1,10 +1,12 @@
-# Publishes a Playlist Bridge release when a tag like playlist-bridge-v1.2.0 is pushed.
-# The tag must match extensions/playlist-bridge/package.json. See extensions/playlist-bridge/SETUP.md → Release.
+# Publishes a Playlist Bridge release, either when a tag like playlist-bridge-v1.2.0 is pushed (it must match
+# extensions/playlist-bridge/package.json), or when run by hand from the Actions tab, which releases the
+# package.json version of the chosen branch and creates the tag. See extensions/playlist-bridge/SETUP.md → Release.
 name: playlist-bridge release
 
 on:
   push:
     tags: ["playlist-bridge-v*"]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,14 +26,16 @@ jobs:
           cache: npm
           cache-dependency-path: extensions/playlist-bridge/package-lock.json
 
-      - name: Check the tag matches package.json
+      - name: Work out the version and tag
         run: |
           version=$(node -p "require('./package.json').version")
-          if [ "${GITHUB_REF_NAME}" != "playlist-bridge-v${version}" ]; then
+          tag="playlist-bridge-v${version}"
+          if [ "${GITHUB_REF_TYPE}" = tag ] && [ "${GITHUB_REF_NAME}" != "${tag}" ]; then
             echo "Tag ${GITHUB_REF_NAME} does not match package.json version ${version}" >&2
             exit 1
           fi
           echo "VERSION=${version}" >> "$GITHUB_ENV"
+          echo "TAG=${tag}" >> "$GITHUB_ENV"
 
       - run: npm ci
       - run: npm test
@@ -43,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cat > notes.md <<EOF
-          **Install or update:** follow [INSTALL.md](https://github.com/${GITHUB_REPOSITORY}/blob/${GITHUB_REF_NAME}/extensions/playlist-bridge/INSTALL.md).
+          **Install or update:** follow [INSTALL.md](https://github.com/${GITHUB_REPOSITORY}/blob/${TAG}/extensions/playlist-bridge/INSTALL.md).
 
           - **Chrome, Edge, Brave:** download \`playlist-bridge-extension-${VERSION}-chrome.zip\`.
             Already installed? Replace the files in your Playlist Bridge folder with the new ones, then click ↻ on the extensions page.
@@ -51,7 +55,9 @@ jobs:
 
           SHA-256 checksums are in \`SHA256SUMS.txt\`.
           EOF
-          gh release create "${GITHUB_REF_NAME}" \
+          # On a manual run this also creates the tag, at the commit that was built.
+          gh release create "${TAG}" \
+            --target "${GITHUB_SHA}" \
             --title "Playlist Bridge ${VERSION}" \
             --notes-file notes.md \
             .output/playlist-bridge-extension-${VERSION}-chrome.zip \

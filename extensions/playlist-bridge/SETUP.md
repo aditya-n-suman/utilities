@@ -46,8 +46,10 @@ Releases are GitHub releases tagged `playlist-bridge-v<version>`. Installed copi
 
 1. Bump `version` in `package.json`, and commit it to `master`.
 2. Run `./instruction.sh test`, `./instruction.sh lint` and `./instruction.sh e2e`, then do the manual checks above.
-3. Tag and push: `git tag playlist-bridge-v<version> && git push origin playlist-bridge-v<version>`.
-   `.github/workflows/playlist-bridge-release.yml` checks the tag matches `package.json`, runs the tests, runs
+3. Either run **playlist-bridge release** from the repo's Actions tab on `master` (it creates the tag
+   `playlist-bridge-v<version>` from `package.json`), or tag and push:
+   `git tag playlist-bridge-v<version> && git push origin playlist-bridge-v<version>`.
+   `.github/workflows/playlist-bridge-release.yml` checks a pushed tag matches `package.json`, runs the tests, runs
    `npm run release` and publishes the release with:
    - `playlist-bridge-extension-<v>-chrome.zip`: what users download (see [INSTALL.md](INSTALL.md))
    - `…-firefox.zip` + `…-sources.zip`: for AMO unlisted signing. The sources zip is the review build input, and
