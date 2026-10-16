@@ -1,0 +1,163 @@
+{
+  "$schema": "../resume.schema.json",
+  "schemaVersion": "1.0",
+  "meta": {
+    "locale": "en-IN",
+    "title": "Priya Raman - Resume",
+    "lastModified": "2026-10-16T09:30:00Z",
+    "generator": "hand-written"
+  },
+  "basics": {
+    "name": "Priya Raman",
+    "headline": "Staff Frontend Engineer | React • TypeScript • Web Performance",
+    "initials": "PR",
+    "email": "priya.raman@example.com",
+    "phone": "+91 98765 43210",
+    "location": { "city": "Bengaluru", "region": "Karnataka", "country": "India", "countryCode": "IN" },
+    "website": { "url": "https://priyaraman.example.dev", "label": "priyaraman.example.dev" },
+    "profiles": [
+      { "network": "linkedin", "url": "https://linkedin.com/in/priya-raman-example", "username": "priya-raman-example" },
+      { "network": "github", "url": "https://github.com/priya-raman-example", "username": "priya-raman-example" },
+      { "network": "npm", "url": "https://www.npmjs.com/~priya-example", "label": "npm: ~priya-example" }
+    ],
+    "summary": "Frontend engineer with **8 years** of experience building high-traffic React and Next.js platforms. Led performance programmes that cut page-load time by **60%** and moved Core Web Vitals into the green for 40K+ URLs. Comfortable owning architecture (micro-frontends, monorepos, design systems) and mentoring teams of 6–10 engineers.",
+    "extras": [
+      { "label": "Notice period", "value": "30 days" }
+    ]
+  },
+  "work": [
+    {
+      "id": "w-orbit-staff",
+      "company": "Orbit Commerce",
+      "title": "Staff Frontend Engineer",
+      "context": "Storefront platform",
+      "url": "https://orbit.example.com",
+      "employmentType": "full-time",
+      "location": { "city": "Bengaluru", "region": "Karnataka" },
+      "workMode": "hybrid",
+      "startDate": "2024-03",
+      "endDate": "present",
+      "highlights": [
+        { "label": "Core Web Vitals", "text": "Led a 9-month programme that moved INP from 380 ms to **190 ms** across 40K+ product pages." },
+        { "label": "Architecture", "text": "Split the storefront into 6 Module Federation remotes, letting teams deploy independently 4× a day." },
+        "Mentored 8 engineers; two promoted to senior within a year."
+      ],
+      "technologies": ["React", "Next.js", "TypeScript", "Module Federation", "Turborepo"]
+    },
+    {
+      "id": "w-orbit-senior",
+      "company": "Orbit Commerce",
+      "title": "Senior Frontend Engineer",
+      "employmentType": "full-time",
+      "location": { "city": "Bengaluru", "region": "Karnataka" },
+      "workMode": "onsite",
+      "startDate": "2021-07",
+      "endDate": "2024-03",
+      "highlights": [
+        "Migrated 220K lines from JavaScript to TypeScript with zero customer-facing incidents.",
+        "Built the checkout design system (48 components, Storybook, visual regression tests)."
+      ]
+    },
+    {
+      "id": "w-finly",
+      "company": "Finly",
+      "title": "Software Engineer",
+      "context": "Client: Northwind Bank",
+      "employmentType": "full-time",
+      "workMode": "remote",
+      "startDate": "2018-08",
+      "endDate": "2021-06",
+      "summary": "Retail-banking web portal serving 2M monthly users.",
+      "highlights": [
+        "Reduced dashboard load time from 10 s to under 3 s through bundle splitting and request batching.",
+        "Introduced React Query, removing 4K lines of hand-written cache code."
+      ],
+      "technologies": ["React", "Redux", "GraphQL", "Jest"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "National Institute of Technology Trichy",
+      "degree": "BTech",
+      "field": "Computer Science and Engineering",
+      "location": { "city": "Tiruchirappalli", "region": "Tamil Nadu", "country": "India" },
+      "startDate": "2014-07",
+      "endDate": "2018-05",
+      "score": { "value": "8.4", "max": "10", "label": "CGPA" },
+      "courses": ["Compilers", "Distributed Systems", "Human-Computer Interaction"]
+    }
+  ],
+  "skills": [
+    { "name": "Frontend", "items": [{ "name": "React", "level": 5 }, { "name": "TypeScript", "level": 5 }, { "name": "Next.js", "level": 4 }, { "name": "CSS / Tailwind", "level": 4 }] },
+    { "name": "Architecture", "items": ["Micro-frontends", "Module Federation", "Monorepos", "Design systems", "BFF"] },
+    { "name": "Performance", "items": ["Core Web Vitals", "INP", "LCP", "Code splitting", "Critical CSS"] },
+    { "name": "Tooling", "items": ["Vite", "Webpack", "Jest", "Playwright", "Storybook", "GitHub Actions"] }
+  ],
+  "projects": [
+    {
+      "id": "p-lazy-remote",
+      "name": "lazy-remote",
+      "kind": "NPM package",
+      "url": "https://www.npmjs.com/package/lazy-remote-example",
+      "repository": "https://github.com/priya-raman-example/lazy-remote",
+      "startDate": "2023",
+      "description": "Loads Module Federation remotes on demand with retry and version pinning. ~3K weekly downloads.",
+      "technologies": ["TypeScript", "Webpack", "Rspack"]
+    },
+    {
+      "id": "p-vitals-bot",
+      "name": "Vitals Bot",
+      "kind": "Side project",
+      "repository": "https://github.com/priya-raman-example/vitals-bot",
+      "description": "GitHub App that comments field-data Core Web Vitals deltas on pull requests."
+    }
+  ],
+  "certifications": [
+    { "name": "AWS Certified Developer – Associate", "issuer": "Amazon Web Services", "date": "2023-02", "expires": "2026-02", "credentialId": "EXAMPLE-12345" }
+  ],
+  "awards": [
+    { "title": "Engineering Excellence Award", "awarder": "Orbit Commerce", "date": "2025-01", "summary": "For the Core Web Vitals programme." }
+  ],
+  "publications": [
+    {
+      "title": "Measuring INP in the field without RUM vendors",
+      "authors": ["Priya Raman"],
+      "venue": "Orbit Engineering Blog",
+      "date": "2025-05",
+      "url": "https://orbit.example.com/blog/inp-field"
+    }
+  ],
+  "languages": [
+    { "language": "English", "fluency": "fluent", "cefr": "C2" },
+    { "language": "Tamil", "fluency": "native" },
+    { "language": "Hindi", "fluency": "professional" }
+  ],
+  "volunteer": [
+    { "organization": "Women Who Code Bengaluru", "role": "Mentor", "startDate": "2022", "endDate": "present", "summary": "Monthly frontend interview-prep sessions." }
+  ],
+  "interests": [
+    { "name": "Long-distance running" },
+    { "name": "Carnatic music" }
+  ],
+  "references": { "availableOnRequest": true },
+  "customSections": [
+    {
+      "id": "talks",
+      "title": "Talks",
+      "display": "entries",
+      "items": [
+        { "title": "Micro-frontends without the micro-pain", "subtitle": "React India", "location": { "city": "Goa" }, "startDate": "2024-09", "url": "https://example.com/talks/mfe" }
+      ]
+    }
+  ],
+  "preferences": {
+    "template": "meridian",
+    "accentColor": "#1A73E8",
+    "pageSize": "A4",
+    "dateFormat": "MMM YYYY",
+    "sectionOrder": ["summary", "work", "projects", "skills", "education", "custom:talks"],
+    "hiddenSections": ["references"],
+    "sectionTitles": { "work": "Professional Experience" },
+    "showSkillLevels": false
+  }
+}

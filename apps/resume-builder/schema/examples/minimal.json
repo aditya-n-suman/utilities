@@ -1,0 +1,29 @@
+{
+  "$schema": "../resume.schema.json",
+  "schemaVersion": "1.0",
+  "basics": {
+    "name": "Sam Okafor",
+    "headline": "Junior Data Analyst",
+    "email": "sam.okafor@example.com",
+    "location": { "city": "Lagos", "country": "Nigeria" },
+    "summary": "Analyst with a year of experience turning sales data into weekly dashboards."
+  },
+  "work": [
+    {
+      "company": "Brightline Retail",
+      "title": "Data Analyst Intern",
+      "startDate": "2025-06",
+      "endDate": "present",
+      "highlights": [
+        "Built the weekly sales dashboard used by **12 store managers**.",
+        "Cut report preparation time from 2 days to 3 hours with SQL views."
+      ]
+    }
+  ],
+  "education": [
+    { "institution": "University of Lagos", "degree": "BSc", "field": "Statistics", "endDate": "2025" }
+  ],
+  "skills": [
+    { "items": ["SQL", "Python", "pandas", "Power BI", "Excel"] }
+  ]
+}

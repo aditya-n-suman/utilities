@@ -1,0 +1,556 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aditya-n-suman/utilities/apps/resume-builder/schema/resume.schema.json",
+  "title": "Resume",
+  "description": "Resume content contract, v1. Content only: what the resume says, never how it looks. Every template renders the same document. Presentation hints live in `preferences` and templates may ignore them. Text fields accept inline markup: **bold**, *italic*, [label](https://url). Nothing else is interpreted; raw HTML is shown as text.",
+  "type": "object",
+  "required": ["schemaVersion", "basics"],
+  "additionalProperties": false,
+  "patternProperties": { "^x-": {} },
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional pointer to this schema so editors can validate and autocomplete."
+    },
+    "schemaVersion": {
+      "const": "1.0",
+      "description": "Contract version. A minor bump only adds optional fields; a major bump may rename or remove fields."
+    },
+    "meta": { "$ref": "#/$defs/meta" },
+    "basics": { "$ref": "#/$defs/basics" },
+    "work": {
+      "type": "array",
+      "description": "Jobs, newest first. A promotion is two entries with the same `company`; templates may group consecutive entries of one company.",
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/workItem" }
+    },
+    "education": {
+      "type": "array",
+      "maxItems": 15,
+      "items": { "$ref": "#/$defs/educationItem" }
+    },
+    "skills": {
+      "type": "array",
+      "description": "Skill groups, e.g. Frontend, Backend & DB. A single group with no `name` renders as a flat list.",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/skillGroup" }
+    },
+    "projects": {
+      "type": "array",
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/projectItem" }
+    },
+    "certifications": {
+      "type": "array",
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/certificationItem" }
+    },
+    "awards": {
+      "type": "array",
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/awardItem" }
+    },
+    "publications": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/publicationItem" }
+    },
+    "languages": {
+      "type": "array",
+      "description": "Spoken languages.",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/languageItem" }
+    },
+    "volunteer": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/volunteerItem" }
+    },
+    "interests": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/interestItem" }
+    },
+    "references": { "$ref": "#/$defs/references" },
+    "customSections": {
+      "type": "array",
+      "description": "Sections the fixed keys don't cover: Patents, Talks, Leadership, Courses. Each one gets a `custom:<id>` key for `preferences.sectionOrder`.",
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/customSection" }
+    },
+    "preferences": { "$ref": "#/$defs/preferences" }
+  },
+
+  "$defs": {
+    "id": {
+      "type": "string",
+      "description": "Optional stable id, unique within its list. The editor uses it to track items across reorders. Generated when missing.",
+      "pattern": "^[A-Za-z0-9_-]{1,64}$"
+    },
+    "text": {
+      "type": "string",
+      "description": "Single line of plain text.",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "richText": {
+      "type": "string",
+      "description": "Paragraph. Inline markup allowed: **bold**, *italic*, [label](https://url).",
+      "minLength": 1,
+      "maxLength": 1500
+    },
+    "url": {
+      "type": "string",
+      "description": "Absolute http(s) or mailto URL.",
+      "pattern": "^(https?://|mailto:)\\S+$",
+      "maxLength": 500
+    },
+    "date": {
+      "type": "string",
+      "description": "Partial ISO 8601 date: YYYY, YYYY-MM or YYYY-MM-DD. Templates format it (e.g. 'Feb 2025') using `preferences.dateFormat` and `meta.locale`.",
+      "pattern": "^\\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\\d|3[01]))?)?$"
+    },
+    "endDate": {
+      "description": "A date, or \"present\" for an ongoing item. Omitted means the item has a single date (`startDate`) or is undated.",
+      "oneOf": [
+        { "$ref": "#/$defs/date" },
+        { "const": "present" }
+      ]
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/text" },
+      "maxItems": 40
+    },
+    "highlight": {
+      "description": "One bullet. A string, or an object with a short bold lead-in: {\"label\": \"Core Web Vitals\", \"text\": \"Improved INP by 5%...\"} renders as '**Core Web Vitals:** Improved INP by 5%...'.",
+      "oneOf": [
+        { "type": "string", "minLength": 1, "maxLength": 500 },
+        {
+          "type": "object",
+          "required": ["text"],
+          "additionalProperties": false,
+          "properties": {
+            "label": { "type": "string", "minLength": 1, "maxLength": 60 },
+            "text": { "type": "string", "minLength": 1, "maxLength": 500 }
+          }
+        }
+      ]
+    },
+    "highlights": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/highlight" },
+      "maxItems": 12
+    },
+    "location": {
+      "type": "object",
+      "description": "Each part is optional. Templates join what is present: 'Noida, UP' or 'Bengaluru, India'.",
+      "additionalProperties": false,
+      "properties": {
+        "city": { "$ref": "#/$defs/text" },
+        "region": { "$ref": "#/$defs/text", "description": "State, province or county." },
+        "country": { "$ref": "#/$defs/text" },
+        "countryCode": { "type": "string", "pattern": "^[A-Z]{2}$", "description": "ISO 3166-1 alpha-2." },
+        "postalCode": { "type": "string", "maxLength": 20 }
+      }
+    },
+    "workMode": {
+      "enum": ["onsite", "remote", "hybrid"],
+      "description": "Shown next to (or instead of) the location: 'Remote', 'Gurugram, Haryana · Hybrid'."
+    },
+
+    "meta": {
+      "type": "object",
+      "description": "About the document, not the person.",
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "locale": {
+          "type": "string",
+          "description": "BCP 47 tag for date and number formatting, and the default section titles. Default en-US.",
+          "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$"
+        },
+        "title": { "$ref": "#/$defs/text", "description": "Document title, used as the PDF title and download filename. Default: '<name> - Resume'." },
+        "lastModified": { "type": "string", "format": "date-time" },
+        "generator": { "$ref": "#/$defs/text", "description": "Who produced the JSON: 'resume-builder 0.1', 'ChatGPT', 'hand-written'." }
+      }
+    },
+
+    "basics": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "name": { "$ref": "#/$defs/text", "description": "Full name as it should appear in the header." },
+        "headline": {
+          "$ref": "#/$defs/text",
+          "description": "Title under the name: 'Lead Engineer' or 'Frontend Technical Lead | React • TypeScript • Performance'."
+        },
+        "photo": {
+          "type": "object",
+          "description": "Templates without a photo slot ignore it. Templates with one fall back to `initials`.",
+          "required": ["src"],
+          "additionalProperties": false,
+          "properties": {
+            "src": {
+              "type": "string",
+              "description": "data:image/(png|jpeg|webp);base64,... (preferred: works offline and in PDF) or an https URL that allows CORS.",
+              "pattern": "^(data:image/(png|jpeg|webp);base64,|https://)",
+              "maxLength": 2000000
+            },
+            "alt": { "$ref": "#/$defs/text" }
+          }
+        },
+        "initials": {
+          "type": "string",
+          "description": "Monogram shown when a template has a photo slot but there is no photo. Default: first letters of the first two words of `name`.",
+          "minLength": 1,
+          "maxLength": 3
+        },
+        "email": { "type": "string", "format": "email", "maxLength": 254 },
+        "phone": {
+          "type": "string",
+          "description": "As it should be printed. E.164 with spaces is the safest: '+91 82092 46645'.",
+          "pattern": "^[+0-9()\\-. ]{5,30}$"
+        },
+        "location": { "$ref": "#/$defs/location" },
+        "website": {
+          "type": "object",
+          "required": ["url"],
+          "additionalProperties": false,
+          "properties": {
+            "url": { "$ref": "#/$defs/url" },
+            "label": { "$ref": "#/$defs/text", "description": "Shown instead of the URL, e.g. 'Portfolio'. Default: the URL without the scheme." }
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/profile" }
+        },
+        "summary": { "$ref": "#/$defs/richText", "description": "Professional summary, 2–5 sentences." },
+        "extras": {
+          "type": "array",
+          "description": "Other header facts some markets expect: Visa status, Notice period, Date of birth. Rendered as 'Label: value'.",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string", "minLength": 1, "maxLength": 40 },
+              "value": { "$ref": "#/$defs/text" }
+            }
+          }
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "required": ["network", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "network": {
+          "description": "Known networks get an icon. Use `other` with a `label` for anything else.",
+          "enum": ["linkedin", "github", "gitlab", "stackoverflow", "x", "mastodon", "bluesky", "medium", "devto", "behance", "dribbble", "kaggle", "leetcode", "orcid", "googlescholar", "youtube", "npm", "other"]
+        },
+        "url": { "$ref": "#/$defs/url" },
+        "username": { "$ref": "#/$defs/text" },
+        "label": { "$ref": "#/$defs/text", "description": "Display text. Default: the URL without the scheme, e.g. 'github.com/jdoe'." }
+      }
+    },
+
+    "workItem": {
+      "type": "object",
+      "required": ["company", "title", "startDate"],
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "company": { "$ref": "#/$defs/text" },
+        "title": { "$ref": "#/$defs/text", "description": "Role title: 'Lead Engineer (Frontend)'." },
+        "context": {
+          "$ref": "#/$defs/text",
+          "description": "Product, client or team, printed after the company: 'Shiksha.com', 'Client: US Bank'."
+        },
+        "url": { "$ref": "#/$defs/url" },
+        "employmentType": { "enum": ["full-time", "part-time", "contract", "freelance", "internship", "apprenticeship"] },
+        "location": { "$ref": "#/$defs/location" },
+        "workMode": { "$ref": "#/$defs/workMode" },
+        "startDate": { "$ref": "#/$defs/date" },
+        "endDate": { "$ref": "#/$defs/endDate" },
+        "summary": { "$ref": "#/$defs/richText", "description": "Optional one-line description of the role or company, above the bullets." },
+        "highlights": { "$ref": "#/$defs/highlights" },
+        "technologies": { "$ref": "#/$defs/stringList", "description": "Rendered as 'Tech stack: a, b, c' or as tags." }
+      }
+    },
+
+    "educationItem": {
+      "type": "object",
+      "required": ["institution"],
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "institution": { "$ref": "#/$defs/text" },
+        "degree": { "$ref": "#/$defs/text", "description": "'BTech', 'MSc', 'High School'." },
+        "field": { "$ref": "#/$defs/text", "description": "'Computer Science and Engineering'." },
+        "url": { "$ref": "#/$defs/url" },
+        "location": { "$ref": "#/$defs/location" },
+        "startDate": { "$ref": "#/$defs/date" },
+        "endDate": { "$ref": "#/$defs/endDate", "description": "Graduation date, or expected graduation." },
+        "score": {
+          "type": "object",
+          "required": ["value"],
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "string", "minLength": 1, "maxLength": 20, "description": "As printed: '7.83', '3.9', '92', 'First Class'." },
+            "max": { "type": "string", "maxLength": 20, "description": "Scale, printed as 'value / max': '10', '4.0', '100'." },
+            "label": { "type": "string", "maxLength": 20, "description": "'GPA', 'CGPA', 'Percentage'. Default 'GPA'." }
+          }
+        },
+        "honors": { "$ref": "#/$defs/text", "description": "'Summa cum laude', 'Dean's list'." },
+        "courses": { "$ref": "#/$defs/stringList" },
+        "highlights": { "$ref": "#/$defs/highlights" }
+      }
+    },
+
+    "skillGroup": {
+      "type": "object",
+      "required": ["items"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text", "description": "Group label: 'Frontend'. Omit for an ungrouped list." },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 40,
+          "items": {
+            "description": "A skill name, or {name, level} when the level matters. Most templates show names only; a few draw levels as bars or dots.",
+            "oneOf": [
+              { "$ref": "#/$defs/text" },
+              {
+                "type": "object",
+                "required": ["name"],
+                "additionalProperties": false,
+                "properties": {
+                  "name": { "$ref": "#/$defs/text" },
+                  "level": { "type": "integer", "minimum": 1, "maximum": 5, "description": "1 = basic, 5 = expert." }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "projectItem": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text" },
+        "kind": { "$ref": "#/$defs/text", "description": "Short tag: 'Open source', 'NPM package', 'Hackathon winner'." },
+        "role": { "$ref": "#/$defs/text" },
+        "url": { "$ref": "#/$defs/url", "description": "Live site or package page." },
+        "repository": { "$ref": "#/$defs/url" },
+        "startDate": { "$ref": "#/$defs/date" },
+        "endDate": { "$ref": "#/$defs/endDate" },
+        "description": { "$ref": "#/$defs/richText" },
+        "highlights": { "$ref": "#/$defs/highlights" },
+        "technologies": { "$ref": "#/$defs/stringList" }
+      }
+    },
+
+    "certificationItem": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/text" },
+        "issuer": { "$ref": "#/$defs/text" },
+        "date": { "$ref": "#/$defs/date", "description": "Issue date." },
+        "expires": { "$ref": "#/$defs/date" },
+        "credentialId": { "$ref": "#/$defs/text" },
+        "url": { "$ref": "#/$defs/url", "description": "Verification link." }
+      }
+    },
+
+    "awardItem": {
+      "type": "object",
+      "required": ["title"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "awarder": { "$ref": "#/$defs/text" },
+        "date": { "$ref": "#/$defs/date" },
+        "summary": { "$ref": "#/$defs/richText" }
+      }
+    },
+
+    "publicationItem": {
+      "type": "object",
+      "required": ["title"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "authors": { "$ref": "#/$defs/stringList", "description": "In order. Put the resume owner's name exactly as in `basics.name` and templates bold it." },
+        "venue": { "$ref": "#/$defs/text", "description": "Journal, conference, publisher or blog." },
+        "date": { "$ref": "#/$defs/date" },
+        "url": { "$ref": "#/$defs/url" },
+        "doi": { "type": "string", "pattern": "^10\\.\\d{4,9}/\\S+$" },
+        "summary": { "$ref": "#/$defs/richText" }
+      }
+    },
+
+    "languageItem": {
+      "type": "object",
+      "required": ["language"],
+      "additionalProperties": false,
+      "properties": {
+        "language": { "$ref": "#/$defs/text" },
+        "fluency": {
+          "enum": ["native", "fluent", "professional", "intermediate", "basic"],
+          "description": "Plain-language level, printed with the first letter capitalised (or translated)."
+        },
+        "cefr": { "enum": ["A1", "A2", "B1", "B2", "C1", "C2"], "description": "Optional CEFR level, printed after the fluency." }
+      }
+    },
+
+    "volunteerItem": {
+      "type": "object",
+      "required": ["organization"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "organization": { "$ref": "#/$defs/text" },
+        "role": { "$ref": "#/$defs/text" },
+        "url": { "$ref": "#/$defs/url" },
+        "location": { "$ref": "#/$defs/location" },
+        "startDate": { "$ref": "#/$defs/date" },
+        "endDate": { "$ref": "#/$defs/endDate" },
+        "summary": { "$ref": "#/$defs/richText" },
+        "highlights": { "$ref": "#/$defs/highlights" }
+      }
+    },
+
+    "interestItem": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "$ref": "#/$defs/text" },
+        "keywords": { "$ref": "#/$defs/stringList" }
+      }
+    },
+
+    "references": {
+      "type": "object",
+      "description": "Either `availableOnRequest: true` (prints 'References available on request') or a list of referees.",
+      "additionalProperties": false,
+      "properties": {
+        "availableOnRequest": { "type": "boolean" },
+        "items": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/text" },
+              "title": { "$ref": "#/$defs/text" },
+              "company": { "$ref": "#/$defs/text" },
+              "relationship": { "$ref": "#/$defs/text", "description": "'Former manager at Acme'." },
+              "email": { "type": "string", "format": "email" },
+              "phone": { "type": "string", "pattern": "^[+0-9()\\-. ]{5,30}$" },
+              "quote": { "$ref": "#/$defs/richText" }
+            }
+          }
+        }
+      }
+    },
+
+    "customSection": {
+      "type": "object",
+      "required": ["id", "title", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text", "description": "Section heading: 'Talks', 'Patents', 'Leadership'." },
+        "display": {
+          "enum": ["entries", "bullets", "tags", "text"],
+          "description": "entries: titled items with dates (like work). bullets: one line per item (uses `title`). tags: chips (uses `title`). text: paragraphs (uses `description`). Default entries."
+        },
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "title": { "$ref": "#/$defs/text" },
+              "subtitle": { "$ref": "#/$defs/text" },
+              "location": { "$ref": "#/$defs/location" },
+              "url": { "$ref": "#/$defs/url" },
+              "startDate": { "$ref": "#/$defs/date" },
+              "endDate": { "$ref": "#/$defs/endDate" },
+              "description": { "$ref": "#/$defs/richText" },
+              "highlights": { "$ref": "#/$defs/highlights" }
+            }
+          }
+        }
+      }
+    },
+
+    "sectionKey": {
+      "type": "string",
+      "pattern": "^(summary|work|education|skills|projects|certifications|awards|publications|languages|volunteer|interests|references|custom:[A-Za-z0-9_-]{1,64})$"
+    },
+
+    "preferences": {
+      "type": "object",
+      "description": "Presentation hints. Optional; the app's own choices win when the user changes them in the UI. Templates ignore what they can't honour (a fixed two-column layout decides its own column placement).",
+      "additionalProperties": false,
+      "patternProperties": { "^x-": {} },
+      "properties": {
+        "template": { "type": "string", "pattern": "^[a-z0-9-]{1,40}$", "description": "Template id to preselect, e.g. 'meridian'. Unknown ids are ignored." },
+        "accentColor": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+        "pageSize": { "enum": ["A4", "Letter"] },
+        "dateFormat": {
+          "enum": ["MMM YYYY", "MMMM YYYY", "MM/YYYY", "YYYY-MM", "YYYY"],
+          "description": "How dates print. Default 'MMM YYYY' ('Feb 2025'). Month names follow `meta.locale`."
+        },
+        "sectionOrder": {
+          "type": "array",
+          "description": "Order of sections in the main flow. Sections not listed keep their default order after the listed ones.",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sectionKey" }
+        },
+        "hiddenSections": {
+          "type": "array",
+          "description": "Sections kept in the JSON but not rendered.",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sectionKey" }
+        },
+        "sectionTitles": {
+          "type": "object",
+          "description": "Heading overrides: {\"work\": \"Professional Experience\"}. Keys are section keys.",
+          "propertyNames": { "$ref": "#/$defs/sectionKey" },
+          "additionalProperties": { "$ref": "#/$defs/text" }
+        },
+        "showPhoto": { "type": "boolean", "description": "Default true when a photo is present." },
+        "showSkillLevels": { "type": "boolean", "description": "Default false." }
+      }
+    }
+  }
+}
