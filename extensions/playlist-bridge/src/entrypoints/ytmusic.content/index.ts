@@ -16,9 +16,19 @@ const HIDDEN_ATTR = "data-playlist-bridge-hidden";
 // Styles copied from YouTube's lyrics so ours look the same. Alignment isn't copied: each line follows its script.
 const COPIED = ["font-family", "font-size", "font-weight", "line-height", "letter-spacing", "color"];
 
-/** YouTube's lyrics text. Scoped to the player page: artist pages use the same element for their bio. */
-const findLyrics = () =>
-  document.querySelector<HTMLElement>("ytmusic-player-page ytmusic-description-shelf-renderer .description");
+/**
+ * YouTube's lyrics text. Scoped to the player page: artist pages use the same element for their bio. The player
+ * page can hold several of these shelves (other tabs keep theirs, hidden), so prefer one that's on screen and has
+ * the lyrics "Source: …" footer.
+ */
+function findLyrics(): HTMLElement | null {
+  const shelves = [...document.querySelectorAll<HTMLElement>("ytmusic-player-page ytmusic-description-shelf-renderer")];
+  const visible = (e: Element) => e.getClientRects().length > 0;
+  const lyricsFooter = (s: Element) => /^\s*source\s*:/i.test(s.querySelector(".footer")?.textContent ?? "");
+  const shelf =
+    shelves.find((s) => visible(s) && lyricsFooter(s)) ?? shelves.find(visible) ?? shelves.find(lyricsFooter) ?? shelves[0];
+  return shelf?.querySelector<HTMLElement>(".description") ?? null;
+}
 
 const deps: Deps = {
   online: (line) => onlineLine(line, TARGET),
@@ -193,6 +203,7 @@ export default defineContentScript({
         desc?.removeAttribute(HIDDEN_ATTR);
         desc = found;
         if (desc) {
+          console.info("[Playlist Bridge] lyrics bar attached");
           descObserver = new MutationObserver(sync);
           descObserver.observe(desc, { childList: true, characterData: true, subtree: true });
         }
@@ -225,6 +236,7 @@ export default defineContentScript({
     };
     browser.storage.onChanged.addListener(onStorage);
 
+    console.info("[Playlist Bridge] lyrics bar ready, waiting for the Lyrics tab");
     ctx.setInterval(sync, 1000);
     ctx.onInvalidated(() => {
       run?.abort();

@@ -16,6 +16,12 @@
 <body>
 <ytmusic-app>
   <ytmusic-player-page>
+    <!-- Another tab's shelf (artist bio in "Related"), hidden and first in the DOM: the bar must skip it. -->
+    <div hidden>
+      <ytmusic-description-shelf-renderer>
+        <yt-formatted-string class="description style-scope ytmusic-description-shelf-renderer">An artist biography.</yt-formatted-string>
+      </ytmusic-description-shelf-renderer>
+    </div>
     <ytmusic-description-shelf-renderer>
       <yt-formatted-string class="non-expandable description style-scope ytmusic-description-shelf-renderer">یوں زندگی کی راہ میں ٹکرا گیا کوئی
 یوں زندگی کی راہ میں ٹکرا گیا کوئی

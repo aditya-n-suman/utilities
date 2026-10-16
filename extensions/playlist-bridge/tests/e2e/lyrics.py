@@ -33,7 +33,7 @@ async def main():
         await page.goto("https://music.youtube.com/watch?v=test")
 
         bar = page.locator(".playlist-bridge-lyrics .bar")
-        desc = page.locator("ytmusic-description-shelf-renderer .description")
+        desc = page.locator("ytmusic-description-shelf-renderer .description").last
         await expect(bar).to_be_visible(timeout=10_000)
         print("✓ bar shows above the lyrics")
 
@@ -75,7 +75,7 @@ async def main():
 
         # Next song: English lyrics in translate mode need nothing.
         await bar.get_by_role("button", name="Translate", exact=True).click()
-        await page.evaluate("t => document.querySelector('ytmusic-description-shelf-renderer .description').textContent = t", ENGLISH)
+        await page.evaluate("t => [...document.querySelectorAll('ytmusic-description-shelf-renderer .description')].at(-1).textContent = t", ENGLISH)
         await expect(status).to_contain_text("Already in English", timeout=20_000)
         await expect(rows.first.locator(".orig")).to_have_text("I can remember when we walked together")
         print("✓ song change followed:", await status.inner_text())
