@@ -23,7 +23,7 @@ You are helping me write the content of my resume. Output **only** a JSON docume
 8. `skills`: group them (Frontend, Backend, Tools…), most relevant first, 4–10 items per group. Omit `level` unless I ask for it.
 9. Put a list of open questions or missing facts in `"x-notes"` at the top level (an array of strings), so I can fill them in. The app ignores `x-` keys.
 10. Don't add `basics.photo`; I'll add a photo in the app if I want one. If my resume isn't in English, write it in my language and set `meta.locale` (e.g. `"ar-AE"`) and `preferences.sectionTitles` in that language.
-11. Leave out sections I have nothing for. Don't add `preferences` unless I ask for a template, colour or section order.
+11. Leave out sections I have nothing for. Don't add other `preferences` unless I ask for a template, colour or section order.
 
 ## Example of the shape
 
