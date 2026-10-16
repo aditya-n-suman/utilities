@@ -39,9 +39,9 @@ remove, reload → "Pick up where you left off" → resume (edits kept), links (
 re-attaches after in-app navigation). No console errors. Repeat with `./instruction.sh e2e` (`tests/e2e/e2e.py`).
 
 ## Lyrics bar on YouTube Music (1.2.0)
-`src/entrypoints/ytmusic.content/` adds **Off · Translate · Transliterate · Both** above static lyrics
-(`ytmusic-player-page ytmusic-description-shelf-renderer .description`, checked on the real site in Chrome 138 and
-Brave 155). YouTube's element is hidden, never edited, and our copy is drawn before it in a shadow root, using its
+`src/entrypoints/ytmusic.content/` adds **Off · Translate · Transliterate · Both** above static lyrics. The product
+owner verified it on the real lyrics tab (2026-10-16). It attaches to the visible lyrics shelf on the player page, and
+to its *shown* `.description`: the shelf holds the text twice, first inside a hidden `#description-button`. YouTube's element is hidden, never edited, and our copy is drawn before it in a shadow root, using its
 font and colour. A 1 s poll plus an observer on the lyrics text follow song changes.
 - `engine/lyrics/pipeline.ts`: per line, at most 6 at a time, repeated lines once. Translation runs on-device first
   (`ondevice.ts`: Chrome's Translator API; LanguageDetector when present). It goes online if there's no model, the
@@ -132,8 +132,6 @@ scripts/release.mjs      release zips + SHA256SUMS.txt (npm run release; also ru
 - If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).
 
 ## Next steps
-0. Lyrics: confirm the online path (gtx) on a home connection, and check the bar on the real lyrics tab. Then release
-   1.2.0 (SETUP.md → Release).
 1. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
    should stay installed.
 2. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in
