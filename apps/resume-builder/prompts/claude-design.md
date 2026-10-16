@@ -2,6 +2,7 @@
 
 Paste everything below the line into Claude Design. Attach:
 
+- `UX.md` (the user journeys)
 - `schema/resume.schema.json` and `schema/SCHEMA.md` (the data contract)
 - `schema/examples/full.json` and `schema/examples/minimal.json` (the fixtures every template renders)
 - Your reference resumes (images or PDFs). The prompt names three of them as templates 1–3; rename or add to match what you attach.
@@ -18,6 +19,8 @@ There are two ways in, and both end at the same place:
 2. **Bring your own JSON.** Upload (or paste) a JSON file that follows our published schema. This is for people who write their content with an AI chat (ChatGPT, Claude, Gemini) or by hand. The app gives them a ready-made prompt to paste into the AI and a link to the schema. They only need a text model for the words; Folio does the design.
 
 Either way, the user then picks a template, sees their resume rendered live, adjusts a few things (accent colour, page size, section order) and downloads a PDF.
+
+The form is never a step people must pass, and never out of reach. Form, preview and design controls are views of one document in one **workspace**, and any part of the preview is one click from its form field. An imported file lands on the rendered resume, not the form, with a short review banner. The attached `UX.md` describes the journeys; follow it, and flag anything in it that doesn't work as a design.
 
 The data contract is attached (`resume.schema.json`, explained in `SCHEMA.md`). Every field the form collects, every field a template prints and every error the importer shows must map to it. Don't invent fields; if a design needs one, call it out in a note on the canvas.
 
@@ -41,31 +44,36 @@ Design each as its own canvas.
 
 1. **Home.** One line on what Folio does and that nothing leaves the device. Two equal, obvious choices: *Start with the form* and *Import JSON*. A strip of template thumbnails below. A small *Resume with AI* explainer: three steps (copy our prompt → paste it into any AI with your old resume → import the JSON it gives back). If a draft exists in the browser, a *Continue editing* card comes first.
 
-2. **Form editor with live preview.** Split view: form on the left (~45%), live A4 preview on the right that updates as you type. Sections as a vertical list the user can reorder by drag, collapse, hide and rename (these map to `preferences.sectionOrder`, `hiddenSections`, `sectionTitles`). Show:
-   - *Basics*: name, headline, photo upload with crop (or initials fallback), email, phone, location, website, profiles (network picker with icons), summary.
-   - *Experience* as repeatable cards: company, title, context, dates with a *Present* toggle, location + work mode, bullets. Each bullet can have an optional bold lead-in label. Reorder bullets and entries by drag. Duplicate an entry (for promotions).
-   - *Skills* as groups of chips, typed with Enter, optional level per chip.
-   - An *Add section* menu for the optional sections and *Custom section*.
-   - Field help text, character counters near the limits, inline validation.
-   - The tiny markup supported in text fields (bold, italic, link) via a minimal toolbar or shortcuts, not a full rich-text editor.
-   - Top bar: document name, *Saved in this browser* status, *Export JSON*, *Choose template*, *Download PDF*.
-   - Phone: form only, with a *Preview* button that opens the preview full-screen.
+2. **Workspace** (the main screen; see `UX.md`). Left panel with two tabs, *Content* (the form) and *Design*; live A4 preview on the right that updates as you type. Top bar: document name, *Saved in this browser* status, problems icon, *Copy for AI*, *Export JSON*, *Download PDF*.
+   - **Click to edit.** Hovering any part of the preview outlines it with an *Edit* hint; clicking opens *Content* at that exact field (down to a single bullet) and focuses it. Focusing a form field highlights its element in the preview. Show both directions.
+   - *Content* tab: sections as a vertical list the user can reorder by drag, collapse, hide and rename (these map to `preferences.sectionOrder`, `hiddenSections`, `sectionTitles`).
+     - *Basics*: name, headline, photo upload with crop (or initials fallback), email, phone, location, website, profiles (network picker with icons), summary.
+     - *Experience* as repeatable cards: company, title, context, dates with a *Present* toggle, location + work mode, bullets. Each bullet can have an optional bold lead-in label. Reorder bullets and entries by drag. Duplicate an entry (for promotions).
+     - *Skills* as groups of chips, typed with Enter, optional level per chip.
+     - An *Add section* menu for the optional sections and *Custom section*.
+     - Field help text, character counters near the limits, inline validation.
+     - The tiny markup supported in text fields (bold, italic, link) via a minimal toolbar or shortcuts, not a full rich-text editor.
+   - *Design* tab: current template with *Browse all templates*, accent colour (6 presets + custom), page size A4 / Letter, date format, show photo, show skill levels. A *Fit check* that warns when the resume runs to a mostly empty extra page.
+   - **Review banner** after a valid import: what was imported, *Review content*, the AI's notes (`x-notes`) as a checklist, and a few soft warnings (no phone, a job with no bullets). Dismissible, reopens from the problems icon.
+   - **Problems panel** after an import with errors: each error clickable to its field; bad values stay visible in their field, flagged; keys that couldn't be imported listed separately. *Download PDF* reads *Fix 2 problems to download* while errors remain.
+   - **Focus preview**: full-screen paged preview (page breaks visible, page count) with an *Edit* button; click-to-edit still works and brings the panel back. A one-line note that the PDF keeps real, selectable text (good for ATS).
+   - Phone: one pane at a time with a bottom bar *Content · Design · Preview*; tapping an element in Preview opens Content at that field, and a *Back to preview* chip returns to the same spot.
+   Show the workspace in four states: building from scratch, just imported (review banner), imported with errors (problems panel), and focus preview.
 
-3. **Import JSON.** Drop zone + *Choose file* + *Paste JSON*. Three states:
-   - *Valid*: summary of what was found (name, 3 jobs, 2 projects, 4 skill groups) and *Continue to templates*.
-   - *Invalid*: list of errors, each with the JSON path, a plain-language problem and a fix hint (e.g. `work[0].startDate`: "Feb 2025" isn't a date we understand. Use "2025-02"). Offer *Open in editor anyway* (loads what's valid, flags the rest) and *Copy errors for AI* (copies the list so the user can paste it back to their AI to fix).
+3. **Import JSON.** Drop zone + *Choose file* + *Paste JSON*. States:
+   - *Valid*: summary of what was found (name, 3 jobs, 2 projects, 4 skill groups), then *Choose a template* (primary) or *Skip, use the default*.
+   - *Invalid*: list of errors, each with the JSON path, a plain-language problem and a fix hint (e.g. `work[0].startDate`: "Feb 2025" isn't a date we understand. Use "2025-02"). Primary *Fix in the form* (loads everything it can into the workspace with the problems panel open); secondary *Copy errors for AI* (copies the list so the user can paste it back to their AI).
    - *Not JSON*: the parse error with line and column.
+   - *Replace your current resume?* dialog when a draft exists, offering *Export current JSON first*, then an *Undo* toast after replacing.
    Also on this screen: *Get the AI prompt* (copy button, shows a preview of the prompt), *Download schema*, *Download example JSON*.
 
-4. **Template gallery.** Grid of the templates rendered with the user's own data, not lorem ipsum. Filters: *ATS-friendly*, *One column / Two column*, *Photo*, *Style* (classic, modern, creative, academic). Each card: name, tags, page count with the user's data. Hover or tap for a larger preview. Selecting one opens the preview.
-
-5. **Preview and export.** Large paged preview (page breaks visible, page count shown). Side panel: template switcher (thumbnails), accent colour (6 presets + custom), page size A4 / Letter, date format, show photo, show skill levels, section order. A *Fit check* that warns when the resume runs to a mostly empty extra page. *Download PDF* as the primary action, *Export JSON* secondary. A one-line note that the PDF keeps real, selectable text (good for ATS).
+4. **Template gallery.** Opened after an import and from *Browse all templates*. Grid of the templates rendered with the user's own data, not lorem ipsum. Filters: *ATS-friendly*, *One column / Two column*, *Photo*, *Style* (classic, modern, creative, academic). Each card: name, tags, page count with the user's data. Hover or tap for a larger preview. Selecting one returns to the workspace with it applied; an *Edit content* link is always present.
 
 Also design: empty states, the autosave/restore prompt, a destructive-action confirm (*Start over*), toast styles, and the error banner when a PDF export fails.
 
 ## Part 2: resume templates
 
-Design **10 templates**. Each one renders `full.json` on A4. Also show `minimal.json` for each, so we can see a short resume still looks intentional, and a page-2 continuation so we can see how a long one breaks.
+Design **10 templates**. Templates are what click-to-edit wraps, so every printed element must correspond to one schema field (or one list item). Each one renders `full.json` on A4. Also show `minimal.json` for each, so we can see a short resume still looks intentional, and a page-2 continuation so we can see how a long one breaks.
 
 ### Rules every template follows
 
@@ -98,7 +106,7 @@ For each template, deliver: the A4 render of `full.json` (all pages), the render
 
 ## Deliverables summary
 
-- 5 app screens × (desktop + phone), plus the states listed.
+- 4 app screens × (desktop + phone), with the workspace in its four states, plus the states listed.
 - 10 templates as above.
 - A one-page design-token sheet for the app (colours, type scale, spacing, radii, shadows) and one shared template token sheet (accent, ink, muted ink, rule colour, page margins).
 - Keep everything buildable with plain HTML and CSS (CSS grid, flex, `@page`, `break-inside: avoid`). The templates will be implemented as React components that print to PDF through the browser.

@@ -6,10 +6,11 @@ Status: **design and contract stage.** No app code yet. "Folio" in the design pr
 
 | Path | What |
 |---|---|
+| `UX.md` | User journeys: one workspace where form, preview and design are views of the same document; how imports (valid or not) land; click-to-edit. |
 | `schema/resume.schema.json` | The data contract (JSON Schema 2020-12). Form, importer and templates all use it. |
 | `schema/SCHEMA.md` | Human guide to the contract: rules, choices, import behaviour, versioning. |
 | `schema/examples/` | `minimal.json` and `full.json`. Fictional people; both validate. They are the fixtures every template must render. |
-| `prompts/claude-design.md` | Prompt for Claude Design: 5 app screens and 10 resume templates (3 from the owner's reference resumes). |
+| `prompts/claude-design.md` | Prompt for Claude Design: 4 app screens (workspace, import, gallery, home) and 10 resume templates (3 from the owner's reference resumes). |
 | `prompts/ai-content.md` | Prompt the app hands users to get schema-valid JSON out of any text model. |
 
 ## Planned architecture
@@ -37,6 +38,6 @@ This becomes an `npm test` once the app exists.
 
 ## Next steps
 
-1. Run `prompts/claude-design.md` in Claude Design with the schema, examples and reference resumes attached. Save the approved canvases under `design/`.
+1. Run `prompts/claude-design.md` in Claude Design with `UX.md`, the schema, examples and reference resumes attached. Save the approved canvases under `design/`.
 2. Scaffold the Vite app, generate types, wire Ajv import with friendly error messages.
 3. Build templates 1–3 (the reference ones) first, then the form editor, then the rest.

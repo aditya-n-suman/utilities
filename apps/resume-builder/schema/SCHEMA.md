@@ -61,9 +61,10 @@ The full field list, with descriptions, lives in the schema. Editors that unders
 ## What the app does on import
 
 1. Parse. A JSON syntax error shows the line and column.
-2. Validate against the schema. Errors list the JSON path (`work[0].startDate`), the problem and a fix hint (*use "2025-02", not "Feb 2025"*). Import is blocked until the file is valid.
-3. Normalise for templates: generate missing `id`s, turn string bullets into `{ text }`, turn string skills into `{ name }`, derive initials, sort nothing (order is the author's).
-4. Templates receive only the normalised document.
+2. Validate against the schema. Errors list the JSON path (`work[0].startDate`), the problem and a fix hint (*use "2025-02", not "Feb 2025"*).
+3. If it is valid, normalise and open the workspace on the rendered resume. If it isn't, the user can still load it into the form: everything that fits a form field is loaded, invalid values stay in their field flagged as errors, and unknown keys are listed as not imported. PDF export waits until the document is valid. See `../UX.md`.
+4. Normalise for templates: generate missing `id`s, turn string bullets into `{ text }`, turn string skills into `{ name }`, derive initials, sort nothing (order is the author's).
+5. Templates receive only the normalised document. Export writes it back in the same shape, keeping `x-` keys untouched, so a file survives import → edit → export → AI → import.
 
 ## Versioning
 
