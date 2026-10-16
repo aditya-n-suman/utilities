@@ -21,7 +21,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: "Playlist Bridge",
     ...(browser === "firefox" ? {} : { key: CHROME_KEY }),
-    description: "Turn a Spotify playlist into a YouTube playlist. Runs entirely in your browser.",
+    description: "Turn a Spotify playlist into a YouTube playlist, and translate YouTube Music lyrics. Runs in your browser.",
     permissions: ["declarativeNetRequestWithHostAccess", "cookies", "contextMenus", "storage"],
     host_permissions: HOSTS,
     // Only needed to follow spotify.link / spoti.fi short links; requested when one is pasted.

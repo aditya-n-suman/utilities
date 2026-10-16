@@ -26,6 +26,7 @@ When a new version is out, Playlist Bridge shows an **Update to x.y.z** button a
 1. Download the new Chrome zip from that link.
 2. Delete the files inside your Playlist Bridge folder and unzip the new version into the **same folder**.
 3. On the extensions page, click the ↻ (reload) icon on the Playlist Bridge card.
+4. Reload any open Spotify or YouTube Music tabs. Their Playlist Bridge buttons only come back after a reload.
 
 Your saved matches, unfinished conversion and settings are kept.
 

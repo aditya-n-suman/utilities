@@ -18,6 +18,18 @@ matching and the same screens. The web app is unchanged.
 If you close the tab, your progress is kept: the next time you open the extension it offers "Pick up where you left off?"
 for up to 7 days.
 
+### Lyrics on YouTube Music
+Open the **Lyrics** tab on music.youtube.com and a bar appears above the lyrics: **Off · Translate · Transliterate · Both**.
+The extra lines appear under each original line, in a lighter style. Verse breaks, right-to-left lines and the lyrics
+source stay as they are.
+- **Translate** (to English): on-device first, with Chrome's built-in translator (Google's models, Chrome 138+). The
+  first use of a language downloads its model, after a click. If the browser has no model for the language, or the
+  lyrics are romanised (like Hindi in Latin letters), it uses Google Translate online, but only after you allow it.
+- **Transliterate**: the same words in another script. "یوں زندگی" becomes "yon zandgi", and romanised Hindi
+  "tum hi ho" becomes "तुम ही हो". Browsers can't do this on-device, so it always uses Google Translate online.
+- The choice is remembered and applies to every song. Only static lyrics are supported. Synced (highlighted) lyrics
+  aren't yet.
+
 ## Install (unpacked / self-distributed)
 **Users:** follow [INSTALL.md](INSTALL.md). Download the Chrome zip from the
 [releases](https://github.com/aditya-n-suman/utilities/releases?q=playlist-bridge&expanded=true), unzip it into a
@@ -55,17 +67,21 @@ See [SETUP.md](SETUP.md) for the manual checks, troubleshooting and how to relea
 | `open.spotify.com` | Read the public playlist page, and add the "Convert to YouTube" button |
 | `api-partner.spotify.com` | Load playlists with more than 100 songs |
 | `open.spotifycdn.com` | Reconnect if Spotify changes how its player loads playlists |
-| `music.youtube.com` | Search YouTube Music, and save the playlist to your account |
+| `music.youtube.com` | Search YouTube Music, save the playlist to your account, and show the lyrics bar |
 | `www.youtube.com` | Search YouTube for songs missing from YouTube Music |
 | `declarativeNetRequestWithHostAccess` | YouTube's internal API refuses requests without its own Origin/Referer, so the extension sets them on `/youtubei/` calls it makes (`public/rules/youtube-headers.json`) |
 | `cookies` | Read YouTube's `SAPISID` cookie to sign the save request, the same way youtube.com does |
 | `contextMenus` | "Convert with Playlist Bridge" on right-click |
-| `storage` | Remember the Spotify query hash if Spotify changes it, and when it last checked for updates |
+| `storage` | Remember the Spotify query hash if Spotify changes it, when it last checked for updates, and the lyrics bar's mode |
 | *optional:* `spotify.link`, `spoti.fi` | Only requested when you paste a short link |
 
 ## Privacy
 - Nothing leaves your browser except requests to Spotify and YouTube, plus one update check a day to GitHub's public
   releases list (`api.github.com`, no cookies). There's no analytics and no server of ours.
+- **Lyrics:** on-device translation keeps the lyrics in your browser. Only after you click **Allow Google Translate
+  online** on the lyrics bar are lyrics lines sent to Google (`translate.googleapis.com`, and `inputtools.google.com` for
+  romanised lyrics), without cookies. "Stop using Google online" on the bar turns that off again. Online results are
+  cached in the extension for 30 days, and "Clear saved matches" deletes them.
 - **Searches are sent without cookies**, so they don't touch your YouTube history or recommendations.
 - Only **Save** uses your YouTube session. It creates one playlist and adds the videos to it, and does nothing else.
 - The match cache (30 days) and the unfinished conversion (7 days) are kept in the extension's IndexedDB. You can
@@ -79,6 +95,8 @@ See [SETUP.md](SETUP.md) for the manual checks, troubleshooting and how to relea
 - Only public playlists work. Up to 500 tracks are converted per run.
 - Saving uses the first signed-in Google account in the browser (`X-Goog-AuthUser: 0`). YouTube brand accounts and
   channel switching aren't supported.
+- Online lyrics translation uses Google's keyless web endpoints, which are unofficial. Google rate-limits busy IPs;
+  translation then falls back to a second endpoint, but transliteration fails with a Retry until the limit lifts.
 - From datacenter or VPN IPs, YouTube Music's songs catalog can return nothing. Matching then falls back to videos, and
   quality drops a little.
 

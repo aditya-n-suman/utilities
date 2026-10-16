@@ -38,6 +38,28 @@ remove, reload → "Pick up where you left off" → resume (edits kept), links (
 → paste fallback, and the "Convert to YouTube" button on a Spotify playlist page (opens the app and starts converting;
 re-attaches after in-app navigation). No console errors. Repeat with `./instruction.sh e2e` (`tests/e2e/e2e.py`).
 
+## Lyrics bar on YouTube Music (1.2.0)
+`src/entrypoints/ytmusic.content/` adds **Off · Translate · Transliterate · Both** above static lyrics. The product
+owner verified it on the real lyrics tab (2026-10-16). It attaches to the visible lyrics shelf on the player page, and
+to its *shown* `.description`: the shelf holds the text twice, first inside a hidden `#description-button`. YouTube's element is hidden, never edited, and our copy is drawn before it in a shadow root, using its
+font and colour. A 1 s poll plus an observer on the lyrics text follow song changes.
+- `engine/lyrics/pipeline.ts`: per line, at most 6 at a time, repeated lines once. Translation runs on-device first
+  (`ondevice.ts`: Chrome's Translator API; LanguageDetector when present). It goes online if there's no model, the
+  model download stalls for 20 s (Brave lists the API but can't download), or the lyrics are romanised (`xx-Latn`).
+  Transliteration is online only. Language: on-device detector → Google → guess from the script (`text.ts`).
+- `engine/lyrics/google.ts` (background only, via `messages.ts`): keyless `translate_a/single?client=gtx` with
+  `dt=rm` for translation + romanization. If it fails (429/captcha on busy IPs), `translate_a/t?client=dict-chrome-ex`
+  translates only. `inputtools.google.com` writes romanised text in its script. All three allow CORS from extension
+  origins, so there are no host permissions. Online needs the user's "Allow" on the bar (`platform/lyricsSettings.ts`).
+- Don't send whole lyrics in one request: Google drops blank lines and returns one transliteration line, which loses
+  the alignment.
+- Chrome's built-in page translation and the Google Translate extension can't be driven by another extension. The
+  extension has no `externally_connectable` and only translates selections. Its translate-pa API key belongs to
+  Google, so we don't use it.
+- Tests: `tests/unit/lyrics.test.ts` (offline) and `tests/e2e/lyrics.py`, which runs against a stand-in lyrics page
+  (`tests/e2e/fixtures/ytmusic-lyrics.html`) with real Google calls. `./instruction.sh e2e` runs both e2e scripts.
+- Next: synced (highlighted) lyrics, a target-language setting, and per-line retry.
+
 ## Engine (src/engine)
 - `sources/`: Spotify embed + pathfinder paging + query-hash recovery + paste/CSV
 - `youtube/innertube.ts`: YouTube Music / YouTube search requests and parsers (videos checked against ytmusicapi output)
@@ -82,8 +104,9 @@ node scripts/make-icons.mjs   # regenerate icons from the design spec
 wxt.config.ts            manifest for both browsers (hosts, permissions, DNR rules, Firefox id/min version)
 public/rules/            declarativeNetRequest: Origin/Referer rewrite for YouTube's internal API
 public/icons/            generated from the design (light + dark-toolbar variants)
-src/entrypoints/         background.ts (toolbar, context menu), app/ (UI), help/ (How it works),
-                         spotify.content/ (button on playlist pages, shadow-root UI next to data-testid="action-bar-row-actions")
+src/entrypoints/         background.ts (toolbar, context menu, online lyrics requests), app/ (UI), help/ (How it works),
+                         spotify.content/ (button on playlist pages, shadow-root UI next to data-testid="action-bar-row-actions"),
+                         ytmusic.content/ (lyrics bar on music.youtube.com)
 src/engine/              in-browser engine (index.ts = interface; filled in phases 2–5), types.ts
 src/platform/            site access, links (version, help, GitHub issue), update check
 src/ui/                  UI copied from apps/spotify-to-youtube/frontend, adapted
@@ -109,8 +132,6 @@ scripts/release.mjs      release zips + SHA256SUMS.txt (npm run release; also ru
 - If paging fails because the query hash is stale: show "Reconnecting…", read the hash from the web player, retry once, then fall back to the `spotify_changed` error (as in the design).
 
 ## Next steps
-0. Publish the first release: push the tag `playlist-bridge-v1.1.0` (SETUP.md → Release). Until a release exists the
-   update check finds nothing and stays silent.
 1. Firefox: run the e2e flow by hand once (the script drives Chromium only), and sign an unlisted build on AMO if it
    should stay installed.
 2. If Spotify's action bar changes, the button stops appearing (nothing breaks). Selectors are in
