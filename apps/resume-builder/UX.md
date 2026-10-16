@@ -20,7 +20,7 @@ The exception is a file with errors. That one opens on the form with the problem
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│ Priya Raman – Resume   ✓ Saved in this browser    [Export JSON] [PDF]│
+│ Priya Raman – Resume  ✓ Saved in this browser   [Download JSON] [PDF]│
 ├───────────────────────────────┬──────────────────────────────────────┤
 │ [ Content ] [ Design ]        │                                      │
 │                               │        live A4 preview               │
@@ -70,7 +70,12 @@ While errors remain, **Download PDF** says *Fix 2 problems to download* and open
 
 ### D. Come back later
 
-Home shows **Continue editing** (name, template thumbnail, last edited). It reopens the workspace exactly where they left: tab, open section, scroll.
+The browser keeps **one** working copy (see *Saving* below). On the next visit, Home opens with a choice before anything else:
+
+> **Welcome back.** You have a resume in progress: Priya Raman · Meridian · edited 2 days ago.
+> **[Continue where you left off]**  [Start fresh]
+
+*Continue* reopens the workspace on the same tab and section. *Start fresh* deletes the saved copy from the browser (after a one-line confirm offering *Download JSON first*) and shows the normal Home.
 
 ### E. Edit while previewing or exporting
 
@@ -80,12 +85,12 @@ There's no separate preview screen to get stuck on: the workspace is the preview
 
 People will alternate between the form and their AI. From the top bar:
 
-- **Export JSON** downloads the current document, including the user's manual edits and any `x-` keys from the import (kept untouched).
+- **Download JSON** saves the current document, including the user's manual edits and any `x-` keys from the import (kept untouched).
 - **Copy for AI** copies the AI prompt with the current JSON included and a line asking for improvements, so the next AI pass starts from the edited version, not the old one.
 
 ### G. Import when a draft already exists
 
-Importing over a draft asks once: **Replace current resume** (with an *Undo* toast for 10 seconds, and *Export current JSON first* offered in the dialog) or **Cancel**. If multiple saved resumes are added later, a third option becomes *Open as a new resume*.
+Importing over a draft asks once: **Replace current resume** (with an *Undo* toast for 10 seconds, and *Download current JSON first* offered in the dialog) or **Cancel**. There is only ever one resume in the app.
 
 ## Rules that keep it trustworthy
 
@@ -93,3 +98,21 @@ Importing over a draft asks once: **Replace current resume** (with an *Undo* toa
 2. **Edits are never more than one click from anywhere** that shows resume content: workspace (both tabs), focus preview, review banner, problems panel.
 3. **Never block reading, only exporting.** Invalid data shows in the preview as best it can; only the PDF waits for a valid document.
 4. **Autosave everything**, on every change, with the status in the top bar. *Undo / Redo* (Ctrl/⌘+Z) cover form edits, reorders and replacing an import.
+
+## Saving: the JSON file is the user's, the browser copy is a convenience
+
+The app stays light: no accounts, no database, no list of resumes. The **downloaded JSON file is the real save**; keeping it, versioning it and re-importing it is up to the user. To spare them from losing work mid-session or between visits on the same browser, the app also keeps the single current document in `localStorage`:
+
+- Written on every change (debounced), along with the UI position (tab, section) so *Continue* lands where they were.
+- One key, one document. Importing or starting fresh replaces it; nothing accumulates.
+- Photos are downscaled on upload (at most 600 px, JPEG) so the document stays well under the browser's ~5 MB limit. If a save still fails (storage full or blocked, private mode), the status turns into *Not saved in this browser. Download JSON to keep your work* and the app keeps working from memory.
+- The top bar status says *Saved in this browser* with a tooltip: *Only on this device. Download JSON to keep a copy.*
+- A **Remove from this browser** action (in the document menu) deletes the copy immediately, for shared computers.
+
+## Photos
+
+A photo is never required. Templates come in two kinds: with a photo slot and without. In a template with a slot, the *Design* tab shows a three-way control, **Photo · Initials · None** (`preferences.avatar`: `auto`, `initials`, `none`); *None* removes the slot and the header reflows as if the template had been designed without one. Choosing *Photo* with no photo uploaded opens the upload. In templates without a slot the control is hidden, and an uploaded photo stays in the JSON unused. The gallery's *Photo slot* filter helps people who want, or don't want, one.
+
+## Languages and direction
+
+Content can be in any language. The direction comes from the resume's locale (`meta.locale`, or `meta.direction` to override). A right-to-left resume mirrors the whole template; the app's own UI stays in the user's interface language and direction. Everything is laid out with logical CSS properties (`inline`/`block`, `start`/`end`, never `left`/`right`) so mirroring needs no per-template code.

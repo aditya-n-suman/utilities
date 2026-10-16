@@ -2,7 +2,7 @@
 
 `resume.schema.json` (JSON Schema 2020-12) is the single contract between the form editor, the JSON import, every template and any AI that writes content. The form produces it, the import accepts it, the templates read only it.
 
-Examples: [`examples/minimal.json`](examples/minimal.json) (the least a useful resume needs) and [`examples/full.json`](examples/full.json) (every section and field). Both validate.
+Examples: [`examples/minimal.json`](examples/minimal.json) (the least a useful resume needs), [`examples/full.json`](examples/full.json) (every section and field) and [`examples/rtl.json`](examples/rtl.json) (Arabic, right to left). All validate.
 
 ## Design rules
 
@@ -30,7 +30,7 @@ Everything else is text. HTML tags are escaped and shown literally, so pasted co
 |---|---|---|
 | `schemaVersion` | yes | `"1.0"`. |
 | `basics` | yes | Name (required), headline, photo or initials, email, phone, location, website, profiles, summary, extras. |
-| `meta` | | Locale, document title (PDF title and filename), lastModified, generator. |
+| `meta` | | Locale, text direction, document title (PDF title and filename), lastModified, generator. |
 | `work` | | Jobs, newest first. |
 | `education` | | Degrees and schools. |
 | `skills` | | Skill groups with items. |
@@ -52,7 +52,9 @@ The full field list, with descriptions, lives in the schema. Editors that unders
 
 **Skills can have levels, but most templates don't show them.** Levels (1–5) are drawn only when the template supports it and `preferences.showSkillLevels` is true. Bars on a resume are often read as self-rating noise, so it's opt-in.
 
-**Photo or initials.** `basics.photo.src` takes a `data:image/...;base64,` URI (preferred: works offline and survives PDF export) or an https URL that allows CORS. Templates with a photo slot fall back to `basics.initials`, then to the first letters of the first two words of `name`.
+**Photo, initials or nothing.** A photo is always optional, also in templates designed with a photo slot. `basics.photo.src` takes a `data:image/...;base64,` URI (preferred: works offline and survives PDF export) or an https URL that allows CORS. `preferences.avatar` decides what a slot shows: `auto` (photo, else initials), `initials`, or `none` (the slot disappears and the header reflows). Initials come from `basics.initials`, else the first letters of the first two words of `name`.
+
+**Any language, either direction.** `meta.locale` sets date formatting and `meta.direction` (derived from the locale when omitted) sets `dir` on the page. Templates are written with logical CSS properties only (`margin-inline-start`, `inset-inline-end`, `text-align: start`, `border-block-end`), so a right-to-left resume mirrors correctly with no per-template work. Section headings default to English; set `preferences.sectionTitles` for other languages. See [`examples/rtl.json`](examples/rtl.json).
 
 **Section keys** are used by `preferences.sectionOrder`, `hiddenSections` and `sectionTitles`: `summary`, `work`, `education`, `skills`, `projects`, `certifications`, `awards`, `publications`, `languages`, `volunteer`, `interests`, `references`, and `custom:<id>` for a custom section.
 

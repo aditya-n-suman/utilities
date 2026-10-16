@@ -172,7 +172,11 @@
         },
         "title": { "$ref": "#/$defs/text", "description": "Document title, used as the PDF title and download filename. Default: '<name> - Resume'." },
         "lastModified": { "type": "string", "format": "date-time" },
-        "generator": { "$ref": "#/$defs/text", "description": "Who produced the JSON: 'resume-builder 0.1', 'ChatGPT', 'hand-written'." }
+        "generator": { "$ref": "#/$defs/text", "description": "Who produced the JSON: 'folio 0.1', 'ChatGPT', 'hand-written'." },
+        "direction": {
+          "enum": ["ltr", "rtl"],
+          "description": "Text direction of the content. Default: derived from `locale` (rtl for ar, he, fa, ur, ps, sd, ug, yi, dv). Templates use logical CSS properties, so rtl mirrors the whole layout."
+        }
       }
     },
 
@@ -189,7 +193,7 @@
         },
         "photo": {
           "type": "object",
-          "description": "Templates without a photo slot ignore it. Templates with one fall back to `initials`.",
+          "description": "Optional, also in templates that have a photo slot. Templates without a slot ignore it; in templates with one, `preferences.avatar` decides what fills the slot. The app downscales uploads to at most 600 px so the draft fits in browser storage.",
           "required": ["src"],
           "additionalProperties": false,
           "properties": {
@@ -204,7 +208,7 @@
         },
         "initials": {
           "type": "string",
-          "description": "Monogram shown when a template has a photo slot but there is no photo. Default: first letters of the first two words of `name`.",
+          "description": "Monogram for a photo slot when there is no photo (or `preferences.avatar` is \"initials\"). Default: first letters of the first two words of `name`.",
           "minLength": 1,
           "maxLength": 3
         },
@@ -548,7 +552,10 @@
           "propertyNames": { "$ref": "#/$defs/sectionKey" },
           "additionalProperties": { "$ref": "#/$defs/text" }
         },
-        "showPhoto": { "type": "boolean", "description": "Default true when a photo is present." },
+        "avatar": {
+          "enum": ["auto", "initials", "none"],
+          "description": "What fills a template's photo slot. auto (default): the photo if there is one, else initials. initials: always the monogram. none: no slot; the header reflows as if the template had none. Ignored by templates without a slot."
+        },
         "showSkillLevels": { "type": "boolean", "description": "Default false." }
       }
     }

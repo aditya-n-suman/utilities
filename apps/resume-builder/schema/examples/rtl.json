@@ -1,0 +1,63 @@
+{
+  "$schema": "../resume.schema.json",
+  "schemaVersion": "1.0",
+  "meta": { "locale": "ar-AE", "direction": "rtl" },
+  "basics": {
+    "name": "ليلى حداد",
+    "headline": "مهندسة برمجيات أولى",
+    "email": "layla.haddad@example.com",
+    "phone": "+971 50 123 4567",
+    "location": { "city": "دبي", "country": "الإمارات العربية المتحدة", "countryCode": "AE" },
+    "profiles": [
+      { "network": "linkedin", "url": "https://linkedin.com/in/layla-haddad-example" },
+      { "network": "github", "url": "https://github.com/layla-haddad-example" }
+    ],
+    "summary": "مهندسة برمجيات بخبرة **6 سنوات** في بناء تطبيقات ويب سريعة باستخدام React وTypeScript، مع تركيز على الأداء وإمكانية الوصول."
+  },
+  "work": [
+    {
+      "company": "شركة الواحة الرقمية",
+      "title": "مهندسة برمجيات أولى",
+      "location": { "city": "دبي" },
+      "workMode": "hybrid",
+      "startDate": "2022-04",
+      "endDate": "present",
+      "highlights": [
+        { "label": "الأداء", "text": "خفّضت زمن تحميل الصفحة الرئيسية من 6 ثوانٍ إلى **أقل من ثانيتين**." },
+        "قدت ترحيل 120 ألف سطر من JavaScript إلى TypeScript دون أعطال للمستخدمين."
+      ],
+      "technologies": ["React", "TypeScript", "Next.js"]
+    },
+    {
+      "company": "نماء للتقنية",
+      "title": "مهندسة برمجيات",
+      "workMode": "remote",
+      "startDate": "2019-09",
+      "endDate": "2022-03",
+      "highlights": [
+        "بنيت نظام تصميم من 40 مكوّناً يدعم الاتجاهين من اليمين إلى اليسار ومن اليسار إلى اليمين."
+      ]
+    }
+  ],
+  "education": [
+    { "institution": "الجامعة الأمريكية في بيروت", "degree": "بكالوريوس", "field": "علوم الحاسوب", "endDate": "2019", "score": { "value": "3.7", "max": "4.0", "label": "المعدل" } }
+  ],
+  "skills": [
+    { "name": "الواجهات الأمامية", "items": ["React", "TypeScript", "CSS", "Next.js"] },
+    { "name": "الأدوات", "items": ["Vite", "Jest", "Playwright", "Git"] }
+  ],
+  "languages": [
+    { "language": "العربية", "fluency": "native" },
+    { "language": "الإنجليزية", "fluency": "fluent", "cefr": "C1" }
+  ],
+  "preferences": {
+    "avatar": "initials",
+    "sectionTitles": {
+      "summary": "نبذة",
+      "work": "الخبرة العملية",
+      "education": "التعليم",
+      "skills": "المهارات",
+      "languages": "اللغات"
+    }
+  }
+}
