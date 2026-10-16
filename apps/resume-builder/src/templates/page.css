@@ -1,0 +1,21 @@
+/* The sheet every template renders on. Logical properties only. */
+
+.folio-page {
+  position: relative;
+  box-sizing: border-box;
+  inline-size: var(--page-width);
+  min-block-size: var(--page-height);
+  padding-block: var(--page-margin-block);
+  padding-inline: var(--page-margin-inline);
+  background: #fff;
+  color: #141414;
+  text-align: start;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.folio-page a { color: inherit; text-decoration: none; }
+.folio-page p a, .folio-page li a { text-decoration: underline; text-underline-offset: 1.5px; }
+.folio-page .icon { display: inline-block; vertical-align: middle; }
+.folio-page strong { font-weight: 700; }
+.folio-page em { font-style: italic; }

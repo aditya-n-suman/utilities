@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Rubik:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+Hebrew:wght@400;600&display=swap">
+<script src="folio-lib.js"></script>
+<style>body{margin:0;background:#E7E7E3}a{color:#2E4BA6}a:hover{color:#243C88}</style>
+</helmet>
+<section data-screen-label="Notes" style="padding:64px 64px 24px;font-family:'IBM Plex Sans',sans-serif;color:#1C1C1A;display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="max-width:560px;">
+    <div style="font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#4A4A46;">Folio · Phase 1</div>
+    <h1 style="font-size:44px;line-height:1.1;margin:8px 0 16px;font-weight:600;">Workspace and the first three templates</h1>
+    <p style="font-size:17px;line-height:1.55;color:#3A3A37;margin:0 0 12px;text-wrap:pretty;">Each frame below is the live workspace, not a picture. Type in a field and the resume updates. Hover the resume to see what each part maps to, and click it to jump to that field. Focusing a field highlights its element on the page.</p>
+    <p style="font-size:15px;line-height:1.55;color:#4A4A46;margin:0;">Every printed element carries a <code style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#fff;padding:1px 5px;border-radius:4px;">data-path</code> taken from the schema (for example <code style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#fff;padding:1px 5px;border-radius:4px;">work.0.highlights.1</code>). That one attribute drives the hover outline, click to edit, form-to-preview highlight and the error markers.</p>
+  </div>
+  <div style="max-width:640px;background:#FFFFFF;border:1px solid #DCDCD7;border-radius:12px;padding:24px 28px;">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px;">Flags on UX.md and the schema</div>
+    <ol style="margin:0;padding-inline-start:20px;font-size:14px;line-height:1.55;color:#2A2A27;display:flex;flex-direction:column;gap:10px;">
+      <li><b>Summary is a section key but lives in <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">basics.summary</code>.</b> The brief puts it inside Basics; I gave it its own card so it can be reordered, hidden and renamed like the others. It still writes to <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">basics.summary</code>.</li>
+      <li><b>Profiles have no section key.</b> Meridian prints them as “Find me online”, but they can't be reordered, hidden or renamed through <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">preferences</code>. Suggest adding <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">profiles</code> to <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">sectionKey</code>.</li>
+      <li><b><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">sectionOrder</code> can't move a section across columns.</b> In two-column templates, dragging Projects above Experience does nothing visible. The Content list marks sidebar sections with a “Sidebar” tag so the order still makes sense.</li>
+      <li><b><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">x-notes</code> isn't in the schema.</b> It's a convention between our AI prompt and the review banner. The prompt has to define it (root-level array of strings) or the banner stays empty.</li>
+      <li><b>Banner position.</b> UX.md sketches the review banner and problems panel at the bottom. I put the banner above the page (seen first after an import) and the problems panel at the top of the left panel, next to the fields it points to.</li>
+      <li><b>Unknown keys after import.</b> <code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">basics.emial</code> is listed with its value and a “Go to email” link, so retyping is a paste, not a memory test.</li>
+      <li><b>One page, always.</b> Width is fixed (A4 210 mm or Letter 8.5 in) and the height grows to fit, with A4/Letter height as the minimum. The PDF gets a single page sized to match (<code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;">@page { size: 210mm &lt;height&gt;mm }</code>). The Fit check warns past 130% of standard height, where printing on normal paper shrinks the text. This replaces the brief's multi-page and page-2 rules. Academic CV is dropped; the set is 9 single-page resume templates.</li>
+    </ol>
+  </div>
+</section>
+
+<section data-screen-label="Workspace states" style="padding:24px 64px 48px;font-family:'IBM Plex Sans',sans-serif;">
+  <h2 style="font-size:24px;font-weight:600;margin:0 0 20px;color:#1C1C1A;">Workspace · desktop 1440</h2>
+  <div style="display:flex;flex-wrap:wrap;gap:48px;">
+    <div id="ws-scratch">
+      <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;background:#1C1C1A;color:#fff;padding:2px 8px;border-radius:4px;">A</span><span style="font-size:17px;font-weight:600;">Building from scratch</span><span style="font-size:14px;color:#4A4A46;">Typing the second bullet; the page highlights it.</span></div>
+      <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 64px rgba(0,0,0,.12);background:#fff;"><dc-import name="FolioWorkspaceApp" state="scratch" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div>
+    </div>
+    <div id="ws-imported">
+      <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;background:#1C1C1A;color:#fff;padding:2px 8px;border-radius:4px;">B</span><span style="font-size:17px;font-weight:600;">Just imported</span><span style="font-size:14px;color:#4A4A46;">Lands on the rendered resume and the Design tab, with the review banner.</span></div>
+      <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 64px rgba(0,0,0,.12);background:#fff;"><dc-import name="FolioWorkspaceApp" state="imported" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div>
+    </div>
+    <div id="ws-errors">
+      <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;background:#1C1C1A;color:#fff;padding:2px 8px;border-radius:4px;">C</span><span style="font-size:17px;font-weight:600;">Imported with errors</span><span style="font-size:14px;color:#4A4A46;">Problems panel open; the bad date keeps its raw value. Fix both and Download PDF unlocks.</span></div>
+      <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 64px rgba(0,0,0,.12);background:#fff;"><dc-import name="FolioWorkspaceApp" state="errors" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div>
+    </div>
+    <div id="ws-focus">
+      <div style="display:flex;gap:10px;align-items:baseline;margin-bottom:10px;"><span style="font-size:12px;font-weight:600;background:#1C1C1A;color:#fff;padding:2px 8px;border-radius:4px;">D</span><span style="font-size:17px;font-weight:600;">Focus preview</span><span style="font-size:14px;color:#4A4A46;">The page exactly as the PDF will print it. Click any part to go back to editing it.</span></div>
+      <div style="width:1440px;height:900px;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08),0 24px 64px rgba(0,0,0,.12);background:#fff;"><dc-import name="FolioWorkspaceApp" state="focus" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 64px 96px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#3A3A37;">Templates are on their own canvas: <a href="Folio Templates.dc.html">Folio Templates</a>.</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+</script>
+</body>
+</html>

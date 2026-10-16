@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div dir="{{ vm.dir }}" lang="{{ vm.lang }}" style="font-family:'Rubik','Noto Sans Arabic','Noto Sans Hebrew',system-ui,sans-serif;color:#141414;font-size:11px;line-height:1.3;text-align:start;">
+<header style="display:flex;gap:28px;align-items:flex-start;margin-block-end:13px;break-inside:avoid;">
+  <div style="flex:1;min-width:0;">
+    <h1 data-path="basics.name" style="margin:0;font-size:28.1px;line-height:1.05;font-weight:600;text-transform:uppercase;letter-spacing:-0.005em;">{{ vm.name }}</h1>
+    <sc-if value="{{ vm.hasHeadline }}" hint-placeholder-val="{{ false }}"><div data-path="basics.headline" style="font-size:14.8px;font-weight:500;color:{{ vm.accent }};margin-block-start:3.5px;">{{ vm.headline }}</div></sc-if>
+    <div style="display:flex;flex-wrap:wrap;gap:6px 18px;margin-block-start:7.5px;font-size:10.7px;font-weight:500;">
+      <sc-for list="{{ vm.contacts }}" as="c" hint-placeholder-count="0"><span data-path="{{ c.path }}" style="display:inline-flex;align-items:center;gap:6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:{{ vm.accent }};flex:none;"><path d="{{ c.icon }}"></path></svg><span dir="{{ c.dir }}">{{ c.text }}</span></span></sc-for>
+    </div>
+  </div>
+  <sc-if value="{{ vm.slotInitials }}" hint-placeholder-val="{{ false }}"><div data-path="basics.initials" aria-label="{{ vm.name }}" style="flex:none;width:96px;height:96px;border-radius:50%;background:{{ vm.accent }};color:{{ vm.onAccent }};display:grid;place-items:center;font-size:33px;font-weight:400;letter-spacing:0.02em;">{{ vm.initials }}</div></sc-if>
+  <sc-if value="{{ vm.slotPhoto }}" hint-placeholder-val="{{ false }}"><img data-path="basics.photo" src="{{ vm.photo }}" alt="{{ vm.photoAlt }}" style="flex:none;width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px {{ vm.accent }};"></sc-if>
+</header>
+<div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:28px;align-items:start;">
+  <div style="min-width:0;">
+    <sc-for list="{{ vm.main }}" as="sec" hint-placeholder-count="0">
+      <section style="margin-block-end:10px;">
+        <h2 data-path="{{ sec.path }}" style="margin:0 0 4px;font-size:14.8px;line-height:1.2;font-weight:600;text-transform:uppercase;padding-block-end:1px;border-block-end:2.5px solid #141414;break-after:avoid;">{{ sec.title }}</h2>
+        <sc-if value="{{ sec.isSummary }}" hint-placeholder-val="{{ false }}"><p data-path="basics.summary" style="margin:0;color:#262626;"><sc-for list="{{ sec.segs }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};text-decoration:{{ s.u }};">{{ s.t }}</span></sc-for></p></sc-if>
+        <sc-if value="{{ sec.isWork }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="w"><article data-path="{{ w.path }}" style="break-inside:avoid;padding-block:4px 4.5px;border-block-end:1px dashed #C9C9C9;">
+            <div data-path="{{ w.path }}.title" style="font-size:11.7px;font-weight:500;line-height:1.3;">{{ w.title }}</div>
+            <div style="font-size:11.7px;font-weight:500;color:{{ vm.accent }};margin-block-start:1.5px;"><span data-path="{{ w.path }}.company">{{ w.company }}</span><sc-if value="{{ w.hasContext }}"><span data-path="{{ w.path }}.context" style="color:#4D4D4D;font-weight:400;font-size:11.4px;"> · {{ w.context }}</span></sc-if></div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px 18px;font-size:10.7px;color:#3D3D3D;margin-block:2px 1.5px;">
+              <span data-path="{{ w.path }}.dates" style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 6h16v14H4z M4 10h16 M8 3v4 M16 3v4"></path></svg>{{ w.dates }}</span>
+              <sc-if value="{{ w.hasWhere }}"><span data-path="{{ w.path }}.location" style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z M12 7.5a2 2 0 1 0 0 4a2 2 0 1 0 0-4z"></path></svg>{{ w.where }}</span></sc-if>
+            </div>
+            <sc-if value="{{ w.hasSummary }}"><p data-path="{{ w.path }}.summary" style="margin:2px 0 2px;color:#333;"><sc-for list="{{ w.summary }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-if>
+            <sc-if value="{{ w.hasBullets }}"><ul style="margin:2px 0 0;padding-inline-start:17px;color:#262626;">
+              <sc-for list="{{ w.bullets }}" as="bl"><li data-path="{{ bl.path }}" style="margin-block:0.5px;"><sc-if value="{{ bl.hasLabel }}"><span style="font-weight:600;">{{ bl.label }}: </span></sc-if><sc-for list="{{ bl.segs }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};text-decoration:{{ s.u }};">{{ s.t }}</span></sc-for></li></sc-for>
+            </ul></sc-if>
+            <sc-if value="{{ w.hasTech }}"><div data-path="{{ w.path }}.technologies" style="margin-block-start:1.5px;font-size:10.7px;color:#3D3D3D;"><span style="font-weight:600;color:#141414;">{{ vm.L.tech }}: </span>{{ w.tech }}</div></sc-if>
+          </article></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isPubs }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="pb"><article data-path="{{ pb.path }}" style="break-inside:avoid;padding-block:3.5px;border-block-end:1px dashed #C9C9C9;">
+            <div style="font-size:10.9px;font-weight:500;">{{ pb.title }}</div>
+            <sc-if value="{{ pb.hasAuthors }}"><div style="font-size:10.7px;color:#333;"><sc-for list="{{ pb.authors }}" as="a"><span style="font-weight:{{ a.w }};">{{ a.t }}</span>{{ a.sep }}</sc-for></div></sc-if>
+            <div style="font-size:10.7px;color:#4D4D4D;">{{ pb.line }}</div>
+            <sc-if value="{{ pb.hasLink }}"><div dir="ltr" style="font-size:10.7px;color:{{ vm.accent }};">{{ pb.link }}</div></sc-if>
+          </article></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isVolunteer }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="v"><article data-path="{{ v.path }}" style="break-inside:avoid;padding-block:3.5px;border-block-end:1px dashed #C9C9C9;">
+            <div style="font-size:10.9px;font-weight:500;">{{ v.role }}</div>
+            <div style="font-size:10.9px;font-weight:500;color:{{ vm.accent }};">{{ v.organization }}</div>
+            <div style="font-size:10.7px;color:#3D3D3D;margin-block:1px;">{{ v.dates }}</div>
+            <sc-if value="{{ v.hasSummary }}"><p style="margin:0;"><sc-for list="{{ v.summary }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-if>
+          </article></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isReferences }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ sec.onRequest }}"><p data-path="references" style="margin:0;color:#333;">{{ sec.text }}</p></sc-if>
+          <sc-for list="{{ sec.items }}" as="r"><div data-path="{{ r.path }}" style="break-inside:avoid;padding-block:3px;"><div style="font-weight:500;">{{ r.name }}</div><div style="font-size:10.7px;color:#4D4D4D;">{{ r.line }}</div><div dir="ltr" style="font-size:10.7px;color:#4D4D4D;">{{ r.contact }}</div></div></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isCustom }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ sec.isEntries }}"><sc-for list="{{ sec.items }}" as="it"><article data-path="{{ it.path }}" style="break-inside:avoid;padding-block:3.5px;border-block-end:1px dashed #C9C9C9;">
+            <div style="font-size:11.3px;font-weight:500;">{{ it.title }}</div>
+            <sc-if value="{{ it.hasMeta }}"><div style="font-size:11.4px;font-weight:500;color:{{ vm.accent }};">{{ it.meta }}</div></sc-if>
+            <sc-if value="{{ it.hasDates }}"><div style="font-size:10.7px;color:#3D3D3D;margin-block-start:1px;">{{ it.dates }}</div></sc-if>
+            <sc-if value="{{ it.hasDesc }}"><p style="margin:2px 0 0;"><sc-for list="{{ it.desc }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-if>
+            <sc-if value="{{ it.hasLink }}"><div dir="ltr" style="font-size:10.7px;color:#4D4D4D;">{{ it.link }}</div></sc-if>
+          </article></sc-for></sc-if>
+          <sc-if value="{{ sec.isBullets }}"><ul style="margin:0;padding-inline-start:17px;"><sc-for list="{{ sec.items }}" as="it"><li data-path="{{ it.path }}">{{ it.title }}</li></sc-for></ul></sc-if>
+          <sc-if value="{{ sec.isTags }}"><div style="display:flex;flex-wrap:wrap;gap:5px 6px;"><sc-for list="{{ sec.items }}" as="it"><span data-path="{{ it.path }}" style="padding:1px 7px 2px;font-weight:500;border-block-end:1.5px solid #9A9A9A;">{{ it.title }}</span></sc-for></div></sc-if>
+          <sc-if value="{{ sec.isText }}"><sc-for list="{{ sec.items }}" as="it"><p data-path="{{ it.path }}" style="margin:0 0 6px;"><sc-for list="{{ it.desc }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-for></sc-if>
+        </sc-if>
+      </section>
+    </sc-for>
+  </div>
+  <div style="min-width:0;">
+    <sc-for list="{{ vm.side }}" as="sec" hint-placeholder-count="0">
+      <section style="margin-block-end:10px;">
+        <h2 data-path="{{ sec.path }}" style="margin:0 0 4px;font-size:14.8px;line-height:1.2;font-weight:600;text-transform:uppercase;padding-block-end:1px;border-block-end:2.5px solid #141414;break-after:avoid;">{{ sec.title }}</h2>
+        <sc-if value="{{ sec.isEducation }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="e"><article data-path="{{ e.path }}" style="break-inside:avoid;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;padding-block:3px 4.5px;">
+            <div style="min-width:0;">
+              <sc-if value="{{ e.hasDegree }}"><div data-path="{{ e.path }}.degree" style="font-size:11.3px;font-weight:500;line-height:1.3;">{{ e.degreeLine }}</div></sc-if>
+              <div data-path="{{ e.path }}.institution" style="font-size:11.3px;font-weight:500;line-height:1.3;color:{{ vm.accent }};margin-block-start:2px;">{{ e.institution }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:3px 14px;font-size:10.7px;color:#3D3D3D;margin-block-start:2px;">
+                <sc-if value="{{ e.hasDates }}"><span data-path="{{ e.path }}.dates">{{ e.dates }}</span></sc-if>
+                <sc-if value="{{ e.hasLoc }}"><span style="display:inline-flex;align-items:center;gap:5px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z M12 7.5a2 2 0 1 0 0 4a2 2 0 1 0 0-4z"></path></svg>{{ e.loc }}</span></sc-if>
+              </div>
+              <sc-if value="{{ e.hasHonors }}"><div style="font-size:10.7px;font-style:italic;margin-block-start:1px;">{{ e.honors }}</div></sc-if>
+            </div>
+            <sc-if value="{{ e.hasScore }}"><div data-path="{{ e.path }}.score" style="align-self:center;border-inline-start:1px solid #BDBDBD;padding-inline-start:14px;text-align:center;min-width:64px;">
+              <div style="font-size:10.7px;color:#4D4D4D;text-transform:uppercase;letter-spacing:0.04em;">{{ e.scoreLabel }}</div>
+              <div style="font-size:12.5px;margin-block-start:1.5px;white-space:nowrap;"><span style="font-weight:600;color:{{ vm.accent }};">{{ e.scoreValue }}</span><sc-if value="{{ e.hasMax }}"><span style="color:#4D4D4D;"> / {{ e.scoreMax }}</span></sc-if></div>
+            </div></sc-if>
+          </article></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isSkills }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.groups }}" as="g"><div data-path="{{ g.path }}" style="break-inside:avoid;padding-block:2px 5px;border-block-end:1px dashed #C9C9C9;">
+            <sc-if value="{{ g.hasName }}"><div style="font-size:10.9px;font-weight:600;color:{{ vm.accent }};margin-block-end:4px;">{{ g.name }}</div></sc-if>
+            <div style="display:flex;flex-wrap:wrap;gap:5px 6px;">
+              <sc-for list="{{ g.items }}" as="k"><span data-path="{{ k.path }}" aria-label="{{ k.levelText }}" style="display:inline-flex;flex-direction:column;align-items:center;gap:3px;padding:1px 7px 2px;font-size:11.4px;font-weight:500;border-block-end:1.5px solid #9A9A9A;">{{ k.name }}<sc-if value="{{ k.hasLevel }}"><span aria-hidden="true" style="display:flex;gap:2px;"><sc-for list="{{ k.dots }}" as="dt"><span style="width:5px;height:5px;border-radius:50%;background:{{ dt.c }};"></span></sc-for></span></sc-if></span></sc-for>
+            </div>
+          </div></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isProjects }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="pr"><article data-path="{{ pr.path }}" style="break-inside:avoid;padding-block:2px 4px;border-block-end:1px dashed #C9C9C9;">
+            <div data-path="{{ pr.path }}.name" style="font-size:11.3px;font-weight:500;">{{ pr.name }}<sc-if value="{{ pr.hasKind }}"><span style="font-weight:400;color:#4D4D4D;font-size:11px;"> ({{ pr.kind }})</span></sc-if></div>
+            <sc-if value="{{ pr.hasDesc }}"><p data-path="{{ pr.path }}.description" style="margin:3px 0 0;color:#333;"><sc-for list="{{ pr.desc }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-if>
+            <sc-if value="{{ pr.hasTech }}"><div style="font-size:10.7px;color:#4D4D4D;margin-block-start:1px;">{{ pr.tech }}</div></sc-if>
+            <sc-if value="{{ pr.hasLink }}"><div data-path="{{ pr.linkPath }}" dir="ltr" style="font-size:10.7px;color:#4D4D4D;text-align:start;">{{ pr.link }}</div></sc-if>
+          </article></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isLanguages }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="l"><div data-path="{{ l.path }}" style="display:flex;justify-content:space-between;gap:12px;padding-block:1.5px;"><span style="font-weight:500;">{{ l.language }}</span><span style="color:#4D4D4D;">{{ l.level }}</span></div></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isCerts }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="c"><div data-path="{{ c.path }}" style="break-inside:avoid;padding-block:1.5px;"><div style="font-weight:500;">{{ c.name }}</div><div style="font-size:10.7px;color:#4D4D4D;">{{ c.line }}</div></div></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isAwards }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ sec.items }}" as="a"><div data-path="{{ a.path }}" style="break-inside:avoid;padding-block:1.5px;"><div style="font-weight:500;">{{ a.title }}</div><div style="font-size:10.7px;color:#4D4D4D;">{{ a.line }}</div><sc-if value="{{ a.hasSummary }}"><div style="font-size:10.7px;"><sc-for list="{{ a.summary }}" as="s"><span style="font-weight:{{ s.w }};">{{ s.t }}</span></sc-for></div></sc-if></div></sc-for>
+        </sc-if>
+        <sc-if value="{{ sec.isInterests }}" hint-placeholder-val="{{ false }}"><p style="margin:0;"><sc-for list="{{ sec.items }}" as="x"><span data-path="{{ x.path }}">{{ x.name }}<sc-if value="{{ x.notLast }}"> · </sc-if></span></sc-for></p></sc-if>
+      </section>
+    </sc-for>
+    <sc-if value="{{ vm.hasProfiles }}" hint-placeholder-val="{{ false }}">
+      <section data-path="basics.profiles" style="break-inside:avoid;">
+        <h2 style="margin:0 0 4px;font-size:14.8px;line-height:1.2;font-weight:600;text-transform:uppercase;padding-block-end:1px;border-block-end:2.5px solid #141414;">{{ vm.L.online }}</h2>
+        <sc-for list="{{ vm.profiles }}" as="p"><div data-path="{{ p.path }}" style="display:flex;gap:10px;align-items:flex-start;padding-block:2px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:{{ vm.accent }};flex:none;margin-block-start:0.5px;"><path d="{{ p.icon }}"></path></svg><div style="min-width:0;"><div style="font-weight:600;font-size:11.9px;">{{ p.name }}</div><div dir="ltr" style="font-size:10.7px;color:#3D3D3D;overflow-wrap:anywhere;text-align:start;">{{ p.text }}</div></div></div></sc-for>
+      </section>
+    </sc-if>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;vm&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;FolioViewModel&quot;}}"></script>
+</body>
+</html>

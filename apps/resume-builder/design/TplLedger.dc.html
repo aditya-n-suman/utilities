@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div dir="{{ vm.dir }}" lang="{{ vm.lang }}" style="font-family:'Source Sans 3','Noto Sans Arabic','Noto Sans Hebrew',system-ui,sans-serif;color:#161616;font-size:11.7px;line-height:1.28;text-align:start;">
+<header style="text-align:center;margin-block-end:6px;break-inside:avoid;">
+  <h1 data-path="basics.name" style="margin:0;font-size:23.9px;line-height:1.1;font-weight:700;text-transform:uppercase;letter-spacing:0.03em;color:{{ vm.accent }};">{{ vm.name }}</h1>
+  <sc-if value="{{ vm.hasHeadline }}" hint-placeholder-val="{{ false }}"><div data-path="basics.headline" style="font-size:12.2px;font-weight:600;margin-block-start:2px;">{{ vm.headline }}</div></sc-if>
+  <div style="margin-block-start:2.5px;font-size:11.3px;"><sc-for list="{{ vm.links }}" as="c" hint-placeholder-count="0"><span data-path="{{ c.path }}"><span dir="{{ c.dir }}">{{ c.short }}</span></span><sc-if value="{{ c.notLast }}"><span aria-hidden="false" style="color:#6B6B6B;"> | </span></sc-if></sc-for></div>
+  <sc-if value="{{ vm.hasExtras }}" hint-placeholder-val="{{ false }}"><div style="margin-block-start:1px;font-size:10.8px;color:#3A3A3A;"><sc-for list="{{ vm.extras }}" as="x"><span data-path="{{ x.path }}">{{ x.label }}: {{ x.value }}</span><sc-if value="{{ x.notLast }}"> | </sc-if></sc-for></div></sc-if>
+</header>
+<sc-for list="{{ vm.sections }}" as="sec" hint-placeholder-count="0">
+  <section style="margin-block-start:6px;">
+    <h2 data-path="{{ sec.path }}" style="margin:0 0 5px;font-size:11.7px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:{{ vm.accent }};padding-block-end:1px;border-block-end:1px solid {{ vm.accent }};break-after:avoid;">{{ sec.title }}</h2>
+    <sc-if value="{{ sec.isSummary }}" hint-placeholder-val="{{ false }}"><p data-path="basics.summary" style="margin:0;"><sc-for list="{{ sec.segs }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};text-decoration:{{ s.u }};">{{ s.t }}</span></sc-for></p></sc-if>
+    <sc-if value="{{ sec.isSkills }}" hint-placeholder-val="{{ false }}"><ul style="margin:0;padding-inline-start:18px;list-style:disc;"><sc-for list="{{ sec.groups }}" as="g"><li data-path="{{ g.path }}" style="margin-block:0.5px;"><sc-if value="{{ g.hasName }}"><b style="font-weight:700;">{{ g.name }}: </b></sc-if>{{ g.joined }}</li></sc-for></ul></sc-if>
+    <sc-if value="{{ sec.isWork }}" hint-placeholder-val="{{ false }}">
+      <sc-for list="{{ sec.items }}" as="w"><article data-path="{{ w.path }}" style="break-inside:avoid;margin-block-start:4px;">
+        <div style="font-weight:700;"><span data-path="{{ w.path }}.company">{{ w.company }}</span><sc-if value="{{ w.hasContext }}"><span data-path="{{ w.path }}.context" style="font-weight:400;"> | {{ w.context }}</span></sc-if> | <span data-path="{{ w.path }}.title">{{ w.title }}</span></div>
+        <div style="font-size:11.3px;color:#333;"><sc-if value="{{ w.hasWhere }}"><span data-path="{{ w.path }}.location">{{ w.where }}</span> | </sc-if><span data-path="{{ w.path }}.dates">{{ w.dates }}</span></div>
+        <sc-if value="{{ w.hasSummary }}"><p data-path="{{ w.path }}.summary" style="margin:2px 0 0;font-style:italic;"><sc-for list="{{ w.summary }}" as="s"><span style="font-weight:{{ s.w }};">{{ s.t }}</span></sc-for></p></sc-if>
+        <ul style="margin:2px 0 0;padding-inline-start:18px;list-style:disc;">
+          <sc-for list="{{ w.bullets }}" as="bl"><li data-path="{{ bl.path }}" style="margin-block:0.5px;"><sc-if value="{{ bl.hasLabel }}"><b style="font-weight:700;">{{ bl.label }}: </b></sc-if><sc-for list="{{ bl.segs }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};text-decoration:{{ s.u }};">{{ s.t }}</span></sc-for></li></sc-for>
+          <sc-if value="{{ w.hasTech }}"><li data-path="{{ w.path }}.technologies"><b style="font-weight:700;">{{ vm.L.tech }}: </b>{{ w.tech }}</li></sc-if>
+        </ul>
+      </article></sc-for>
+    </sc-if>
+    <sc-if value="{{ sec.isEducation }}" hint-placeholder-val="{{ false }}">
+      <sc-for list="{{ sec.items }}" as="e"><article data-path="{{ e.path }}" style="break-inside:avoid;margin-block-start:2.5px;">
+        <div><b data-path="{{ e.path }}.institution" style="font-weight:700;">{{ e.institution }}</b><sc-if value="{{ e.hasDegree }}"> | <span data-path="{{ e.path }}.degree">{{ e.degreeLine }}</span></sc-if></div>
+        <div style="font-size:11.3px;color:#333;"><sc-if value="{{ e.hasLoc }}"><span>{{ e.loc }}</span> | </sc-if><span data-path="{{ e.path }}.dates">{{ e.dates }}</span><sc-if value="{{ e.hasScore }}"> | <span data-path="{{ e.path }}.score">{{ e.scoreLine }}</span></sc-if><sc-if value="{{ e.hasHonors }}"> | {{ e.honors }}</sc-if></div>
+        <sc-if value="{{ e.hasCourses }}"><div style="font-size:11.3px;">Courses: {{ e.courses }}</div></sc-if>
+      </article></sc-for>
+    </sc-if>
+    <sc-if value="{{ sec.isProjects }}" hint-placeholder-val="{{ false }}">
+      <sc-for list="{{ sec.items }}" as="pr"><article data-path="{{ pr.path }}" style="break-inside:avoid;margin-block-start:3px;">
+        <div><b data-path="{{ pr.path }}.name" style="font-weight:700;">{{ pr.name }}</b><sc-if value="{{ pr.hasKind }}"> ({{ pr.kind }})</sc-if><sc-if value="{{ pr.hasLink }}"> | <span data-path="{{ pr.linkPath }}" dir="ltr">{{ pr.link }}</span></sc-if><sc-if value="{{ pr.hasDates }}"> | {{ pr.dates }}</sc-if></div>
+        <ul style="margin:1px 0 0;padding-inline-start:18px;list-style:disc;">
+          <sc-if value="{{ pr.hasDesc }}"><li data-path="{{ pr.path }}.description"><sc-for list="{{ pr.desc }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></li></sc-if>
+          <sc-for list="{{ pr.bullets }}" as="bl"><li data-path="{{ bl.path }}"><sc-if value="{{ bl.hasLabel }}"><b>{{ bl.label }}: </b></sc-if><sc-for list="{{ bl.segs }}" as="s"><span style="font-weight:{{ s.w }};">{{ s.t }}</span></sc-for></li></sc-for>
+          <sc-if value="{{ pr.hasTech }}"><li><b style="font-weight:700;">{{ vm.L.tech }}: </b>{{ pr.tech }}</li></sc-if>
+        </ul>
+      </article></sc-for>
+    </sc-if>
+    <sc-if value="{{ sec.isCerts }}" hint-placeholder-val="{{ false }}"><ul style="margin:0;padding-inline-start:18px;"><sc-for list="{{ sec.items }}" as="c"><li data-path="{{ c.path }}"><b style="font-weight:700;">{{ c.name }}</b><sc-if value="{{ c.issuer }}">, {{ c.line }}</sc-if></li></sc-for></ul></sc-if>
+    <sc-if value="{{ sec.isAwards }}" hint-placeholder-val="{{ false }}"><ul style="margin:0;padding-inline-start:18px;"><sc-for list="{{ sec.items }}" as="a"><li data-path="{{ a.path }}"><b style="font-weight:700;">{{ a.title }}</b>, {{ a.line }}<sc-if value="{{ a.hasSummary }}">. <sc-for list="{{ a.summary }}" as="s"><span>{{ s.t }}</span></sc-for></sc-if></li></sc-for></ul></sc-if>
+    <sc-if value="{{ sec.isPubs }}" hint-placeholder-val="{{ false }}"><sc-for list="{{ sec.items }}" as="pb"><div data-path="{{ pb.path }}" style="break-inside:avoid;margin-block-start:2px;"><sc-for list="{{ pb.authors }}" as="a"><span style="font-weight:{{ a.w }};">{{ a.t }}</span>{{ a.sep }}</sc-for>. <i>{{ pb.title }}</i>. {{ pb.line }}.<sc-if value="{{ pb.hasLink }}"> <span dir="ltr">{{ pb.link }}</span></sc-if></div></sc-for></sc-if>
+    <sc-if value="{{ sec.isLanguages }}" hint-placeholder-val="{{ false }}"><p data-path="languages" style="margin:0;">{{ sec.joined }}</p></sc-if>
+    <sc-if value="{{ sec.isVolunteer }}" hint-placeholder-val="{{ false }}"><sc-for list="{{ sec.items }}" as="v"><article data-path="{{ v.path }}" style="break-inside:avoid;margin-block-start:2.5px;"><div style="font-weight:700;">{{ v.organization }}<sc-if value="{{ v.hasRole }}"> | {{ v.role }}</sc-if></div><div style="font-size:11.3px;color:#333;">{{ v.dates }}</div><sc-if value="{{ v.hasSummary }}"><ul style="margin:1px 0 0;padding-inline-start:18px;"><li><sc-for list="{{ v.summary }}" as="s"><span>{{ s.t }}</span></sc-for></li></ul></sc-if></article></sc-for></sc-if>
+    <sc-if value="{{ sec.isInterests }}" hint-placeholder-val="{{ false }}"><p data-path="interests" style="margin:0;">{{ sec.joined }}</p></sc-if>
+    <sc-if value="{{ sec.isReferences }}" hint-placeholder-val="{{ false }}"><sc-if value="{{ sec.onRequest }}"><p data-path="references" style="margin:0;">{{ sec.text }}</p></sc-if><sc-for list="{{ sec.items }}" as="r"><div data-path="{{ r.path }}" style="break-inside:avoid;"><b>{{ r.name }}</b>, {{ r.line }} | <span dir="ltr">{{ r.contact }}</span></div></sc-for></sc-if>
+    <sc-if value="{{ sec.isCustom }}" hint-placeholder-val="{{ false }}">
+      <sc-if value="{{ sec.isEntries }}"><sc-for list="{{ sec.items }}" as="it"><article data-path="{{ it.path }}" style="break-inside:avoid;margin-block-start:2.5px;"><div><b style="font-weight:700;">{{ it.title }}</b><sc-if value="{{ it.hasMeta }}"> | {{ it.meta }}</sc-if></div><sc-if value="{{ it.hasDates }}"><div style="font-size:11.3px;color:#333;">{{ it.dates }}</div></sc-if><sc-if value="{{ it.hasDesc }}"><div><sc-for list="{{ it.desc }}" as="s"><span style="font-weight:{{ s.w }};">{{ s.t }}</span></sc-for></div></sc-if></article></sc-for></sc-if>
+      <sc-if value="{{ sec.isBullets }}"><ul style="margin:0;padding-inline-start:18px;"><sc-for list="{{ sec.items }}" as="it"><li data-path="{{ it.path }}">{{ it.title }}</li></sc-for></ul></sc-if>
+      <sc-if value="{{ sec.isTags }}"><p style="margin:0;"><sc-for list="{{ sec.items }}" as="it"><span data-path="{{ it.path }}">{{ it.title }}</span><sc-if value="{{ it.notLast }}">, </sc-if></sc-for></p></sc-if>
+      <sc-if value="{{ sec.isText }}"><sc-for list="{{ sec.items }}" as="it"><p data-path="{{ it.path }}" style="margin:0 0 4px;"><sc-for list="{{ it.desc }}" as="s"><span style="font-weight:{{ s.w }};font-style:{{ s.st }};">{{ s.t }}</span></sc-for></p></sc-for></sc-if>
+    </sc-if>
+  </section>
+</sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;vm&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;FolioViewModel&quot;}}"></script>
+</body>
+</html>

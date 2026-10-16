@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Rubik:wght@400;500;600&family=Source+Sans+3:wght@400;600;700&family=Libre+Franklin:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Arabic:wght@400;600&family=Noto+Sans+Hebrew:wght@400;600&display=swap">
+<script src="folio-lib.js"></script>
+<style>body{margin:0}a{color:#2E4BA6}a:hover{color:#243C88}</style>
+</helmet>
+<div style="width:100%;height:100%;display:flex;flex-direction:column;background:#F6F6F4;font-family:'IBM Plex Sans',system-ui,sans-serif;color:#1C1C1A;font-size:14px;line-height:1.45;position:relative;overflow:hidden;">
+<sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+  <header style="height:56px;flex:none;display:flex;align-items:center;gap:12px;padding:0 16px;background:#FFFFFF;border-bottom:1px solid #E3E3DF;">
+    <div style="display:flex;align-items:center;gap:8px;padding-inline-end:12px;border-inline-end:1px solid #E3E3DF;height:32px;">
+      <div style="width:24px;height:24px;border-radius:6px;background:#1C1C1A;color:#fff;display:grid;place-items:center;font-weight:600;font-size:13px;">F</div>
+      <span style="font-weight:600;font-size:15px;">Folio</span>
+    </div>
+    <input aria-label="Document name" data-field="meta.title" value="{{ top.docName }}" onChange="{{ onField }}" style="width:220px;height:32px;padding:0 8px;border:1px solid transparent;border-radius:6px;font:inherit;font-size:14px;font-weight:500;color:#1C1C1A;background:transparent;outline:none;" style-hover="border-color:#E3E3DF" style-focus="border-color:#2E4BA6;background:#fff">
+    <div style="position:relative;min-width:0;" onMouseEnter="{{ statusIn }}" onMouseLeave="{{ statusOut }}">
+      <sc-if value="{{ top.saved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#4A4A46;padding:4px 8px;border-radius:6px;white-space:nowrap;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1F7A45" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Saved in this browser</span></sc-if>
+      <sc-if value="{{ top.unsaved }}"><span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#8A5300;background:#FFF5E1;padding:4px 10px;border-radius:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 8v5 M12 16.5v.5 M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg>Not saved in this browser. Download JSON to keep your work.</span></sc-if>
+      <sc-if value="{{ statusTip }}"><div role="tooltip" style="position:absolute;top:34px;left:0;z-index:30;width:260px;padding:10px 12px;background:#1C1C1A;color:#fff;font-size:12.5px;line-height:1.4;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);">{{ top.tip }}</div></sc-if>
+    </div>
+    <div style="flex:1;"></div>
+    <button onClick="{{ toggleProblems }}" aria-label="{{ top.problemsLabel }}" title="{{ top.problemsLabel }}" style="position:relative;width:36px;height:36px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;display:grid;place-items:center;cursor:pointer;color:#4A4A46;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18z M12 7.5v5.5 M12 16.5v.5"></path></svg>
+      <sc-if value="{{ top.hasBadge }}"><span style="position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:{{ top.badgeBg }};color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;">{{ top.badge }}</span></sc-if>
+    </button>
+    <button onClick="{{ toggleFocus }}" aria-label="Focus preview" title="Focus preview" style="width:36px;height:36px;border:1px solid {{ top.focusBorder }};border-radius:8px;background:{{ top.focusBg }};display:grid;place-items:center;cursor:pointer;color:#4A4A46;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6z"></path></svg></button>
+    <div style="width:1px;height:24px;background:#E3E3DF;"></div>
+    <button onClick="{{ copyAI }}" style="height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;color:#1C1C1A;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 9h11v11H9z M5 15H4V4h11v1"></path></svg>Copy for AI</button>
+    <button onClick="{{ downloadJSON }}" style="height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;color:#1C1C1A;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11 M7 10l5 5 5-5 M5 20h14"></path></svg>Download JSON</button>
+    <sc-if value="{{ top.pdfOk }}"><button onClick="{{ downloadPDF }}" style="height:36px;padding:0 16px;border:none;border-radius:8px;background:#2E4BA6;font:inherit;font-size:14px;font-weight:600;color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none;" style-hover="background:#243C88" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11 M7 10l5 5 5-5 M5 20h14"></path></svg>Download PDF</button></sc-if>
+    <sc-if value="{{ top.pdfBlocked }}"><button onClick="{{ openProblems }}" style="height:36px;padding:0 16px;border:1px solid #F3C7C1;border-radius:8px;background:#FDF0EE;font:inherit;font-size:14px;font-weight:600;color:#B42318;cursor:pointer;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex:none;" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">{{ top.pdfLabel }}</button></sc-if>
+    <div style="position:relative;">
+      <button onClick="{{ toggleMenu }}" aria-label="Document menu" aria-expanded="{{ menu }}" style="width:36px;height:36px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;display:grid;place-items:center;cursor:pointer;color:#4A4A46;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="19" cy="12" r="1.8"></circle></svg></button>
+      <sc-if value="{{ menu }}"><div role="menu" style="position:absolute;top:42px;right:0;z-index:40;width:248px;padding:6px;background:#fff;border:1px solid #E3E3DF;border-radius:10px;box-shadow:0 12px 32px rgba(28,28,26,.14);">
+        <button role="menuitem" onClick="{{ askStartOver }}" style="width:100%;text-align:start;padding:10px 12px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:14px;cursor:pointer;color:#1C1C1A;" style-hover="background:#F4F4F1">Start over<div style="font-size:12px;color:#6B6B66;">Clear the form and begin again</div></button>
+        <button role="menuitem" onClick="{{ removeFromBrowser }}" style="width:100%;text-align:start;padding:10px 12px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:14px;cursor:pointer;color:#B42318;" style-hover="background:#FDF0EE">Remove from this browser<div style="font-size:12px;color:#6B6B66;">For shared computers. Keeps working from memory.</div></button>
+      </div></sc-if>
+    </div>
+  </header>
+
+  <div style="flex:1;min-height:0;display:flex;">
+    <sc-if value="{{ showPanel }}">
+    <aside style="width:480px;flex:none;display:flex;flex-direction:column;background:#FFFFFF;border-inline-end:1px solid #E3E3DF;min-height:0;">
+      <div role="tablist" style="display:flex;gap:4px;padding:12px 16px 0;border-bottom:1px solid #E3E3DF;">
+        <button role="tab" aria-selected="{{ tabs.content }}" data-tab="content" onClick="{{ setTab }}" style="height:40px;padding:0 14px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:{{ tabs.cFg }};box-shadow:inset 0 -2px 0 {{ tabs.cLine }};" style-focus="outline:2px solid #2E4BA6;outline-offset:-2px">Content</button>
+        <button role="tab" aria-selected="{{ tabs.design }}" data-tab="design" onClick="{{ setTab }}" style="height:40px;padding:0 14px;border:none;background:transparent;font:inherit;font-size:14px;font-weight:600;cursor:pointer;color:{{ tabs.dFg }};box-shadow:inset 0 -2px 0 {{ tabs.dLine }};" style-focus="outline:2px solid #2E4BA6;outline-offset:-2px">Design</button>
+      </div>
+      <div ref="{{ formRef }}" onFocus="{{ onFormFocus }}" style="flex:1;min-height:0;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;">
+
+        <sc-if value="{{ problemsOpen }}">
+          <section aria-label="Problems" style="border:1px solid #F3C7C1;background:#FFFBFA;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <div style="flex:1;"><div style="font-weight:600;color:#B42318;">{{ prob.title }}</div><div style="font-size:13px;color:#4A4A46;">{{ prob.sub }}</div></div>
+              <button onClick="{{ closeProblems }}" aria-label="Close problems" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4A4A46;" style-hover="background:#F4F4F1">✕</button>
+            </div>
+            <sc-for list="{{ prob.errors }}" as="er" hint-placeholder-count="0"><button data-pick="{{ er.dot }}" onClick="{{ pickBtn }}" style="text-align:start;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 12px;border:1px solid #F3C7C1;border-radius:8px;background:#fff;font:inherit;cursor:pointer;" style-hover="border-color:#B42318" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">
+              <code style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#B42318;">{{ er.path }}</code><span style="font-size:12.5px;color:#2E4BA6;font-weight:500;grid-row:span 3;align-self:center;">Go to field →</span>
+              <span style="font-size:13.5px;color:#1C1C1A;">{{ er.problem }}</span>
+              <span style="font-size:12.5px;color:#4A4A46;">{{ er.hint }}</span>
+            </button></sc-for>
+            <sc-if value="{{ prob.hasUnknown }}"><div style="border-top:1px solid #F3C7C1;padding-top:10px;">
+              <div style="font-size:13px;font-weight:600;color:#1C1C1A;margin-bottom:6px;">Not imported</div>
+              <sc-for list="{{ prob.unknown }}" as="u"><div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:8px 0;font-size:13px;">
+                <span>Not imported: <code style="font-family:'IBM Plex Mono',monospace;font-size:12px;">{{ u.path }}</code></span>
+                <sc-if value="{{ u.hasSug }}"><button data-pick="{{ u.target }}" onClick="{{ pickBtn }}" style="border:none;background:transparent;color:#2E4BA6;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;grid-row:span 2;align-self:center;">Go to {{ u.suggestion }} →</button></sc-if>
+                <span style="color:#4A4A46;font-size:12.5px;">{{ u.note }} Value: <span dir="ltr" style="font-family:'IBM Plex Mono',monospace;font-size:12px;">{{ u.value }}</span></span>
+              </div></sc-for>
+            </div></sc-if>
+            <button onClick="{{ copyErrors }}" style="align-self:flex-start;height:32px;padding:0 12px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:13px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Copy errors for AI</button>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ tabs.content }}">
+          <sc-for list="{{ secs }}" as="s" hint-placeholder-count="0">
+            <div data-drow="1" data-dlist="sections" data-didx="{{ s.idx }}" onDragOver="{{ onDragOver }}" onDrop="{{ onDrop }}" style="border:1px solid {{ s.border }};border-radius:10px;background:#fff;box-shadow:{{ s.shadow }};opacity:{{ s.opacity }};">
+              <div style="display:flex;align-items:center;gap:4px;padding:6px 8px 6px 4px;min-height:44px;">
+                <sc-if value="{{ s.draggable }}"><span draggable="true" data-dlist="sections" data-didx="{{ s.idx }}" onDragStart="{{ onDragStart }}" onDragEnd="{{ onDragEnd }}" title="Drag to reorder" aria-label="Drag to reorder {{ s.title }}" style="width:24px;height:32px;display:grid;place-items:center;cursor:grab;color:#8A8A84;"><svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true"><circle cx="3" cy="3" r="1.4"></circle><circle cx="9" cy="3" r="1.4"></circle><circle cx="3" cy="8" r="1.4"></circle><circle cx="9" cy="8" r="1.4"></circle><circle cx="3" cy="13" r="1.4"></circle><circle cx="9" cy="13" r="1.4"></circle></svg></span></sc-if>
+                <sc-if value="{{ s.fixed }}"><span style="width:24px;"></span></sc-if>
+                <button data-key="{{ s.key }}" onClick="{{ toggleSection }}" aria-expanded="{{ s.open }}" style="flex:1;min-width:0;display:flex;align-items:center;gap:8px;text-align:start;height:36px;padding:0 6px;border:none;background:transparent;border-radius:6px;font:inherit;cursor:pointer;color:{{ s.titleFg }};" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">
+                  <span style="font-weight:600;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ s.title }}</span>
+                  <sc-if value="{{ s.renamed }}"><span style="font-size:12px;color:#6B6B66;white-space:nowrap;">({{ s.defTitle }})</span></sc-if>
+                  <sc-if value="{{ s.hasCount }}"><span style="font-size:12px;color:#4A4A46;background:#F1F1EE;border-radius:10px;padding:1px 8px;">{{ s.count }}</span></sc-if>
+                  <sc-if value="{{ s.inSidebar }}"><span title="This template puts this section in the sidebar" style="font-size:11.5px;color:#4A4A46;border:1px solid #E3E3DF;border-radius:10px;padding:0 7px;">Sidebar</span></sc-if>
+                  <sc-if value="{{ s.hasErr }}"><span style="width:8px;height:8px;border-radius:50%;background:#B42318;" aria-label="Has problems"></span></sc-if>
+                </button>
+                <sc-if value="{{ s.hideable }}"><button data-key="{{ s.key }}" onClick="{{ toggleHidden }}" aria-label="{{ s.hideLabel }}" title="{{ s.hideLabel }}" style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:{{ s.eyeFg }};display:grid;place-items:center;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ s.eyeIcon }}"></path></svg></button></sc-if>
+                <button data-key="{{ s.key }}" onClick="{{ toggleSection }}" aria-hidden="true" tabindex="-1" style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4A4A46;display:grid;place-items:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="transform:rotate({{ s.chev }}deg);"><path d="M6 9l6 6 6-6"></path></svg></button>
+              </div>
+              <sc-if value="{{ s.open }}"><div style="padding:4px 16px 16px;display:flex;flex-direction:column;gap:14px;border-top:1px solid #EFEFEC;">
+                <sc-if value="{{ s.renameable }}"><label style="display:block;padding-top:12px;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Section heading</span><input data-field="{{ s.titleField.path }}" value="{{ s.titleField.value }}" placeholder="{{ s.defTitle }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ s.titleField.bc }};box-shadow:{{ s.titleField.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><span style="display:block;font-size:12px;color:#6B6B66;margin-top:6px;">Printed as the heading. Leave empty to use “{{ s.defTitle }}”.</span></label></sc-if>
+
+                <sc-if value="{{ s.isBasics }}"><div style="display:flex;flex-direction:column;gap:14px;padding-top:12px;">
+                  <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Full name <span style="color:#B42318;">*</span></span><input data-field="{{ fb.name.path }}" value="{{ fb.name.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.name.bc }};box-shadow:{{ fb.name.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><sc-if value="{{ fb.name.hasErr }}"><span style="display:block;font-size:12px;color:#B42318;margin-top:6px;">{{ fb.name.err }}</span></sc-if></label>
+                  <label style="display:block;"><span style="display:flex;justify-content:space-between;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Headline<sc-if value="{{ fb.headline.showCount }}"><span style="font-weight:400;color:{{ fb.headline.countFg }};">{{ fb.headline.count }}</span></sc-if></span><input data-field="{{ fb.headline.path }}" value="{{ fb.headline.value }}" onChange="{{ onField }}" placeholder="e.g. Lead Engineer" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.headline.bc }};box-shadow:{{ fb.headline.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><span style="display:block;font-size:12px;color:#6B6B66;margin-top:6px;">The line under your name. Your current title, or title plus focus areas.</span></label>
+                  <div style="display:flex;gap:14px;align-items:center;">
+                    <sc-if value="{{ fb.hasPhoto }}"><img src="{{ fb.photo }}" alt="Your photo" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none;"></sc-if>
+                    <sc-if value="{{ fb.noPhoto }}"><div aria-hidden="true" style="width:56px;height:56px;border-radius:50%;background:#EEF1FA;color:#2E4BA6;display:grid;place-items:center;font-weight:600;font-size:18px;flex:none;">{{ fb.initials }}</div></sc-if>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button data-field="basics.photo" onClick="{{ pickPhoto }}" style="height:32px;padding:0 12px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:13px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">{{ fb.photoBtn }}</button>
+                        <sc-if value="{{ fb.hasPhoto }}"><button onClick="{{ recrop }}" style="height:32px;padding:0 12px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:13px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Crop</button><button onClick="{{ removePhoto }}" style="height:32px;padding:0 12px;border:none;border-radius:8px;background:transparent;font:inherit;font-size:13px;font-weight:500;cursor:pointer;color:#B42318;" style-hover="background:#FDF0EE">Remove</button></sc-if>
+                      </div>
+                      <div style="font-size:12px;color:#6B6B66;margin-top:6px;">Optional. Only templates with a photo slot show it; others use your initials or nothing.</div>
+                      <input ref="{{ fileRef }}" type="file" accept="image/png,image/jpeg,image/webp" onChange="{{ onPhotoFile }}" style="display:none;">
+                    </div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Email</span><input type="email" data-field="{{ fb.email.path }}" value="{{ fb.email.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.email.bc }};box-shadow:{{ fb.email.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><sc-if value="{{ fb.email.hasErr }}"><span style="display:block;font-size:12px;color:#B42318;margin-top:6px;">{{ fb.email.err }}</span></sc-if></label>
+                    <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Phone</span><input type="tel" data-field="{{ fb.phone.path }}" value="{{ fb.phone.value }}" onChange="{{ onField }}" placeholder="+91 98765 43210" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.phone.bc }};box-shadow:{{ fb.phone.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><sc-if value="{{ fb.phone.hasErr }}"><span style="display:block;font-size:12px;color:#B42318;margin-top:6px;">{{ fb.phone.err }}</span></sc-if></label>
+                  </div>
+                  <div><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Location</span><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                    <input aria-label="City" placeholder="City" data-field="{{ fb.city.path }}" value="{{ fb.city.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.city.bc }};box-shadow:{{ fb.city.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                    <input aria-label="Region" placeholder="State / region" data-field="{{ fb.region.path }}" value="{{ fb.region.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.region.bc }};box-shadow:{{ fb.region.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                    <input aria-label="Country" placeholder="Country" data-field="{{ fb.country.path }}" value="{{ fb.country.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.country.bc }};box-shadow:{{ fb.country.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                  </div></div>
+                  <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;">
+                    <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Website</span><input data-field="{{ fb.web.path }}" value="{{ fb.web.value }}" onChange="{{ onField }}" placeholder="https://" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.web.bc }};box-shadow:{{ fb.web.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"></label>
+                    <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Shown as</span><input data-field="{{ fb.webLabel.path }}" value="{{ fb.webLabel.value }}" onChange="{{ onField }}" placeholder="Portfolio" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ fb.webLabel.bc }};box-shadow:{{ fb.webLabel.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"></label>
+                  </div>
+                  <div><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Profiles</span>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                      <sc-for list="{{ fb.profiles }}" as="p"><div style="display:grid;grid-template-columns:36px 132px minmax(0,1fr) 32px;gap:8px;align-items:center;">
+                        <span style="width:36px;height:36px;border-radius:8px;background:#F1F1EE;display:grid;place-items:center;color:#1C1C1A;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ p.icon }}"></path></svg></span>
+                        <select aria-label="Network" data-field="{{ p.netPath }}" value="{{ p.network }}" onChange="{{ onField }}" style="height:40px;padding:0 8px;border:1px solid #D6D6D1;border-radius:8px;font:inherit;font-size:14px;background:#fff;"><option value="linkedin">LinkedIn</option><option value="github">GitHub</option><option value="gitlab">GitLab</option><option value="stackoverflow">Stack Overflow</option><option value="x">X</option><option value="mastodon">Mastodon</option><option value="bluesky">Bluesky</option><option value="medium">Medium</option><option value="devto">DEV</option><option value="behance">Behance</option><option value="dribbble">Dribbble</option><option value="kaggle">Kaggle</option><option value="leetcode">LeetCode</option><option value="orcid">ORCID</option><option value="googlescholar">Google Scholar</option><option value="youtube">YouTube</option><option value="npm">npm</option><option value="other">Other</option></select>
+                        <input aria-label="Profile URL" data-field="{{ p.url.path }}" value="{{ p.url.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ p.url.bc }};box-shadow:{{ p.url.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                        <button data-list="basics.profiles" data-idx="{{ p.i }}" onClick="{{ delAt }}" aria-label="Remove profile" style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#6B6B66;" style-hover="background:#F4F4F1;color:#B42318">✕</button>
+                      </div></sc-for>
+                      <button data-list="basics.profiles" onClick="{{ addProfile }}" style="align-self:flex-start;height:32px;padding:0 10px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:13px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA">+ Add profile</button>
+                    </div>
+                  </div>
+                </div></sc-if>
+
+                <sc-if value="{{ s.isSummary }}"><div style="padding-top:2px;">
+                  <div style="display:flex;align-items:center;gap:2px;margin-bottom:6px;"><span style="flex:1;font-size:13px;font-weight:500;color:#3A3A37;">Summary</span>
+                    <button data-mark="**" onMouseDown="{{ wrapSel }}" aria-label="Bold (Ctrl+B)" title="Bold (Ctrl+B)" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-weight:700;font-size:13px;" style-hover="background:#F1F1EE">B</button>
+                    <button data-mark="*" onMouseDown="{{ wrapSel }}" aria-label="Italic (Ctrl+I)" title="Italic (Ctrl+I)" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-style:italic;font-size:13px;font-family:Georgia,serif;" style-hover="background:#F1F1EE">I</button>
+                    <button data-mark="link" onMouseDown="{{ wrapSel }}" aria-label="Link (Ctrl+K)" title="Link (Ctrl+K)" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:grid;place-items:center;" style-hover="background:#F1F1EE"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></button>
+                  </div>
+                  <textarea data-field="{{ fb.summary.path }}" data-rich="1" value="{{ fb.summary.value }}" onChange="{{ onField }}" onKeyDown="{{ onRichKey }}" placeholder="2–5 sentences: what you do, for whom, and your strongest results." style="width:100%;box-sizing:border-box;min-height:120px;field-sizing:content;padding:10px 12px;border:1px solid {{ fb.summary.bc }};box-shadow:{{ fb.summary.ring }};border-radius:8px;font:inherit;font-size:14px;line-height:1.5;background:#fff;outline:none;resize:vertical;"></textarea>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;color:#6B6B66;margin-top:6px;"><span>**bold**, *italic* and [links](https://…) are kept. Nothing else.</span><sc-if value="{{ fb.summary.showCount }}"><span style="color:{{ fb.summary.countFg }};">{{ fb.summary.count }}</span></sc-if></div>
+                </div></sc-if>
+
+                <sc-if value="{{ s.isWork }}"><div style="display:flex;flex-direction:column;gap:8px;">
+                  <button data-list="work" onClick="{{ addItem }}" style="align-self:flex-start;height:32px;padding:0 10px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:13px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA">+ Add job</button>
+                  <sc-if value="{{ workEmpty }}"><div style="padding:20px;border:1px dashed #D6D6D1;border-radius:8px;text-align:center;color:#4A4A46;font-size:13.5px;">No jobs yet. Start with your most recent one; internships and part-time roles count.</div></sc-if>
+                  <sc-for list="{{ fw }}" as="w"><div data-drow="1" data-dlist="work" data-didx="{{ w.i }}" onDragOver="{{ onDragOver }}" onDrop="{{ onDrop }}" style="border:1px solid {{ w.border }};border-radius:8px;background:{{ w.bg }};">
+                    <div style="display:flex;align-items:center;gap:4px;padding:4px 6px 4px 2px;">
+                      <span draggable="true" data-dlist="work" data-didx="{{ w.i }}" onDragStart="{{ onDragStart }}" onDragEnd="{{ onDragEnd }}" title="Drag to reorder" style="width:22px;height:32px;display:grid;place-items:center;cursor:grab;color:#8A8A84;"><svg width="10" height="14" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true"><circle cx="3" cy="3" r="1.4"></circle><circle cx="9" cy="3" r="1.4"></circle><circle cx="3" cy="8" r="1.4"></circle><circle cx="9" cy="8" r="1.4"></circle><circle cx="3" cy="13" r="1.4"></circle><circle cx="9" cy="13" r="1.4"></circle></svg></span>
+                      <button data-idx="{{ w.i }}" onClick="{{ toggleItem }}" aria-expanded="{{ w.open }}" style="flex:1;min-width:0;text-align:start;padding:6px 4px;border:none;background:transparent;font:inherit;cursor:pointer;border-radius:6px;" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">
+                        <div style="font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ w.heading }}</div>
+                        <div style="font-size:12.5px;color:{{ w.subFg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ w.sub }}</div>
+                      </button>
+                      <button data-list="work" data-idx="{{ w.i }}" onClick="{{ dupItem }}" aria-label="Duplicate (for a promotion)" title="Duplicate (for a promotion)" style="width:30px;height:30px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4A4A46;display:grid;place-items:center;" style-hover="background:#F1F1EE"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 9h11v11H9z M5 15H4V4h11v1"></path></svg></button>
+                      <button data-list="work" data-idx="{{ w.i }}" onClick="{{ delItem }}" aria-label="Delete job" title="Delete job" style="width:30px;height:30px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4A4A46;display:grid;place-items:center;" style-hover="background:#FDF0EE;color:#B42318"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16 M9 7V4h6v3 M6 7l1 13h10l1-13"></path></svg></button>
+                    </div>
+                    <sc-if value="{{ w.open }}"><div style="padding:6px 14px 14px;display:flex;flex-direction:column;gap:12px;border-top:1px solid #EFEFEC;">
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px;">
+                        <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Job title <span style="color:#B42318;">*</span></span><input data-field="{{ w.title.path }}" value="{{ w.title.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ w.title.bc }};box-shadow:{{ w.title.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><sc-if value="{{ w.title.hasErr }}"><span style="display:block;font-size:12px;color:#B42318;margin-top:6px;">{{ w.title.err }}</span></sc-if></label>
+                        <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Company <span style="color:#B42318;">*</span></span><input data-field="{{ w.company.path }}" value="{{ w.company.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ w.company.bc }};box-shadow:{{ w.company.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><sc-if value="{{ w.company.hasErr }}"><span style="display:block;font-size:12px;color:#B42318;margin-top:6px;">{{ w.company.err }}</span></sc-if></label>
+                      </div>
+                      <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Context <span style="font-weight:400;color:#6B6B66;">(optional)</span></span><input data-field="{{ w.context.path }}" value="{{ w.context.value }}" onChange="{{ onField }}" placeholder="Client: US Bank, or Shiksha.com" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ w.context.bc }};box-shadow:{{ w.context.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"><span style="display:block;font-size:12px;color:#6B6B66;margin-top:6px;">The client, product or team. Printed after the company.</span></label>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <sc-for list="{{ w.dates }}" as="d"><div>
+                          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;color:#3A3A37;">{{ d.label }}<sc-if value="{{ d.required }}"> <span style="color:#B42318;">*</span></sc-if></span>
+                            <sc-if value="{{ d.isEnd }}"><label style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#3A3A37;cursor:pointer;"><input type="checkbox" checked="{{ d.isPresent }}" data-path="{{ d.path }}" onChange="{{ onPresent }}" style="width:16px;height:16px;accent-color:#2E4BA6;margin:0;">Present</label></sc-if>
+                          </div>
+                          <sc-if value="{{ d.showPicker }}"><div style="display:grid;grid-template-columns:1fr 92px;gap:6px;">
+                            <select aria-label="{{ d.label }} month" data-field="{{ d.path }}" data-date="{{ d.path }}" data-part="m" value="{{ d.month }}" onChange="{{ onDate }}" style="height:40px;padding:0 8px;border:1px solid {{ d.bc }};box-shadow:{{ d.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;"><option value="">Month</option><option value="01">Jan</option><option value="02">Feb</option><option value="03">Mar</option><option value="04">Apr</option><option value="05">May</option><option value="06">Jun</option><option value="07">Jul</option><option value="08">Aug</option><option value="09">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select>
+                            <select aria-label="{{ d.label }} year" data-date="{{ d.path }}" data-part="y" value="{{ d.year }}" onChange="{{ onDate }}" style="height:40px;padding:0 8px;border:1px solid {{ d.bc }};border-radius:8px;font:inherit;font-size:14px;background:#fff;"><option value="">Year</option><option value="2027">2027</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option><option value="2023">2023</option><option value="2022">2022</option><option value="2021">2021</option><option value="2020">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option><option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option><option value="1990">1990</option><option value="1989">1989</option><option value="1988">1988</option><option value="1987">1987</option><option value="1986">1986</option><option value="1985">1985</option><option value="1984">1984</option><option value="1983">1983</option><option value="1982">1982</option><option value="1981">1981</option><option value="1980">1980</option><option value="1979">1979</option><option value="1978">1978</option></select>
+                          </div></sc-if>
+                          <sc-if value="{{ d.isPresent }}"><div style="height:40px;display:flex;align-items:center;padding:0 12px;border:1px dashed #D6D6D1;border-radius:8px;color:#4A4A46;font-size:14px;">Present</div></sc-if>
+                          <sc-if value="{{ d.isRaw }}"><div>
+                            <input data-field="{{ d.path }}" value="{{ d.raw }}" onChange="{{ onField }}" aria-invalid="true" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid #B42318;box-shadow:{{ d.ring }};border-radius:8px;font:inherit;font-size:14px;color:#B42318;background:#FFFBFA;outline:none;">
+                            <div style="font-size:12px;color:#B42318;margin-top:6px;">{{ d.err }}</div>
+                            <sc-if value="{{ d.hasFix }}"><button data-path="{{ d.path }}" data-val="{{ d.fix }}" onClick="{{ applyFix }}" style="margin-top:6px;height:28px;padding:0 10px;border:1px solid #D6D6D1;border-radius:6px;background:#fff;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Use {{ d.fixLabel }}</button></sc-if>
+                          </div></sc-if>
+                        </div></sc-for>
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                        <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">City</span><input data-field="{{ w.city.path }}" value="{{ w.city.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ w.city.bc }};box-shadow:{{ w.city.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"></label>
+                        <label style="display:block;"><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">State / region</span><input data-field="{{ w.region.path }}" value="{{ w.region.value }}" onChange="{{ onField }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ w.region.bc }};box-shadow:{{ w.region.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;"></label>
+                      </div>
+                      <div><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Work mode</span>
+                        <div role="radiogroup" aria-label="Work mode" style="display:inline-flex;padding:3px;background:#F1F1EE;border-radius:8px;gap:2px;">
+                          <sc-for list="{{ w.modes }}" as="m"><button role="radio" aria-checked="{{ m.on }}" data-set="{{ m.path }}" data-val="{{ m.v }}" onClick="{{ onSet }}" style="height:30px;padding:0 12px;border:none;border-radius:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }};box-shadow:{{ m.sh }};">{{ m.t }}</button></sc-for>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;color:#3A3A37;">Bullets</span><span style="font-size:12px;color:#6B6B66;">{{ w.bulletCount }}</span></div>
+                        <div style="display:flex;flex-direction:column;gap:6px;">
+                          <sc-for list="{{ w.bullets }}" as="bl"><div data-drow="1" data-dlist="{{ w.blList }}" data-didx="{{ bl.j }}" onDragOver="{{ onDragOver }}" onDrop="{{ onDrop }}" style="display:grid;grid-template-columns:20px minmax(0,1fr) 28px;gap:6px;align-items:start;padding:8px 6px 8px 2px;border:1px solid {{ bl.bc }};box-shadow:{{ bl.ring }};border-radius:8px;background:#fff;">
+                            <span draggable="true" data-dlist="{{ w.blList }}" data-didx="{{ bl.j }}" onDragStart="{{ onDragStart }}" onDragEnd="{{ onDragEnd }}" title="Drag to reorder" style="height:24px;display:grid;place-items:center;cursor:grab;color:#8A8A84;"><svg width="10" height="14" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true"><circle cx="3" cy="3" r="1.4"></circle><circle cx="9" cy="3" r="1.4"></circle><circle cx="3" cy="8" r="1.4"></circle><circle cx="9" cy="8" r="1.4"></circle><circle cx="3" cy="13" r="1.4"></circle><circle cx="9" cy="13" r="1.4"></circle></svg></span>
+                            <div style="min-width:0;">
+                              <input aria-label="Bold lead-in (optional)" data-field="{{ bl.label.path }}" value="{{ bl.label.value }}" onChange="{{ onField }}" placeholder="Bold lead-in (optional)" style="width:100%;box-sizing:border-box;height:24px;padding:0 4px;border:none;border-radius:4px;font:inherit;font-size:13px;font-weight:600;color:#1C1C1A;background:transparent;outline:none;">
+                              <textarea aria-label="Bullet text" data-field="{{ bl.text.path }}" data-rich="1" value="{{ bl.text.value }}" onChange="{{ onField }}" onKeyDown="{{ onRichKey }}" placeholder="What you did and the result, with a number if you have one." style="width:100%;box-sizing:border-box;min-height:24px;field-sizing:content;padding:2px 4px;border:none;border-radius:4px;font:inherit;font-size:13.5px;line-height:1.45;color:#1C1C1A;background:transparent;outline:none;resize:none;"></textarea>
+                              <sc-if value="{{ bl.active }}"><div style="display:flex;align-items:center;gap:2px;margin-top:4px;padding-top:4px;border-top:1px solid #EFEFEC;">
+                                <button data-mark="**" onMouseDown="{{ wrapSel }}" aria-label="Bold" title="Bold (Ctrl+B)" style="width:26px;height:26px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-weight:700;font-size:12.5px;" style-hover="background:#F1F1EE">B</button>
+                                <button data-mark="*" onMouseDown="{{ wrapSel }}" aria-label="Italic" title="Italic (Ctrl+I)" style="width:26px;height:26px;border:none;background:transparent;border-radius:6px;cursor:pointer;font-style:italic;font-size:12.5px;font-family:Georgia,serif;" style-hover="background:#F1F1EE">I</button>
+                                <button data-mark="link" onMouseDown="{{ wrapSel }}" aria-label="Link" title="Link (Ctrl+K)" style="width:26px;height:26px;border:none;background:transparent;border-radius:6px;cursor:pointer;display:grid;place-items:center;" style-hover="background:#F1F1EE"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1 M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></button>
+                                <span style="flex:1;"></span><span style="font-size:11.5px;color:{{ bl.text.countFg }};">{{ bl.text.count }}</span>
+                              </div></sc-if>
+                            </div>
+                            <button data-list="{{ w.blList }}" data-idx="{{ bl.j }}" onClick="{{ delAt }}" aria-label="Delete bullet" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#8A8A84;" style-hover="background:#FDF0EE;color:#B42318">✕</button>
+                          </div></sc-for>
+                          <sc-if value="{{ w.canAddBullet }}"><button data-list="{{ w.blList }}" onClick="{{ addBullet }}" style="align-self:flex-start;height:32px;padding:0 10px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:13px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA">+ Add bullet</button></sc-if>
+                        </div>
+                      </div>
+                      <div><span style="display:block;font-size:13px;font-weight:500;color:#3A3A37;margin-bottom:6px;">Technologies</span>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;padding:6px;border:1px solid #D6D6D1;border-radius:8px;min-height:40px;box-sizing:border-box;align-items:center;">
+                          <sc-for list="{{ w.tech }}" as="t"><span style="display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 4px 0 10px;background:#F1F1EE;border-radius:13px;font-size:13px;">{{ t.t }}<button data-list="{{ w.techList }}" data-idx="{{ t.k }}" onClick="{{ delAt }}" aria-label="Remove {{ t.t }}" style="width:20px;height:20px;border:none;background:transparent;border-radius:50%;cursor:pointer;color:#6B6B66;font-size:11px;" style-hover="background:#E3E3DF">✕</button></span></sc-for>
+                          <input data-list="{{ w.techList }}" data-kind="str" value="{{ w.techDraft }}" onChange="{{ onChipDraft }}" onKeyDown="{{ onChipKey }}" placeholder="Type and press Enter" aria-label="Add technology" style="flex:1;min-width:120px;height:26px;border:none;outline:none;font:inherit;font-size:13px;background:transparent;">
+                        </div>
+                      </div>
+                    </div></sc-if>
+                  </div></sc-for>
+                </div></sc-if>
+
+                <sc-if value="{{ s.isSkills }}"><div style="display:flex;flex-direction:column;gap:10px;">
+                  <sc-if value="{{ skillsEmpty }}"><div style="padding:20px;border:1px dashed #D6D6D1;border-radius:8px;text-align:center;color:#4A4A46;font-size:13.5px;">Add a group like “Frontend” or “Tools”, or one unnamed group for a flat list.</div></sc-if>
+                  <sc-for list="{{ fs }}" as="g"><div style="border:1px solid {{ g.border }};border-radius:8px;padding:10px;">
+                    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;"><input aria-label="Group name" data-field="{{ g.name.path }}" value="{{ g.name.value }}" onChange="{{ onField }}" placeholder="Group name (optional)" style="flex:1;height:32px;padding:0 8px;border:1px solid {{ g.name.bc }};box-shadow:{{ g.name.ring }};border-radius:6px;font:inherit;font-size:13.5px;font-weight:600;background:#fff;outline:none;"><button data-list="skills" data-idx="{{ g.i }}" onClick="{{ delAt }}" aria-label="Delete group" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#8A8A84;" style-hover="background:#FDF0EE;color:#B42318">✕</button></div>
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+                      <sc-for list="{{ g.chips }}" as="c"><span data-field="{{ c.path }}" tabindex="0" style="display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 4px 0 10px;background:{{ c.bg }};box-shadow:{{ c.ring }};border-radius:14px;font-size:13px;outline:none;">{{ c.name }}<button data-path="{{ c.path }}" onClick="{{ cycleLevel }}" aria-label="{{ c.levelLabel }}" title="{{ c.levelLabel }}" style="display:flex;gap:2px;padding:4px;border:none;background:transparent;cursor:pointer;border-radius:4px;" style-hover="background:#E3E3DF"><sc-for list="{{ c.dots }}" as="dt"><span style="width:5px;height:5px;border-radius:50%;background:{{ dt.c }};"></span></sc-for></button><button data-list="{{ g.list }}" data-idx="{{ c.k }}" onClick="{{ delAt }}" aria-label="Remove {{ c.name }}" style="width:20px;height:20px;border:none;background:transparent;border-radius:50%;cursor:pointer;color:#6B6B66;font-size:11px;" style-hover="background:#E3E3DF">✕</button></span></sc-for>
+                      <input data-field="{{ g.newPath }}" data-list="{{ g.list }}" data-kind="obj" value="{{ g.draft }}" onChange="{{ onChipDraft }}" onKeyDown="{{ onChipKey }}" placeholder="Type a skill, press Enter" aria-label="Add skill" style="flex:1;min-width:150px;height:28px;border:none;outline:none;font:inherit;font-size:13px;background:transparent;">
+                    </div>
+                  </div></sc-for>
+                  <div style="display:flex;justify-content:space-between;align-items:center;"><button onClick="{{ addGroup }}" style="height:32px;padding:0 10px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:13px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA">+ Add group</button><span style="font-size:12px;color:#6B6B66;">Dots set an optional level (1–5). Shown only when the template and Design tab allow.</span></div>
+                </div></sc-if>
+
+                <sc-if value="{{ s.isList }}"><div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ s.rows }}" as="r"><div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 28px;gap:8px;align-items:center;">
+                    <input aria-label="{{ r.aLabel }}" data-field="{{ r.a.path }}" value="{{ r.a.value }}" onChange="{{ onField }}" placeholder="{{ r.aLabel }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ r.a.bc }};box-shadow:{{ r.a.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                    <input aria-label="{{ r.bLabel }}" data-field="{{ r.b.path }}" value="{{ r.b.value }}" onChange="{{ onField }}" placeholder="{{ r.bLabel }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ r.b.bc }};box-shadow:{{ r.b.ring }};border-radius:8px;font:inherit;font-size:14px;background:#fff;outline:none;">
+                    <button data-list="{{ s.list }}" data-idx="{{ r.i }}" onClick="{{ delAt }}" aria-label="Delete" style="width:28px;height:28px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#8A8A84;" style-hover="background:#FDF0EE;color:#B42318">✕</button>
+                  </div></sc-for>
+                  <sc-if value="{{ s.hasErrRows }}"><sc-for list="{{ s.errRows }}" as="er"><div style="font-size:12px;color:#B42318;">{{ er.label }}: {{ er.msg }}</div></sc-for></sc-if>
+                  <sc-for list="{{ s.extraFields }}" as="x"><div><input data-field="{{ x.f.path }}" value="{{ x.f.value }}" onChange="{{ onField }}" aria-label="{{ x.label }}" aria-invalid="{{ x.f.hasErr }}" style="width:100%;box-sizing:border-box;height:40px;padding:0 12px;border:1px solid {{ x.f.bc }};box-shadow:{{ x.f.ring }};border-radius:8px;font:inherit;font-size:14px;color:{{ x.f.fg }};background:#fff;outline:none;"><div style="font-size:12px;color:{{ x.helpFg }};margin-top:6px;">{{ x.help }}</div></div></sc-for>
+                  <button data-list="{{ s.list }}" onClick="{{ addItem }}" style="align-self:flex-start;height:32px;padding:0 10px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:13px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA">+ Add</button>
+                </div></sc-if>
+              </div></sc-if>
+            </div>
+          </sc-for>
+          <div style="position:relative;">
+            <button onClick="{{ toggleAddMenu }}" style="width:100%;height:44px;border:1px dashed #CFCFC9;border-radius:10px;background:transparent;font:inherit;font-size:14px;font-weight:500;color:#2E4BA6;cursor:pointer;" style-hover="background:#EEF1FA;border-color:#2E4BA6" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">+ Add section</button>
+            <sc-if value="{{ addMenu }}"><div role="menu" style="position:absolute;bottom:52px;left:0;right:0;z-index:20;padding:6px;background:#fff;border:1px solid #E3E3DF;border-radius:10px;box-shadow:0 12px 32px rgba(28,28,26,.14);display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+              <sc-for list="{{ addable }}" as="a"><button role="menuitem" data-key="{{ a.key }}" onClick="{{ addSection }}" style="text-align:start;padding:9px 12px;border:none;background:transparent;border-radius:6px;font:inherit;font-size:14px;cursor:pointer;" style-hover="background:#F4F4F1">{{ a.title }}</button></sc-for>
+              <button role="menuitem" data-key="custom" onClick="{{ addSection }}" style="grid-column:1 / -1;text-align:start;padding:9px 12px;border:none;border-top:1px solid #EFEFEC;background:transparent;font:inherit;font-size:14px;cursor:pointer;color:#2E4BA6;font-weight:500;" style-hover="background:#EEF1FA">Custom section…<div style="font-size:12px;color:#6B6B66;font-weight:400;">Talks, Patents, Leadership. Shown as entries, bullets, tags or text.</div></button>
+            </div></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ tabs.design }}"><div style="display:flex;flex-direction:column;gap:20px;">
+          <section style="border:1px solid #E3E3DF;border-radius:10px;padding:14px;display:flex;gap:14px;">
+            <div aria-hidden="true" style="width:120px;height:160px;flex:none;overflow:hidden;border:1px solid #E3E3DF;border-radius:6px;background:#fff;pointer-events:none;">
+              <div style="width:794px;padding:44px 48px;box-sizing:border-box;zoom:0.151;">
+                <sc-if value="{{ tplIs.meridian }}"><dc-import name="TplMeridian" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+                <sc-if value="{{ tplIs.ledger }}"><dc-import name="TplLedger" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+                <sc-if value="{{ tplIs.tracking }}"><dc-import name="TplTracking" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;">
+              <div style="font-size:12px;color:#6B6B66;font-weight:500;text-transform:uppercase;letter-spacing:.06em;">Template</div>
+              <div style="font-size:18px;font-weight:600;">{{ design.tplName }}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px;"><sc-for list="{{ design.tags }}" as="t"><span style="font-size:12px;padding:1px 8px;border-radius:10px;background:#F1F1EE;color:#3A3A37;">{{ t.t }}</span></sc-for></div>
+              <div style="flex:1;"></div>
+              <button onClick="{{ browseTemplates }}" style="align-self:flex-start;height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1" style-focus="outline:2px solid #2E4BA6;outline-offset:2px">Browse all templates</button>
+              <div style="display:flex;gap:4px;flex-wrap:wrap;"><sc-for list="{{ design.quick }}" as="q"><button data-pref="template" data-val="{{ q.id }}" onClick="{{ setPref }}" aria-pressed="{{ q.on }}" style="height:26px;padding:0 8px;border:1px solid {{ q.border }};border-radius:6px;background:{{ q.bg }};font:inherit;font-size:12px;cursor:pointer;color:#1C1C1A;">{{ q.name }}</button></sc-for></div>
+            </div>
+          </section>
+          <section><div style="font-size:13px;font-weight:600;margin-bottom:8px;">Accent colour</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <sc-for list="{{ design.accents }}" as="a"><button data-pref="accentColor" data-val="{{ a.c }}" onClick="{{ setPref }}" aria-label="Accent {{ a.c }}" aria-pressed="{{ a.on }}" style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;background:{{ a.c }};box-shadow:0 0 0 {{ a.ringW }}px {{ a.ringC }};cursor:pointer;" style-focus="outline:2px solid #2E4BA6;outline-offset:3px"></button></sc-for>
+              <label style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 4px 0 10px;border:1px solid #D6D6D1;border-radius:8px;font-size:13px;cursor:pointer;">Custom<input type="color" data-pref="accentColor" value="{{ design.accent }}" onChange="{{ setPrefInput }}" style="width:28px;height:24px;border:none;padding:0;background:transparent;cursor:pointer;"></label>
+              <code style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#4A4A46;">{{ design.accent }}</code>
+            </div>
+            <sc-if value="{{ design.lowContrast }}"><div style="margin-top:8px;font-size:12.5px;color:#8A5300;background:#FFF5E1;padding:8px 10px;border-radius:8px;">This colour is light for text on white ({{ design.ratio }}:1). Headings in it may be hard to read, especially in print.</div></sc-if>
+          </section>
+          <section style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div><div style="font-size:13px;font-weight:600;margin-bottom:8px;">Page size</div>
+              <div role="radiogroup" style="display:inline-flex;padding:3px;background:#F1F1EE;border-radius:8px;gap:2px;"><sc-for list="{{ design.sizes }}" as="m"><button role="radio" aria-checked="{{ m.on }}" data-pref="pageSize" data-val="{{ m.v }}" onClick="{{ setPref }}" style="height:30px;padding:0 14px;border:none;border-radius:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }};box-shadow:{{ m.sh }};">{{ m.t }}</button></sc-for></div>
+            </div>
+            <label style="display:block;"><span style="display:block;font-size:13px;font-weight:600;margin-bottom:8px;">Date format</span><select data-pref="dateFormat" value="{{ design.dateFormat }}" onChange="{{ setPrefInput }}" style="width:100%;height:36px;padding:0 8px;border:1px solid #D6D6D1;border-radius:8px;font:inherit;font-size:14px;background:#fff;"><option value="MMM YYYY">Feb 2025 (MMM YYYY)</option><option value="MMMM YYYY">February 2025 (MMMM YYYY)</option><option value="MM/YYYY">02/2025 (MM/YYYY)</option><option value="YYYY-MM">2025-02 (YYYY-MM)</option><option value="YYYY">2025 (YYYY)</option></select></label>
+          </section>
+          <sc-if value="{{ design.hasSlot }}"><section><div style="font-size:13px;font-weight:600;margin-bottom:8px;">Photo slot</div>
+            <div role="radiogroup" style="display:inline-flex;padding:3px;background:#F1F1EE;border-radius:8px;gap:2px;"><sc-for list="{{ design.avatars }}" as="m"><button role="radio" aria-checked="{{ m.on }}" data-pref="avatar" data-val="{{ m.v }}" onClick="{{ setAvatar }}" style="height:30px;padding:0 14px;border:none;border-radius:6px;font:inherit;font-size:13px;font-weight:500;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }};box-shadow:{{ m.sh }};">{{ m.t }}</button></sc-for></div>
+            <div style="font-size:12px;color:#6B6B66;margin-top:6px;">{{ design.avatarHelp }}</div>
+          </section></sc-if>
+          <section style="display:flex;gap:12px;align-items:flex-start;">
+            <input id="lvl" type="checkbox" checked="{{ design.levels }}" disabled="{{ design.levelsOff }}" data-pref="showSkillLevels" onChange="{{ setPrefCheck }}" style="width:18px;height:18px;margin:2px 0 0;accent-color:#2E4BA6;">
+            <label for="lvl" style="flex:1;"><div style="font-size:13px;font-weight:600;color:{{ design.levelsFg }};">Show skill levels</div><div style="font-size:12px;color:#6B6B66;">{{ design.levelsHelp }}</div></label>
+          </section>
+          <section style="border:1px solid {{ fit.border }};background:{{ fit.bg }};border-radius:10px;padding:14px;display:flex;gap:12px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ fit.fg }}" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px;"><path d="{{ fit.icon }}"></path></svg>
+            <div style="flex:1;"><div style="font-weight:600;font-size:14px;">Fit check · {{ fit.title }}</div><div style="font-size:13px;color:#3A3A37;margin-top:2px;">{{ fit.text }}</div>
+              <div style="margin-top:8px;height:6px;background:#E3E3DF;border-radius:3px;overflow:hidden;"><div style="height:100%;width:{{ fit.pct }}%;background:{{ fit.fg }};"></div></div>
+              <button onClick="{{ toggleFocus }}" style="margin-top:10px;height:30px;padding:0 10px;border:1px solid #D6D6D1;border-radius:6px;background:#fff;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">See the page in focus preview</button>
+            </div>
+          </section>
+        </div></sc-if>
+      </div>
+    </aside>
+    </sc-if>
+
+    <main ref="{{ paneRef }}" style="flex:1;min-width:0;overflow:auto;background:#EDEDEA;position:relative;">
+      <sc-if value="{{ showPanel }}"><div style="max-width:{{ pv.maxW }}px;margin:0 auto;padding:24px 24px 64px;">
+        <sc-if value="{{ banner }}"><section aria-label="Import review" style="margin-bottom:16px;background:#fff;border:1px solid #E3E3DF;border-radius:12px;box-shadow:0 1px 2px rgba(28,28,26,.06);padding:16px 18px;display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:32px;height:32px;border-radius:8px;background:#E8F4EC;color:#1F7A45;display:grid;place-items:center;flex:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></div>
+            <div style="flex:1;min-width:0;"><div style="font-weight:600;">Imported from JSON<sc-if value="{{ bn.hasGen }}"><span style="font-weight:400;color:#4A4A46;"> · written with {{ bn.generator }}</span></sc-if></div><div style="font-size:13px;color:#3A3A37;">{{ bn.stats }}</div></div>
+            <button onClick="{{ reviewContent }}" style="height:32px;padding:0 12px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:13px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Review content</button>
+            <button onClick="{{ closeBanner }}" aria-label="Dismiss" title="Dismiss. Reopen from the problems icon." style="width:32px;height:32px;border:none;background:transparent;border-radius:6px;cursor:pointer;color:#4A4A46;" style-hover="background:#F4F4F1">✕</button>
+          </div>
+          <div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;">
+            <div><div style="font-size:12.5px;font-weight:600;color:#3A3A37;margin-bottom:6px;">{{ bn.notesTitle }}</div>
+              <sc-for list="{{ bn.notes }}" as="n"><label style="display:flex;gap:8px;align-items:flex-start;padding:4px 0;font-size:13px;cursor:pointer;color:{{ n.fg }};"><input type="checkbox" checked="{{ n.done }}" data-i="{{ n.i }}" onChange="{{ toggleNote }}" style="width:16px;height:16px;margin:2px 0 0;accent-color:#2E4BA6;flex:none;"><span style="text-decoration:{{ n.deco }};">{{ n.text }}</span></label></sc-for>
+            </div>
+            <div><div style="font-size:12.5px;font-weight:600;color:#3A3A37;margin-bottom:6px;">{{ bn.warnTitle }}</div>
+              <sc-for list="{{ bn.warns }}" as="w"><div style="display:flex;gap:8px;align-items:center;padding:4px 0;font-size:13px;"><span style="width:6px;height:6px;border-radius:50%;background:#B7791F;flex:none;"></span><span style="flex:1;">{{ w.text }}</span><button data-pick="{{ w.path }}" onClick="{{ pickBtn }}" style="border:none;background:transparent;color:#2E4BA6;font:inherit;font-size:13px;font-weight:500;cursor:pointer;padding:2px 4px;border-radius:4px;" style-hover="background:#EEF1FA">{{ w.action }}</button></div></sc-for>
+              <sc-if value="{{ bn.noWarns }}"><div style="font-size:13px;color:#4A4A46;">Nothing else stands out.</div></sc-if>
+            </div>
+          </div>
+        </section></sc-if>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12.5px;color:#4A4A46;">
+          <span>{{ pv.meta }}</span><span>Hover any part to edit it</span>
+        </div>
+        <div ref="{{ hostRef }}" onMouseMove="{{ onPvMove }}" onMouseLeave="{{ onPvLeave }}" onClick="{{ onPvClick }}" style="position:relative;">
+          <div ref="{{ sheetRef }}" style="position:relative;width:{{ pv.pw }}px;min-height:{{ pv.ph }}px;padding:44px 48px;box-sizing:border-box;background:#fff;box-shadow:0 1px 3px rgba(28,28,26,.08),0 8px 24px rgba(28,28,26,.06);zoom:{{ pv.zoom }};cursor:pointer;">
+            <sc-if value="{{ vm.empty }}"><div style="height:1000px;display:grid;place-items:center;text-align:center;color:#6B6B66;font-size:18px;cursor:default;"><div><div style="font-size:22px;font-weight:600;color:#3A3A37;margin-bottom:8px;">Your resume appears here as you type</div>Start with your name in Basics.</div></div></sc-if>
+            <sc-if value="{{ vm.hasName }}">
+              <sc-if value="{{ tplIs.meridian }}"><dc-import name="TplMeridian" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+              <sc-if value="{{ tplIs.ledger }}"><dc-import name="TplLedger" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+              <sc-if value="{{ tplIs.tracking }}"><dc-import name="TplTracking" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+            </sc-if>
+            
+          </div>
+          <sc-for list="{{ errBoxes }}" as="e"><div aria-hidden="true" style="position:absolute;left:{{ e.x }}px;top:{{ e.y }}px;width:{{ e.w }}px;height:{{ e.h }}px;outline:2px dashed #B42318;outline-offset:2px;border-radius:3px;pointer-events:none;"><span style="position:absolute;top:-10px;right:-10px;width:18px;height:18px;border-radius:50%;background:#B42318;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;">!</span></div></sc-for>
+          <sc-if value="{{ hasAct }}"><div aria-hidden="true" style="position:absolute;left:{{ act.x }}px;top:{{ act.y }}px;width:{{ act.w }}px;height:{{ act.h }}px;background:rgba(46,75,166,.10);outline:2px solid #2E4BA6;outline-offset:2px;border-radius:3px;pointer-events:none;"></div></sc-if>
+          <sc-if value="{{ hasHover }}"><div aria-hidden="true" style="position:absolute;left:{{ hover.x }}px;top:{{ hover.y }}px;width:{{ hover.w }}px;height:{{ hover.h }}px;outline:1.5px solid #2E4BA6;outline-offset:3px;border-radius:3px;pointer-events:none;"><span style="position:absolute;bottom:100%;right:-4px;margin-bottom:5px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;background:#2E4BA6;color:#fff;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;padding:2px 8px;border-radius:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg>Edit · {{ hover.label }}</span></div></sc-if>
+        </div>
+      </div></sc-if>
+
+      <sc-if value="{{ focus }}"><div style="min-height:100%;display:flex;flex-direction:column;">
+        <div style="position:sticky;top:0;left:0;z-index:5;display:flex;align-items:center;gap:16px;padding:12px 24px;background:rgba(237,237,234,.94);border-bottom:1px solid #DCDCD7;">
+          <div style="font-weight:600;">{{ fp.title }}</div>
+          <div style="font-size:13px;color:#3A3A37;">{{ fp.pageNote }}</div>
+          <div style="flex:1;"></div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#3A3A37;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F7A45" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>The PDF keeps real, selectable text, so applicant tracking systems can read it.</div>
+          <button onClick="{{ toggleFocus }}" style="height:36px;padding:0 16px;border:none;border-radius:8px;background:#1C1C1A;color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;" style-hover="background:#3A3A37" style-focus="outline:2px solid #2E4BA6;outline-offset:2px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg>Edit</button>
+        </div>
+        <div style="flex:1;overflow:auto;padding:32px;">
+          <div style="zoom:{{ fp.zoom }};width:{{ fp.pw }}px;margin:0 auto;padding-bottom:40px;">
+            <div ref="{{ hostRef }}" onMouseMove="{{ onPvMove }}" onMouseLeave="{{ onPvLeave }}" onClick="{{ onPvClick }}" style="position:relative;width:{{ fp.pw }}px;">
+              <div ref="{{ sheetRef }}" style="position:relative;width:{{ fp.pw }}px;min-height:{{ fp.ph }}px;box-sizing:border-box;padding:44px 48px;background:#fff;box-shadow:0 1px 3px rgba(28,28,26,.1),0 12px 32px rgba(28,28,26,.08);cursor:pointer;">
+                <sc-if value="{{ tplIs.meridian }}"><dc-import name="TplMeridian" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+                <sc-if value="{{ tplIs.ledger }}"><dc-import name="TplLedger" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+                <sc-if value="{{ tplIs.tracking }}"><dc-import name="TplTracking" vm="{{ vm }}" hint-size="100%,1000px"></dc-import></sc-if>
+              </div>
+              <sc-if value="{{ hasHover }}"><div aria-hidden="true" style="position:absolute;left:{{ hover.zx }}px;top:{{ hover.zy }}px;width:{{ hover.zw }}px;height:{{ hover.zh }}px;outline:2.5px solid #2E4BA6;outline-offset:4px;border-radius:3px;pointer-events:none;"><span style="position:absolute;bottom:100%;right:-4px;margin-bottom:7px;white-space:nowrap;background:#2E4BA6;color:#fff;font-size:18px;font-weight:500;padding:3px 12px;border-radius:6px;">Edit · {{ hover.label }}</span></div></sc-if>
+            </div>
+          </div>
+        </div>
+      </div></sc-if>
+    </main>
+  </div>
+
+  <sc-if value="{{ hasCrop }}"><div style="position:absolute;inset:0;z-index:60;background:rgba(28,28,26,.42);display:grid;place-items:center;">
+    <div role="dialog" aria-label="Crop photo" style="width:360px;background:#fff;border-radius:14px;padding:20px;box-shadow:0 24px 64px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:14px;">
+      <div style="font-weight:600;font-size:16px;">Crop photo</div>
+      <div onPointerDown="{{ cropDown }}" onPointerMove="{{ cropMove }}" onPointerUp="{{ cropUp }}" style="position:relative;width:280px;height:280px;margin:0 auto;overflow:hidden;border-radius:8px;background:#1C1C1A;cursor:grab;touch-action:none;">
+        <img src="{{ crop.src }}" alt="" draggable="false" style="position:absolute;left:{{ crop.left }}px;top:{{ crop.top }}px;width:{{ crop.dw }}px;height:{{ crop.dh }}px;max-width:none;user-select:none;pointer-events:none;">
+        <div style="position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 400px rgba(0,0,0,.45);pointer-events:none;"></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;">Zoom<input type="range" min="1" max="3" step="0.01" value="{{ crop.z }}" onChange="{{ cropZoom }}" style="flex:1;accent-color:#2E4BA6;"></label>
+      <div style="font-size:12px;color:#6B6B66;">Drag to position. Saved at 600 × 600 px so the draft fits in browser storage.</div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;"><button onClick="{{ cropCancel }}" style="height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer;">Cancel</button><button onClick="{{ cropSave }}" style="height:36px;padding:0 16px;border:none;border-radius:8px;background:#2E4BA6;color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;">Use photo</button></div>
+    </div>
+  </div></sc-if>
+
+  <sc-if value="{{ dlgStart }}"><div style="position:absolute;inset:0;z-index:60;background:rgba(28,28,26,.42);display:grid;place-items:center;">
+    <div role="alertdialog" aria-label="Start over?" style="width:440px;background:#fff;border-radius:14px;padding:22px;box-shadow:0 24px 64px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:12px;">
+      <div style="font-weight:600;font-size:17px;">Start over?</div>
+      <div style="font-size:14px;color:#3A3A37;">This clears every field and removes the copy saved in this browser. If you might want this version again, download the JSON first.</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;flex-wrap:wrap;">
+        <button onClick="{{ downloadJSON }}" style="height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Download JSON first</button>
+        <button onClick="{{ closeDialog }}" style="height:36px;padding:0 14px;border:1px solid #D6D6D1;border-radius:8px;background:#fff;font:inherit;font-size:14px;font-weight:500;cursor:pointer;" style-hover="background:#F4F4F1">Cancel</button>
+        <button onClick="{{ doStartOver }}" style="height:36px;padding:0 16px;border:none;border-radius:8px;background:#B42318;color:#fff;font:inherit;font-size:14px;font-weight:600;cursor:pointer;" style-hover="background:#912018">Start over</button>
+      </div>
+    </div>
+  </div></sc-if>
+
+  <sc-if value="{{ hasToast }}"><div role="status" style="position:absolute;left:50%;bottom:24px;transform:translateX(-50%);z-index:70;display:flex;align-items:center;gap:14px;padding:10px 10px 10px 16px;background:#1C1C1A;color:#fff;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.24);font-size:14px;max-width:560px;">
+    <span>{{ toast.msg }}</span>
+    <sc-if value="{{ toast.hasUndo }}"><button onClick="{{ undoToast }}" style="height:30px;padding:0 10px;border:none;border-radius:6px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:13px;font-weight:600;cursor:pointer;" style-hover="background:rgba(255,255,255,.22)">Undo</button></sc-if>
+    <button onClick="{{ closeToast }}" aria-label="Dismiss" style="width:28px;height:28px;border:none;border-radius:6px;background:transparent;color:#fff;cursor:pointer;opacity:.8;">✕</button>
+  </div></sc-if>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;scratch&quot;,&quot;imported&quot;,&quot;errors&quot;,&quot;focus&quot;],&quot;default&quot;:&quot;scratch&quot;,&quot;tsType&quot;:&quot;'scratch'|'imported'|'errors'|'focus'&quot;}}">
+class Component extends DCLogic {
+  state = { ready: false };
+  formRef = React.createRef(); paneRef = React.createRef(); hostRef = React.createRef(); sheetRef = React.createRef(); fileRef = React.createRef();
+
+  componentDidMount(){ this.boot(); }
+  componentWillUnmount(){ clearTimeout(this._t); clearTimeout(this._tt); clearTimeout(this._mt); }
+  componentDidUpdate(){ clearTimeout(this._mt); this.measure(); this._mt = setTimeout(() => this.measure(), 350); }
+
+  boot(){
+    const F = window.Folio; if (!F){ this._t = setTimeout(() => this.boot(), 40); return; }
+    this.F = F; const st = this.props.state || 'scratch';
+    let raw = F.clone(F.DOCS[st === 'focus' ? 'full' : st] || F.DOCS.scratch); let unknown = [];
+    if (st === 'errors'){ unknown = F.validate(raw).unknown; F.dropUnknown(raw, unknown); }
+    this.setState({ ready: true, st, doc: F.formNormalize(raw), tab: st === 'imported' ? 'design' : 'content',
+      open: st === 'imported' ? null : 'work', openItem: 0, active: st === 'scratch' ? 'work.0.highlights.1.text' : null,
+      banner: st === 'imported', problemsOpen: st === 'errors', unknown, focus: st === 'focus', notes: {}, drafts: {}, saved: true,
+      menu: false, addMenu: false, dialog: null, toast: null, hover: null, m: null, statusTip: false });
+  }
+
+  // ---------- paths ----------
+  getP(o, p){ return p.split('.').reduce((a, k) => a == null ? a : a[k], o); }
+  setP(o, p, v){ const ks = p.split('.'); let a = o; for (let i = 0; i < ks.length - 1; i++){ if (a[ks[i]] == null) a[ks[i]] = /^\d+$/.test(ks[i+1]) ? [] : {}; a = a[ks[i]]; } const k = ks[ks.length - 1]; if ((v === '' || v == null) && !Array.isArray(a)) delete a[k]; else a[k] = v; }
+  upd(fn, extra){ this.setState(s => { const doc = this.F.clone(s.doc); fn(doc); return Object.assign({ doc }, extra || {}); }); }
+  fieldPath(p){ return p.indexOf('section:') === 0 ? 'preferences.sectionTitles.' + p.slice(8) : p; }
+  toPreview(p){
+    if (!p) return p;
+    if (p.indexOf('section:') === 0) return p;
+    if (p.indexOf('preferences.sectionTitles.') === 0) return 'section:' + p.slice(26);
+    return p.replace(/\.(text|label)$/, '').replace(/\.(startDate|endDate)$/, '.dates').replace(/^basics\.location\..*/, 'basics.location').replace(/^basics\.website\..*/, 'basics.website')
+      .replace(/\.location\.(city|region|country)$/, '.location').replace(/\.workMode$/, '.location').replace(/\.score\..*$/, '.score').replace(/\.field$/, '.degree').replace(/\.new$/, '').replace(/^(skills\.\d+)\.name$/, '$1').replace(/^basics\.photo$/, 'basics.initials');
+  }
+  toForm(p){
+    if (p.indexOf('section:') === 0) return p;
+    if (/\.highlights\.\d+$/.test(p)) return p + '.text';
+    if (/\.dates$/.test(p)) return p.replace(/\.dates$/, '.startDate');
+    if (p === 'basics.location') return 'basics.location.city';
+    if (p === 'basics.website') return 'basics.website.url';
+    if (p === 'basics.initials' || p === 'basics.photo') return 'basics.photo';
+    if (/^basics\.profiles\.\d+$/.test(p)) return p + '.url';
+    if (/^work\.\d+$/.test(p)) return p + '.title';
+    if (/^work\.\d+\.location$/.test(p)) return p + '.city';
+    if (/^education\.\d+$/.test(p)) return p + '.institution';
+    if (/\.score$/.test(p)) return p + '.value';
+    if (/^skills\.\d+$/.test(p)) return p + '.name';
+    if (/^projects\.\d+$/.test(p)) return p + '.name';
+    return p;
+  }
+  sectionOf(p){
+    if (p.indexOf('section:') === 0) return p.slice(8);
+    const [a, b] = p.split('.');
+    if (a === 'basics') return b === 'summary' ? 'summary' : 'basics';
+    if (a === 'customSections') return 'custom:' + (((this.state.doc.customSections || [])[+b]) || {}).id;
+    return a;
+  }
+  itemOf(p){ const ps = p.split('.'); return /^\d+$/.test(ps[1] || '') ? +ps[1] : 0; }
+  labelFor(p){
+    if (p.indexOf('section:') === 0) return 'Section heading';
+    const M = {'basics.name':'Name','basics.headline':'Headline','basics.email':'Email','basics.phone':'Phone','basics.location':'Location','basics.website':'Website','basics.summary':'Summary','basics.initials':'Photo','basics.photo':'Photo','basics.profiles':'Profiles'};
+    if (M[p]) return M[p];
+    let m;
+    if ((m = p.match(/highlights\.(\d+)$/))) return 'Bullet ' + (+m[1] + 1);
+    if ((m = p.match(/^skills\.\d+\.items\.\d+$/))) return 'Skill';
+    const last = p.split('.').pop();
+    const L = {title:'Job title', company:'Company', context:'Context', dates:'Dates', location:'Location', technologies:'Technologies', summary:'Description', institution:'School', degree:'Degree', score:'Score', name:'Name', description:'Description', url:'Link', repository:'Repository'};
+    if (L[last]) return L[last];
+    const S = {work:'Job', education:'Education', skills:'Skill group', projects:'Project', certifications:'Certification', awards:'Award', publications:'Publication', languages:'Language', volunteer:'Volunteering', interests:'Interest', profiles:'Profile', customSections:'Entry'};
+    const seg = p.split('.'); return S[seg[0]] || S[seg[1]] || 'Content';
+  }
+
+  // ---------- measuring + overlays ----------
+  pageDims(){ const ps = ((this.state.doc || {}).preferences || {}).pageSize; return ps === 'Letter' ? {pw:816, ph:1056} : {pw:794, ph:1123}; }
+  findEl(p){
+    const sheet = this.sheetRef.current; if (!sheet || !p) return null;
+    let q = this.toPreview(p);
+    while (q){ const el = sheet.querySelector('[data-path="' + q + '"]'); if (el) return el; const i = q.lastIndexOf('.'); if (i < 0) break; q = q.slice(0, i); }
+    return null;
+  }
+  rel(el){ const h = this.hostRef.current.getBoundingClientRect(); const r = el.getBoundingClientRect(); return {x: Math.round(r.left - h.left), y: Math.round(r.top - h.top), w: Math.round(r.width), h: Math.round(r.height)}; }
+  measure(){
+    const s = this.state; const host = this.hostRef.current, sheet = this.sheetRef.current; if (!s.ready || !host || !sheet) return;
+    const {pw, ph} = this.pageDims(); const sr = sheet.getBoundingClientRect(); const z = sr.width / pw || 1;
+    const H = sr.height / z; const pages = 1; const fill = Math.round(H / ph * 100) / 100;
+    const act = !s.focus && s.active ? this.findEl(s.active) : null;
+    const errs = [];
+    if (!s.focus){ this.F.validate(s.doc).errors.forEach(e => { const el = this.findEl(e.dot); if (el) errs.push(this.rel(el)); }); }
+    const next = {H: Math.round(H), pages, fill: Math.round(fill * 100) / 100, z, act: act ? this.rel(act) : null, errs};
+    const key = JSON.stringify(next);
+    if (key !== this._mk){ this._mk = key; this.setState({ m: next }); }
+    if (act && s.fromForm && this._scrolled !== s.active){
+      this._scrolled = s.active; const pane = this.paneRef.current; const pr = pane.getBoundingClientRect(); const er = act.getBoundingClientRect();
+      if (er.top < pr.top + 40 || er.bottom > pr.bottom - 40) pane.scrollTop += er.top - pr.top - pr.height / 3;
+    }
+  }
+  onPvMove = e => {
+    const el = e.target.closest && e.target.closest('[data-path]'); const sheet = this.sheetRef.current;
+    if (!el || !sheet || !sheet.contains(el)){ if (this.state.hover) this.setState({ hover: null }); return; }
+    const p = el.dataset.path; if (this.state.hover && this.state.hover.path === p) return;
+    const r = this.rel(el); const zf = this.state.focus ? (this.hostRef.current.getBoundingClientRect().width / this.pageDims().pw || 1) : 1;
+    this.setState({ hover: Object.assign({ path: p, label: this.labelFor(p), zx: r.x / zf, zy: r.y / zf, zw: r.w / zf, zh: r.h / zf }, r) });
+  };
+  onPvLeave = () => { if (this.state.hover) this.setState({ hover: null }); };
+  onPvClick = e => { const el = e.target.closest && e.target.closest('[data-path]'); if (el && this.sheetRef.current && this.sheetRef.current.contains(el)) this.pick(el.dataset.path); };
+  pick(p){
+    const sec = this.sectionOf(p); const f = this.toForm(p);
+    this.setState({ focus: false, tab: 'content', open: sec, openItem: this.itemOf(p), active: f, fromForm: false, hover: null, menu: false },
+      () => setTimeout(() => this.focusForm(f), 30));
+  }
+  focusForm(path){
+    const root = this.formRef.current; if (!root) return;
+    let el = root.querySelector('[data-field="' + path + '"]') || root.querySelector('[data-field^="' + path + '."]');
+    if (!el){ const i = path.lastIndexOf('.'); if (i > 0) el = root.querySelector('[data-field^="' + path.slice(0, i) + '."]'); }
+    if (!el) return;
+    el.focus({ preventScroll: true });
+    const pr = root.getBoundingClientRect(), er = el.getBoundingClientRect(); root.scrollTop += er.top - pr.top - 120;
+  }
+  pickBtn = e => this.pick(e.currentTarget.dataset.pick);
+
+  // ---------- form handlers ----------
+  onField = e => { const t = e.currentTarget; const p = this.fieldPath(t.dataset.field); const v = t.value; this.upd(d => this.setP(d, p, v)); };
+  onFormFocus = e => { const f = e.target && e.target.dataset && e.target.dataset.field; if (f && f !== this.state.active) this.setState({ active: f, fromForm: true }); };
+  onDate = e => {
+    const t = e.currentTarget; const p = t.dataset.date, part = t.dataset.part, v = t.value;
+    this.upd(d => { const cur = this.getP(d, p); let [y, m] = this.F.DATE_RE.test(cur || '') ? cur.split('-') : ['', '']; if (part === 'y') y = v; else m = v; if (!y && m) y = String(new Date().getFullYear()); this.setP(d, p, y ? (m ? y + '-' + m : y) : ''); });
+  };
+  onPresent = e => { const p = e.currentTarget.dataset.path, on = e.currentTarget.checked; this.upd(d => this.setP(d, p, on ? 'present' : '')); };
+  applyFix = e => { const p = e.currentTarget.dataset.path, v = e.currentTarget.dataset.val; this.upd(d => this.setP(d, p, v)); };
+  onSet = e => { const p = e.currentTarget.dataset.set, v = e.currentTarget.dataset.val; this.upd(d => this.setP(d, p, this.getP(d, p) === v ? '' : v)); };
+  setTab = e => this.setState({ tab: e.currentTarget.dataset.tab });
+  toggleSection = e => { const k = e.currentTarget.dataset.key; this.setState(s => ({ open: s.open === k ? null : k, openItem: 0 })); };
+  toggleItem = e => { const i = +e.currentTarget.dataset.idx; this.setState(s => ({ openItem: s.openItem === i ? -1 : i })); };
+  toggleHidden = e => { const k = e.currentTarget.dataset.key; this.upd(d => { d.preferences = d.preferences || {}; const h = d.preferences.hiddenSections || []; d.preferences.hiddenSections = h.indexOf(k) >= 0 ? h.filter(x => x !== k) : h.concat([k]); if (!d.preferences.hiddenSections.length) delete d.preferences.hiddenSections; }); };
+  blank(list){ const B = {work:{company:'', title:'', startDate:'', highlights:[{text:''}]}, education:{institution:''}, projects:{name:''}, certifications:{name:''}, awards:{title:''}, publications:{title:''}, languages:{language:''}, volunteer:{organization:''}, interests:{name:''}}; return B[list] || {title:''}; }
+  addItem = e => { const list = e.currentTarget.dataset.list; this.upd(d => { const arr = this.getP(d, list) || []; const b = this.blank(list.split('.').pop() === 'items' ? 'custom' : list); if (list === 'work') arr.unshift(b); else arr.push(b); this.setP(d, list, arr); }, list === 'work' ? { openItem: 0 } : null); };
+  dupItem = e => { const list = e.currentTarget.dataset.list, i = +e.currentTarget.dataset.idx; this.upd(d => { const arr = this.getP(d, list); const c = this.F.clone(arr[i]); delete c.id; c.title = ''; c.startDate = ''; c.endDate = 'present'; arr.splice(i, 0, c); }, { openItem: i }); this.toast('Duplicated above. Add the new title and dates for the promotion.'); };
+  delItem = e => { const list = e.currentTarget.dataset.list, i = +e.currentTarget.dataset.idx; const prev = this.state.doc; this.upd(d => { this.getP(d, list).splice(i, 1); }); this.toast('Job deleted.', prev); };
+  delAt = e => { const list = e.currentTarget.dataset.list, i = +e.currentTarget.dataset.idx; this.upd(d => { const arr = this.getP(d, list); if (arr) arr.splice(i, 1); }); };
+  addBullet = e => { const list = e.currentTarget.dataset.list; const n = (this.getP(this.state.doc, list) || []).length; this.upd(d => { const arr = this.getP(d, list) || []; arr.push({ text: '' }); this.setP(d, list, arr); }, { active: list + '.' + n + '.text' }); setTimeout(() => this.focusForm(list + '.' + n + '.text'), 40); };
+  addProfile = () => this.upd(d => { d.basics.profiles = (d.basics.profiles || []).concat([{ network: 'linkedin', url: '' }]); });
+  onChipDraft = e => { const l = e.currentTarget.dataset.list, v = e.currentTarget.value; this.setState(s => ({ drafts: Object.assign({}, s.drafts, { [l]: v }) })); };
+  onChipKey = e => {
+    const t = e.currentTarget; const l = t.dataset.list, kind = t.dataset.kind; const v = (t.value || '').trim();
+    if (e.key === 'Enter' && v){ e.preventDefault(); this.upd(d => { const arr = this.getP(d, l) || []; arr.push(kind === 'obj' ? { name: v } : v); this.setP(d, l, arr); }, { drafts: Object.assign({}, this.state.drafts, { [l]: '' }) }); }
+    else if (e.key === 'Backspace' && !t.value){ this.upd(d => { const arr = this.getP(d, l); if (arr && arr.length) arr.pop(); }); }
+  };
+  cycleLevel = e => { const p = e.currentTarget.dataset.path; this.upd(d => { const it = this.getP(d, p); const n = (it.level || 0) + 1; if (n > 5) delete it.level; else it.level = n; }); };
+  addGroup = () => this.upd(d => { d.skills = (d.skills || []).concat([{ name: '', items: [] }]); });
+  toggleAddMenu = () => this.setState(s => ({ addMenu: !s.addMenu }));
+  addSection = e => {
+    const k = e.currentTarget.dataset.key;
+    if (k === 'custom'){ const n = ((this.state.doc.customSections || []).length + 1); const id = 'custom-' + n; this.upd(d => { d.customSections = (d.customSections || []).concat([{ id, title: 'New section', display: 'entries', items: [{ title: '' }] }]); }, { open: 'custom:' + id, addMenu: false }); return; }
+    if (k === 'references'){ this.upd(d => { d.references = { availableOnRequest: true }; }, { open: k, addMenu: false }); return; }
+    this.upd(d => { d[k] = [this.blank(k)]; }, { open: k, addMenu: false });
+  };
+  wrapSel = e => {
+    e.preventDefault(); const el = document.activeElement; if (!el || !el.dataset || !el.dataset.rich) return; this.wrap(el, e.currentTarget.dataset.mark);
+  };
+  wrap(el, mark){
+    const s = el.selectionStart, en = el.selectionEnd, txt = el.value; const sel = txt.slice(s, en) || (mark === 'link' ? 'link text' : 'text');
+    const ins = mark === 'link' ? '[' + sel + '](https://)' : mark + sel + mark; const nv = txt.slice(0, s) + ins + txt.slice(en); const p = el.dataset.field;
+    this.upd(d => this.setP(d, p, nv)); setTimeout(() => { el.focus(); const a = s + (mark === 'link' ? 1 : mark.length); el.setSelectionRange(a, a + sel.length); }, 20);
+  }
+  onRichKey = e => { if (!(e.metaKey || e.ctrlKey)) return; const k = e.key.toLowerCase(); const m = k === 'b' ? '**' : k === 'i' ? '*' : k === 'k' ? 'link' : null; if (m){ e.preventDefault(); this.wrap(e.currentTarget, m); } };
+  // drag
+  onDragStart = e => { const t = e.currentTarget; this._drag = { list: t.dataset.dlist, idx: +t.dataset.didx }; e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', t.dataset.dlist); const row = t.closest('[data-drow]'); if (row) e.dataTransfer.setDragImage(row, 16, 16); } catch (_){} this.setState({ dragList: t.dataset.dlist, dragIdx: +t.dataset.didx }); };
+  onDragOver = e => { const t = e.currentTarget; if (this._drag && t.dataset.dlist === this._drag.list){ e.preventDefault(); e.stopPropagation(); if (this.state.overIdx !== +t.dataset.didx || this.state.overList !== t.dataset.dlist) this.setState({ overIdx: +t.dataset.didx, overList: t.dataset.dlist }); } };
+  onDragEnd = () => { this._drag = null; this.setState({ dragList: null, overIdx: null, overList: null }); };
+  onDrop = e => {
+    const t = e.currentTarget; const dr = this._drag; if (!dr || t.dataset.dlist !== dr.list) return; e.preventDefault(); e.stopPropagation(); const to = +t.dataset.didx; this._drag = null;
+    if (dr.list === 'sections'){ const keys = this.orderedKeys(); const [k] = keys.splice(dr.idx, 1); keys.splice(to, 0, k); this.upd(d => { d.preferences = d.preferences || {}; d.preferences.sectionOrder = keys; }, { dragList: null, overIdx: null }); return; }
+    this.upd(d => { const arr = this.getP(d, dr.list); const [x] = arr.splice(dr.idx, 1); arr.splice(to, 0, x); }, { dragList: null, overIdx: null, openItem: dr.list === 'work' ? to : this.state.openItem });
+  };
+  orderedKeys(){
+    const d = this.state.doc; const p = d.preferences || {}; const F = this.F;
+    const all = F.KEYS.concat((d.customSections || []).map(c => 'custom:' + c.id));
+    const so = (p.sectionOrder || []).filter(k => all.indexOf(k) >= 0); return so.concat(all.filter(k => so.indexOf(k) < 0));
+  }
+  // design
+  setPref = e => { const k = e.currentTarget.dataset.pref, v = e.currentTarget.dataset.val; this.upd(d => { d.preferences = d.preferences || {}; d.preferences[k] = v; }); };
+  setPrefInput = e => { const k = e.currentTarget.dataset.pref, v = e.currentTarget.value; this.upd(d => { d.preferences = d.preferences || {}; d.preferences[k] = v.toUpperCase ? (k === 'accentColor' ? v.toUpperCase() : v) : v; }); };
+  setPrefCheck = e => { const k = e.currentTarget.dataset.pref, v = e.currentTarget.checked; this.upd(d => { d.preferences = d.preferences || {}; d.preferences[k] = v; }); };
+  setAvatar = e => { const v = e.currentTarget.dataset.val; if (v === 'auto' && !(this.state.doc.basics.photo || {}).src){ this.pickPhoto(); } this.upd(d => { d.preferences = d.preferences || {}; d.preferences.avatar = v; }); };
+  browseTemplates = () => this.toast('Opens the template gallery with your own content in every card.');
+  // photo
+  pickPhoto = () => { const f = this.fileRef.current; if (f) f.click(); else this.setState({ tab: 'content', open: 'basics' }, () => setTimeout(() => this.fileRef.current && this.fileRef.current.click(), 40)); };
+  onPhotoFile = e => { const file = e.currentTarget.files && e.currentTarget.files[0]; if (!file) return; const r = new FileReader(); r.onload = () => this.openCrop(r.result); r.readAsDataURL(file); e.currentTarget.value = ''; };
+  openCrop(src){ const img = new Image(); img.onload = () => { this._img = img; this.setState({ crop: { src, w: img.naturalWidth, h: img.naturalHeight, z: 1, x: 0, y: 0 } }); }; img.src = src; }
+  recrop = () => { const p = this.state.doc.basics.photo; if (p && p.src) this.openCrop(p.src); };
+  removePhoto = () => this.upd(d => { delete d.basics.photo; });
+  cropDown = e => { e.currentTarget.setPointerCapture(e.pointerId); this._pan = { sx: e.clientX, sy: e.clientY, x: this.state.crop.x, y: this.state.crop.y }; };
+  cropMove = e => { if (!this._pan) return; const c = this.state.crop; this.setState({ crop: Object.assign({}, c, { x: this._pan.x + e.clientX - this._pan.sx, y: this._pan.y + e.clientY - this._pan.sy }) }); };
+  cropUp = () => { this._pan = null; };
+  cropZoom = e => this.setState({ crop: Object.assign({}, this.state.crop, { z: +e.currentTarget.value }) });
+  cropCancel = () => this.setState({ crop: null });
+  cropSave = () => {
+    const c = this.state.crop, img = this._img; const s0 = 280 / Math.min(c.w, c.h) * c.z; const k = 600 / 280;
+    const cv = document.createElement('canvas'); cv.width = 600; cv.height = 600; const ctx = cv.getContext('2d');
+    ctx.drawImage(img, (140 + c.x - c.w * s0 / 2) * k, (140 + c.y - c.h * s0 / 2) * k, c.w * s0 * k, c.h * s0 * k);
+    const src = cv.toDataURL('image/jpeg', 0.85);
+    this.upd(d => { d.basics.photo = { src, alt: d.basics.name || 'Photo' }; d.preferences = d.preferences || {}; d.preferences.avatar = 'auto'; }, { crop: null });
+  };
+  // top bar
+  statusIn = () => this.setState({ statusTip: true }); statusOut = () => this.setState({ statusTip: false });
+  toggleProblems = () => { const s = this.state; if (this.problemCount() || s.unknown.length) this.setState({ problemsOpen: !s.problemsOpen, tab: s.tab }); else this.setState({ banner: !s.banner }); };
+  openProblems = () => this.setState({ problemsOpen: true });
+  closeProblems = () => this.setState({ problemsOpen: false });
+  closeBanner = () => this.setState({ banner: false });
+  reviewContent = () => this.setState({ tab: 'content', open: 'basics' }, () => { if (this.formRef.current) this.formRef.current.scrollTop = 0; });
+  toggleNote = e => { const i = e.currentTarget.dataset.i; this.setState(s => ({ notes: Object.assign({}, s.notes, { [i]: !s.notes[i] }) })); };
+  toggleFocus = () => this.setState(s => ({ focus: !s.focus, hover: null }));
+  toggleMenu = () => this.setState(s => ({ menu: !s.menu }));
+  askStartOver = () => this.setState({ menu: false, dialog: 'start' });
+  closeDialog = () => this.setState({ dialog: null });
+  doStartOver = () => { const prev = this.state.doc; this.setState({ doc: { schemaVersion: '1.0', basics: { name: '' } }, dialog: null, open: 'basics', tab: 'content', banner: false, problemsOpen: false, unknown: [], active: 'basics.name' }, () => setTimeout(() => this.focusForm('basics.name'), 40)); this.toast('Started over. The saved copy was removed from this browser.', prev); };
+  removeFromBrowser = () => { this.setState({ menu: false, saved: false }); this.toast('Removed from this browser. You can keep editing; download the JSON before you close the tab.'); };
+  copyAI = () => { const txt = this.F.PROMPT.replace('<paste it here>', '(see below)') + '\n\nHere is my current resume JSON. Improve the wording; keep every fact.\n\n' + JSON.stringify(this.state.doc, null, 2); try { navigator.clipboard.writeText(txt); } catch (_){} this.toast('Copied the AI prompt with your current resume. Paste it into any AI chat.'); };
+  copyErrors = () => { const v = this.F.validate(this.state.doc); const lines = v.errors.map(e => e.path + ': ' + e.problem + ' ' + e.hint).concat(this.state.unknown.map(u => u.path + ': unknown key' + (u.suggestion ? ' (did you mean "' + u.suggestion + '"?)' : ''))); try { navigator.clipboard.writeText('Please fix these problems in the resume JSON and return the whole file:\n' + lines.join('\n')); } catch (_){} this.toast('Copied ' + lines.length + ' problems. Paste them back to your AI.'); };
+  downloadJSON = () => { const d = this.state.doc; const name = ((d.meta || {}).title || (d.basics.name || 'Resume') + ' - Resume'); const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); this.toast('Downloaded ' + name + '.json'); };
+  downloadPDF = () => { const d = this.state.doc; this.toast('Saved ' + (((d.meta || {}).title) || (d.basics.name + ' - Resume')) + '.pdf · ' + ((this.state.m || {}).pages || 1) + ' pages'); };
+  toast(msg, undo){ clearTimeout(this._tt); this._undo = undo || null; this.setState({ toast: { msg, hasUndo: !!undo } }); this._tt = setTimeout(() => this.setState({ toast: null }), undo ? 10000 : 5000); }
+  undoToast = () => { if (this._undo) this.setState({ doc: this._undo, saved: true }); this._undo = null; this.setState({ toast: null }); };
+  closeToast = () => this.setState({ toast: null });
+  problemCount(){ return this.F.validate(this.state.doc).errors.length; }
+
+  // ---------- view ----------
+  renderVals(){
+    const s = this.state; if (!s.ready) return { ready: false };
+    const F = this.F, d = s.doc, p = d.preferences || {}, b = d.basics || {};
+    const tplId = (F.TPL.find(t => t.id === p.template && !t.soon) || F.TPL[0]).id; const tpl = F.TPL.find(t => t.id === tplId);
+    const vm = F.view(d, { template: tplId });
+    const val = F.validate(d); const errMap = {}; val.errors.forEach(e => { errMap[e.dot] = e; });
+    const A = '#2E4BA6', ERR = '#B42318';
+    const fld = (path, value, max) => { const v = value == null ? '' : String(value); const er = errMap[path]; const act = s.active === path;
+      return { path, value: v, bc: er ? ERR : act ? A : '#D6D6D1', ring: act ? (er ? '0 0 0 3px rgba(180,35,24,.14)' : '0 0 0 3px rgba(46,75,166,.16)') : 'none', hasErr: !!er, err: er ? (er.field || er.problem) : '', fg: er ? ERR : '#1C1C1A',
+        count: max ? v.length + ' / ' + max : '', showCount: !!max && v.length > max * 0.8, countFg: max && v.length > max ? ERR : '#6B6B66' }; };
+    const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const dateFld = (path, value, label, isEnd, required) => { const v = value || ''; const valid = !v || F.DATE_RE.test(v); const present = v === 'present'; const er = errMap[path]; const act = s.active === path;
+      const [y, m] = valid && v ? v.split('-') : ['', '']; const g = er && er.fix;
+      return { path, label, isEnd: !!isEnd, required: !!required, isPresent: present, showPicker: !present && (valid || false), isRaw: !present && !valid, raw: v, month: m || '', year: y || '', err: er ? er.field : '', hasFix: !!g, fix: g || '', fixLabel: g ? F.fmtDate(g, 'MMM YYYY', 'en-US') : '',
+        bc: er ? ERR : act ? A : '#D6D6D1', ring: act ? '0 0 0 3px rgba(46,75,166,.16)' : 'none' }; };
+    const hidden = new Set(p.hiddenSections || []);
+    const present = k => { if (['summary','work','education','skills'].indexOf(k) >= 0) return true; if (k === 'references') return !!d.references; if (k.indexOf('custom:') === 0) return true; return !!(d[k] || []).length; };
+    const titles = p.sectionTitles || {};
+    const defTitle = k => k.indexOf('custom:') === 0 ? ((d.customSections || []).find(c => 'custom:' + c.id === k) || {}).title || 'Custom' : F.TITLES[k];
+    const side = tpl.side || [];
+    const errIn = pre => val.errors.some(e => e.dot.indexOf(pre) === 0);
+    const LIST = { certifications:['name','issuer','Certification','Issuer'], awards:['title','awarder','Award','Awarded by'], publications:['title','venue','Title','Venue'], languages:['language','fluency','Language','Fluency (native, fluent…)'], volunteer:['organization','role','Organisation','Role'], interests:['name','keywords','Interest','Keywords'], education:['institution','degree','School','Degree'], projects:['name','kind','Project','Kind (e.g. NPM package)'] };
+    const keys = this.orderedKeys().filter(present);
+    const secs = [{ key: 'basics', title: 'Basics', idx: -1, fixed: true, draggable: false, isBasics: true }].concat(keys.map((k, i) => ({ key: k, idx: i }))).map(x => {
+      const k = x.key; const open = s.open === k; const isCustom = k.indexOf('custom:') === 0;
+      const o = Object.assign({ open, chev: open ? 180 : 0, title: k === 'basics' ? 'Basics' : (titles[k] || defTitle(k)), defTitle: k === 'basics' ? '' : defTitle(k), renamed: !!titles[k] && titles[k] !== defTitle(k),
+        fixed: k === 'basics', draggable: k !== 'basics', hideable: k !== 'basics', renameable: k !== 'basics' && !isCustom, isHidden: hidden.has(k),
+        isSummary: k === 'summary', isWork: k === 'work', isSkills: k === 'skills', inSidebar: tpl.cols === 2 && side.indexOf(k) >= 0,
+        hasErr: k === 'basics' ? errIn('basics.') && !errIn('basics.summary') : errIn((isCustom ? 'customSections' : k) + '.'),
+        border: s.overList === 'sections' && s.overIdx === x.idx ? A : '#E3E3DF', shadow: s.dragList === 'sections' && s.dragIdx === x.idx ? '0 8px 24px rgba(28,28,26,.14)' : 'none' }, x);
+      o.opacity = o.isHidden ? 0.55 : 1; o.titleFg = o.isHidden ? '#6B6B66' : '#1C1C1A';
+      o.hideLabel = o.isHidden ? 'Show on resume' : 'Hide from resume';
+      o.eyeIcon = o.isHidden ? 'M3 3l18 18 M10.6 6.1A10 10 0 0 1 12 6c6.4 0 10 6 10 6a17 17 0 0 1-3 3.6 M6.6 6.6A17 17 0 0 0 2 12s3.6 6 10 6a9.7 9.7 0 0 0 4-.9 M9.9 9.9a3 3 0 0 0 4.2 4.2' : 'M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6z';
+      o.eyeFg = o.isHidden ? '#B42318' : '#4A4A46';
+      o.titleField = fld('section:' + k, titles[k] || '');
+      o.titleField.bc = s.active === 'section:' + k ? A : '#D6D6D1'; o.titleField.ring = s.active === 'section:' + k ? '0 0 0 3px rgba(46,75,166,.16)' : 'none';
+      const n = k === 'references' ? 0 : isCustom ? (((d.customSections || []).find(c => 'custom:' + c.id === k) || {}).items || []).length : (Array.isArray(d[k]) ? d[k].length : 0);
+      o.hasCount = n > 0 && k !== 'summary'; o.count = n;
+      const L = LIST[k]; o.isList = !!L || isCustom || k === 'references';
+      if (o.isList && open){
+        let list = k, arr = d[k] || [], a = L ? L[0] : 'title', bb = L ? L[1] : 'subtitle', al = L ? L[2] : 'Title', bl = L ? L[3] : 'Subtitle';
+        if (isCustom){ const ci = (d.customSections || []).findIndex(c => 'custom:' + c.id === k); list = 'customSections.' + ci + '.items'; arr = d.customSections[ci].items || []; }
+        if (k === 'references'){ arr = []; }
+        o.list = list; o.rows = arr.map((it, i) => ({ i, aLabel: al, bLabel: bl, a: fld(list + '.' + i + '.' + a, it[a]), b: fld(list + '.' + i + '.' + bb, Array.isArray(it[bb]) ? it[bb].join(', ') : it[bb]) }));
+        o.extraFields = []; o.errRows = [];
+        if (k === 'projects'){ arr.forEach((it, i) => { const f = fld('projects.' + i + '.url', it.url); o.extraFields.push({ label: (it.name || 'Project') + ' link', f, help: f.hasErr ? (it.name || 'Project') + ' link: ' + f.err : (it.name || 'Project') + ' link (https://…)', helpFg: f.hasErr ? ERR : '#6B6B66' }); }); }
+        o.hasErrRows = !!o.errRows.length;
+      }
+      return o;
+    });
+    // basics
+    const loc = b.location || {};
+    const fb = { name: fld('basics.name', b.name, 200), headline: fld('basics.headline', b.headline, 200), email: fld('basics.email', b.email), phone: fld('basics.phone', b.phone),
+      city: fld('basics.location.city', loc.city), region: fld('basics.location.region', loc.region), country: fld('basics.location.country', loc.country),
+      web: fld('basics.website.url', (b.website || {}).url), webLabel: fld('basics.website.label', (b.website || {}).label), summary: fld('basics.summary', b.summary, 1500),
+      hasPhoto: !!(b.photo && b.photo.src), noPhoto: !(b.photo && b.photo.src), photo: (b.photo || {}).src || '', initials: vm.initials || '?', photoBtn: b.photo && b.photo.src ? 'Replace photo' : 'Upload photo',
+      profiles: (b.profiles || []).map((pr, i) => ({ i, network: pr.network, netPath: 'basics.profiles.' + i + '.network', icon: F.ICONS[pr.network] || F.ICONS.link, url: fld('basics.profiles.' + i + '.url', pr.url) })) };
+    if (s.active === 'basics.photo'){ fb.photoRing = true; }
+    // work
+    const fw = (d.work || []).map((w, i) => { const open = s.open === 'work' && s.openItem === i; const base = 'work.' + i; const l = w.location || {};
+      const he = errIn(base + '.'); const drag = s.overList === 'work' && s.overIdx === i;
+      return { i, open, heading: w.title || 'New job', sub: [w.company, F.fmtDate(w.startDate, 'MMM YYYY') + (w.endDate ? ' – ' + F.fmtDate(w.endDate, 'MMM YYYY') : '')].filter(x => x && x.trim()).join(' · ') || 'Add the company and dates', subFg: he ? ERR : '#4A4A46',
+        border: drag ? A : he ? '#F3C7C1' : open ? '#CFCFC9' : '#E3E3DF', bg: open ? '#FFFFFF' : '#FAFAF8',
+        title: fld(base + '.title', w.title, 200), company: fld(base + '.company', w.company, 200), context: fld(base + '.context', w.context, 200),
+        dates: [dateFld(base + '.startDate', w.startDate, 'Start', false, true), dateFld(base + '.endDate', w.endDate, 'End', true)],
+        city: fld(base + '.location.city', l.city), region: fld(base + '.location.region', l.region),
+        modes: [['onsite','On-site'],['hybrid','Hybrid'],['remote','Remote']].map(([v, t]) => { const on = w.workMode === v; return { v, t, on, path: base + '.workMode', bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#1C1C1A' : '#4A4A46', sh: on ? '0 1px 2px rgba(28,28,26,.12)' : 'none' }; }),
+        blList: base + '.highlights', bulletCount: (w.highlights || []).length + ' / 12', canAddBullet: (w.highlights || []).length < 12,
+        bullets: (w.highlights || []).map((h, j) => { const bp = base + '.highlights.' + j; const act = s.active === bp + '.text' || s.active === bp + '.label'; const t = fld(bp + '.text', h.text, 500); t.count = (h.text || '').length + ' / 500';
+          return { j, label: fld(bp + '.label', h.label, 60), text: t, active: act, bc: s.overList === base + '.highlights' && s.overIdx === j ? A : act ? A : '#E3E3DF', ring: act ? '0 0 0 3px rgba(46,75,166,.12)' : 'none' }; }),
+        techList: base + '.technologies', tech: (w.technologies || []).map((t, k) => ({ t, k })), techDraft: (s.drafts || {})[base + '.technologies'] || '' };
+    });
+    const levelDots = (lv, accent) => [1,2,3,4,5].map(n => ({ c: n <= lv ? accent : '#C9C9C4' }));
+    const fs = (d.skills || []).map((g, gi) => ({ i: gi, list: 'skills.' + gi + '.items', newPath: 'skills.' + gi + '.new', name: fld('skills.' + gi + '.name', g.name), draft: (s.drafts || {})['skills.' + gi + '.items'] || '', border: s.active && s.active.indexOf('skills.' + gi + '.') === 0 ? A : '#E3E3DF',
+      chips: (g.items || []).map((it, k) => { const cp = 'skills.' + gi + '.items.' + k; const act = s.active === cp; return { k, path: cp, name: it.name, dots: levelDots(it.level || 0, '#2E4BA6'), levelLabel: it.level ? 'Level ' + it.level + ' of 5. Click to change.' : 'No level. Click to set one.', bg: act ? '#EEF1FA' : '#F1F1EE', ring: act ? '0 0 0 2px #2E4BA6' : 'none' }; }) }));
+    const addable = F.KEYS.filter(k => !present(k)).map(k => ({ key: k, title: F.TITLES[k] }));
+    // design
+    const accent = vm.accent;
+    const presets = [tpl.accent, '#1A73E8', '#0F766E', '#B42318', '#6D28D9', '#1F2937'].filter((c, i, a) => a.indexOf(c) === i).slice(0, 6);
+    const seg = (on) => ({ bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#1C1C1A' : '#4A4A46', sh: on ? '0 1px 2px rgba(28,28,26,.12)' : 'none' });
+    const avatar = p.avatar || 'auto'; const ratio = F.contrast(accent, '#FFFFFF');
+    const lvSupported = !!tpl.levels;
+    const design = { tplName: tpl.name, tags: tpl.tags.map(t => ({ t })), accent,
+      quick: F.TPL.filter(t => !t.soon).map(t => ({ id: t.id, name: t.name, on: t.id === tplId, border: t.id === tplId ? A : '#E3E3DF', bg: t.id === tplId ? '#EEF1FA' : '#fff' })),
+      accents: presets.map(c => ({ c, on: c.toUpperCase() === accent.toUpperCase(), ringW: c.toUpperCase() === accent.toUpperCase() ? 2 : 1, ringC: c.toUpperCase() === accent.toUpperCase() ? '#1C1C1A' : '#D6D6D1' })),
+      lowContrast: ratio < 3, ratio: ratio.toFixed(1),
+      sizes: ['A4', 'Letter'].map(v => Object.assign({ v, t: v === 'A4' ? 'A4' : 'Letter', on: (p.pageSize || 'A4') === v }, seg((p.pageSize || 'A4') === v))),
+      dateFormat: p.dateFormat || 'MMM YYYY', formats: ['MMM YYYY','MMMM YYYY','MM/YYYY','YYYY-MM','YYYY'].map(v => ({ v, t: F.fmtDate('2025-02', v, 'en-US') + '  (' + v + ')' })),
+      hasSlot: !!tpl.photo, avatars: [['auto','Photo'],['initials','Initials'],['none','None']].map(([v, t]) => Object.assign({ v, t, on: avatar === v }, seg(avatar === v))),
+      avatarHelp: avatar === 'none' ? 'No slot. The header reflows as if the template had none.' : avatar === 'initials' ? 'Shows ' + (vm.initials || 'your initials') + ' in the accent colour.' : (b.photo && b.photo.src ? 'Shows your photo.' : 'No photo uploaded yet, so your initials show. Choose Photo again to upload.'),
+      levels: !!p.showSkillLevels && lvSupported, levelsOff: !lvSupported, levelsFg: lvSupported ? '#1C1C1A' : '#6B6B66',
+      levelsHelp: lvSupported ? 'Draws dots for skills that have a level. Many recruiters read bars as self-rating, so it is off by default.' : tpl.name + ' prints skills as text only, so levels are not shown.' };
+    const m = s.m || { pages: 1, fill: 1, H: 0 };
+    const letter = (p.pageSize || 'A4') === 'Letter';
+    const sizeLabel = letter ? '8.5 × ' + (m.fill * 11).toFixed(1) + ' in' : '210 × ' + Math.round(m.fill * 297) + ' mm';
+    const sparse = m.fill > 1.3;
+    const fit = { title: 'One page, ' + sizeLabel, pct: Math.min(100, Math.round(1 / Math.max(m.fill, 1) * 100)),
+      text: sparse ? 'The page is ' + Math.round(m.fill * 100) + '% of ' + (letter ? 'Letter' : 'A4') + ' height. Printed on standard paper it shrinks to fit, so the text gets small. Hide a section or trim a few bullets.' : m.fill > 1.01 ? 'The page is a little taller than ' + (letter ? 'Letter' : 'A4') + ' (' + Math.round(m.fill * 100) + '%). It stays one page in the PDF and still prints legibly.' : 'Everything fits on one standard ' + (letter ? 'Letter' : 'A4') + ' page.',
+      border: sparse ? '#F0D9A8' : '#E3E3DF', bg: sparse ? '#FFF9EC' : '#FFFFFF', fg: sparse ? '#B7791F' : '#1F7A45',
+      icon: sparse ? 'M12 8v5 M12 16.5v.5 M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z' : 'M5 12.5l4.5 4.5L19 7.5' };
+    // preview
+    const { pw, ph } = this.pageDims();
+    const pv = { pw, ph, zoom: 0.92, maxW: Math.round(pw * 0.92) + 48, meta: tpl.name + ' · one page · ' + sizeLabel };
+    const fz = 0.62;
+    const fp = { pw, ph, zoom: fz, title: (d.meta || {}).title || (b.name || 'Resume') + ' - Resume', pageNote: 'One page · ' + sizeLabel + ' · ' + tpl.name };
+    // banner + problems
+    const notes = (d['x-notes'] || []).map((t, i) => ({ i, text: t, done: !!s.notes[i], deco: s.notes[i] ? 'line-through' : 'none', fg: s.notes[i] ? '#6B6B66' : '#1C1C1A' }));
+    const warns = F.softWarnings(d);
+    const bn = { hasGen: !!(d.meta || {}).generator, generator: (d.meta || {}).generator || '', stats: 'We found ' + F.stats(d).join(', ') + '. Check what your AI wrote, then download.',
+      notes, notesTitle: notes.length ? notes.length + ' notes from your AI' : 'No notes from your AI', warns, warnTitle: warns.length ? warns.length + (warns.length === 1 ? ' field' : ' fields') + ' you may want to fill' : 'Fields to fill', noWarns: !warns.length };
+    const nErr = val.errors.length;
+    const prob = { title: nErr ? 'Fix ' + nErr + (nErr === 1 ? ' problem' : ' problems') + ' to download the PDF' : 'All problems fixed', sub: nErr ? 'We loaded everything we could. Bad values stay in their fields, marked in red.' : 'You can download the PDF now.',
+      errors: val.errors, hasUnknown: !!s.unknown.length,
+      unknown: s.unknown.map(u => { const tgt = u.suggestion ? u.dot.replace(/[^.]+$/, u.suggestion) : ''; return { path: u.path, value: typeof u.value === 'string' ? u.value : JSON.stringify(u.value), hasSug: !!u.suggestion, suggestion: u.suggestion || '', target: tgt, note: u.suggestion ? 'Unknown key, probably “' + u.suggestion + '”. Retype it there.' : 'Unknown key. Retype it where it belongs.' }; }) };
+    const badge = nErr || (s.st === 'imported' ? notes.filter(n => !n.done).length + warns.length : 0);
+    const top = { docName: (d.meta || {}).title || ((b.name || 'Untitled') + ' - Resume'), saved: s.saved, unsaved: !s.saved,
+      tip: s.saved ? 'Only on this device. Download JSON to keep a copy.' : 'Saving here failed or was turned off. Your work is only in this tab until you download the JSON.',
+      hasBadge: !!badge, badge, badgeBg: nErr ? ERR : '#4A4A46', problemsLabel: nErr ? nErr + ' problems' : 'Review notes and warnings',
+      pdfOk: !nErr, pdfBlocked: !!nErr, pdfLabel: 'Fix ' + nErr + (nErr === 1 ? ' problem' : ' problems') + ' to download',
+      focusBg: s.focus ? '#EEF1FA' : '#fff', focusBorder: s.focus ? A : '#D6D6D1' };
+    const tabs = { content: s.tab === 'content', design: s.tab === 'design', cFg: s.tab === 'content' ? '#1C1C1A' : '#6B6B66', dFg: s.tab === 'design' ? '#1C1C1A' : '#6B6B66', cLine: s.tab === 'content' ? '#1C1C1A' : 'transparent', dLine: s.tab === 'design' ? '#1C1C1A' : 'transparent' };
+    const c = s.crop; let crop = null; if (c){ const s0 = 280 / Math.min(c.w, c.h) * c.z; const dw = c.w * s0, dh = c.h * s0; crop = { src: c.src, z: c.z, dw, dh, left: 140 + c.x - dw / 2, top: 140 + c.y - dh / 2 }; }
+    return {
+      ready: true, vm, tplIs: { meridian: tplId === 'meridian', ledger: tplId === 'ledger', tracking: tplId === 'tracking' },
+      top, tabs, secs, fb, fw, fs, workEmpty: !(d.work || []).length, skillsEmpty: !(d.skills || []).length, addable, design, fit, pv, fp, bn, prob,
+      showPanel: !s.focus, focus: s.focus, banner: s.banner && !s.focus, problemsOpen: s.problemsOpen, menu: s.menu, addMenu: s.addMenu, statusTip: s.statusTip,
+      hasHover: !!s.hover, hover: s.hover || {}, hasAct: !!(m.act && !s.focus), act: m.act || {}, errBoxes: s.focus ? [] : (m.errs || []),
+      dlgStart: s.dialog === 'start', hasToast: !!s.toast, toast: s.toast || {}, hasCrop: !!crop, crop: crop || {},
+      months: [{ v: '', t: 'Month' }].concat(MON.map((t, i) => ({ v: String(i + 1).padStart(2, '0'), t }))),
+      years: [{ v: '', t: 'Year' }].concat(Array.from({ length: 50 }, (_, i) => { const y = String(2027 - i); return { v: y, t: y }; })),
+      networks: Object.keys(F.NET).map(k => ({ v: k, t: F.NET[k] })),
+      formRef: this.formRef, paneRef: this.paneRef, hostRef: this.hostRef, sheetRef: this.sheetRef, fileRef: this.fileRef,
+      onField: this.onField, onFormFocus: this.onFormFocus, onDate: this.onDate, onPresent: this.onPresent, applyFix: this.applyFix, onSet: this.onSet, setTab: this.setTab,
+      toggleSection: this.toggleSection, toggleItem: this.toggleItem, toggleHidden: this.toggleHidden, addItem: this.addItem, dupItem: this.dupItem, delItem: this.delItem, delAt: this.delAt,
+      addBullet: this.addBullet, addProfile: this.addProfile, onChipDraft: this.onChipDraft, onChipKey: this.onChipKey, cycleLevel: this.cycleLevel, addGroup: this.addGroup,
+      toggleAddMenu: this.toggleAddMenu, addSection: this.addSection, wrapSel: this.wrapSel, onRichKey: this.onRichKey,
+      onDragStart: this.onDragStart, onDragOver: this.onDragOver, onDragEnd: this.onDragEnd, onDrop: this.onDrop,
+      setPref: this.setPref, setPrefInput: this.setPrefInput, setPrefCheck: this.setPrefCheck, setAvatar: this.setAvatar, browseTemplates: this.browseTemplates,
+      pickPhoto: this.pickPhoto, onPhotoFile: this.onPhotoFile, recrop: this.recrop, removePhoto: this.removePhoto, cropDown: this.cropDown, cropMove: this.cropMove, cropUp: this.cropUp, cropZoom: this.cropZoom, cropCancel: this.cropCancel, cropSave: this.cropSave,
+      statusIn: this.statusIn, statusOut: this.statusOut, toggleProblems: this.toggleProblems, openProblems: this.openProblems, closeProblems: this.closeProblems, closeBanner: this.closeBanner, reviewContent: this.reviewContent, toggleNote: this.toggleNote,
+      toggleFocus: this.toggleFocus, toggleMenu: this.toggleMenu, askStartOver: this.askStartOver, closeDialog: this.closeDialog, doStartOver: this.doStartOver, removeFromBrowser: this.removeFromBrowser,
+      copyAI: this.copyAI, copyErrors: this.copyErrors, downloadJSON: this.downloadJSON, downloadPDF: this.downloadPDF, undoToast: this.undoToast, closeToast: this.closeToast,
+      onPvMove: this.onPvMove, onPvLeave: this.onPvLeave, onPvClick: this.onPvClick, pickBtn: this.pickBtn
+    };
+  }
+}
+</script>
+</body>
+</html>

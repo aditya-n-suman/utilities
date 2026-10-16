@@ -1,0 +1,141 @@
+/* Meridian. Sizes are CSS px on a 794 px (A4) page, as in the design. Logical properties only. */
+
+.mer {
+  font-family: "Rubik", "Noto Sans Arabic", "Noto Sans Hebrew", system-ui, sans-serif;
+  color: #141414;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.mer-head {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-block-end: 13px;
+  break-inside: avoid;
+}
+.mer-id { flex: 1; min-width: 0; }
+.mer h1 {
+  margin: 0;
+  font-size: 28.1px;
+  line-height: 1.05;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.mer-headline { font-size: 14.8px; font-weight: 500; color: var(--accent); margin-block-start: 3.5px; }
+.mer-contacts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-block-start: 7.5px; font-size: 10.7px; font-weight: 500; }
+.mer-contact { display: inline-flex; align-items: center; gap: 6px; }
+.mer-contact .icon { color: var(--accent); flex: none; }
+
+.mer-avatar {
+  flex: none;
+  inline-size: 96px;
+  block-size: 96px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: grid;
+  place-items: center;
+  font-size: 33px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+.mer-photo { object-fit: cover; background: none; box-shadow: 0 0 0 4px var(--accent); }
+
+.mer-cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  column-gap: 28px;
+  align-items: start;
+}
+.mer-col, .mer-min { min-width: 0; }
+
+.mer-sec { margin-block-end: 10px; }
+.mer h2 {
+  margin: 0 0 4px;
+  font-size: 14.8px;
+  line-height: 1.2;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding-block-end: 1px;
+  border-block-end: 2.5px solid #141414;
+  break-after: avoid;
+}
+
+.mer-text { margin: 0; color: #262626; }
+.mer-para { margin-block-end: 6px; }
+.mer-strong { font-weight: 500; }
+.mer-small { font-size: 10.7px; }
+.mer-muted { color: #4d4d4d; }
+.mer-accent { color: var(--accent); }
+.mer-meta-text { color: #3d3d3d; margin-block: 1px; }
+
+.mer-entry {
+  break-inside: avoid;
+  padding-block: 4px 4.5px;
+  border-block-end: 1px dashed #c9c9c9;
+}
+.mer-title { font-size: 11.7px; font-weight: 500; line-height: 1.3; }
+.mer-org { font-size: 11.7px; font-weight: 500; color: var(--accent); margin-block-start: 1.5px; }
+.mer-context { color: #4d4d4d; font-weight: 400; font-size: 11.4px; }
+.mer-meta { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 10.7px; color: #3d3d3d; margin-block: 2px 1.5px; }
+.mer-meta > span { display: inline-flex; align-items: center; gap: 5px; }
+.mer-summary { margin-block: 2px; color: #333; }
+.mer-bullets { margin: 2px 0 0; padding-inline-start: 17px; color: #262626; }
+.mer-bullets li { margin-block: 0.5px; }
+.mer .lead { font-weight: 600; }
+.mer-tech { margin-block-start: 1.5px; font-size: 10.7px; color: #3d3d3d; }
+.mer-tech-label { font-weight: 600; color: #141414; }
+
+.mer-edu {
+  break-inside: avoid;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding-block: 3px 4.5px;
+}
+.mer-edu-degree, .mer-edu-inst { font-size: 11.3px; font-weight: 500; line-height: 1.3; }
+.mer-edu-inst { color: var(--accent); margin-block-start: 2px; }
+.mer-edu .mer-meta { gap: 3px 14px; margin-block: 2px 0; }
+.mer-honors { font-size: 10.7px; font-style: italic; margin-block-start: 1px; }
+.mer-score {
+  align-self: center;
+  border-inline-start: 1px solid #bdbdbd;
+  padding-inline-start: 14px;
+  text-align: center;
+  min-inline-size: 64px;
+}
+.mer-score-label { font-size: 10.7px; color: #4d4d4d; text-transform: uppercase; letter-spacing: 0.04em; }
+.mer-score-value { font-size: 12.5px; margin-block-start: 1.5px; white-space: nowrap; }
+.mer-score-num { font-weight: 600; color: var(--accent); }
+
+.mer-skill-group { break-inside: avoid; padding-block: 2px 5px; border-block-end: 1px dashed #c9c9c9; }
+.mer-sub { font-size: 10.9px; font-weight: 600; color: var(--accent); margin-block-end: 4px; }
+.mer-chips { display: flex; flex-wrap: wrap; gap: 5px 6px; }
+.mer-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 7px 2px;
+  font-size: 11.4px;
+  font-weight: 500;
+  border-block-end: 1.5px solid #9a9a9a;
+}
+.mer-dots { display: flex; gap: 2px; }
+.mer-dots > span { inline-size: 5px; block-size: 5px; border-radius: 50%; background: #d4d4d4; }
+.mer-dots > span.on { background: var(--accent); }
+
+.mer-project { padding-block: 2px 4px; }
+.mer-project-name { font-size: 11.3px; font-weight: 500; }
+.mer-kind { font-weight: 400; color: #4d4d4d; font-size: 11px; }
+.mer-desc { margin: 3px 0 0; color: #333; }
+
+.mer-lang { display: flex; justify-content: space-between; gap: 12px; padding-block: 1.5px; }
+.mer-mini { break-inside: avoid; padding-block: 1.5px; }
+
+.mer-profile { display: flex; gap: 10px; align-items: flex-start; padding-block: 2px; }
+.mer-profile .icon { color: var(--accent); flex: none; margin-block-start: 0.5px; }
+.mer-profile-name { font-weight: 600; font-size: 11.9px; }
+.mer-profile-url { font-size: 10.7px; color: #3d3d3d; overflow-wrap: anywhere; text-align: start; }
