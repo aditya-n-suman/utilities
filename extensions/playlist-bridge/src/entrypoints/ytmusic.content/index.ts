@@ -27,7 +27,12 @@ function findLyrics(): HTMLElement | null {
   const lyricsFooter = (s: Element) => /^\s*source\s*:/i.test(s.querySelector(".footer")?.textContent ?? "");
   const shelf =
     shelves.find((s) => visible(s) && lyricsFooter(s)) ?? shelves.find(visible) ?? shelves.find(lyricsFooter) ?? shelves[0];
-  return shelf?.querySelector<HTMLElement>(".description") ?? null;
+  if (!shelf) return null;
+  // A shelf has two copies of the text: one inside a hidden "expand" button (first in the DOM), and the shown
+  // .non-expandable one. Take the one on screen; ours counts while we hide it ourselves.
+  const copies = [...shelf.querySelectorAll<HTMLElement>(".description")];
+  const shown = (d: HTMLElement) => !d.closest("[hidden]") && (d.hasAttribute(HIDDEN_ATTR) || visible(d));
+  return copies.find(shown) ?? copies.find((d) => d.classList.contains("non-expandable")) ?? copies[0] ?? null;
 }
 
 const deps: Deps = {
