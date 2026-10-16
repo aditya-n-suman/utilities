@@ -39,6 +39,11 @@ describe.each(READY_TEMPLATES.map((t) => t.id))("%s", (id) => {
     expect(out).toMatch(/^<div class="folio-page" dir="rtl" lang="ar-AE"/);
   });
 
+  it("passes text and spacing scale to the page", () => {
+    const out = html(DOCS.full, id, { textScale: 0.9, spacingScale: 0.7 });
+    expect(out).toContain("--text-scale:0.9;--space-scale:0.7");
+  });
+
   it("puts a data-path on every work bullet for click-to-edit", () => {
     const out = html(DOCS.full, id);
     for (let w = 0; w < 3; w++) expect(out).toContain(`data-path="work.${w}.highlights.0"`);
@@ -71,6 +76,17 @@ describe("pageFit", () => {
     expect(two.pages).toBe(2);
     expect(two.breaks).toEqual([44 + 1035]);
     expect(two.text).toMatch(/^2 pages · page 2 is \d+% full/);
+  });
+});
+
+describe("template sizes go through the scale variables", () => {
+  const files = readdirSync(__dirname).filter((f) => f.endsWith(".css") && f !== "page.css").map((f) => join(__dirname, f));
+  it.each(files)("%s", (file) => {
+    const css = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+    // Any px in a size or spacing property must be inside calc(N * var(--fs|--sp)).
+    const raw = [...css.matchAll(/(?<![\w-])(font-size|margin[\w-]*|padding[\w-]*|gap|row-gap|column-gap|inline-size|block-size|min-inline-size|grid-template-columns):([^;}]+)/g)]
+      .filter((m) => /(?<![\w.])\d*\.?\d+px/.test(m[2].replace(/calc\([\d.]+ \* var\(--(fs|sp)\)\)/g, "")));
+    expect(raw.map((m) => m[0].trim())).toEqual([]);
   });
 });
 

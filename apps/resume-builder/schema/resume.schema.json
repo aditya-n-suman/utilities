@@ -556,7 +556,19 @@
           "enum": ["auto", "initials", "none"],
           "description": "What fills a template's photo slot. auto (default): the photo if there is one, else initials. initials: always the monogram. none: no slot; the header reflows as if the template had none. Ignored by templates without a slot."
         },
-        "showSkillLevels": { "type": "boolean", "description": "Default false." }
+        "showSkillLevels": { "type": "boolean", "description": "Default false." },
+        "textScale": {
+          "type": "number",
+          "minimum": 0.85,
+          "maximum": 1.15,
+          "description": "Multiplies every text size in the template (and what's sized with text: icons, the avatar, bullet indents). Default 1. Templates are designed around 8–9 pt body text, so 0.85 is the floor."
+        },
+        "spacingScale": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.5,
+          "description": "Multiplies the whitespace between and inside sections (margins, padding, gaps), not the page margins. Default 1."
+        }
       }
     }
   }

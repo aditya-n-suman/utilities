@@ -113,6 +113,10 @@ The app stays light: no accounts, no database, no list of resumes. The **downloa
 
 A photo is never required. Templates come in two kinds: with a photo slot and without. In a template with a slot, the *Design* tab shows a three-way control, **Photo · Initials · None** (`preferences.avatar`: `auto`, `initials`, `none`); *None* removes the slot and the header reflows as if the template had been designed without one. Choosing *Photo* with no photo uploaded opens the upload. In templates without a slot the control is hidden, and an uploaded photo stays in the JSON unused. The gallery's *Photo slot* filter helps people who want, or don't want, one.
 
+## Text size and spacing
+
+Every template can be tightened or loosened without picking another one. The *Design* tab has two sliders in 5% steps, next to the fit check: **Text size** (85–115%, `preferences.textScale`) and **Spacing** (50–150%, `preferences.spacingScale`). Text size also scales what's drawn with the text (icons, the avatar, bullet indents); spacing scales the whitespace between and inside sections, not the page margins. Beside them the app shows the printed body size ("body text 7.8 pt") so nobody shrinks a resume into unreadability by accident. The preview and the PDF read the same values, so what fits on screen fits on paper, and the values travel in the JSON. When the fit check says the last page is nearly empty, it suggests lowering spacing first, then text.
+
 ## Languages and direction
 
 Content can be in any language. The direction comes from the resume's locale (`meta.locale`, or `meta.direction` to override). A right-to-left resume mirrors the whole template; the app's own UI stays in the user's interface language and direction. Everything is laid out with logical CSS properties (`inline`/`block`, `start`/`end`, never `left`/`right`) so mirroring needs no per-template code.

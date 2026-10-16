@@ -53,7 +53,7 @@ Design each as its own canvas.
      - An *Add section* menu for the optional sections and *Custom section*.
      - Field help text, character counters near the limits, inline validation.
      - The tiny markup supported in text fields (bold, italic, link) via a minimal toolbar or shortcuts, not a full rich-text editor.
-   - *Design* tab: current template with *Browse all templates*, accent colour (6 presets + custom), page size A4 / Letter, date format, photo slot (*Photo · Initials · None*, shown only for templates with a slot), show skill levels. A *Fit check* that warns when the resume runs to a mostly empty extra page.
+   - *Design* tab: current template with *Browse all templates*, accent colour (6 presets + custom), page size A4 / Letter, date format, photo slot (*Photo · Initials · None*, shown only for templates with a slot), show skill levels, *Text size* (85–115%) and *Spacing* (50–150%) sliders with the printed body size beside them. A *Fit check* that warns when the resume runs to a mostly empty extra page.
    - **Review banner** after a valid import: what was imported, *Review content*, the AI's notes (`x-notes`) as a checklist, and a few soft warnings (no phone, a job with no bullets). Dismissible, reopens from the problems icon.
    - **Problems panel** after an import with errors: each error clickable to its field; bad values stay visible in their field, flagged; keys that couldn't be imported listed separately. *Download PDF* reads *Fix 2 problems to download* while errors remain.
    - **Focus preview**: full-screen paged preview (page breaks visible, page count) with an *Edit* button; click-to-edit still works and brings the panel back. A one-line note that the PDF keeps real, selectable text (good for ATS).

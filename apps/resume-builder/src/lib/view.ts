@@ -37,7 +37,14 @@ export interface ViewOptions {
   avatar?: Avatar;
   dateFormat?: DateFormat;
   showSkillLevels?: boolean;
+  textScale?: number;
+  spacingScale?: number;
 }
+
+export const TEXT_SCALE = { min: 0.85, max: 1.15 } as const;
+export const SPACING_SCALE = { min: 0.5, max: 1.5 } as const;
+const clampScale = (v: number | undefined, r: { min: number; max: number }) =>
+  typeof v === "number" && Number.isFinite(v) ? Math.min(r.max, Math.max(r.min, v)) : 1;
 
 export interface Bullet { path: string; label?: string; segs: Seg[] }
 
@@ -142,6 +149,9 @@ export interface ResumeView {
   accent: string;
   accentSoft: string;
   onAccent: string;
+  /** Multipliers for text sizes and whitespace, clamped to the schema's ranges. */
+  textScale: number;
+  spacingScale: number;
   labels: { tech: string; online: string };
   name: string;
   headline?: string;
@@ -400,6 +410,8 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
     accent,
     accentSoft: tint(accent, 0.88),
     onAccent: contrast(accent, "#ffffff") >= 4.5 ? "#FFFFFF" : "#111111",
+    textScale: clampScale(opts.textScale ?? p.textScale, TEXT_SCALE),
+    spacingScale: clampScale(opts.spacingScale ?? p.spacingScale, SPACING_SCALE),
     labels: { tech: L.tech, online: L.online },
     name,
     headline: nonEmpty(b.headline),

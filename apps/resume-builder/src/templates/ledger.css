@@ -1,52 +1,54 @@
-/* Ledger. Sizes are CSS px on a 794 px (A4) page, as in the design. Logical properties only. */
+/* Ledger. Sizes are the design's CSS px on a 794 px (A4) page, written as multiples of
+   --fs (text and things sized with text) and --sp (whitespace), so preferences.textScale
+   and spacingScale resize them. Borders stay fixed. Logical properties only. */
 
 .led {
   font-family: "Source Sans 3", "Noto Sans Arabic", "Noto Sans Hebrew", system-ui, sans-serif;
   color: #161616;
-  font-size: 11.7px;
+  font-size: calc(11.7 * var(--fs));
   line-height: 1.28;
 }
 .led p { margin: 0; }
-.led ul { margin: 2px 0 0; padding-inline-start: 18px; list-style: disc; }
-.led li { margin-block: 0.5px; }
+.led ul { margin: calc(2 * var(--sp)) 0 0; padding-inline-start: calc(18 * var(--fs)); list-style: disc; }
+.led li { margin-block: calc(0.5 * var(--sp)); }
 .led strong { font-weight: 700; }
 
-.led-head { text-align: center; margin-block-end: 6px; break-inside: avoid; }
+.led-head { text-align: center; margin-block-end: calc(6 * var(--sp)); break-inside: avoid; }
 .led h1 {
   margin: 0;
-  font-size: 23.9px;
+  font-size: calc(23.9 * var(--fs));
   line-height: 1.1;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   color: var(--accent);
 }
-.led-headline { font-size: 12.2px; font-weight: 600; margin-block-start: 2px; }
-.led-links { margin-block-start: 2.5px; font-size: 11.3px; }
+.led-headline { font-size: calc(12.2 * var(--fs)); font-weight: 600; margin-block-start: calc(2 * var(--sp)); }
+.led-links { margin-block-start: calc(2.5 * var(--sp)); font-size: calc(11.3 * var(--fs)); }
 .led-sep { color: #6b6b6b; }
-.led-extras { margin-block-start: 1px; font-size: 10.8px; color: #3a3a3a; }
+.led-extras { margin-block-start: calc(1 * var(--sp)); font-size: calc(10.8 * var(--fs)); color: #3a3a3a; }
 
-.led-sec { margin-block-start: 6px; }
+.led-sec { margin-block-start: calc(6 * var(--sp)); }
 .led h2 {
-  margin: 0 0 5px;
-  font-size: 11.7px;
+  margin: 0 0 calc(5 * var(--sp));
+  font-size: calc(11.7 * var(--fs));
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--accent);
-  padding-block-end: 1px;
+  padding-block-end: calc(1 * var(--sp));
   border-block-end: 1px solid var(--accent);
   break-after: avoid;
 }
 
-.led-entry { break-inside: avoid; margin-block-start: 4px; }
-.led-tight { margin-block-start: 2.5px; }
-.led-project { margin-block-start: 3px; }
-.led-project ul { margin-block-start: 1px; }
+.led-entry { break-inside: avoid; margin-block-start: calc(4 * var(--sp)); }
+.led-tight { margin-block-start: calc(2.5 * var(--sp)); }
+.led-project { margin-block-start: calc(3 * var(--sp)); }
+.led-project ul { margin-block-start: calc(1 * var(--sp)); }
 .led-strong { font-weight: 700; }
 .led-normal { font-weight: 400; }
-.led-meta { font-size: 11.3px; color: #333; }
-.led-meta-size { font-size: 11.3px; }
-.led-summary { margin-block-start: 2px; font-style: italic; }
-.led-pub { break-inside: avoid; margin-block-start: 2px; }
-.led-para { margin-block-end: 4px; }
+.led-meta { font-size: calc(11.3 * var(--fs)); color: #333; }
+.led-meta-size { font-size: calc(11.3 * var(--fs)); }
+.led-summary { margin-block-start: calc(2 * var(--sp)); font-style: italic; }
+.led-pub { break-inside: avoid; margin-block-start: calc(2 * var(--sp)); }
+.led-para { margin-block-end: calc(4 * var(--sp)); }

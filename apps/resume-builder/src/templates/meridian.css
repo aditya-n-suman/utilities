@@ -1,43 +1,45 @@
-/* Meridian. Sizes are CSS px on a 794 px (A4) page, as in the design. Logical properties only. */
+/* Meridian. Sizes are the design's CSS px on a 794 px (A4) page, written as multiples of
+   --fs (text and things sized with text) and --sp (whitespace), so preferences.textScale
+   and spacingScale resize them. Borders stay fixed. Logical properties only. */
 
 .mer {
   font-family: "Rubik", "Noto Sans Arabic", "Noto Sans Hebrew", system-ui, sans-serif;
   color: #141414;
-  font-size: 11px;
+  font-size: calc(11 * var(--fs));
   line-height: 1.3;
 }
 
 .mer-head {
   display: flex;
-  gap: 28px;
+  gap: calc(28 * var(--sp));
   align-items: flex-start;
-  margin-block-end: 13px;
+  margin-block-end: calc(13 * var(--sp));
   break-inside: avoid;
 }
 .mer-id { flex: 1; min-width: 0; }
 .mer h1 {
   margin: 0;
-  font-size: 28.1px;
+  font-size: calc(28.1 * var(--fs));
   line-height: 1.05;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: -0.005em;
 }
-.mer-headline { font-size: 14.8px; font-weight: 500; color: var(--accent); margin-block-start: 3.5px; }
-.mer-contacts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-block-start: 7.5px; font-size: 10.7px; font-weight: 500; }
-.mer-contact { display: inline-flex; align-items: center; gap: 6px; }
+.mer-headline { font-size: calc(14.8 * var(--fs)); font-weight: 500; color: var(--accent); margin-block-start: calc(3.5 * var(--sp)); }
+.mer-contacts { display: flex; flex-wrap: wrap; gap: calc(6 * var(--sp)) calc(18 * var(--sp)); margin-block-start: calc(7.5 * var(--sp)); font-size: calc(10.7 * var(--fs)); font-weight: 500; }
+.mer-contact { display: inline-flex; align-items: center; gap: calc(6 * var(--sp)); }
 .mer-contact .icon { color: var(--accent); flex: none; }
 
 .mer-avatar {
   flex: none;
-  inline-size: 96px;
-  block-size: 96px;
+  inline-size: calc(96 * var(--fs));
+  block-size: calc(96 * var(--fs));
   border-radius: 50%;
   background: var(--accent);
   color: var(--on-accent);
   display: grid;
   place-items: center;
-  font-size: 33px;
+  font-size: calc(33 * var(--fs));
   font-weight: 400;
   letter-spacing: 0.02em;
 }
@@ -46,96 +48,96 @@
 .mer-cols {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  column-gap: 28px;
+  column-gap: calc(28 * var(--sp));
   align-items: start;
 }
 .mer-col, .mer-min { min-width: 0; }
 
-.mer-sec { margin-block-end: 10px; }
+.mer-sec { margin-block-end: calc(10 * var(--sp)); }
 .mer h2 {
-  margin: 0 0 4px;
-  font-size: 14.8px;
+  margin: 0 0 calc(4 * var(--sp));
+  font-size: calc(14.8 * var(--fs));
   line-height: 1.2;
   font-weight: 600;
   text-transform: uppercase;
-  padding-block-end: 1px;
+  padding-block-end: calc(1 * var(--sp));
   border-block-end: 2.5px solid #141414;
   break-after: avoid;
 }
 
 .mer-text { margin: 0; color: #262626; }
-.mer-para { margin-block-end: 6px; }
+.mer-para { margin-block-end: calc(6 * var(--sp)); }
 .mer-strong { font-weight: 500; }
-.mer-small { font-size: 10.7px; }
+.mer-small { font-size: calc(10.7 * var(--fs)); }
 .mer-muted { color: #4d4d4d; }
 .mer-accent { color: var(--accent); }
-.mer-meta-text { color: #3d3d3d; margin-block: 1px; }
+.mer-meta-text { color: #3d3d3d; margin-block: calc(1 * var(--sp)); }
 
 .mer-entry {
   break-inside: avoid;
-  padding-block: 4px 4.5px;
+  padding-block: calc(4 * var(--sp)) calc(4.5 * var(--sp));
   border-block-end: 1px dashed #c9c9c9;
 }
-.mer-title { font-size: 11.7px; font-weight: 500; line-height: 1.3; }
-.mer-org { font-size: 11.7px; font-weight: 500; color: var(--accent); margin-block-start: 1.5px; }
-.mer-context { color: #4d4d4d; font-weight: 400; font-size: 11.4px; }
-.mer-meta { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 10.7px; color: #3d3d3d; margin-block: 2px 1.5px; }
-.mer-meta > span { display: inline-flex; align-items: center; gap: 5px; }
-.mer-summary { margin-block: 2px; color: #333; }
-.mer-bullets { margin: 2px 0 0; padding-inline-start: 17px; color: #262626; }
-.mer-bullets li { margin-block: 0.5px; }
+.mer-title { font-size: calc(11.7 * var(--fs)); font-weight: 500; line-height: 1.3; }
+.mer-org { font-size: calc(11.7 * var(--fs)); font-weight: 500; color: var(--accent); margin-block-start: calc(1.5 * var(--sp)); }
+.mer-context { color: #4d4d4d; font-weight: 400; font-size: calc(11.4 * var(--fs)); }
+.mer-meta { display: flex; flex-wrap: wrap; gap: calc(4 * var(--sp)) calc(18 * var(--sp)); font-size: calc(10.7 * var(--fs)); color: #3d3d3d; margin-block: calc(2 * var(--sp)) calc(1.5 * var(--sp)); }
+.mer-meta > span { display: inline-flex; align-items: center; gap: calc(5 * var(--sp)); }
+.mer-summary { margin-block: calc(2 * var(--sp)); color: #333; }
+.mer-bullets { margin: calc(2 * var(--sp)) 0 0; padding-inline-start: calc(17 * var(--fs)); color: #262626; }
+.mer-bullets li { margin-block: calc(0.5 * var(--sp)); }
 .mer .lead { font-weight: 600; }
-.mer-tech { margin-block-start: 1.5px; font-size: 10.7px; color: #3d3d3d; }
+.mer-tech { margin-block-start: calc(1.5 * var(--sp)); font-size: calc(10.7 * var(--fs)); color: #3d3d3d; }
 .mer-tech-label { font-weight: 600; color: #141414; }
 
 .mer-edu {
   break-inside: avoid;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  padding-block: 3px 4.5px;
+  gap: calc(14 * var(--sp));
+  padding-block: calc(3 * var(--sp)) calc(4.5 * var(--sp));
 }
-.mer-edu-degree, .mer-edu-inst { font-size: 11.3px; font-weight: 500; line-height: 1.3; }
-.mer-edu-inst { color: var(--accent); margin-block-start: 2px; }
-.mer-edu .mer-meta { gap: 3px 14px; margin-block: 2px 0; }
-.mer-honors { font-size: 10.7px; font-style: italic; margin-block-start: 1px; }
+.mer-edu-degree, .mer-edu-inst { font-size: calc(11.3 * var(--fs)); font-weight: 500; line-height: 1.3; }
+.mer-edu-inst { color: var(--accent); margin-block-start: calc(2 * var(--sp)); }
+.mer-edu .mer-meta { gap: calc(3 * var(--sp)) calc(14 * var(--sp)); margin-block: calc(2 * var(--sp)) 0; }
+.mer-honors { font-size: calc(10.7 * var(--fs)); font-style: italic; margin-block-start: calc(1 * var(--sp)); }
 .mer-score {
   align-self: center;
   border-inline-start: 1px solid #bdbdbd;
-  padding-inline-start: 14px;
+  padding-inline-start: calc(14 * var(--sp));
   text-align: center;
-  min-inline-size: 64px;
+  min-inline-size: calc(64 * var(--fs));
 }
-.mer-score-label { font-size: 10.7px; color: #4d4d4d; text-transform: uppercase; letter-spacing: 0.04em; }
-.mer-score-value { font-size: 12.5px; margin-block-start: 1.5px; white-space: nowrap; }
+.mer-score-label { font-size: calc(10.7 * var(--fs)); color: #4d4d4d; text-transform: uppercase; letter-spacing: 0.04em; }
+.mer-score-value { font-size: calc(12.5 * var(--fs)); margin-block-start: calc(1.5 * var(--sp)); white-space: nowrap; }
 .mer-score-num { font-weight: 600; color: var(--accent); }
 
-.mer-skill-group { break-inside: avoid; padding-block: 2px 5px; border-block-end: 1px dashed #c9c9c9; }
-.mer-sub { font-size: 10.9px; font-weight: 600; color: var(--accent); margin-block-end: 4px; }
-.mer-chips { display: flex; flex-wrap: wrap; gap: 5px 6px; }
+.mer-skill-group { break-inside: avoid; padding-block: calc(2 * var(--sp)) calc(5 * var(--sp)); border-block-end: 1px dashed #c9c9c9; }
+.mer-sub { font-size: calc(10.9 * var(--fs)); font-weight: 600; color: var(--accent); margin-block-end: calc(4 * var(--sp)); }
+.mer-chips { display: flex; flex-wrap: wrap; gap: calc(5 * var(--sp)) calc(6 * var(--sp)); }
 .mer-chip {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding: 1px 7px 2px;
-  font-size: 11.4px;
+  gap: calc(3 * var(--sp));
+  padding: calc(1 * var(--sp)) calc(7 * var(--sp)) calc(2 * var(--sp));
+  font-size: calc(11.4 * var(--fs));
   font-weight: 500;
   border-block-end: 1.5px solid #9a9a9a;
 }
-.mer-dots { display: flex; gap: 2px; }
-.mer-dots > span { inline-size: 5px; block-size: 5px; border-radius: 50%; background: #d4d4d4; }
+.mer-dots { display: flex; gap: calc(2 * var(--sp)); }
+.mer-dots > span { inline-size: calc(5 * var(--fs)); block-size: calc(5 * var(--fs)); border-radius: 50%; background: #d4d4d4; }
 .mer-dots > span.on { background: var(--accent); }
 
-.mer-project { padding-block: 2px 4px; }
-.mer-project-name { font-size: 11.3px; font-weight: 500; }
-.mer-kind { font-weight: 400; color: #4d4d4d; font-size: 11px; }
-.mer-desc { margin: 3px 0 0; color: #333; }
+.mer-project { padding-block: calc(2 * var(--sp)) calc(4 * var(--sp)); }
+.mer-project-name { font-size: calc(11.3 * var(--fs)); font-weight: 500; }
+.mer-kind { font-weight: 400; color: #4d4d4d; font-size: calc(11 * var(--fs)); }
+.mer-desc { margin: calc(3 * var(--sp)) 0 0; color: #333; }
 
-.mer-lang { display: flex; justify-content: space-between; gap: 12px; padding-block: 1.5px; }
-.mer-mini { break-inside: avoid; padding-block: 1.5px; }
+.mer-lang { display: flex; justify-content: space-between; gap: calc(12 * var(--sp)); padding-block: calc(1.5 * var(--sp)); }
+.mer-mini { break-inside: avoid; padding-block: calc(1.5 * var(--sp)); }
 
-.mer-profile { display: flex; gap: 10px; align-items: flex-start; padding-block: 2px; }
-.mer-profile .icon { color: var(--accent); flex: none; margin-block-start: 0.5px; }
-.mer-profile-name { font-weight: 600; font-size: 11.9px; }
-.mer-profile-url { font-size: 10.7px; color: #3d3d3d; overflow-wrap: anywhere; text-align: start; }
+.mer-profile { display: flex; gap: calc(10 * var(--sp)); align-items: flex-start; padding-block: calc(2 * var(--sp)); }
+.mer-profile .icon { color: var(--accent); flex: none; margin-block-start: calc(0.5 * var(--sp)); }
+.mer-profile-name { font-weight: 600; font-size: calc(11.9 * var(--fs)); }
+.mer-profile-url { font-size: calc(10.7 * var(--fs)); color: #3d3d3d; overflow-wrap: anywhere; text-align: start; }

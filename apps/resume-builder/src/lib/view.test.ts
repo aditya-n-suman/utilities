@@ -105,6 +105,17 @@ describe("buildView", () => {
   });
 });
 
+describe("text and spacing scale", () => {
+  it("defaults to 1, reads preferences, and clamps to the schema's ranges", () => {
+    expect(buildView(MIN)).toMatchObject({ textScale: 1, spacingScale: 1 });
+    const pref: Resume = { ...MIN, preferences: { textScale: 0.9, spacingScale: 0.6 } };
+    expect(buildView(pref)).toMatchObject({ textScale: 0.9, spacingScale: 0.6 });
+    expect(buildView(pref, { textScale: 1.1 })).toMatchObject({ textScale: 1.1, spacingScale: 0.6 });
+    expect(buildView(MIN, { textScale: 0.2, spacingScale: 9 })).toMatchObject({ textScale: 0.85, spacingScale: 1.5 });
+    expect(buildView(MIN, { textScale: NaN })).toMatchObject({ textScale: 1 });
+  });
+});
+
 describe("Arabic locations", () => {
   it("join with the Arabic comma", () => {
     const v = buildView(RTL);

@@ -189,6 +189,10 @@ export interface Preferences {
   sectionTitles?: Record<string, string>;
   avatar?: Avatar;
   showSkillLevels?: boolean;
+  /** 0.85–1.15, default 1. */
+  textScale?: number;
+  /** 0.5–1.5, default 1. */
+  spacingScale?: number;
 }
 
 export interface Meta {

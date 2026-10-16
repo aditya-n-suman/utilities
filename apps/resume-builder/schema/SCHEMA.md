@@ -56,6 +56,8 @@ The full field list, with descriptions, lives in the schema. Editors that unders
 
 **Any language, either direction.** `meta.locale` sets date formatting and `meta.direction` (derived from the locale when omitted) sets `dir` on the page. Templates are written with logical CSS properties only (`margin-inline-start`, `inset-inline-end`, `text-align: start`, `border-block-end`), so a right-to-left resume mirrors correctly with no per-template work. Section headings default to English; set `preferences.sectionTitles` for other languages. See [`examples/rtl.json`](examples/rtl.json).
 
+**Text size and spacing.** `preferences.textScale` (0.85–1.15) and `spacingScale` (0.5–1.5) let a user tighten or loosen any template without changing it: text and what's sized with it (icons, avatar, bullet indents) follow `textScale`; margins, padding and gaps between and inside sections follow `spacingScale`. Page margins, borders and rules don't change. The preview and the PDF use the same values, so what fits on screen fits on paper.
+
 **Section keys** are used by `preferences.sectionOrder`, `hiddenSections` and `sectionTitles`: `summary`, `work`, `education`, `skills`, `projects`, `certifications`, `awards`, `publications`, `languages`, `volunteer`, `interests`, `references`, and `custom:<id>` for a custom section.
 
 **Empty sections don't render.** A missing key, an empty array and a hidden section all produce no heading.

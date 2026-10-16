@@ -2,13 +2,13 @@
 // the fixtures, with page-break guides, a page count and Save as PDF.
 // Implements design/Folio Templates.dc.html.
 
-import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 import full from "../../schema/examples/full.json";
 import minimal from "../../schema/examples/minimal.json";
 import rtl from "../../schema/examples/rtl.json";
 import { printResume } from "../lib/print";
 import type { Avatar, PageSize, Resume } from "../lib/types";
-import { buildView, type ViewOptions } from "../lib/view";
+import { buildView, SPACING_SCALE, TEXT_SCALE, type ViewOptions } from "../lib/view";
 import { READY_TEMPLATES, TEMPLATES, templateTags } from "../templates/registry";
 import { PAGE, ResumePage } from "../templates/ResumePage";
 
@@ -41,8 +41,18 @@ function rendersFor(id: string): Render[] {
   return list;
 }
 
+interface Scales {
+  textScale: number;
+  spacingScale: number;
+}
+
 export function TemplatesPage() {
   const [size, setSize] = useState<PageSize>("A4");
+  const [scales, setScales] = useState<Scales>({ textScale: 1, spacingScale: 1 });
+  const mainRef = useRef<HTMLElement>(null);
+  const avail = useContentWidth(mainRef);
+  // Half size like the design, smaller when the screen can't fit that.
+  const fitTo = (want: number) => Math.min(want, avail / PAGE[size].width);
   const withPhoto = useMemo<Resume>(() => ({ ...FIXTURES.full, basics: { ...FIXTURES.full.basics, photo: { src: PLACEHOLDER_PHOTO, alt: "Photo placeholder" } } }), []);
   const heads: { label: string; doc: Resume; avatar: Avatar }[] = [
     { label: "Photo", doc: withPhoto, avatar: "auto" },
@@ -51,7 +61,7 @@ export function TemplatesPage() {
   ];
 
   return (
-    <main className="tp">
+    <main className="tp" ref={mainRef}>
       <header className="tp-top">
         <div>
           <div className="tp-brand">Folio</div>
@@ -61,14 +71,17 @@ export function TemplatesPage() {
             break. <strong>Save as PDF</strong> opens the print dialog; choose “Save as PDF” as the destination.
           </p>
         </div>
-        <fieldset className="tp-size">
-          <legend>Page size</legend>
-          {(["A4", "Letter"] as const).map((s) => (
-            <label key={s}>
-              <input type="radio" name="size" checked={size === s} onChange={() => setSize(s)} /> {s}
-            </label>
-          ))}
-        </fieldset>
+        <div className="tp-controls">
+          <fieldset className="tp-size">
+            <legend>Page size</legend>
+            {(["A4", "Letter"] as const).map((s) => (
+              <label key={s}>
+                <input type="radio" name="size" checked={size === s} onChange={() => setSize(s)} /> {s}
+              </label>
+            ))}
+          </fieldset>
+          <ScaleControls value={scales} onChange={setScales} />
+        </div>
       </header>
 
       {READY_TEMPLATES.map((t) => (
@@ -81,7 +94,7 @@ export function TemplatesPage() {
           </div>
           <div className="tp-renders">
             {rendersFor(t.id).map((r) => (
-              <RenderCard key={r.key} r={r} size={size} />
+              <RenderCard key={r.key} r={r} size={size} scales={scales} scale={fitTo(0.5)} />
             ))}
           </div>
         </section>
@@ -95,8 +108,8 @@ export function TemplatesPage() {
           {heads.map((h) => (
             <figure key={h.label} className="tp-card">
               <figcaption className="tp-label">{h.label}</figcaption>
-              <Scaled scale={0.6} width={PAGE[size].width} height={250}>
-                <ResumePage vm={buildView(h.doc, { template: "meridian", avatar: h.avatar })} size={size} className="tp-clip" />
+              <Scaled scale={fitTo(0.6)} width={PAGE[size].width} height={250}>
+                <ResumePage vm={buildView(h.doc, { template: "meridian", avatar: h.avatar, ...scales })} size={size} className="tp-clip" />
               </Scaled>
             </figure>
           ))}
@@ -114,8 +127,40 @@ export function TemplatesPage() {
   );
 }
 
-function RenderCard({ r, size }: { r: Render; size: PageSize }) {
-  const vm = useMemo(() => buildView(r.doc, r.opts), [r]);
+const pct = (v: number) => Math.round(v * 100) + "%";
+
+/** Text size and spacing sliders, in 5% steps. Both go into preferences in the workspace. */
+function ScaleControls({ value, onChange }: { value: Scales; onChange: (v: Scales) => void }) {
+  const row = (key: keyof Scales, label: string, range: { min: number; max: number }) => (
+    <label className="tp-scale">
+      <span className="tp-scale-label">{label}</span>
+      <input
+        type="range"
+        min={range.min}
+        max={range.max}
+        step={0.05}
+        value={value[key]}
+        onChange={(e) => onChange({ ...value, [key]: +e.target.value })}
+      />
+      <output>{pct(value[key])}</output>
+    </label>
+  );
+  const changed = value.textScale !== 1 || value.spacingScale !== 1;
+  return (
+    <fieldset className="tp-size tp-scales">
+      <legend>Fit</legend>
+      {row("textScale", "Text size", TEXT_SCALE)}
+      {row("spacingScale", "Spacing", SPACING_SCALE)}
+      <button type="button" className="tp-link" disabled={!changed} onClick={() => onChange({ textScale: 1, spacingScale: 1 })}>
+        Reset
+      </button>
+    </fieldset>
+  );
+}
+
+function RenderCard({ r, size, scales, scale }: { r: Render; size: PageSize; scales: Scales; scale: number }) {
+  const opts = useMemo(() => ({ ...r.opts, ...scales }), [r, scales]);
+  const vm = useMemo(() => buildView(r.doc, opts), [r, opts]);
   const ref = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(PAGE[size].height);
 
@@ -134,7 +179,7 @@ function RenderCard({ r, size }: { r: Render; size: PageSize }) {
   return (
     <figure className="tp-card">
       <figcaption className="tp-label">{r.label}</figcaption>
-      <Scaled scale={0.5} width={PAGE[size].width} height={Math.max(height, PAGE[size].height)}>
+      <Scaled scale={scale} width={PAGE[size].width} height={Math.max(height, PAGE[size].height)}>
         <div ref={ref} className="tp-sheet">
           <ResumePage vm={vm} size={size} />
           {fit.breaks.map((y, i) => (
@@ -144,15 +189,34 @@ function RenderCard({ r, size }: { r: Render; size: PageSize }) {
           ))}
         </div>
       </Scaled>
-      <div className="tp-foot">
-        <span className="tp-count">{fit.text}</span>
-        <button type="button" className="tp-btn" onClick={() => printResume(r.doc, r.opts, size)}>
+      <div className="tp-foot" style={{ maxInlineSize: PAGE[size].width * scale }}>
+        <span className="tp-count">
+          {fit.text}
+          {vm.template.bodyPx && <> · body text {bodyPt(vm.template.bodyPx, vm.textScale)} pt</>}
+        </span>
+        <button type="button" className="tp-btn" onClick={() => printResume(r.doc, opts, size)}>
           Save as PDF
         </button>
       </div>
     </figure>
   );
 }
+
+/** Width of an element's content box, kept up to date. */
+function useContentWidth(ref: RefObject<HTMLElement>) {
+  const [w, setW] = useState(Infinity);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref]);
+  return w;
+}
+
+/** Printed size of the body text: 96 CSS px per inch, 72 pt per inch. */
+export const bodyPt = (px: number, scale: number) => (Math.round(px * scale * 0.75 * 10) / 10).toFixed(1);
 
 /**
  * Estimated pagination of a continuous sheet. Each printed page holds the

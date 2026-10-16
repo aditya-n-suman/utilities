@@ -26,7 +26,7 @@ On the page, *Save as PDF* opens the browser's print dialog; pick "Save as PDF" 
 | `src/lib/format.ts` | Dates, ranges, locations, initials, accent contrast and tint. |
 | `src/lib/print.tsx` | `printResume()`: renders the resume into a print-only root, sets `@page` size and margins, calls `print()`, cleans up on `afterprint`. |
 | `src/templates/` | `registry.ts` (all 10 templates, 7 marked `soon`), `ResumePage.tsx` (the sheet: size, `dir`, `lang`, accent CSS variables), `Meridian`, `Ledger`, `Tracking` with their CSS, shared `parts.tsx`. |
-| `src/pages/TemplatesPage.tsx` | The templates page: each template from `full.json` and `minimal.json` (alt accent), Ledger from `rtl.json`, Meridian's three avatar modes, page-break guides, page count and fit hint. |
+| `src/pages/TemplatesPage.tsx` | The templates page: each template from `full.json` and `minimal.json` (alt accent), Ledger from `rtl.json`, Meridian's three avatar modes, page-break guides, page count and fit hint, page size, *Text size* and *Spacing* sliders. |
 | `design/` | Claude Design export: `Folio Templates.dc.html`, `Tpl*.dc.html`, `folio-lib.js` (fixtures, view model, validator), `Folio Workspace.dc.html` and `FolioWorkspaceApp.dc.html` (next to build), `shots/`. |
 | `UX.md` | User journeys: one workspace where form, preview and design are views of the same document; how imports land; click-to-edit; saving; photos; direction. |
 | `schema/` | The contract (`resume.schema.json`), its guide (`SCHEMA.md`) and fixtures (`examples/minimal.json`, `full.json`, `rtl.json`). |
@@ -38,6 +38,7 @@ On the page, *Save as PDF* opens the browser's print dialog; pick "Save as PDF" 
 - Sizes are CSS px on a 794 px wide A4 sheet (96 px per inch), copied from the design. Page margins (44 px block, 48 px inline) are padding on screen and the `@page` margin in print, so every printed page gets them.
 - **Logical CSS only.** Templates and the page use `inline`/`block` and `start`/`end`; a test fails on any `left` or `right` in the CSS. That is what makes `rtl.json` mirror with no per-template code.
 - Entries use `break-inside: avoid` and headings `break-after: avoid`, so a job or project moves to the next page whole.
+- **Text size and spacing are user-adjustable.** Template CSS writes every size as a multiple of `--fs` (text, and what's sized with it: icons, the avatar, bullet indents) or `--sp` (margins, padding, gaps): `font-size: calc(11.7 * var(--fs))`. The page sets `--fs = 1px × textScale` and `--sp = 1px × spacingScale` from `preferences.textScale` (0.85–1.15) and `spacingScale` (0.5–1.5). Borders and page margins stay fixed. A test fails on any raw `px` size in template CSS. Not `rem`, because the root font size belongs to the app UI and the browser's font settings; not `em`, because spacing has to move independently of text, and nested `em` compounds.
 - Colour comes from `--accent`, `--accent-soft` and `--on-accent` (white or near-black text on the accent, whichever passes 4.5:1).
 - Links are real `<a href>`s (mail, phone, website, profiles, projects), so they work in the PDF.
 
@@ -46,7 +47,7 @@ On the page, *Save as PDF* opens the browser's print dialog; pick "Save as PDF" 
 Checked in headless Chromium through the real print path:
 
 - Text is selectable and links are clickable. Arabic extracts correctly.
-- `full.json` doesn't fit on one A4 page in Meridian (page 2 holds *Find me online*) or Ledger (a single line spills). The design canvas shows the same overflow (105% of A4 height for Meridian). The page reports it: *2 pages · page 2 is 12% full: trim a little to fit on 1*. Tracking fits on one page.
+- `full.json` doesn't fit on one A4 page in Meridian (page 2 holds *Find me online*) or Ledger (a single line spills). The design canvas shows the same overflow (105% of A4 height for Meridian). The page reports it: *2 pages · page 2 is 12% full: trim a little to fit on 1*. Tracking fits on one page. At text 95% and spacing 60% both fit on one page (body text 7.8 pt in Meridian, 8.3 pt in Ledger), in the preview and the PDF.
 - Tracking's letter-spaced headline and headings extract as `S TA F F  F R O N T E N D`. Your original letter-spaced resume extracts the same way. People reading the PDF won't notice, but some ATS parsers may not recognise the section names. Ledger has no letter-spacing, so it is the safer pick for ATS.
 
 ## Decisions

@@ -12,6 +12,8 @@ export interface TemplateMeta {
   /** Can draw skill levels when preferences.showSkillLevels is on. */
   levels: boolean;
   fonts: string;
+  /** Body text size in design px (96 per inch), to report the printed point size. */
+  bodyPx?: number;
   /** Sections placed in the side column (two-column templates). */
   side?: string[];
   /** Alternative accent shown on the templates page. */
@@ -22,11 +24,11 @@ export interface TemplateMeta {
 export const TEMPLATES: TemplateMeta[] = [
   {
     id: "meridian", name: "Meridian", ats: false, columns: 2, photoSlot: true, style: "Modern",
-    accent: "#1A73E8", altAccent: "#0F766E", levels: true, fonts: "Rubik",
+    accent: "#1A73E8", altAccent: "#0F766E", levels: true, fonts: "Rubik", bodyPx: 11,
     side: ["education", "skills", "projects", "languages", "certifications", "awards", "interests"],
   },
-  { id: "ledger", name: "Ledger", ats: true, columns: 1, photoSlot: false, style: "Classic", accent: "#1F2A44", altAccent: "#7A1F2B", levels: false, fonts: "Source Sans 3" },
-  { id: "tracking", name: "Tracking", ats: true, columns: 1, photoSlot: false, style: "Classic", accent: "#2F4F6F", altAccent: "#6D28D9", levels: false, fonts: "Libre Franklin" },
+  { id: "ledger", name: "Ledger", ats: true, columns: 1, photoSlot: false, style: "Classic", accent: "#1F2A44", altAccent: "#7A1F2B", levels: false, fonts: "Source Sans 3", bodyPx: 11.7 },
+  { id: "tracking", name: "Tracking", ats: true, columns: 1, photoSlot: false, style: "Classic", accent: "#2F4F6F", altAccent: "#6D28D9", levels: false, fonts: "Libre Franklin", bodyPx: 11.3 },
   { id: "harbor", name: "Harbor", ats: false, columns: 2, photoSlot: true, style: "Modern", accent: "#0F4C5C", levels: true, fonts: "", soon: true },
   { id: "editorial", name: "Editorial", ats: true, columns: 1, photoSlot: false, style: "Creative", accent: "#8A3B12", levels: false, fonts: "", soon: true },
   { id: "timeline", name: "Timeline", ats: false, columns: 1, photoSlot: true, style: "Modern", accent: "#5B4BC4", levels: false, fonts: "", soon: true },

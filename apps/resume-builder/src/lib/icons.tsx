@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 // 24×24 stroke icons from the design (folio-lib.js). Always drawn next to text, so aria-hidden.
 export const ICONS = {
   phone: "M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z",
@@ -13,12 +15,12 @@ export const ICONS = {
   x: "M4 4l16 16 M20 4L4 20",
 } as const;
 
+/** `size` is in design px; the page's --fs scales it with the text. */
 export function Icon({ d, size = 12, width = 2.2 }: { d: string; size?: number; width?: number }) {
   return (
     <svg
       className="icon"
-      width={size}
-      height={size}
+      style={{ "--icon": size } as CSSProperties}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"

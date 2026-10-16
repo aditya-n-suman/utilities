@@ -27,6 +27,8 @@ export function ResumePage({ vm, size = "A4", className }: { vm: ResumeView; siz
     "--accent": vm.accent,
     "--accent-soft": vm.accentSoft,
     "--on-accent": vm.onAccent,
+    "--text-scale": vm.textScale,
+    "--space-scale": vm.spacingScale,
     "--page-width": PAGE[size].width + "px",
     "--page-height": PAGE[size].height + "px",
     "--page-margin-block": PAGE.marginBlock + "px",

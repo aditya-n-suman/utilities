@@ -10,12 +10,15 @@
   background: #fff;
   color: #141414;
   text-align: start;
+  /* One design px of text, and of whitespace, after the user's scaling. */
+  --fs: calc(1px * var(--text-scale, 1));
+  --sp: calc(1px * var(--space-scale, 1));
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
 
 .folio-page a { color: inherit; text-decoration: none; }
 .folio-page p a, .folio-page li a { text-decoration: underline; text-underline-offset: 1.5px; }
-.folio-page .icon { display: inline-block; vertical-align: middle; }
+.folio-page .icon { display: inline-block; vertical-align: middle; inline-size: calc(var(--icon) * var(--fs)); block-size: calc(var(--icon) * var(--fs)); }
 .folio-page strong { font-weight: 700; }
 .folio-page em { font-style: italic; }
