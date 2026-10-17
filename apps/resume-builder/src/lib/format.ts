@@ -39,13 +39,13 @@ export const formatLocation = (l: Location | undefined, locale = "en-US") =>
   l ? [l.city, l.region || l.country].filter(Boolean).join(isArabic(locale) ? "، " : ", ") : "";
 
 export function initialsOf(name: string): string {
-  return name
+  const letters = name
     .trim()
     .split(/\s+/)
     .slice(0, 2)
-    .map((w) => [...w][0] ?? "")
-    .join("")
-    .toUpperCase();
+    .map((w) => [...w][0] ?? "");
+  // Arabic letters join; a zero-width non-joiner keeps the two initials apart.
+  return letters.join(letters.every((c) => /[\u0600-\u06FF]/.test(c)) ? "\u200C" : "").toUpperCase();
 }
 
 function luminance(hex: string): number {

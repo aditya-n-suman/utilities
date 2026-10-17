@@ -38,12 +38,12 @@ export function Meridian({ vm }: { vm: ResumeView }) {
         {vm.slot === "photo" && vm.photo && <img className="mer-avatar mer-photo" data-path="basics.photo" src={vm.photo.src} alt={vm.photo.alt} />}
       </header>
       <div className="mer-cols">
-        <div className="mer-col">
+        <div className="mer-col" data-flow>
           {vm.main.map((s) => (
             <MeridianSection key={s.key} s={s} vm={vm} />
           ))}
         </div>
-        <div className="mer-col">
+        <div className="mer-col" data-flow>
           {vm.side.map((s) => (
             <MeridianSection key={s.key} s={s} vm={vm} />
           ))}

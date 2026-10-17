@@ -91,7 +91,7 @@ describe("template sizes go through the scale variables", () => {
 });
 
 describe("CSS uses logical properties only", () => {
-  const dirs = [join(__dirname), join(__dirname, "..")];
+  const dirs = [join(__dirname), join(__dirname, ".."), join(__dirname, "../app")];
   const files = dirs.flatMap((d) => readdirSync(d).filter((f) => f.endsWith(".css")).map((f) => join(d, f)));
   it.each(files)("%s", (file) => {
     const css = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");

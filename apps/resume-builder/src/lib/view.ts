@@ -247,7 +247,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         const items: WorkView[] = work.map((w, i) => {
           const wh = [formatLocation(w.location), w.workMode ? modes[w.workMode] : ""].filter(Boolean).join(" · ");
           return {
-            path: `work.${i}`, company: w.company, title: w.title, context: nonEmpty(w.context), dates: R(w.startDate, w.endDate),
+            path: `work.${i}`, company: w.company ?? "", title: w.title ?? "", context: nonEmpty(w.context), dates: R(w.startDate, w.endDate),
             where: nonEmpty(wh), summary: segsOrUndef(w.summary), bullets: bullets(w.highlights, `work.${i}`), tech: w.technologies ?? [],
           };
         });
@@ -273,7 +273,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
             const s = e.score;
             const label = s?.label || L.score;
             return {
-              path: `education.${i}`, institution: e.institution,
+              path: `education.${i}`, institution: e.institution ?? "",
               degreeLine: nonEmpty(e.degree && e.field ? e.degree + L.in + e.field : e.degree || e.field),
               dates: nonEmpty(R(e.startDate, e.endDate)), location: nonEmpty(formatLocation(e.location)),
               score: s ? { label, value: s.value, max: s.max, line: `${label}: ${s.value}${s.max ? " / " + s.max : ""}` } : undefined,
@@ -288,10 +288,11 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         return {
           kind: "skills",
           groups: sk.map((g, gi) => {
-            const items = g.items.map((s, si) => {
+            const items = (g.items ?? []).map((s, si) => {
               const o = typeof s === "string" ? { name: s, level: undefined } : s;
               const level = showLevels ? o.level : undefined;
-              return { path: `skills.${gi}.items.${si}`, name: o.name, level, label: level ? `${o.name}, level ${level} of 5` : o.name };
+              const nm = o.name ?? "";
+              return { path: `skills.${gi}.items.${si}`, name: nm, level, label: level ? `${nm}, level ${level} of 5` : nm };
             });
             return { path: `skills.${gi}`, name: nonEmpty(g.name), items, joined: items.map((x) => x.name + (x.level ? ` (${x.level}/5)` : "")).join(", ") };
           }),
@@ -305,7 +306,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
           items: pr.map((x, i) => {
             const href = x.url || x.repository;
             return {
-              path: `projects.${i}`, name: x.name, kind: nonEmpty(x.kind), dates: x.startDate ? R(x.startDate, x.endDate) : undefined,
+              path: `projects.${i}`, name: x.name ?? "", kind: nonEmpty(x.kind), dates: x.startDate ? R(x.startDate, x.endDate) : undefined,
               desc: segsOrUndef(x.description), bullets: bullets(x.highlights, `projects.${i}`), tech: x.technologies ?? [],
               link: href ? { text: stripUrl(href), href, path: `projects.${i}.${x.url ? "url" : "repository"}` } : undefined,
             };
@@ -317,7 +318,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         if (!c.length) return null;
         return {
           kind: "certifications",
-          items: c.map((x, i) => ({ path: `certifications.${i}`, name: x.name, issuer: nonEmpty(x.issuer), date: D(x.date), line: [x.issuer, D(x.date)].filter(Boolean).join(" · ") })),
+          items: c.map((x, i) => ({ path: `certifications.${i}`, name: x.name ?? "", issuer: nonEmpty(x.issuer), date: D(x.date), line: [x.issuer, D(x.date)].filter(Boolean).join(" · ") })),
         };
       }
       case "awards": {
@@ -325,7 +326,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         if (!a.length) return null;
         return {
           kind: "awards",
-          items: a.map((x, i) => ({ path: `awards.${i}`, title: x.title, awarder: nonEmpty(x.awarder), date: D(x.date), line: [x.awarder, D(x.date)].filter(Boolean).join(" · "), summary: segsOrUndef(x.summary) })),
+          items: a.map((x, i) => ({ path: `awards.${i}`, title: x.title ?? "", awarder: nonEmpty(x.awarder), date: D(x.date), line: [x.awarder, D(x.date)].filter(Boolean).join(" · "), summary: segsOrUndef(x.summary) })),
         };
       }
       case "publications": {
@@ -336,7 +337,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
           items: pb.map((x, i) => {
             const href = x.doi ? "https://doi.org/" + x.doi : x.url;
             return {
-              path: `publications.${i}`, title: x.title, authors: (x.authors ?? []).map((a) => ({ name: a, isOwner: a === name })),
+              path: `publications.${i}`, title: x.title ?? "", authors: (x.authors ?? []).map((a) => ({ name: a, isOwner: a === name })),
               venue: nonEmpty(x.venue), date: D(x.date), line: [x.venue, D(x.date)].filter(Boolean).join(" · "),
               link: href ? { text: x.doi ? "doi.org/" + x.doi : stripUrl(x.url), href } : undefined,
             };
@@ -348,7 +349,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         if (!l.length) return null;
         return {
           kind: "languages",
-          items: l.map((x, i) => ({ path: `languages.${i}`, language: x.language, level: nonEmpty([x.fluency && fluency[x.fluency], x.cefr].filter(Boolean).join(" · ")) })),
+          items: l.map((x, i) => ({ path: `languages.${i}`, language: x.language ?? "", level: nonEmpty([x.fluency && fluency[x.fluency], x.cefr].filter(Boolean).join(" · ")) })),
           joined: l.map((x) => x.language + (x.fluency ? ` (${fluency[x.fluency]}${x.cefr ? ", " + x.cefr : ""})` : "")).join(" · "),
         };
       }
@@ -357,13 +358,13 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         if (!v.length) return null;
         return {
           kind: "volunteer",
-          items: v.map((x, i) => ({ path: `volunteer.${i}`, organization: x.organization, role: nonEmpty(x.role), dates: R(x.startDate, x.endDate), summary: segsOrUndef(x.summary), bullets: bullets(x.highlights, `volunteer.${i}`) })),
+          items: v.map((x, i) => ({ path: `volunteer.${i}`, organization: x.organization ?? "", role: nonEmpty(x.role), dates: R(x.startDate, x.endDate), summary: segsOrUndef(x.summary), bullets: bullets(x.highlights, `volunteer.${i}`) })),
         };
       }
       case "interests": {
         const x = doc.interests ?? [];
         if (!x.length) return null;
-        return { kind: "interests", items: x.map((y, i) => ({ path: `interests.${i}`, name: y.name })), joined: x.map((y) => y.name).join(" · ") };
+        return { kind: "interests", items: x.map((y, i) => ({ path: `interests.${i}`, name: y.name ?? "" })), joined: x.map((y) => y.name).join(" · ") };
       }
       case "references": {
         const r = doc.references;
@@ -371,7 +372,7 @@ export function buildView(doc: Resume, opts: ViewOptions = {}): ResumeView {
         if (!r || (!r.availableOnRequest && !items.length)) return null;
         return {
           kind: "references", onRequest: !!r.availableOnRequest && !items.length, text: L.onRequest,
-          items: items.map((x, i) => ({ path: `references.items.${i}`, name: x.name, line: [x.title, x.company].filter(Boolean).join(", "), contact: [x.email, x.phone].filter(Boolean).join(" · ") })),
+          items: items.map((x, i) => ({ path: `references.items.${i}`, name: x.name ?? "", line: [x.title, x.company].filter(Boolean).join(", "), contact: [x.email, x.phone].filter(Boolean).join(" · ") })),
         };
       }
     }

@@ -66,6 +66,7 @@ describe("buildView", () => {
 
   it("derives initials and contrast-safe text on the accent", () => {
     expect(initialsOf("sam okafor")).toBe("SO");
+    expect(initialsOf("ليلى حداد")).toBe("ل\u200Cح");
     expect(buildView(MIN, { template: "meridian" }).initials).toBe("SO");
     expect(buildView(MIN, { accent: "#FFE066" }).onAccent).toBe("#111111");
     expect(buildView(MIN, { accent: "#1A73E8" }).onAccent).toBe("#FFFFFF");
