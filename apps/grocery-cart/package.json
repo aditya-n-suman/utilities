@@ -1,0 +1,27 @@
+{
+  "name": "grocery-cart",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Grocery Cart: turn a grocery list into a JioMart cart in your own logged-in Chrome.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "record": "tsx src/research/record.ts",
+    "summarize": "tsx src/research/summarize.ts",
+    "probe": "tsx src/research/probe.ts",
+    "e2e": "tsx tests/e2e/phase0.e2e.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "playwright-core": "^1.56.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11"
+  }
+}

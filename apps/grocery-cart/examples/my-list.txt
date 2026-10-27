@@ -1,0 +1,65 @@
+Tea strainer ; x1 ; चाय छन्नी
+Tea cup small ; x6
+Cup stand ; x1 ; कप स्टैंड
+Spoon holder ; x1
+Thali plate ; x6 ; थाली
+Drinking glass ; x6 ; गिलास
+Pressure cooker 5 L ; x1 ; प्रेशर कुकर
+Kadhai ; x1 ; कड़ाही
+Tawa ; x1 ; तवा
+Patila with lid ; x2 ; पतीला
+Bowl medium ; x6 ; कटोरा
+Bowl small ; x6 ; कटोरा
+Spoon ; x12 ; चम्मच
+Ladle ; x1 ; कलछुल
+Spatula turner ; x1 ; झोलनी / छलनी
+Rolling pin ; x1 ; बेलन
+Quarter plate ; x6 ; प्लेट
+Fork ; x12 ; फोर्क
+Dining knife ; x6
+Kitchen tongs ; x1 ; चिमटा
+Utensil gripper pakkad ; x1 ; सॉसपैन पकड़ (Sansi)
+Saucepan ; x1 ; सॉसपैन
+Vegetable rack ; x1 ; सब्जी रैक
+Steel container 5 kg ; x3 ; डब्बा
+Container 1 kg ; x6 ; डब्बा
+Container 500 g ; x6 ; डब्बा
+Container 200 g ; x6 ; डब्बा
+Container 100 g ; x6 ; डब्बा
+Parat ; x1 ; कटौती (dough kneading basin)
+Copper mug ; x1 ; मग (ताँबा)
+Induction cooktop ; x1
+Oil dispenser ; x1
+Kitchen knife ; x2
+Peeler ; x1
+Serving spoon ; x3
+Skimmer strainer ; x1 ; झाँझ
+Masala box ; x1 ; मसाला Box
+Dish drying basket ; x1 ; बर्तन Drying टोकरी
+Rice ; 5 kg ; चावल
+Atta ; 5 kg ; आटा
+Masoor dal ; 2 kg ; मसूर दाल
+Suji ; 1 kg ; सूजी
+Poha ; 2 kg ; चूरा
+Peanuts ; 1 kg ; मूंगफली
+Mustard oil ; 5 L ; सरसों तेल
+Sugar ; 5 kg ; चीनी
+Jeera ; 100 g ; जीरा
+Ajwain ; 100 g ; अजवाइन
+Methi seeds ; 100 g ; मेथी
+Whole garam masala ; 200 g ; (गरम) खड़ा मसाला
+Black pepper ; 100 g ; काली मिर्च
+Tej patta ; x1 ; तेजपत्ता
+Salt ; 1 kg ; नमक
+Saunf ; 100 g ; सौंफ
+Matchbox ; x1
+Garlic ; 500 g ; लहसुन
+Ginger ; 200 g ; अदरक
+Kasuri methi ; 100 g ; कस्तूरी मेथी
+Phool jhadu ; x1 ; फूलझाड़ू
+Dustbin large ; x1
+Dustbin ; x2
+Dustpan ; x1
+Floor mopping cloth ; x1 ; पोंछा cloth
+Floor cleaner liquid ; x1 ; पोंछा liquid
+Detergent powder ; x1
