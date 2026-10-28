@@ -89,7 +89,8 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 ## Local (`src/local/`, Playwright over CDP)
 - `jiomart-tab.ts`: finds the JioMart tab, learns headers (minus the stale `x-fp-signature`/`x-fp-date`) and the
   cart query from the page's own polling (reloads once if the page is quiet), and each mode's filter from the page's
-  searches; remembers filters per area code in `~/.config/grocery-cart/jiomart.json`. Requests go out with fetch()
+  searches; remembers filters per area code in `~/.config/grocery-cart/jiomart.json`. When you scroll a search, it
+  learns paging from the page's page-2 request (`jiomart-paging.json`); until then a repeated page stops paging. Requests go out with fetch()
   inside the tab.
 - `live-check.ts`: you search once in Quick and once in Shop all on JioMart; it reports what it learnt (names only for
   headers, cookies, storage keys that change between modes), searches groceries and kitchenware in both modes,
@@ -136,12 +137,12 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. You: `./instruction.sh paging` (reads your Phase 0 capture; prints which field the page used for page 2), then
-   `./instruction.sh live-check --cart` once more (prints stock for the quantity-change test and always cleans up).
-   Then the app for real with `examples/my-list.txt`; the Cart page removes what the old live check left behind.
+1. You: `./instruction.sh live-check --cart` once more. It asks you to scroll a Quick search (that teaches paging),
+   prints stock for the quantity-change test, and always cleans up. Then the app for real with
+   `examples/my-list.txt`; its Cart page removes what the old live check left behind.
 2. Unverified on the real site, in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH`), the cart page
    (`CART_PAGE_PATH = /checkout/cart`).
-3. Fix paging from step 1's output; tune the matcher on real searches (sanitised fixtures + cases in `match.test.ts`).
+3. Confirm paging from step 1's output; tune the matcher on real searches (sanitised fixtures + cases in `match.test.ts`).
 4. Needs real JioMart responses first: the area name on Connect, pincode serviceability (A8.3).
 5. Then the extension (Part B of the canvas), once the local app has worked on the real site: the engine
    (`src/engine/`) moves as is; `src/local/jiomart-tab.ts` becomes a content script + side panel.

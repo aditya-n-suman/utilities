@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseCart, parseSearch, piecesFromName, quickFilter, searchUrl, sizeFromName, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
+import { parseCart, parseSearch, pathOfValue, piecesFromName, valueAt, quickFilter, searchUrl, sizeFromName, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
 import { CartError, cartErrorCode, type FetchRequest, type FetchResponse, JioMartClient, type Session, ShopError } from "../../src/engine/jiomart/client.ts";
-import { areaCode, modeOfFilter, type Observed, observe, pageHeaders } from "../../src/local/jiomart-tab.ts";
+import { areaCode, modeOfFilter, type Observed, observe, observeSearchAnswer, pageHeaders } from "../../src/local/jiomart-tab.ts";
 
 const fixture = (name: string) => JSON.parse(readFileSync(new URL(`../fixtures/jiomart/${name}`, import.meta.url), "utf8")) as unknown;
 const SEARCH = fixture("search-atta.json");
@@ -112,6 +112,19 @@ describe("client", () => {
     expect(calls).toHaveLength(2);
   });
 
+  it("pages the way the page was seen to", async () => {
+    const second = JSON.parse(JSON.stringify(SEARCH)) as { items: { uid: number }[] };
+    for (const it of second.items) it.uid += 1;
+    const pages = [{ ...(SEARCH as object), page: { has_next: true, next_id: "2" } }, { ...second, page: { has_next: false } }];
+    const { client, calls, session } = fakeShop(() => json(pages.shift()));
+    session.paging = { idFrom: "page.next_id", params: { page_size: "50", page_type: "cursor" } };
+    const { products } = await client.search("atta", "quick", 40);
+    expect(products).toHaveLength(6);
+    expect(new URL(calls[1].url).search).toBe(
+      `?f=${encodeURIComponent(quickFilter("13895"))}&page_id=2&page_size=50&page_type=cursor&q=atta`.replace(/%20/g, "+"),
+    );
+  });
+
   it("stops at the first page when it has enough", async () => {
     const { client, calls } = fakeShop(() => json(SEARCH));
     const { products } = await client.search("atta", "quick", 3);
@@ -202,6 +215,17 @@ describe("learning from the page", () => {
     expect(o.modeHeaders.quick?.["x-location-detail"]).toBe("loc");
     expect(o.modeHeaders.all?.["x-location-detail"]).toBe("loc-all");
     expect(areaCode(o.cartQuery)).toBe("110001");
+  });
+
+  it("learns paging from the page's own page-2 request", () => {
+    const o: Observed = { filters: {}, modeHeaders: {} };
+    const base = "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Astandard&q=rice";
+    observe(o, base, { authorization: "a" });
+    observeSearchAnswer(o, base, { items: [{ uid: 1 }], page: { has_next: true, next_id: "2" }, meta: { nextPageToken: "TOK" } });
+    observe(o, `${base}&page_id=TOK&page_size=50&page_type=cursor`, { authorization: "a" });
+    expect(o.paging).toEqual({ idFrom: "meta.nextPageToken", params: { page_size: "50", page_type: "cursor" } });
+    expect(pathOfValue({ items: [{ id: "2" }], page: { next_id: "2" } }, "2")).toBe("page.next_id");
+    expect(valueAt({ page: { next_id: 2 } }, "page.next_id")).toBe("2");
   });
 
   it("drops browser-set and signature headers", () => {

@@ -165,15 +165,50 @@ export function storeFromFilter(f: string): string | undefined {
   return /store_ids:(\d+)/.exec(f)?.[1];
 }
 
-export function searchUrl(filter: string | undefined, query: string, pageId?: string, pageSize = 50, origin = ORIGIN): string {
+/**
+ * How the page asks for the next search page, learnt from the page itself (src/local/jiomart-tab.ts):
+ * `page_id` is the value at `idFrom` in the previous answer, sent along with `params` (e.g. page_size).
+ */
+export interface Paging {
+  idFrom: string;
+  params: Record<string, string>;
+}
+
+export function searchUrl(
+  filter: string | undefined,
+  query: string,
+  pageId?: string,
+  pageSize = 50,
+  origin = ORIGIN,
+  params?: Record<string, string>,
+): string {
   const u = new URL(SEARCH_PATH, origin);
   if (filter) u.searchParams.set("f", filter);
   if (pageId) {
     u.searchParams.set("page_id", pageId);
-    u.searchParams.set("page_size", String(pageSize));
+    for (const [k, v] of Object.entries(params ?? { page_size: String(pageSize) })) u.searchParams.set(k, v);
   }
   u.searchParams.set("q", query);
   return u.toString();
+}
+
+/** The string at a dotted path ("meta.nextPageToken", "page.next_id") in a JSON value. */
+export function valueAt(json: unknown, path: string): string | undefined {
+  let v: unknown = json;
+  for (const k of path.split(".")) v = obj(v)[k];
+  return typeof v === "number" ? String(v) : str(v);
+}
+
+/** The first path (outside the product and filter lists) whose value equals `value`. */
+export function pathOfValue(json: unknown, value: string, path = ""): string | undefined {
+  if ((typeof json === "string" || typeof json === "number") && String(json) === value) return path || undefined;
+  if (!isObj(json)) return undefined;
+  for (const [k, v] of Object.entries(json)) {
+    if (k === "items" || k === "filters") continue;
+    const found = pathOfValue(v, value, path ? `${path}.${k}` : k);
+    if (found) return found;
+  }
+  return undefined;
 }
 
 // --- cart ---

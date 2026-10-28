@@ -85,7 +85,7 @@ export function Connect({ state, onContinue }: { state: AppState; onContinue: ()
               {!modesOk && (
                 <span className="sub">
                   {ready
-                    ? `On JioMart, switch to ${!c.modes.quick ? "Quick" : "Shop all"} and search for anything once. Needed once per pincode.`
+                    ? `On JioMart, switch to ${!c.modes.quick ? "Quick" : "Shop all"} and search for anything once (scroll until more products load, so it learns paging too). Needed once per pincode.`
                     : "Checked after you sign in."}
                   {ready && (c.modes.quick || c.modes.all) && ` ${c.modes.quick ? "Quick" : "Shop all"} is ready already.`}
                 </span>

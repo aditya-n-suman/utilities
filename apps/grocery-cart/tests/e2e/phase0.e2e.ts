@@ -161,8 +161,8 @@ try {
   chrome.kill();
   await exited;
   await shop.close();
-  rmSync(profile, { recursive: true, force: true });
-  rmSync(outRoot, { recursive: true, force: true });
+  rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  rmSync(outRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
 
 console.log(failures ? `\n${failures} check(s) failed` : "\nAll e2e checks passed");

@@ -40,6 +40,7 @@ const endpoint = `http://127.0.0.1:${PORT}`;
 const jm = await startFakeJioMart();
 const tmp = mkdtempSync(join(tmpdir(), "grocery-cart-engine-e2e-"));
 process.env.GROCERY_CART_STATE = join(tmp, "state.json");
+process.env.GROCERY_CART_HOME = join(tmp, "config");
 const chrome = spawn(
   findChromium(),
   [`--remote-debugging-port=${PORT}`, `--user-data-dir=${join(tmp, "profile")}`, "--headless=new", "--no-first-run", "--no-sandbox", `${jm.origin}/`],
@@ -84,6 +85,22 @@ try {
 
   // Search in both modes.
   const client = new JioMartClient(tab.fetcher, tab.session, { writeGapMs: 200, searchGapMs: 50 });
+
+  // Paging: before the page has shown how it asks for page 2, a repeated first page stops the search;
+  // after you "scroll" once on the site, the tool pages the same way.
+  const before = await client.search("a", "all", 40);
+  check(before.products.length === 2, `without learnt paging, a repeated page stops the search (${before.products.length})`);
+  await page.fill("#q", "a");
+  await page.click("#go");
+  await page.waitForTimeout(300);
+  await page.click("#more");
+  await page.waitForTimeout(500);
+  check(
+    tab.session.paging?.idFrom === "meta.nextPageToken" && tab.session.paging.params.page_type === "cursor",
+    `paging learnt from the page's own page-2 request (${JSON.stringify(tab.session.paging)})`,
+  );
+  const after = await client.search("a", "all", 40);
+  check(after.products.length > 2 && new Set(after.products.map((p) => p.uid)).size === after.products.length, `with learnt paging: ${after.products.length} distinct products`);
   const quickCooker = await client.search("pressure cooker", "quick");
   const allCooker = await client.search("pressure cooker", "all");
   check(quickCooker.products.length === 0, "Quick finds no pressure cooker (kitchenware isn't quick)");
@@ -122,7 +139,7 @@ try {
   chrome.kill();
   await exited;
   await jm.close();
-  rmSync(tmp, { recursive: true, force: true });
+  rmSync(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
 
 console.log(failures ? `\n${failures} check(s) failed` : "\nAll engine e2e checks passed");

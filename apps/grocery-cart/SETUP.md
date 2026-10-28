@@ -84,7 +84,8 @@ the same requests from your signed-in tab. You do the clicking; the tools only w
    ```bash
    ./instruction.sh live-check --cart      # leave out --cart for a read-only run
    ```
-   It asks you to search once in "Quick" and once in "Shop all" on JioMart (that's how it learns both), then searches
+   It asks you to search once in "Quick" (and scroll until more products load: that's how it learns paging) and once
+   in "Shop all" on JioMart (that's how it learns both modes), then searches
    a few list lines in both modes. With `--cart`, for each mode it asks before adding 1 of a product, changes it to 2
    and removes it. Share `captures/live-check-<time>.md` (redacted: header, cookie and storage *names* only).
 

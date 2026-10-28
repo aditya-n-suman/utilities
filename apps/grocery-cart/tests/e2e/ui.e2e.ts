@@ -249,7 +249,7 @@ try {
   userChrome.kill();
   await exited;
   await jm.close();
-  rmSync(tmp, { recursive: true, force: true });
+  rmSync(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
 }
 
 console.log(failures ? `\n${failures} check(s) failed` : "\nAll UI e2e checks passed");

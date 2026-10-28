@@ -14,12 +14,14 @@ import {
   cartWriteOk,
   type Mode,
   ORIGIN,
+  type Paging,
   parseCart,
   parseSearch,
   type Product,
   removeBody,
   searchUrl,
   updateBody,
+  valueAt,
   writeMessage,
 } from "./api.ts";
 
@@ -50,6 +52,8 @@ export interface Session {
   filters: Partial<Record<Mode, string>>;
   /** JioMart's address; only tests change it */
   origin?: string;
+  /** how the page asks for search page 2 (learnt when you scroll on JioMart); default: meta.nextPageToken */
+  paging?: Paging;
   /** headers the page sent with its searches in each mode, if they differ from `headers` */
   modeHeaders?: Partial<Record<Mode, Record<string, string>>>;
 }
@@ -156,8 +160,11 @@ export class JioMartClient {
     let next: string | undefined;
     do {
       await this.pace("search");
-      const page = parseSearch(await this.send("GET", searchUrl(filter || undefined, query, next, 50, this.origin), undefined, mode));
+      const paging = this.session.paging;
+      const json = await this.send("GET", searchUrl(filter || undefined, query, next, 50, this.origin, paging?.params), undefined, mode);
+      const page = parseSearch(json);
       if (!page) throw new ShopError("shop_changed", "JioMart's search answer changed shape");
+      if (paging && page.next !== undefined) page.next = valueAt(json, paging.idFrom);
       // Stop when a page brings nothing new: a wrong page id makes JioMart repeat the first page.
       const seen = new Set(products.map((p) => p.uid));
       const fresh = page.products.filter((p) => !seen.has(p.uid));

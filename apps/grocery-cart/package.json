@@ -13,7 +13,6 @@
     "probe": "tsx src/research/probe.ts",
     "cart-probe": "tsx src/research/cart-probe.ts",
     "live-check": "tsx src/local/live-check.ts",
-    "paging": "tsx src/research/paging.ts",
     "e2e": "vite build && tsx tests/e2e/phase0.e2e.ts && tsx tests/e2e/engine.e2e.ts && tsx tests/e2e/ui.e2e.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

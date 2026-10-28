@@ -12,7 +12,6 @@
 #   ./instruction.sh cart-probe ["toor dal"] [dir]
 #                                          Phase 0b (JioMart): add one product found by a new search, check, remove
 #   ./instruction.sh live-check [--cart]   Phase 2: run the JioMart client in your tab (Quick + Shop all); --cart also writes
-#   ./instruction.sh paging [dir]          how the page asked for search page 2, from your Phase 0 capture
 #   ./instruction.sh e2e                   research tools, engine and UI against local stand-in shops (no network)
 set -euo pipefail
 
@@ -74,7 +73,6 @@ case "${1:-}" in
   probe) setup; npm run --silent probe -- "${@:2}" ;;
   cart-probe) setup; npm run --silent cart-probe -- "${@:2}" ;;
   live-check) setup; npm run --silent live-check -- "${@:2}" ;;
-  paging) setup; npm run --silent paging -- "${@:2}" ;;
   e2e) setup; npm run --silent e2e ;;
-  *) sed -n '2,16p' "$0"; exit 1 ;;
+  *) sed -n '2,15p' "$0"; exit 1 ;;
 esac

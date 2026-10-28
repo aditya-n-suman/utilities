@@ -7,12 +7,12 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import type { BrowserContext, Page, Request } from "playwright-core";
-import { CART_DETAIL_PATH, type Mode, ORIGIN, SEARCH_PATH, storeFromFilter } from "../engine/jiomart/api.ts";
+import type { BrowserContext, Page, Request, Response } from "playwright-core";
+import { CART_DETAIL_PATH, type Mode, ORIGIN, type Paging, pathOfValue, SEARCH_PATH, storeFromFilter } from "../engine/jiomart/api.ts";
 import type { Fetcher, FetchRequest, FetchResponse, Session } from "../engine/jiomart/client.ts";
 import { sitePage } from "../research/cdp.ts";
 import { type Site, SITES } from "../research/sites.ts";
-import { configDir } from "./config.ts";
+import { configDir, readConfig, writeConfig } from "./config.ts";
 import { resendableHeaders } from "./headers.ts";
 
 const stateFile = () => process.env.GROCERY_CART_STATE ?? join(configDir(), "jiomart.json");
@@ -56,6 +56,23 @@ export interface Observed {
   cartQuery?: string;
   filters: Partial<Record<Mode, string>>;
   modeHeaders: Partial<Record<Mode, Record<string, string>>>;
+  /** the page's last search answer per filter + words, to see where its next page_id came from */
+  lastSearch?: Map<string, unknown>;
+  paging?: Paging;
+}
+
+const searchKey = (u: URL) => `${u.searchParams.get("f") ?? ""}|${u.searchParams.get("q") ?? ""}`;
+
+/** Remembers a search answer the page received. Exported for tests. */
+export function observeSearchAnswer(o: Observed, url: string, json: unknown, origin = ORIGIN): void {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return;
+  }
+  if (u.origin !== origin || u.pathname !== SEARCH_PATH) return;
+  (o.lastSearch ??= new Map()).set(searchKey(u), json);
 }
 
 /** Folds one of the page's requests into what we've learnt. Exported for tests. */
@@ -75,6 +92,14 @@ export function observe(o: Observed, url: string, headers: Record<string, string
     const mode = modeOfFilter(f);
     o.filters[mode] = f;
     if (headers.authorization) o.modeHeaders[mode] = pageHeaders(headers);
+    // Asking for a later page (you scrolled): learn which field of the previous answer it sent as page_id.
+    const pageId = u.searchParams.get("page_id");
+    const previous = o.lastSearch?.get(searchKey(u));
+    const idFrom = pageId && previous !== undefined ? pathOfValue(previous, pageId) : undefined;
+    if (idFrom) {
+      const params = Object.fromEntries([...u.searchParams].filter(([k]) => k !== "f" && k !== "q" && k !== "page_id"));
+      o.paging = { idFrom, params };
+    }
   }
 }
 
@@ -127,12 +152,18 @@ export async function openJioMartTab(
   const page = await sitePage(context, opts.site ?? SITES.jiomart);
   const saved = loadSaved();
   const o: Observed = { filters: {}, modeHeaders: {} };
+  let savedPaging = readConfig<Paging | undefined>("jiomart-paging.json", undefined);
   const session: Session = { headers: {}, cartQuery: "", filters: {}, ...(origin !== ORIGIN ? { origin } : {}) };
 
   const sync = () => {
     if (o.headers) session.headers = o.headers;
     if (o.cartQuery) session.cartQuery = o.cartQuery;
     session.modeHeaders = o.modeHeaders;
+    if (o.paging && JSON.stringify(o.paging) !== JSON.stringify(savedPaging)) {
+      savedPaging = o.paging;
+      writeConfig("jiomart-paging.json", o.paging);
+    }
+    session.paging = o.paging ?? savedPaging;
     const area = areaCode(o.cartQuery);
     const remembered = saved[area] ?? {};
     session.filters = { ...remembered, ...o.filters };
@@ -151,6 +182,14 @@ export async function openJioMartTab(
       .catch(() => undefined);
   };
   page.on("request", onRequest);
+  const onResponse = (res: Response) => {
+    if (!res.url().includes(SEARCH_PATH)) return;
+    void res
+      .json()
+      .then((json: unknown) => observeSearchAnswer(o, res.url(), json, origin))
+      .catch(() => undefined);
+  };
+  page.on("response", onResponse);
 
   const waitFor = async (ms: number) => {
     const end = Date.now() + ms;
@@ -180,6 +219,9 @@ export async function openJioMartTab(
     get missing() {
       return missing();
     },
-    close: () => page.off("request", onRequest),
+    close: () => {
+      page.off("request", onRequest);
+      page.off("response", onResponse);
+    },
   };
 }

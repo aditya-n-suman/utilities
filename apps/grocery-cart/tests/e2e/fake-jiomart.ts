@@ -42,7 +42,7 @@ const ITEMS = [
 
 const PAGE = `<!doctype html><meta charset="utf-8"><title>JioMart stand-in</title>
 <button id="quick">Quick</button><button id="all">Shop all</button>
-<input id="q"><button id="go">Search</button><ul id="results"></ul>
+<input id="q"><button id="go">Search</button><button id="more">More</button><ul id="results"></ul>
 <script>
 let mode = "quick";
 const headers = () => ({ authorization: ${JSON.stringify(AUTH)}, "x-location-detail": mode === "quick" ? "loc-quick" : "loc-all",
@@ -51,12 +51,20 @@ const poll = () => fetch("/api/service/application/cart/v1.0/detail?area_code=00
 poll(); setInterval(poll, 1000);
 document.getElementById("quick").onclick = () => { mode = "quick"; document.cookie = "journey=quick; path=/"; };
 document.getElementById("all").onclick = () => { mode = "all"; document.cookie = "journey=all; path=/"; };
-document.getElementById("go").onclick = async () => {
-  const q = encodeURIComponent(document.getElementById("q").value);
+let last, lastQuery = "";
+const search = async (extra) => {
   const f = mode === "quick" ? "&f=" + encodeURIComponent("journey:quickcommerce:::store_ids:${STORE}||${STORE}") : "";
-  const res = await (await fetch("/ext/vertex/application/api/v1.0/products?q=" + q + f, { headers: headers() })).json();
-  document.getElementById("results").innerHTML = res.items.map((i) => "<li>" + i.name + "</li>").join("");
+  last = await (await fetch("/ext/vertex/application/api/v1.0/products?q=" + lastQuery + f + extra, { headers: headers() })).json();
+  document.getElementById("results").innerHTML += last.items.map((i) => "<li>" + i.name + "</li>").join("");
 };
+document.getElementById("go").onclick = () => {
+  lastQuery = encodeURIComponent(document.getElementById("q").value);
+  document.getElementById("results").innerHTML = "";
+  return search("");
+};
+// Scrolling: the page sends the token from the last answer, plus page_size and page_type.
+document.getElementById("more").onclick = () =>
+  last && last.page.has_next && search("&page_id=" + encodeURIComponent(last.meta.nextPageToken) + "&page_size=50&page_type=cursor");
 </script>`;
 
 export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}) {
@@ -105,7 +113,17 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
         if (f !== null && !quick) return send({ items: [], page: { has_next: false, item_total: 0 } });
         const items = ITEMS.filter((i) => (quick ? i.journey === "quickcommerce" : true) && words.every((w) => i.name.toLowerCase().includes(w)));
         const abs = items.map((i) => ({ ...i, medias: i.medias.map((m) => ({ ...m, url: `http://${req.headers.host}${m.url}` })) }));
-        return send({ items: abs, page: { has_next: false, item_total: items.length } });
+        // Pages of 2. Like the real site in the live check, a page_id without the page's other parameters
+        // (page_type=cursor here) gets the first page again.
+        const token = `tok-${url.searchParams.get("q")}`;
+        const second = url.searchParams.get("page_id") === token && url.searchParams.get("page_type") === "cursor";
+        const start = second ? 2 : 0;
+        const end = second ? abs.length : 2;
+        return send({
+          items: abs.slice(start, end),
+          page: { has_next: end < abs.length, next_id: "2", item_total: items.length, type: "cursor" },
+          meta: { nextPageToken: token, attributionToken: "attr" },
+        });
       }
       if (url.pathname === "/api/service/application/cart/v1.0/detail") {
         return send({

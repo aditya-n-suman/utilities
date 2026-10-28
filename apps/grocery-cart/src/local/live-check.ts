@@ -86,7 +86,7 @@ async function main(): Promise<void> {
     await tab.page.bringToFront();
 
     const before = await snapshot(context, tab.page);
-    await enter('1/2  On JioMart, switch to "Quick" and search for anything (e.g. rice).');
+    await enter('1/2  On JioMart, switch to "Quick", search for anything (e.g. rice) and scroll down until more products load.');
     const afterQuick = await snapshot(context, tab.page);
     await enter('2/2  Now switch to "Shop all" and search for anything (e.g. rice).');
     const afterAll = await snapshot(context, tab.page);
@@ -100,6 +100,9 @@ async function main(): Promise<void> {
       log(`- ${MODE_NAME[mode]} filter: ${f === undefined ? "not seen" : f === "" ? "(empty)" : `\`${safeFilter(f)}\``}`);
     }
     if (tab.missing.length) log(`- still missing: ${tab.missing.join("; ")}`);
+    log(
+      `- paging: ${s.paging ? `page_id from \`${s.paging.idFrom}\`, with ${Object.keys(s.paging.params).map((k) => `\`${k}\``).join(", ") || "no other parameters"}` : "not learnt (scroll down on a search results page until more load)"}`,
+    );
     const hq = s.modeHeaders?.quick;
     const ha = s.modeHeaders?.all;
     if (hq && ha) {
@@ -140,7 +143,7 @@ async function main(): Promise<void> {
     }
     if (s.filters.quick !== undefined) {
       const { products } = await client.search("atta", "quick", 40);
-      log(`\nPaging: "atta" asked for 40 → got ${products.length} (${new Set(products.map((p) => p.uid)).size} distinct)`);
+      log(`\nPaging: "atta" asked for 40 → got ${products.length} distinct${s.paging ? " (with the learnt paging)" : ""}`);
     }
 
     if (values.cart) {

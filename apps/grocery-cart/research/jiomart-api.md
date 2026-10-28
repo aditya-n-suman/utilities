@@ -84,8 +84,9 @@ Sponsored results come from the ad server, not the search response, so search re
   the mode in site storage (`journey`, `userJourney`, `activeTab`, …), and only the filter changes in search.
 - **Reach:** "atta" 281 results in Quick vs 8,679 in Shop all; "pressure cooker 5 L" 6 vs 314. Kitchenware needs Shop all.
 - **Paging:** sending `page_id=<meta.nextPageToken>&page_size=50` returned the first page again (40 asked → 12
-  distinct). The client now stops when a page brings nothing new. `./instruction.sh paging` reads the Phase 0 capture
-  to see what the page itself sent as `page_id`.
+  distinct). The client now stops when a page brings nothing new, and learns paging from the page: when you scroll
+  a search on JioMart, `jiomart-tab.ts` sees the page's own page-2 request, finds which field of the previous answer
+  it sent as `page_id`, and copies its other parameters (saved in `~/.config/grocery-cart/jiomart-paging.json`).
 - **Cart:** adds work in both modes. A product found in Shop all was added with `journey quickcommerce` (it's also
   stocked nearby; JioMart picks the fulfilment). Changing the quantity to 2 failed for both test products with
   "Product is out of stock": probably real (one unit in the nearby store); the live check now prints the line's
