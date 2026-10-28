@@ -11,6 +11,7 @@
     "record": "tsx src/research/record.ts",
     "summarize": "tsx src/research/summarize.ts",
     "probe": "tsx src/research/probe.ts",
+    "cart-probe": "tsx src/research/cart-probe.ts",
     "e2e": "tsx tests/e2e/phase0.e2e.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"

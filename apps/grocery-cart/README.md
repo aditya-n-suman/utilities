@@ -22,6 +22,7 @@ list (text)  →  parse  →  search JioMart  →  pick best product per line  �
 - [SETUP.md](SETUP.md): install, and the Phase 0 recording run on Fedora.
 - [DESIGN_BRIEF.md](DESIGN_BRIEF.md): the Claude Design prompt (local app now, extension later) and the UI's data.
 - [STATUS.md](STATUS.md): phases, findings, decisions, next steps.
+- [research/jiomart-api.md](research/jiomart-api.md): JioMart's search and cart requests, from the Phase 0 run.
 
 ## Privacy
 Everything stays on your computer. Raw captures (`captures/*/raw.jsonl`) hold your JioMart cookies and are git-ignored;

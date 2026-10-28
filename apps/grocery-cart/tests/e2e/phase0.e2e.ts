@@ -9,13 +9,15 @@ import { spawn } from "node:child_process";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { loadCapture } from "../../src/research/capture.ts";
+import { type CapturedRequest, loadCapture } from "../../src/research/capture.ts";
+import { type CartTemplates, probeCart } from "../../src/research/cart-probe.ts";
 import { connect, sitePage } from "../../src/research/cdp.ts";
 import { addCandidate, searchCandidates } from "../../src/research/classify.ts";
 import { formatSearchProbe, probeSearch, replay, replayHeaders } from "../../src/research/probe.ts";
 import { startRecording } from "../../src/research/recorder.ts";
 import type { Site } from "../../src/research/sites.ts";
 import { writeSummary } from "../../src/research/summarize.ts";
+import { startFakeJioMart } from "./fake-jiomart.ts";
 import { SESSION, SHOP_TOKEN, startFakeShop } from "./fake-shop.ts";
 
 function findChromium(): string {
@@ -117,6 +119,37 @@ try {
   const add = addCandidate(capture)!;
   const res = await replay(page, { url: add.url, method: add.method, headers: replayHeaders(add, true), body: add.reqBody });
   check(res.status === 200 && shop.cart.get(102) === 1, "add-to-cart replay changes the cart");
+
+  // Cart probe against a JioMart-shaped stand-in: add a product it found itself, check, remove, check.
+  for (const requireSignature of [false, true]) {
+    const jm = await startFakeJioMart({ requireSignature });
+    const jmPage = await context.newPage();
+    await jmPage.goto(`${jm.origin}/`);
+    const headers = { "content-type": "application/json", authorization: "Bearer app", "x-fp-signature": "v1.1:sig", "x-fp-date": "20261028T022600Z" };
+    const tpl = (method: string, path: string, step = "add", reqBody?: string): CapturedRequest => ({
+      seq: 1, t: 0, step, method, url: `${jm.origin}${path}`, resourceType: "xhr", siteHost: true, reqHeaders: headers, reqBody,
+    });
+    const templates: CartTemplates = {
+      term: "atta",
+      search: tpl("GET", "/ext/vertex/application/api/v1.0/products?f=x&q=atta", "search"),
+      cartDetail: tpl("GET", "/api/service/application/cart/v1.0/detail?b=true&i=true"),
+      add: tpl("POST", "/api/service/application/cart/v2.0/bulk-detail?id=old"),
+      remove: tpl("PUT", "/api/service/application/cart/v2.0/detail?id=old", "remove", '{"operation":"remove_item"}'),
+    };
+    const lines: string[] = [];
+    await probeCart(jmPage, templates, "toor dal", async () => false, (l) => lines.push(l));
+    check(jm.writes.length === 0, "cart probe writes nothing when you don't confirm");
+    await probeCart(jmPage, templates, "toor dal", async () => true, (l) => lines.push(l));
+    const label = requireSignature ? "(signature checked)" : "(signature not checked)";
+    check(lines.some((l) => l.includes("picked: Tata Sampann")), `cart probe skips the unsellable first result ${label}`);
+    check(jm.writes[0]?.signed === false, `first add is tried without the signature ${label}`);
+    check(jm.writes.filter((w) => w.path.endsWith("bulk-detail")).length === (requireSignature ? 2 : 1), `retries with the signature only when needed ${label}`);
+    check(lines.some((l) => l.includes("✅ cart now has 1")), `add verified in the cart ${label}`);
+    check(lines.some((l) => l.includes("✅ cart is back to how it was")) && jm.cart.size === 0, `product removed again ${label}`);
+    console.log(`\n${lines.join("\n")}`);
+    await jmPage.close();
+    await jm.close();
+  }
 
   // Disconnecting must not close the user's Chrome or its tabs.
   await browser.close();

@@ -50,7 +50,16 @@ the same requests from your signed-in tab. You do the clicking; the tools only w
    After you type `yes`, it sends the captured add-to-cart once. Your real cart changes: reload the cart page to
    check, then remove the item.
 
-6. Close the tool's Chrome.
+6. **Phase 0b: add and remove a product found by a new search.**
+   ```bash
+   ./instruction.sh summarize                 # regenerate summary.md with the latest redaction
+   ./instruction.sh cart-probe "toor dal"
+   ```
+   It searches, picks the first product JioMart will sell, reads your cart, and after you type `yes` adds 1 of it,
+   checks the cart, removes it and checks again. It refuses if that product is already in your cart. Share the new
+   lines at the end of `probe.md`. If it ends with "remove … by hand", do that on the cart page.
+
+7. Close the tool's Chrome.
 
 ### If something goes wrong
 | Symptom | Cause / fix |

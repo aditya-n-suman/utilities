@@ -8,6 +8,8 @@
 #   ./instruction.sh summarize [dir]       rewrite summary.md for the newest (or given) capture
 #   ./instruction.sh probe [--query "toor dal"] [--add] [dir]
 #                                          Phase 0: replay the captured search (and add) from the shop's tab
+#   ./instruction.sh cart-probe ["toor dal"] [dir]
+#                                          Phase 0b (JioMart): add one product found by a new search, check, remove
 #   ./instruction.sh e2e                   Phase 0 tools against a local stand-in shop (no network)
 set -euo pipefail
 
@@ -60,6 +62,7 @@ case "${1:-}" in
   record) setup; npm run --silent record -- "${@:2}" ;;
   summarize) setup; npm run --silent summarize -- "${@:2}" ;;
   probe) setup; npm run --silent probe -- "${@:2}" ;;
+  cart-probe) setup; npm run --silent cart-probe -- "${@:2}" ;;
   e2e) setup; npm run --silent e2e ;;
-  *) sed -n '2,12p' "$0"; exit 1 ;;
+  *) sed -n '2,13p' "$0"; exit 1 ;;
 esac

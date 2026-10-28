@@ -6,7 +6,7 @@
 export const REDACTED = "‹redacted›";
 
 const SENSITIVE_KEY =
-  /(pin_?code|pincode|zip|^pin$|lat(itude)?$|^lng$|lon(gitude)?$|phone|mobile|msisdn|e_?mail|token|auth|session|^sid$|cookie|secret|password|otp|address|addr|landmark|(first|last|full|customer|user|cust)_?name|^name_?on|customer_?id|user_?id|cust_?id|device_?id|imei|card_?(no|num)|cvv|upi|vpa)/i;
+  /(pin_?code|pincode|zip|^pin$|area_?code|lat(itude)?$|^lng$|lon(gitude)?$|long_?lat|lat_?l(o)?ng|geo|coord|location|phone|mobile|msisdn|e_?mail|token|auth|session|^sid$|cookie|secret|password|otp|address|addr|landmark|(first|last|full|customer|user|cust)_?name|^name_?on|customer_?id|user_?id|cust_?id|device_?id|imei|card_?(no|num)|cvv|upi|vpa)/i;
 
 export function sensitiveKey(key: string): boolean {
   return SENSITIVE_KEY.test(key);

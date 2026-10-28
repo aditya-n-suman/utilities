@@ -21,7 +21,10 @@ export function safeUrl(url: string, term?: string): string {
     return redactValue(url);
   }
   const params = [...u.searchParams].map(([k, v]) => {
-    const keep = !sensitiveKey(k) && (/^[\w .,:-]{0,24}$/.test(v) || (term && v.toLowerCase().includes(term.toLowerCase())));
+    const keep =
+      !sensitiveKey(k) &&
+      !/^\d{6}$/.test(v) && // looks like a pincode
+      (/^[\w .,:-]{0,24}$/.test(v) || (term && v.toLowerCase().includes(term.toLowerCase())));
     return `${k}=${keep ? redactValue(v) : REDACTED}`;
   });
   return `${u.host}${redactValue(decodeURIComponentSafe(u.pathname))}${params.length ? `?${params.join("&")}` : ""}`;

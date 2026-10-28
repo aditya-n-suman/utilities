@@ -53,19 +53,31 @@ export function searchCandidates(c: Capture): SearchCandidate[] {
 }
 
 export function cartCandidates(c: Capture): CapturedRequest[] {
-  return c.requests.filter(
-    (r) =>
-      r.siteHost &&
-      CART_STEPS.includes(r.step) &&
-      (r.resourceType === "fetch" || r.resourceType === "xhr") &&
-      (r.method !== "GET" || /cart|basket|bag/i.test(r.url)),
-  );
+  const seen = new Set<string>();
+  return c.requests.filter((r) => {
+    if (!r.siteHost || !CART_STEPS.includes(r.step) || (r.resourceType !== "fetch" && r.resourceType !== "xhr")) return false;
+    if (r.method === "GET" && !/cart|basket|bag/i.test(r.url)) return false;
+    // One example per endpoint and step: the page polls the cart many times.
+    const key = `${r.step} ${r.method} ${r.url.split("?")[0]}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
-/** The request the probe replays for an add: the first write during the add step, preferring cart-named URLs. */
+/**
+ * The request the probe replays for an add: a write during the add step, preferring one whose response says
+ * something was added, and avoiding removals (shops often tidy the cart just before adding).
+ */
 export function addCandidate(c: Capture): CapturedRequest | undefined {
-  const writes = cartCandidates(c).filter((r) => r.step === "add" && r.method !== "GET");
-  return writes.find((r) => /cart|basket|bag/i.test(r.url)) ?? writes[0];
+  const score = (r: CapturedRequest) =>
+    (/\badd(ed)?\b/i.test(r.resBody ?? "") ? 5 : 0) +
+    (/remove|delete/i.test(r.reqBody ?? "") ? -10 : 0) +
+    (r.method === "POST" ? 2 : 0) +
+    (/cart|basket|bag/i.test(r.url) ? 1 : 0);
+  return c.requests
+    .filter((r) => r.siteHost && r.step === "add" && r.method !== "GET")
+    .sort((a, b) => score(b) - score(a) || a.seq - b.seq)[0];
 }
 
 function replaceIn(s: string, term: string, next: string): string {

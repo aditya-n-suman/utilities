@@ -21,7 +21,9 @@ export function outline(value: unknown, indent = 0, key = "", depth = 0): string
       const merged = Object.assign({}, ...objects.slice().reverse()) as Record<string, unknown>;
       return `${pad}${label}[${value.length}] of\n${outlineObject(merged, indent + 1, depth + 1)}`;
     }
-    return `${pad}${label}[${value.length}] of ${outline(value[0], 0, "", depth + 1).trim()}`;
+    // Primitives inherit the array's key, so `long_lat: [76.9, 28.4]` is redacted like `lat` would be.
+    const first = outline(value[0], 0, key, depth + 1).trim();
+    return `${pad}${label}[${value.length}] of ${key ? first.slice(key.length + 2) : first}`;
   }
   if (isPlainObject(value)) {
     if (depth >= MAX_DEPTH) return `${pad}${label}{…}`;
