@@ -17,7 +17,7 @@ Everything stays in the browser. Text, sizes and the photo are saved to `localSt
 
 ## Background artwork
 
-The artwork is one image, `public/background.png` (1055×1491), from the Claude Design export with the text areas removed. **It isn't committed**, because the frame still contains the original photo. Put the file there before running or building. Without it the page shows a plain parchment colour, and everything else still works.
+The artwork is one image, `public/background.png` (1055×1491), from the Claude Design export with the text areas removed. The photo frame still holds the original photo, which shows until you upload your own. Replace the file to change the artwork. Without it the page shows a plain parchment colour, and everything else still works.
 
 ## Run, test, build
 
@@ -33,7 +33,7 @@ npm run build     # static site in dist/ (relative paths, host it anywhere)
 
 ```
 design/Biodata.dc.html  the approved Claude Design canvas (sample text in place of real details)
-public/background.png   artwork (not committed, see above)
+public/background.png   artwork (see above)
 src/
   App.tsx               state, saving, fit-to-width scaling, photo upload
   doc.ts                document model, placeholder content, measured section metrics, size/zoom limits
