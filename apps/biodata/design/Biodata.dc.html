@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+@font-face{font-family:'PT Serif';font-style:normal;font-weight:400;font-display:block;src:url(fonts/PTSerif-400.woff2) format('woff2');}
+@font-face{font-family:'PT Serif';font-style:normal;font-weight:700;font-display:block;src:url(fonts/PTSerif-700.woff2) format('woff2');}
+
+@font-face{font-family:'Noto Serif';font-style:normal;font-weight:100 900;font-stretch:62.5% 100%;font-display:block;src:url(fonts/NotoSerif-latin.woff2) format('woff2');}
+@font-face{font-family:'Noto Serif Devanagari';font-style:normal;font-weight:100 900;font-stretch:62.5% 100%;font-display:block;src:url(fonts/NotoSerifDevanagari-devanagari.woff2) format('woff2');unicode-range:U+0900-097F,U+1CD0-1CF4,U+1CF7-1CF9,U+200C-200D,U+20A8,U+20B9,U+20F0,U+25CC,U+A830-A839,U+A8E0-A8FF;}
+@font-face{font-family:'Noto Serif Devanagari';font-style:normal;font-weight:100 900;font-stretch:62.5% 100%;font-display:block;src:url(fonts/NotoSerifDevanagari-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+2000-206F;}
+body{margin:0;background:#2a1410;}
+a{color:#5a1a10;}a:hover{color:#8a3a20;}
+[contenteditable]:focus{outline:1px dashed rgba(120,40,20,.55);outline-offset:2px;}
+</style>
+</helmet>
+<div style="width:1055px;height:1491px;position:relative;overflow:hidden;margin:0 auto;background:#f6ecd2 url(assets/bg-v2.png) 0 0 / 1055px 1491px no-repeat;--hs:{{ ts.hs }};--bs:{{ ts.bs }};--ls:{{ ts.ls }};font-family:{{ fontFamily }};font-stretch:62.5%;letter-spacing:-0.25px;color:{{ textColor }};">
+
+  <div ref="{{ photoRef }}" onClick="{{ photoClick }}" onPointerDown="{{ dragStart }}" onPointerMove="{{ dragMove }}" onPointerUp="{{ dragEnd }}" onPointerCancel="{{ dragEnd }}" title="{{ photoTip }}" style="position:absolute;left:166px;top:291px;width:228px;height:252px;border-radius:50%;overflow:hidden;cursor:{{ photoCursor }};touch-action:none;background:{{ photoBacking }};">
+    <div style="position:absolute;inset:0;background:{{ photoBg }} center / cover no-repeat;transform:{{ photoTf }};transform-origin:center;pointer-events:none;"></div>
+  </div>
+  <input type="file" accept="image/*" ref="{{ fileRef }}" onChange="{{ onFile }}" style="display:none;">
+
+  <div style="position:absolute;left:331px;top:144px;width:400px;text-align:center;font-weight:700;color:{{ headColor }};">
+    <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.skt1 }}" onKeyDown="{{ noEnter }}" style="font-family:'Noto Serif Devanagari',serif;font-size:calc(25px * var(--hs));line-height:calc(34px * var(--hs) * var(--ls));font-stretch:88%;">{{ d.skt1 }}</div>
+    <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.skt2 }}" onKeyDown="{{ noEnter }}" style="font-size:calc(22px * var(--hs));line-height:calc(28px * var(--hs) * var(--ls));font-weight:600;font-stretch:78%;">{{ d.skt2 }}</div>
+  </div>
+
+  <div style="position:absolute;left:452px;top:219px;width:504px;text-align:center;font-weight:700;font-size:calc(46px * var(--hs));line-height:calc(50px * var(--hs) * var(--ls));font-stretch:82%;color:{{ headColor }};text-shadow:0 1px 0 rgba(255,255,255,.55),0 1px 2px rgba(60,10,0,.25);">
+    <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.title1 }}" onKeyDown="{{ noEnter }}">{{ d.title1 }}</div>
+    <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.title2 }}" onKeyDown="{{ noEnter }}" style="padding-left:20px;">{{ d.title2 }}</div>
+  </div>
+
+  <div style="position:absolute;left:490px;top:338px;width:460px;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ personal.onTitle }}" onKeyDown="{{ noEnter }}" style="font-size:calc(31px * var(--hs));line-height:calc(42px * var(--hs) * var(--ls));font-weight:700;font-stretch:80%;letter-spacing:0;color:{{ headColor }};">{{ personal.title }}</div>
+    </div>
+    <sc-for list="{{ personal.rows }}" as="row" hint-placeholder-count="7">
+      <div style="position:relative;display:grid;grid-template-columns:196px 12px minmax(0,1fr);font-size:{{ personal.size }}px;line-height:{{ personal.lh }}px;">
+        <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ row.onLabel }}" onKeyDown="{{ noEnter }}">{{ row.label }}</div>
+        <div>:</div>
+        <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ row.onValue }}" onKeyDown="{{ noEnter }}">{{ row.value }}</div>
+        <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ row.remove }}" title="Remove row" style="position:absolute;left:-26px;top:50%;margin-top:-10px;width:20px;height:20px;border-radius:50%;border:1px solid #8a3a20;background:#fff6e0;color:#8a3a20;font:600 13px/18px sans-serif;padding:0;cursor:pointer;">×</button>
+        </sc-if>
+      </div>
+    </sc-for>
+    <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ personal.add }}" style="margin-top:4px;border:1px dashed #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/20px sans-serif;padding:0 10px;border-radius:10px;cursor:pointer;">+ Row</button>
+    </sc-if>
+  </div>
+
+  <div style="position:absolute;left:205px;top:641px;width:680px;">
+    <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="3">
+      <div style="padding-top:{{ sec.gap }}px;">
+        <div style="position:relative;text-align:center;margin-left:{{ sec.shift2 }}px;">
+          <span contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ sec.onTitle }}" onKeyDown="{{ noEnter }}" style="font-size:calc(31px * var(--hs));line-height:{{ sec.headLH }}px;font-weight:700;font-stretch:77%;color:{{ headColor }};">{{ sec.title }}</span>
+          <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+            <span style="position:absolute;right:0;top:8px;display:flex;gap:6px;">
+              <button onClick="{{ sec.up }}" title="Move up" style="border:1px solid #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/20px sans-serif;padding:0 7px;border-radius:10px;cursor:pointer;">↑</button>
+              <button onClick="{{ sec.remove }}" style="border:1px solid #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/20px sans-serif;padding:0 8px;border-radius:10px;cursor:pointer;">Remove section</button>
+            </span>
+          </sc-if>
+        </div>
+        <sc-for list="{{ sec.rows }}" as="row" hint-placeholder-count="4">
+          <div style="position:relative;display:grid;grid-template-columns:{{ sec.labelW }}px {{ sec.colonW }}px minmax(0,1fr);font-size:{{ sec.size }}px;line-height:{{ sec.wrapLH }}px;padding:{{ sec.padY }}px 0;">
+            <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ row.onLabel }}" onKeyDown="{{ noEnter }}">{{ row.label }}</div>
+            <div>:</div>
+            <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ row.onValue }}" onKeyDown="{{ noEnter }}" style="text-wrap:pretty;">{{ row.value }}</div>
+            <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ row.remove }}" title="Remove row" style="position:absolute;left:-26px;top:50%;margin-top:-10px;width:20px;height:20px;border-radius:50%;border:1px solid #8a3a20;background:#fff6e0;color:#8a3a20;font:600 13px/18px sans-serif;padding:0;cursor:pointer;">×</button>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ sec.add }}" style="margin-top:4px;border:1px dashed #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/20px sans-serif;padding:0 10px;border-radius:10px;cursor:pointer;">+ Row</button>
+        </sc-if>
+      </div>
+    </sc-for>
+    <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button onClick="{{ addSection }}" style="border:1px dashed #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/22px sans-serif;padding:0 12px;border-radius:11px;cursor:pointer;">+ Section</button>
+        <button onClick="{{ resetAll }}" style="border:1px solid #8a3a20;background:#fff6e0;color:#8a3a20;font:600 12px/22px sans-serif;padding:0 12px;border-radius:11px;cursor:pointer;">Reset to original</button>
+      </div>
+    </sc-if>
+  </div>
+
+  <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.lppTitle }}" onKeyDown="{{ noEnter }}" style="position:absolute;left:332px;top:1214px;width:400px;text-align:center;font-size:calc(28px * var(--hs));line-height:calc(36px * var(--hs) * var(--ls));font-weight:700;font-stretch:64%;color:{{ headColor }};">{{ d.lppTitle }}</div>
+  <div contentEditable="plaintext-only" suppressContentEditableWarning="{{ true }}" onBlur="{{ ed.lpp }}" style="position:absolute;left:261px;top:1255px;width:537px;font-size:calc(18.6px * var(--bs));line-height:calc(26.8px * var(--bs) * var(--ls));text-align:justify;font-stretch:70%;letter-spacing:0;">{{ d.lpp }}</div>
+
+
+  <sc-if value="{{ controls }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;left:12px;top:12px;z-index:50;width:236px;display:flex;flex-direction:column;gap:12px;padding:14px;background:#fbf3df;border:1px solid #c9a46a;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.35);">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font:700 11px/14px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8a3a20;">Text &amp; spacing</div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;">
+        <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Heading size</div>
+        <button onClick="{{ ts.hsDn }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">−</button>
+        <div style="font:600 12px/28px system-ui,sans-serif;color:#2b0b0a;min-width:42px;text-align:center;">{{ ts.hsPct }}</div>
+        <button onClick="{{ ts.hsUp }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">+</button>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;">
+        <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Body size</div>
+        <button onClick="{{ ts.bsDn }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">−</button>
+        <div style="font:600 12px/28px system-ui,sans-serif;color:#2b0b0a;min-width:42px;text-align:center;">{{ ts.bsPct }}</div>
+        <button onClick="{{ ts.bsUp }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">+</button>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;">
+        <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Line spacing</div>
+        <button onClick="{{ ts.lsDn }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">−</button>
+        <div style="font:600 12px/28px system-ui,sans-serif;color:#2b0b0a;min-width:42px;text-align:center;">{{ ts.lsPct }}</div>
+        <button onClick="{{ ts.lsUp }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">+</button>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;">
+        <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Section gap</div>
+        <button onClick="{{ ts.sgDn }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">−</button>
+        <div style="font:600 12px/28px system-ui,sans-serif;color:#2b0b0a;min-width:42px;text-align:center;">{{ ts.sgPct }}</div>
+        <button onClick="{{ ts.sgUp }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">+</button>
+      </div>
+        <button onClick="{{ ts.reset }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;align-self:flex-start;font-weight:500;font-size:12px;">Reset text sizes</button>
+      </div>
+      <div style="height:1px;background:#e2cfa5;"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font:700 11px/14px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8a3a20;">Photo</div>
+        <button onClick="{{ pickPhoto }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;font-weight:500;font-size:12px;">{{ photoBtn }}</button>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;align-items:center;gap:4px;">
+          <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Zoom</div>
+          <button onClick="{{ ph.zOut }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">−</button>
+          <div style="font:600 12px/28px system-ui,sans-serif;color:#2b0b0a;min-width:42px;text-align:center;">{{ ph.zPct }}</div>
+          <button onClick="{{ ph.zIn }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;">+</button>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px;">
+          <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;">Pan</div>
+          <div style="display:grid;grid-template-columns:repeat(3,28px);gap:3px;">
+            <div></div><button onClick="{{ ph.up }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;padding:0;">↑</button><div></div>
+            <button onClick="{{ ph.left }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;padding:0;">←</button><button onClick="{{ ph.center }}" title="Center" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;padding:0;">•</button><button onClick="{{ ph.right }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;padding:0;">→</button>
+            <div></div><button onClick="{{ ph.down }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;padding:0;">↓</button><div></div>
+          </div>
+        </div>
+        <div style="font:500 12px/16px system-ui,sans-serif;color:#5a1a10;color:#8a5a3a;">Drag the photo to pan. Scroll on it to zoom.</div>
+        <button onClick="{{ ph.reset }}" style="border:1px solid #c9a46a;background:#fff6e0;color:#5a1a10;font:600 13px/26px system-ui,sans-serif;min-width:28px;height:28px;padding:0 6px;border-radius:6px;cursor:pointer;align-self:flex-start;font-weight:500;font-size:12px;">Reset photo position</button>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ showRef }}" hint-placeholder-val="{{ false }}">
+    <img src="assets/reference.png" alt="" style="position:absolute;inset:0;width:1055px;height:1491px;opacity:{{ refOpacity }};pointer-events:none;">
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1055,&quot;height&quot;:1491},&quot;editControls&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Editing&quot;},&quot;referenceOpacity&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:100,&quot;step&quot;:5,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Editing&quot;},&quot;font&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Noto Serif&quot;,&quot;PT Serif&quot;],&quot;default&quot;:&quot;Noto Serif&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Type&quot;},&quot;headingColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#2b0b0a&quot;,&quot;#4a1208&quot;,&quot;#1f1b17&quot;,&quot;#6b2a10&quot;],&quot;default&quot;:&quot;#2b0b0a&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Type&quot;},&quot;textColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;#1f1b17&quot;,&quot;#2b0b0a&quot;,&quot;#3a2a20&quot;],&quot;default&quot;:&quot;#1f1b17&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Type&quot;}}">
+const KEY = 'biodata-dc-v1';
+const DEFAULTS = {
+  skt1: '|| श्री गणेशाय नमः ||',
+  skt2: '|| Shree Ganeshay Namah ||',
+  title1: 'RAVI KUMAR SHARMA',
+  title2: 'BIODATA',
+  personal: { title: 'PERSONAL DETAILS', rows: [
+    ['Date of Birth', 'March 12, 1997'], ['Height', '175 cm'], ['Complexion', 'Wheatish'], ['Religion', 'Hindu'],
+    ['Caste', 'Your caste'], ['Gotra', 'Your gotra'], ['Languages Known', 'Hindi, English']] },
+  sections: [
+    { title: 'EDUCATION & CAREER', style: 'edu', rows: [
+      ['Highest Education', 'B.Tech (CSE), Example Institute'], ['12th Standard', 'Example Public School, Lucknow (CBSE)'],
+      ['10th Standard', 'Example Vidyalaya, Lucknow (CBSE)'], ['Current Designation', 'Software Engineer, Example Corp']] },
+    { title: 'FAMILY BACKGROUND', style: 'fam', rows: [
+      ["Father's Name", 'Shri Ramesh Sharma (Teacher)'], ["Mother's Name", 'Smt. Sunita Sharma (Homemaker)'],
+      ['Elder Sister', 'Ms. Priya Sharma (Doctor)']] },
+    { title: 'CONTACT & ADDRESS', style: 'con', rows: [
+      ['Contact Number', '+91 98765 43210 (Father)'], ['Home Address', '12 Station Road, Dist. Lucknow (Uttar Pradesh)'],
+      ['Present Address', 'House 4, near City Park main gate, Gomti Nagar, Lucknow (Uttar Pradesh)'], ['Current Residence', 'Bengaluru, Karnataka']] }
+  ],
+  lppTitle: 'LIFE PARTNER PREFERENCE',
+  lpp: 'A kind, grounded, and adaptable life partner is preferred - someone who values family, respects traditions, and embraces togetherness while preserving her individuality. Preference is for someone working in, or open to relocating to, a metro city. Mutual respect, trust, and companionship are valued as the foundation of a happy and fulfilling\u00a0life.',
+  photo: null,
+  type: { hs: 1, bs: 1, ls: 1, sg: 1 },
+  ph: { z: 1, x: 0, y: 0 }
+};
+// measured per-section metrics from the reference
+const STYLES = {
+  edu: { gap: 0, headLH: 42, size: 25.5, pitch: 36, wrapLH: 30, labelW: 253, colonW: 16, shift: -5 },
+  fam: { gap: 18, headLH: 44, size: 25.5, pitch: 33, wrapLH: 30, labelW: 253, colonW: 16, shift: -5 },
+  con: { gap: 18, headLH: 40, size: 23.5, pitch: 30, wrapLH: 27, labelW: 252, colonW: 15, shift: -19 }
+};
+const clone = o => JSON.parse(JSON.stringify(o));
+
+class Component extends DCLogic {
+  state = { d: this.load() };
+  fileRef = React.createRef();
+  photoRef = React.createRef();
+  componentDidMount() {
+    this._wheel = e => { if (!this.state.d.photo) return; e.preventDefault(); this.zoomBy(e.deltaY < 0 ? 0.05 : -0.05); };
+    this.photoRef.current && this.photoRef.current.addEventListener('wheel', this._wheel, { passive: false });
+  }
+  componentWillUnmount() { this.photoRef.current && this.photoRef.current.removeEventListener('wheel', this._wheel); }
+  zoomBy(dz) { this.mut(x => { x.ph.z = Math.round(Math.min(4, Math.max(0.5, x.ph.z + dz)) * 100) / 100; }); }
+  panBy(dx, dy) { this.mut(x => { x.ph.x += dx; x.ph.y += dy; }); }
+  load() {
+    try { const s = localStorage.getItem(KEY); if (s) { const o = JSON.parse(s); const b = clone(DEFAULTS); return { ...b, ...o, type: { ...b.type, ...(o.type || {}) }, ph: { ...b.ph, ...(o.ph || {}) } }; } } catch (e) {}
+    return clone(DEFAULTS);
+  }
+  save(d) {
+    this.setState({ d });
+    try { localStorage.setItem(KEY, JSON.stringify(d)); } catch (e) {
+      try { localStorage.setItem(KEY, JSON.stringify({ ...d, photo: null })); } catch (e2) {}
+    }
+  }
+  mut(fn) { const d = clone(this.state.d); fn(d); this.save(d); }
+  txt(e) { return e.currentTarget.innerText.replace(/\n+$/, ''); }
+
+  renderVals() {
+    const p = this.props, d = this.state.d, T = d.type, P = d.ph;
+    const ts = { hs: T.hs, bs: T.bs, ls: T.ls, reset: () => this.mut(x => { x.type = clone(DEFAULTS.type); }) };
+    ['hs', 'bs', 'ls', 'sg'].forEach(k => {
+      const step = k === 'sg' ? 0.1 : 0.02, lo = k === 'sg' ? 0 : 0.6, hi = k === 'sg' ? 3 : 1.6;
+      const set = dv => this.mut(x => { x.type[k] = Math.round(Math.min(hi, Math.max(lo, x.type[k] + dv)) * 100) / 100; });
+      ts[k + 'Up'] = () => set(step); ts[k + 'Dn'] = () => set(-step); ts[k + 'Pct'] = Math.round(T[k] * 100) + '%';
+    });
+    const ph = { zPct: Math.round(P.z * 100) + '%', zIn: () => this.zoomBy(0.1), zOut: () => this.zoomBy(-0.1),
+      up: () => this.panBy(0, -10), down: () => this.panBy(0, 10), left: () => this.panBy(-10, 0), right: () => this.panBy(10, 0),
+      center: () => this.mut(x => { x.ph.x = 0; x.ph.y = 0; }), reset: () => this.mut(x => { x.ph = clone(DEFAULTS.ph); }) };
+    const dragPos = this.state.drag ? this.state.drag.cur : P;
+    const fonts = {
+      'Noto Serif': "'Noto Serif', serif",
+      'PT Serif': "'PT Serif', serif"
+    };
+    const ed = {};
+    ['skt1', 'skt2', 'title1', 'title2', 'lppTitle', 'lpp'].forEach(k => {
+      ed[k] = e => { const v = this.txt(e); if (v !== d[k]) this.mut(x => { x[k] = v; }); };
+    });
+    const mkRows = (get) => get(d).rows.map((r, i) => ({
+      label: r[0], value: r[1],
+      onLabel: e => { const v = this.txt(e); if (v !== r[0]) this.mut(x => { get(x).rows[i][0] = v; }); },
+      onValue: e => { const v = this.txt(e); if (v !== r[1]) this.mut(x => { get(x).rows[i][1] = v; }); },
+      remove: () => this.mut(x => { get(x).rows.splice(i, 1); })
+    }));
+    const personal = {
+      title: d.personal.title, size: 25.5 * T.bs, lh: 34 * T.bs * T.ls,
+      rows: mkRows(x => x.personal),
+      onTitle: e => { const v = this.txt(e); this.mut(x => { x.personal.title = v; }); },
+      add: () => this.mut(x => { x.personal.rows.push(['Label', 'Value']); })
+    };
+    const sections = d.sections.map((s, si) => {
+      const st = STYLES[s.style] || STYLES.fam;
+      return {
+        title: s.title, rows: mkRows(x => x.sections[si]),
+        gap: si === 0 ? 0 : st.gap * T.sg, headLH: st.headLH * T.hs * T.ls, size: st.size * T.bs, wrapLH: st.wrapLH * T.bs * T.ls,
+        padY: (st.pitch - st.wrapLH) / 2 * T.bs * T.ls, labelW: st.labelW, colonW: st.colonW, shift2: st.shift * 2,
+        onTitle: e => { const v = this.txt(e); this.mut(x => { x.sections[si].title = v; }); },
+        add: () => this.mut(x => { x.sections[si].rows.push(['Label', 'Value']); }),
+        remove: () => this.mut(x => { x.sections.splice(si, 1); }),
+        up: () => this.mut(x => { if (si > 0) { const [m] = x.sections.splice(si, 1); x.sections.splice(si - 1, 0, m); } })
+      };
+    });
+    return {
+      d, ed, personal, sections,
+      fontFamily: fonts[p.font] || fonts['Noto Serif'],
+      ts, ph, photoRef: this.photoRef,
+      photoBacking: d.photo ? '#efe2c4' : 'transparent',
+      photoBtn: d.photo ? 'Change photo' : 'Upload photo',
+      photoTip: d.photo ? 'Drag to pan, scroll to zoom' : 'Click to add photo',
+      photoCursor: d.photo ? (this.state.drag ? 'grabbing' : 'grab') : 'pointer',
+      photoTf: 'translate(' + dragPos.x + 'px,' + dragPos.y + 'px) scale(' + P.z + ')',
+      photoClick: () => { if (!d.photo) this.fileRef.current && this.fileRef.current.click(); },
+      dragStart: e => { if (!d.photo) return; e.currentTarget.setPointerCapture(e.pointerId); this.setState({ drag: { sx: e.clientX, sy: e.clientY, ox: P.x, oy: P.y, cur: { x: P.x, y: P.y } } }); },
+      dragMove: e => { const g = this.state.drag; if (!g) return; this.setState({ drag: { ...g, cur: { x: g.ox + e.clientX - g.sx, y: g.oy + e.clientY - g.sy } } }); },
+      dragEnd: () => { const g = this.state.drag; if (!g) return; this.setState({ drag: null }); this.mut(x => { x.ph.x = g.cur.x; x.ph.y = g.cur.y; }); },
+      textColor: p.textColor ?? '#1f1b17',
+      headColor: p.headingColor ?? '#2b0b0a',
+      controls: p.editControls ?? false,
+      showRef: (p.referenceOpacity ?? 0) > 0,
+      refOpacity: (p.referenceOpacity ?? 0) / 100,
+      photoBg: d.photo ? 'url("' + d.photo + '")' : 'none',
+      noEnter: e => { if (e.key === 'Enter') { e.preventDefault(); e.currentTarget.blur(); } },
+      pickPhoto: () => this.fileRef.current && this.fileRef.current.click(),
+      fileRef: this.fileRef,
+      onFile: e => {
+        const f = e.target.files && e.target.files[0]; if (!f) return;
+        const r = new FileReader();
+        r.onload = () => this.mut(x => { x.photo = r.result; x.ph = clone(DEFAULTS.ph); });
+        r.readAsDataURL(f); e.target.value = '';
+      },
+      addSection: () => this.mut(x => { x.sections.push({ title: 'NEW SECTION', style: 'fam', rows: [['Label', 'Value']] }); }),
+      resetAll: () => { if (confirm('Reset all text and photo to the original?')) this.save(clone(DEFAULTS)); }
+    };
+  }
+}
+</script>
+</body>
+</html>

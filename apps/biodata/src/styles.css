@@ -1,0 +1,355 @@
+/* Values from design/Biodata.dc.html (the Claude Design canvas). */
+@font-face {
+  font-family: "PT Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(./assets/fonts/PTSerif-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "PT Serif";
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url(./assets/fonts/PTSerif-700.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Noto Serif";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-display: block;
+  src: url(./assets/fonts/NotoSerif-latin.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Noto Serif Devanagari";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-display: block;
+  src: url(./assets/fonts/NotoSerifDevanagari-devanagari.woff2) format("woff2");
+  unicode-range: U+0900-097F, U+1CD0-1CF4, U+1CF7-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF;
+}
+@font-face {
+  font-family: "Noto Serif Devanagari";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-display: block;
+  src: url(./assets/fonts/NotoSerifDevanagari-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F;
+}
+
+:root {
+  --ink: #5a1a10;
+  --ink-strong: #2b0b0a;
+  --accent: #8a3a20;
+  --muted: #8a5a3a;
+  --paper: #fbf3df;
+  --button: #fff6e0;
+  --gold: #c9a46a;
+  --rule: #e2cfa5;
+  --ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #2a1410;
+}
+
+[contenteditable]:focus {
+  outline: 1px dashed rgba(120, 40, 20, 0.55);
+  outline-offset: 2px;
+}
+
+/* ---- the sheet ---- */
+
+.stage {
+  margin: 0 auto;
+}
+.stage-inner {
+  width: 1055px;
+  transform-origin: 0 0;
+}
+
+.page {
+  width: 1055px;
+  height: 1491px;
+  position: relative;
+  overflow: hidden;
+  background: #f6ecd2;
+  font-stretch: 62.5%;
+  letter-spacing: -0.25px;
+}
+.page-bg {
+  position: absolute;
+  inset: 0;
+  width: 1055px;
+  height: 1491px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.pg-photo {
+  position: absolute;
+  left: 166px;
+  top: 291px;
+  width: 228px;
+  height: 252px;
+  border-radius: 50%;
+  overflow: hidden;
+  touch-action: none;
+}
+.pg-photo-img {
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.pg-row {
+  position: relative;
+  display: grid;
+}
+
+/* On-page edit buttons */
+.pg-btn {
+  border: 1px solid var(--accent);
+  background: var(--button);
+  color: var(--accent);
+  font: 600 12px/20px sans-serif;
+  padding: 0 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.pg-add {
+  margin-top: 4px;
+  border-style: dashed;
+  padding: 0 10px;
+}
+.pg-lg {
+  margin-top: 0;
+  font-size: 12px;
+  line-height: 22px;
+  padding: 0 12px;
+  border-radius: 11px;
+}
+.pg-remove {
+  position: absolute;
+  left: -26px;
+  top: 50%;
+  margin-top: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font: 600 13px/18px sans-serif;
+  padding: 0;
+}
+.pg-sec-tools {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  display: flex;
+  gap: 6px;
+}
+.pg-sec-tools .pg-btn:first-child {
+  padding: 0 7px;
+}
+
+/* ---- floating panel ---- */
+
+.panel-wrap {
+  position: fixed;
+  left: 12px;
+  top: 12px;
+  z-index: 50;
+  width: 236px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: calc(100vh - 24px);
+}
+.panel-bar {
+  display: flex;
+  gap: 6px;
+}
+.panel-bar .pn-btn {
+  height: 32px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+  overflow-y: auto;
+  min-height: 0;
+}
+.pn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pn-head {
+  font: 700 11px/14px var(--ui);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.pn-rule {
+  height: 1px;
+  background: var(--rule);
+  flex: none;
+}
+.pn-step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 4px;
+}
+.pn-label {
+  font: 500 12px/16px var(--ui);
+  color: var(--ink);
+}
+.pn-hint {
+  color: var(--muted);
+}
+.pn-val {
+  font: 600 12px/28px var(--ui);
+  color: var(--ink-strong);
+  min-width: 42px;
+  text-align: center;
+}
+.pn-btn {
+  border: 1px solid var(--gold);
+  background: var(--button);
+  color: var(--ink);
+  font: 600 13px/26px var(--ui);
+  min-width: 28px;
+  height: 28px;
+  padding: 0 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.pn-btn:hover {
+  background: #fdebc4;
+}
+.pn-btn:focus-visible,
+.pg-btn:focus-visible,
+.pn-select:focus-visible,
+.pn-swatch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.pn-text {
+  font-weight: 500;
+  font-size: 12px;
+  padding: 0 10px;
+}
+.pn-toggle.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff6e0;
+}
+.pn-start {
+  align-self: flex-start;
+}
+.pn-pan-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
+}
+.pn-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 28px);
+  gap: 3px;
+}
+.pn-pad .pn-btn {
+  padding: 0;
+}
+.pn-row-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pn-field {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.pn-select {
+  font: 500 12px/16px var(--ui);
+  color: var(--ink);
+  background: var(--button);
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  height: 28px;
+  padding: 0 4px;
+}
+.pn-swatch-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pn-swatches {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.pn-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--gold);
+  padding: 0;
+  cursor: pointer;
+}
+.pn-swatch.on {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.pn-color {
+  width: 28px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+  background: var(--button);
+  cursor: pointer;
+}
+
+/* ---- print: just the page, at its real size ---- */
+
+@page {
+  size: 1055px 1491px;
+  margin: 0;
+}
+@media print {
+  body {
+    background: none;
+  }
+  .no-print,
+  .pg-btn,
+  .pg-sec-tools {
+    display: none !important;
+  }
+  .stage {
+    width: 1055px !important;
+    height: 1491px !important;
+  }
+  .stage-inner {
+    transform: none !important;
+  }
+  .page {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    break-inside: avoid;
+  }
+  [contenteditable]:focus {
+    outline: none;
+  }
+}

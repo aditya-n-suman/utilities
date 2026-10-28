@@ -6,6 +6,7 @@ A collection of small, self-contained utilities. Web apps live under `apps/` and
 |---|---|
 | [`apps/spotify-to-youtube`](apps/spotify-to-youtube) | Converts a public Spotify playlist into a YouTube playlist (temporary link or saved to your account). Status and next steps: [STATUS.md](apps/spotify-to-youtube/STATUS.md) |
 | [`apps/nginx-config-explorer`](apps/nginx-config-explorer) | Browse `nginx -T` output like a JSON viewer: fold blocks, follow includes in place, search. Runs fully in the browser. |
+| [`apps/biodata`](apps/biodata) | Editable marriage biodata page: click-to-edit text, photo with zoom and pan, text-size controls, print or save as PDF. Runs fully in the browser. |
 
 | Extension | What it does |
 |---|---|
