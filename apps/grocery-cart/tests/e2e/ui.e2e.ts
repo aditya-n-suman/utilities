@@ -182,6 +182,14 @@ try {
     await ui.getByRole("link", { name: "Remembered choices" }).click();
     await ui.getByRole("heading", { name: "Remembered choices" }).waitFor();
     check(await ui.getByText("Fortune Kachi Ghani Mustard Oil 1 L").isVisible(), "the changed pick is remembered");
+    await ui.getByRole("button", { name: "Change product for mustard oil" }).click();
+    await ui.getByRole("search").getByRole("button", { name: "Search" }).click();
+    await ui.getByRole("option", { name: /Mustard Oil 5 L/ }).waitFor();
+    if (scheme === "light") await shot(ui, "a7-remembered-change");
+    await ui.getByRole("option", { name: /Mustard Oil 5 L/ }).click();
+    await ui.getByRole("listbox").waitFor({ state: "detached" });
+    const saved = await ui.getByRole("table", { name: "Remembered choices" }).getByRole("row").nth(1).innerText();
+    check(saved.includes("Mustard Oil 5 L") && saved.includes("₹849"), "Change saves the picked product and closes");
     if (scheme === "light") await shot(ui, "a7-remembered");
     await ui.getByRole("button", { name: "Forget mustard oil" }).click();
     await ui.getByText("Nothing remembered yet").waitFor();

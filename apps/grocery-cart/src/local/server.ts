@@ -106,6 +106,17 @@ export async function handle(app: App, req: IncomingMessage, res: ServerResponse
       case "/api/review":
         run.backToReview();
         break;
+      case "/api/remembered/search": {
+        if (typeof b.words !== "string" || !b.words.trim() || !isMode(b.mode)) return send(res, 400, { error: "words and mode needed" });
+        try {
+          return send(res, 200, { candidates: await app.searchForRemembered(b.words.trim(), b.mode) });
+        } catch (e) {
+          return send(res, 200, { error: (e as Error).message, candidates: [] });
+        }
+      }
+      case "/api/remembered/set":
+        if (!app.rememberProduct(String(b.key), Number(b.uid))) return send(res, 400, { error: "search again first" });
+        break;
       case "/api/forget":
         app.memory.forget(String(b.key));
         app.emit();

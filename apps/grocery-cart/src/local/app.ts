@@ -4,10 +4,11 @@
 // - Files in ~/.config/grocery-cart/: last list and mode, remembered choices, learnt filters (jiomart-tab.ts).
 
 import type { Browser } from "playwright-core";
-import { CART_PAGE_PATH, type Mode, ORIGIN, PROFILE_PATH } from "../engine/jiomart/api.ts";
+import { CART_PAGE_PATH, type Mode, ORIGIN, type Product, PROFILE_PATH } from "../engine/jiomart/api.ts";
 import { JioMartClient, ShopError } from "../engine/jiomart/client.ts";
 import { parseList } from "../engine/list.ts";
-import { MemoryStore, type Remembered, type RememberedStore } from "../engine/remembered.ts";
+import { type Candidate, match } from "../engine/match.ts";
+import { MemoryStore, type Remembered, type RememberedStore, rememberedFrom } from "../engine/remembered.ts";
 import { Run, type RunState, type Shop } from "../engine/run.ts";
 import { connect, DEFAULT_ENDPOINT } from "../research/cdp.ts";
 import type { Site } from "../research/sites.ts";
@@ -178,6 +179,31 @@ export class App {
     const { items, errors } = parseList(text);
     if (items.length) void this.run.find(items, mode);
     return { items: items.length, errors: errors.length };
+  }
+
+  private picked = new Map<number, Product>();
+
+  /**
+   * Remembered choices → Change: searches JioMart for new words and returns candidates, best first.
+   * Products are kept so that `rememberProduct` can save the one picked.
+   */
+  async searchForRemembered(words: string, mode: Mode): Promise<Candidate[]> {
+    await this.check();
+    const { products } = await this.requireClient().search(words, mode, 24);
+    const item = { line: 0, raw: words, query: words, qty: { kind: "count" as const, value: 1 } };
+    const m = match(item, products);
+    const all = [m.chosen, ...m.alternatives].filter((c): c is Candidate => !!c).slice(0, 8);
+    for (const c of all) this.picked.set(c.product.uid, c.product);
+    return all;
+  }
+
+  /** Saves the product picked in Remembered choices → Change for `key`. */
+  rememberProduct(key: string, uid: number, today = new Date().toISOString().slice(0, 10)): boolean {
+    const p = this.picked.get(uid);
+    if (!p) return false;
+    this.memory.set({ ...rememberedFrom(key, p, today), key });
+    this.emit();
+    return true;
   }
 
   /** Resume after a pause; reconnects first if Chrome went away. */

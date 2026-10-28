@@ -108,7 +108,7 @@ export function App() {
       {screen === "review" && <Review run={state.run} allModeKnown={c.modes.all} />}
       {screen === "adding" && <Adding run={state.run} />}
       {screen === "done" && <Done run={state.run} />}
-      {screen === "remembered" && <Remembered items={state.remembered} />}
+      {screen === "remembered" && <Remembered items={state.remembered} modes={c.modes} />}
     </div>
   );
 }

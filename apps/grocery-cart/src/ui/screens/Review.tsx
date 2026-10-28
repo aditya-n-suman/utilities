@@ -3,10 +3,9 @@
 
 import { useState } from "react";
 import type { Mode } from "../../engine/jiomart/api.ts";
-import type { Candidate } from "../../engine/match.ts";
 import type { Row, RunState } from "../../engine/run.ts";
 import { act } from "../api.ts";
-import { MatchChip, MODE_LABEL, Thumb, Yours } from "../bits.tsx";
+import { MatchChip, MODE_LABEL, perUnit, Thumb, Yours } from "../bits.tsx";
 import { plural, rupees } from "../format.ts";
 import { PauseBanner } from "./PauseBanner.tsx";
 
@@ -19,12 +18,6 @@ const FILTERS: Record<Tab, { label: string; test: (r: Row) => boolean }> = {
   ready: { label: "Ready", test: (r) => live(r) && !!r.chosen && r.confidence === "high" },
   skipped: { label: "Skipped", test: (r) => r.skipped },
 };
-
-function perUnit(c: Candidate): string {
-  const p = c.pricePerUnit;
-  if (!p) return "price per unit unknown";
-  return p.per === "pack" ? "per pack" : `${rupees(p.value)}/${p.per}`;
-}
 
 function packWord(r: Row): string {
   if (r.qtyText.startsWith("x")) return r.chosen?.packs === 1 ? "pc" : "pcs";

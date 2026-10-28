@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import type { Mode } from "../engine/jiomart/api.ts";
-import type { Confidence } from "../engine/match.ts";
+import type { Candidate, Confidence } from "../engine/match.ts";
+import { rupees } from "./format.ts";
 
 export function Thumb({ src, size }: { src?: string; size: number }) {
   const [broken, setBroken] = useState(false);
@@ -59,4 +60,10 @@ export function Cmd() {
       <Copy text="./instruction.sh chrome" />
     </div>
   );
+}
+
+export function perUnit(c: Candidate): string {
+  const p = c.pricePerUnit;
+  if (!p) return "price per unit unknown";
+  return p.per === "pack" ? "per pack" : `${rupees(p.value)}/${p.per}`;
 }

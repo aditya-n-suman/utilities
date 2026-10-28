@@ -28,7 +28,7 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 | 2 | JioMart client (`src/engine/jiomart/`) + tab connection (`src/local/jiomart-tab.ts`); Quick and Shop all | 🔧 built; unit + e2e on a JioMart-shaped stand-in pass; **waiting for `live-check` on the real site** |
 | 3 | Matcher (`src/engine/match.ts`) | ✅ v1, unit-tested on cases from the real data; **tune on real searches** |
 | 4 | Local app: server (`src/local/server.ts`, `app.ts`) + React UI (`src/ui/`) from `design/Grocery Cart.dc.html` | ✅ all of Part A, light + dark; UI e2e on the stand-in passes; **not yet run against the real site** |
-| 5 | Remembered choices (`src/engine/remembered.ts`, A7) | ✅ kept in `~/.config/grocery-cart/remembered.json` |
+| 5 | Remembered choices (`src/engine/remembered.ts`, A7) | ✅ kept in `~/.config/grocery-cart/remembered.json`; Change (search + pick) and Forget |
 | 6 | DMart Ready adapter; extension (side panel) | brief covers the extension |
 
 ## Run it
@@ -50,7 +50,7 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
   Connect row ("Learnt Quick and Shop all"), a delivery tag on each product, "Search Shop all for this" on Quick rows
   that found nothing, and a footer split ("5 Quick · 1 Shop all").
 - Other differences from the canvas: Connect shows the pincode without the area name (JioMart's area name isn't read
-  yet); A7 has Forget but not Change (change a remembered product by picking another one in Review); "Pincode not
+  yet); A7's Change opens an inline search (words + Quick / Shop all) under the row instead of a dialog; "Pincode not
   serviceable" (A8.3) isn't detected; the A8 errors appear as the pause banner on the screen you're on, and "Nothing
   found" / "Your list is empty" in place. Extra links: "Stop and edit list", "Edit list", "Back to review", "New list".
 - Server (`src/local/server.ts`): 127.0.0.1 only; refuses other Host headers (DNS rebinding) and cross-site POSTs.
@@ -134,4 +134,6 @@ Details and field tables: `research/jiomart-api.md`.
 2. Unverified on the real site, all isolated in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH` assumed
    to answer 401/403 when signed out), the cart page (`CART_PAGE_PATH = /checkout/cart`), Shop all's filter.
 3. Tune the matcher on real searches (save sanitised search responses as fixtures and add cases to `match.test.ts`).
-4. Later: area name on Connect, A7 "Change", pincode serviceability, then the extension (Part B of the canvas).
+4. Needs real JioMart responses first: the area name on Connect, pincode serviceability (A8.3).
+5. Then the extension (Part B of the canvas), once the local app has worked on the real site: the engine
+   (`src/engine/`) moves as is; `src/local/jiomart-tab.ts` becomes a content script + side panel.

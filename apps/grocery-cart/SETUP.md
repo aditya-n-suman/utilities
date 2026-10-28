@@ -5,7 +5,7 @@
 cd apps/grocery-cart
 ./instruction.sh setup        # npm install (.npmrc sets legacy-peer-deps, same npm 10 bug as playlist-bridge)
 ./instruction.sh test         # unit tests + typecheck
-./instruction.sh e2e          # the Phase 0 tools against a local stand-in shop (needs Chrome or Chromium)
+./instruction.sh e2e          # research tools, engine and UI against local stand-in shops (needs Chrome or Chromium)
 ```
 `e2e` uses `/usr/bin/google-chrome` if it finds no Chromium; set `CHROMIUM_EXECUTABLE=/path/to/chrome` to choose one.
 
