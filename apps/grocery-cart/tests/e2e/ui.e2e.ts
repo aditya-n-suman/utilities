@@ -95,7 +95,13 @@ try {
       await shop.fill("#q", "rice");
       await shop.click("#go");
       await shop.click("#all");
+      await shop.fill("#q", "strainer");
       await shop.click("#go");
+      await shop.waitForTimeout(300);
+      await shop.click("#add"); // adding once on JioMart in Shop all teaches how the page adds there
+      await shop.waitForTimeout(300);
+      jm.cart.clear(); // …and you'd remove it again
+      jm.writes.length = 0;
       await ui.getByText("Learnt Quick and Shop all").waitFor();
       await ui.locator(".checklist li:last-child .state-ok").waitFor();
       check(true, "both modes learnt from the shop tab's searches");

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseCart, parseSearch, pathOfValue, piecesFromName, valueAt, quickFilter, searchUrl, sizeFromName, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
+import { addBody, addTemplateFrom, describeTemplate, parseCart, parseSearch, pathOfValue, piecesFromName, valueAt, quickFilter, searchUrl, sizeFromName, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
 import { CartError, cartErrorCode, type FetchRequest, type FetchResponse, JioMartClient, type Session, ShopError } from "../../src/engine/jiomart/client.ts";
 import { areaCode, modeOfFilter, type Observed, observe, observeSearchAnswer, pageHeaders } from "../../src/local/jiomart-tab.ts";
 
@@ -112,6 +112,18 @@ describe("client", () => {
     expect(calls).toHaveLength(2);
   });
 
+  it("adds with the learnt template for the product's mode", async () => {
+    const { client, calls, session } = fakeShop(() =>
+      json({ success: true, identifiers: { L: { item_id: 7507147, article_id: "a", item_index: 0, quantity: 1 } } }),
+    );
+    session.addTemplates = { all: { query: { journey: "standard" }, item: { meta: { journey: "standard" } }, top: {} } };
+    await client.add("c1", { ...parseSearch(SEARCH)!.products[1], mode: "all" }, 1);
+    await client.add("c1", { ...parseSearch(SEARCH)!.products[1], mode: "quick" }, 1);
+    expect(new URL(calls[0].url).search).toBe("?id=c1&journey=standard");
+    expect(JSON.parse(calls[0].body!).items[0].meta).toEqual({ vertical_code: "GROCERIES", compute_delivery_fee: true, journey: "standard" });
+    expect(new URL(calls[1].url).search).toBe("?id=c1");
+  });
+
   it("pages the way the page was seen to", async () => {
     const second = JSON.parse(JSON.stringify(SEARCH)) as { items: { uid: number }[] };
     for (const it of second.items) it.uid += 1;
@@ -203,7 +215,7 @@ describe("client", () => {
 
 describe("learning from the page", () => {
   it("collects headers, cart query and per-mode filters", () => {
-    const o: Observed = { filters: {}, modeHeaders: {} };
+    const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
     const h = { authorization: "Bearer app", cookie: "c", "x-fp-signature": "sig", "x-fp-date": "d", "x-location-detail": "loc", "user-agent": "ua" };
     observe(o, "https://www.jiomart.com/api/service/application/cart/v1.0/detail?area_code=110001&b=true&i=true", h);
     observe(o, "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Aquickcommerce%3A%3A%3Astore_ids%3A1%7C%7C1&q=rice", h);
@@ -218,7 +230,7 @@ describe("learning from the page", () => {
   });
 
   it("learns paging from the page's own page-2 request", () => {
-    const o: Observed = { filters: {}, modeHeaders: {} };
+    const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
     const base = "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Astandard&q=rice";
     observe(o, base, { authorization: "a" });
     observeSearchAnswer(o, base, { items: [{ uid: 1 }], page: { has_next: true, next_id: "2" }, meta: { nextPageToken: "TOK" } });
@@ -226,6 +238,47 @@ describe("learning from the page", () => {
     expect(o.paging).toEqual({ idFrom: "meta.nextPageToken", params: { page_size: "50", page_type: "cursor" } });
     expect(pathOfValue({ items: [{ id: "2" }], page: { next_id: "2" } }, "2")).toBe("page.next_id");
     expect(valueAt({ page: { next_id: 2 } }, "page.next_id")).toBe("2");
+  });
+
+  it("learns paging even when page 2's filter differs from page 1's", () => {
+    const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
+    const p1 = "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Aquickcommerce%3A%3A%3Astore_ids%3A1%7C%7C1%3A%3A%3AsearchType%3Aglobal&q=rice";
+    observe(o, p1, { authorization: "a" });
+    observeSearchAnswer(o, p1, { items: [], page: { has_next: true }, meta: { nextPageToken: "TOK" } });
+    observe(o, "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Aquickcommerce&q=rice&page_id=TOK&page_size=50", { authorization: "a" });
+    expect(o.paging).toEqual({ idFrom: "meta.nextPageToken", params: { page_size: "50" } });
+    expect(o.filters.quick).toContain("searchType:global"); // page-2 requests don't replace the learnt filter
+  });
+
+  it("reports a page-2 request it can't explain", () => {
+    const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
+    observe(o, "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?q=rice&page_id=XYZ&page_no=2", { authorization: "a" });
+    expect(o.paging).toBeUndefined();
+    expect(o.pagingUnmatched).toEqual({ params: ["page_no"], idLength: 3, answers: 0 });
+  });
+
+  it("learns what the page's own add sends in each mode, and adds the same way", () => {
+    const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
+    observe(o, "https://www.jiomart.com/ext/vertex/application/api/v1.0/products?f=journey%3Astandard%3A%3A%3Astore_ids%3A9%7C%7C9&q=strainer", { authorization: "a" });
+    const pageAdd = {
+      items: [{ item_id: 55, item_size: "OS", quantity: 1, seller_id: 7, article_id: "art55", meta: { vertical_code: "HOME", compute_delivery_fee: true, journey: "standard" }, extra_meta: { is_tradein_opted: false } }],
+      pincode_source: "user",
+    };
+    observe(o, "https://www.jiomart.com/api/service/application/cart/v2.0/bulk-detail?id=c1&journey=standard", { authorization: "a" }, undefined, JSON.stringify(pageAdd));
+    const tpl = o.addTemplates.all!;
+    expect(tpl).toEqual({
+      query: { journey: "standard" },
+      item: { meta: { vertical_code: "HOME", compute_delivery_fee: true, journey: "standard" }, extra_meta: { is_tradein_opted: false } },
+      top: { pincode_source: "user" },
+    });
+    expect(o.addTemplates.quick).toBeUndefined();
+    const product = { ...parseSearch(SEARCH)!.products[1] };
+    expect(addBody(product, 2, tpl)).toEqual({
+      pincode_source: "user",
+      items: [{ item_id: 7507147, item_size: "5 KG", quantity: 2, seller_id: 1, meta: { vertical_code: "GROCERIES", compute_delivery_fee: true, journey: "standard" }, extra_meta: { is_tradein_opted: false } }],
+    });
+    expect(describeTemplate(tpl)).toContain("item.meta.journey=standard");
+    expect(addTemplateFrom("not a url", pageAdd)).toBeUndefined();
   });
 
   it("drops browser-set and signature headers", () => {

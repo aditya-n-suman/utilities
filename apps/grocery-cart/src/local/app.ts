@@ -23,6 +23,8 @@ export interface Connection {
   signedIn: Check;
   pincode?: string;
   modes: Record<Mode, boolean>;
+  /** learnt from the page: how it loads more results, and how it adds in Shop all (neither blocks anything) */
+  learnt?: { paging: boolean; shopAllAdd: boolean };
   /** what's missing, in words */
   missing: string[];
 }
@@ -114,6 +116,7 @@ export class App {
     if (tab) {
       this.connection.modes = { quick: tab.session.filters.quick !== undefined, all: tab.session.filters.all !== undefined };
       this.connection.missing = tab.missing;
+      this.connection.learnt = { paging: !!tab.session.paging, shopAllAdd: !!tab.session.addTemplates?.all };
     }
     return {
       connection: { ...this.connection },

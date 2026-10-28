@@ -12,8 +12,15 @@ export function Done({ run, undoable }: { run: RunState; undoable: number }) {
   const added = tried.filter((r) => r.add === "added").length;
   const failed = tried.length - added;
   const elsewhere = run.rows
-    .filter((r) => !r.skipped && (r.add === "failed" || (r.search === "done" && !r.chosen)))
-    .map((r) => ({ r, reason: r.add === "failed" ? `Failed · ${ADD_ERRORS[r.addError ?? "shop_error"].toLowerCase()}` : "Not found" }));
+    .filter((r) => !r.skipped && (r.add === "failed" || !!r.addedPacks || (r.search === "done" && !r.chosen)))
+    .map((r) => ({
+      r,
+      reason: r.addedPacks
+        ? `Only ${r.addedPacks} of ${r.chosen?.packs} added · low stock`
+        : r.add === "failed"
+          ? `Failed · ${ADD_ERRORS[r.addError ?? "shop_error"].toLowerCase()}`
+          : "Not found",
+    }));
   return (
     <main className="center" style={{ padding: "64px 28px 72px" }}>
       <div className="col" style={{ maxWidth: 680, gap: 32 }}>

@@ -245,6 +245,21 @@ describe("run", () => {
     expect(shop.cartLines).toHaveLength(3);
   });
 
+  it("adds what's in stock when there isn't enough for every pack", async () => {
+    const shop = new FakeShop(catalog());
+    const original = shop.add.bind(shop);
+    shop.add = async (id, p, quantity) => {
+      if (quantity > 1) throw new CartError("out_of_stock", "Product is out of stock");
+      return original(id, p, quantity);
+    };
+    const run = new Run(shop, new MemoryStore());
+    await run.find(list.slice(1, 2), "quick"); // Toor dal 2 kg → 2 × 1 kg
+    await run.addAll();
+    expect(run.state().rows[0]).toMatchObject({ add: "added", addedPacks: 1, addMessage: "Only 1 of 2 added: JioMart has no more in stock" });
+    expect(shop.cartLines).toHaveLength(1);
+    expect(shop.cartLines[0].quantity).toBe(1);
+  });
+
   it("searches a row again with other words or in the other mode", async () => {
     const shop = new FakeShop({ ...catalog(), asafoetida: [P("LG Asafoetida 50 g", 99)] });
     const run = new Run(shop, new MemoryStore());

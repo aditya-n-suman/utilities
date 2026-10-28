@@ -15,7 +15,8 @@ cd apps/grocery-cart
 ./instruction.sh start      # builds the UI and opens http://127.0.0.1:4180 in your normal browser
 ```
 1. **Connect** checks the tool's Chrome, your JioMart sign-in and pincode. The first time per pincode it also asks you
-   to search once on JioMart in **Quick** and once in **Shop all**: that's how it learns both.
+   to search once on JioMart in **Quick** and once in **Shop all**: that's how it learns both. It also asks, once, to
+   scroll a search (paging) and to add and remove any product in Shop all (so Shop all items go in as Shop all).
 2. **Paste** your list (see LIST_FORMAT.md), pick Quick or Shop all, **Find products**. It searches one line at a time.
 3. **Review**: Change (alternatives), Search (other words), Skip, − / + packs. Quick lines that found nothing offer
    "Search Shop all for this". A changed pick is remembered for next time unless you untick it.
@@ -84,8 +85,8 @@ the same requests from your signed-in tab. You do the clicking; the tools only w
    ```bash
    ./instruction.sh live-check --cart      # leave out --cart for a read-only run
    ```
-   It asks you to search once in "Quick" (and scroll until more products load: that's how it learns paging) and once
-   in "Shop all" on JioMart (that's how it learns both modes), then searches
+   In each mode it asks you to search on JioMart, scroll until more products load, and add any product and remove it
+   again. That's how it learns the modes, paging, and how the page adds in Shop all. Then it searches
    a few list lines in both modes. With `--cart`, for each mode it asks before adding 1 of a product, changes it to 2
    and removes it. Share `captures/live-check-<time>.md` (redacted: header, cookie and storage *names* only).
 

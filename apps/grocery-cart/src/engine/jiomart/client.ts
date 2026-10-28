@@ -4,6 +4,7 @@
 
 import {
   ADD_PATH,
+  type AddTemplate,
   type AddedLine,
   addBody,
   addedLine,
@@ -52,6 +53,8 @@ export interface Session {
   filters: Partial<Record<Mode, string>>;
   /** JioMart's address; only tests change it */
   origin?: string;
+  /** what the page's own add-to-cart carries per mode (learnt when you add something on JioMart) */
+  addTemplates?: Partial<Record<Mode, AddTemplate>>;
   /** how the page asks for search page 2 (learnt when you scroll on JioMart); default: meta.nextPageToken */
   paging?: Paging;
   /** headers the page sent with its searches in each mode, if they differ from `headers` */
@@ -182,9 +185,10 @@ export class JioMartClient {
     return cart;
   }
 
-  private async write(method: "POST" | "PUT", path: string, cartId: string, body: unknown, mode?: Mode): Promise<unknown> {
+  private async write(method: "POST" | "PUT", path: string, cartId: string, body: unknown, mode?: Mode, query: Record<string, string> = {}): Promise<unknown> {
     await this.pace("write");
-    const json = await this.send(method, `${this.origin}${path}?id=${encodeURIComponent(cartId)}`, body, mode);
+    const extra = Object.entries(query).map(([k, v]) => `&${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("");
+    const json = await this.send(method, `${this.origin}${path}?id=${encodeURIComponent(cartId)}${extra}`, body, mode);
     if (!cartWriteOk(200, json)) {
       const message = writeMessage(json) ?? "JioMart didn't change the cart";
       throw new CartError(cartErrorCode(message), message);
@@ -194,7 +198,8 @@ export class JioMartClient {
 
   /** Adds `quantity` of a product. Returns the cart line it created or grew. */
   async add(cartId: string, product: Product, quantity: number): Promise<AddedLine> {
-    const json = await this.write("POST", ADD_PATH, cartId, addBody(product, quantity), product.mode);
+    const tpl = product.mode ? this.session.addTemplates?.[product.mode] : undefined;
+    const json = await this.write("POST", ADD_PATH, cartId, addBody(product, quantity, tpl), product.mode, tpl?.query);
     const line = addedLine(json, product.uid);
     if (!line) throw new ShopError("shop_changed", "JioMart added the product but didn't say which cart line");
     return line;

@@ -46,6 +46,8 @@ export interface Row {
   addMessage?: string;
   /** once added: the product added and how many of it the cart had before (for "Undo this run") */
   addedUid?: number;
+  /** packs actually added when JioMart had fewer in stock than asked (otherwise the chosen packs) */
+  addedPacks?: number;
   before?: number;
   /** taken back out of the cart afterwards ("Undo this run" or the Cart page) */
   undone?: boolean;
@@ -323,6 +325,26 @@ export class Run {
         } catch (e) {
           if (gen !== this.generation) return;
           if (e instanceof CartError) {
+            // Not enough stock for all the packs (the nearby store often has 1): take what there is.
+            const c = r.chosen!;
+            if (e.code === "out_of_stock" && c.packs > 1 && !cart?.lines.some((l) => l.uid === c.product.uid)) {
+              try {
+                await this.shop.add(cart?.id ?? (await this.shop.cart()).id, { ...c.product, mode: r.mode }, 1);
+                cart = undefined;
+                Object.assign(r, {
+                  add: "added",
+                  addedUid: c.product.uid,
+                  before: 0,
+                  addedPacks: 1,
+                  addError: "out_of_stock",
+                  addMessage: `Only 1 of ${c.packs} added: JioMart has no more in stock`,
+                });
+                this.emit();
+                break;
+              } catch {
+                /* not even one: fail below */
+              }
+            }
             Object.assign(r, { add: "failed", addError: e.code, addMessage: e.message });
             this.emit();
             break;

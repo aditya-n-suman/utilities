@@ -94,3 +94,15 @@ Sponsored results come from the ad server, not the search response, so search re
   always removes.
 - **Names:** sizes aren't always last ("… Cooker 5 Ltr / ISI Certified / 5 Year Warranty"), and sets matter
   ("(Set of 3)", "2 pcs."). Both are read now.
+
+## Live check 2 (2026-10-28 20:34)
+- **Paging** wasn't learnt even after scrolling. The match required page 2 to repeat page 1's filter and words exactly
+  (the Quick filter carries `:::searchType:global`, which the page may drop for page 2). Now any of the last 20 search
+  answers can explain a `page_id`, and an unexplained page-2 request is reported (parameter names, id length only).
+- **Shop all adds go out as Quick.** The tool's add carries nothing that says Shop all; the earlier run put a Shop all
+  strainer in the cart as `journey quickcommerce`, and this run's Shop all add failed "Product is out of stock" (not
+  stocked nearby). The tab now learns what the page's own add sends per mode (extra URL parameters, extra item and
+  body fields, never product fields) when you add something on JioMart, saved in `~/.config/grocery-cart/jiomart-add.json`.
+- **Stock:** Tata Sampann toor dal: added 1, "JioMart can sell 1 more" (sellable quantity 1), change to 2 → "Product is
+  out of stock". Real store stock. A run now adds what there is when several packs are out of stock ("only 1 of 2").
+- The tool's own requests run in the tab too; the learning now ignores them (they're counted by the fetcher).

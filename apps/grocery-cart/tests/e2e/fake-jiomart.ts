@@ -42,7 +42,7 @@ const ITEMS = [
 
 const PAGE = `<!doctype html><meta charset="utf-8"><title>JioMart stand-in</title>
 <button id="quick">Quick</button><button id="all">Shop all</button>
-<input id="q"><button id="go">Search</button><button id="more">More</button><ul id="results"></ul>
+<input id="q"><button id="go">Search</button><button id="more">More</button><button id="add">Add first</button><ul id="results"></ul>
 <script>
 let mode = "quick";
 const headers = () => ({ authorization: ${JSON.stringify(AUTH)}, "x-location-detail": mode === "quick" ? "loc-quick" : "loc-all",
@@ -65,6 +65,18 @@ document.getElementById("go").onclick = () => {
 // Scrolling: the page sends the token from the last answer, plus page_size and page_type.
 document.getElementById("more").onclick = () =>
   last && last.page.has_next && search("&page_id=" + encodeURIComponent(last.meta.nextPageToken) + "&page_size=50&page_type=cursor");
+// Adding from the results: in Shop all the page says so, in the URL and in meta (as the real one may).
+document.getElementById("add").onclick = () => {
+  const it = last.items[0];
+  const all = mode === "all";
+  return fetch("/api/service/application/cart/v2.0/bulk-detail?id=cart0001" + (all ? "&journey=standard" : ""), {
+    method: "POST",
+    headers: { ...headers(), "content-type": "application/json" },
+    body: JSON.stringify({ items: [{ item_id: it.uid, item_size: it.sizes[0], quantity: 1, seller_id: 1,
+      meta: { vertical_code: it.attributes["vertical-code"], compute_delivery_fee: true, ...(all ? { journey: "standard" } : {}) },
+      extra_meta: { is_tradein_opted: false } }] }),
+  });
+};
 </script>`;
 
 export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}) {
@@ -152,13 +164,16 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
         const it = body.items[0];
         const known = ITEMS.find((i) => i.uid === it.item_id && i.sizes[0] === it.item_size && i.sellable);
         if (url.searchParams.get("id") !== CART || !known) return send({ success: false, message: "Item not found" });
+        // Without the page's Shop all marker an add is a Quick add, and Quick doesn't stock Shop-all-only items.
+        const journey = url.searchParams.get("journey") === "standard" && it.meta?.journey === "standard" ? "standard" : "quickcommerce";
+        if (known.journey === "standard" && journey !== "standard") return send({ success: false, message: "Product is out of stock" });
         const line = cart.get(it.item_id) ?? {
           identifier: `id${++lineSeq}`,
           article_id: `art${it.item_id}`,
           quantity: 0,
           size: it.item_size,
           vertical: it.meta.vertical_code,
-          journey: known.journey,
+          journey,
         };
         line.quantity += it.quantity;
         if (line.quantity > known.moq.maximum) return send({ success: false, message: `You can add maximum ${known.moq.maximum} quantity` });

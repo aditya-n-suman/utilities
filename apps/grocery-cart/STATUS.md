@@ -77,7 +77,7 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 - `run.ts`: one run of a list: `find` (line by line), review edits (`choose`, `setPacks`, `skip`, `setRemember`,
   `searchAgain` with other words or the other mode), `addAll` (existing cart lines are increased, not duplicated;
   `onlyFailed` for retries), `pause`/`resume`, `reset`. Shop trouble pauses on the current line and resume retries it;
-  a refused write fails only that line. Remembers a changed pick (if ticked) when it's added.
+  a refused write fails only that line, except "out of stock" for several packs, which adds 1 ("only 1 of N"). Remembers a changed pick (if ticked) when it's added.
 - `tidy.ts`: `CartTidy.run(targets)` brings each product down to a quantity (0 = remove), one at a time, re-reading the
   cart before each change because JioMart renumbers lines; pauses on shop trouble like the run. `Run.undoTargets()`
   gives "Undo this run": what the run added goes back to the quantity the cart had before (`Row.before`).
@@ -90,7 +90,9 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 - `jiomart-tab.ts`: finds the JioMart tab, learns headers (minus the stale `x-fp-signature`/`x-fp-date`) and the
   cart query from the page's own polling (reloads once if the page is quiet), and each mode's filter from the page's
   searches; remembers filters per area code in `~/.config/grocery-cart/jiomart.json`. When you scroll a search, it
-  learns paging from the page's page-2 request (`jiomart-paging.json`); until then a repeated page stops paging. Requests go out with fetch()
+  learns paging from the page's page-2 request (`jiomart-paging.json`); until then a repeated page stops paging. When you
+  add something on JioMart, it learns what the page's add carries in that mode (`jiomart-add.json`), which the client
+  merges into its own adds (`AddTemplate`). The tool's own requests (also made in the tab) are ignored by the learning. Requests go out with fetch()
   inside the tab.
 - `live-check.ts`: you search once in Quick and once in Shop all on JioMart; it reports what it learnt (names only for
   headers, cookies, storage keys that change between modes), searches groceries and kitchenware in both modes,
@@ -137,9 +139,9 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. You: `./instruction.sh live-check --cart` once more. It asks you to scroll a Quick search (that teaches paging),
-   prints stock for the quantity-change test, and always cleans up. Then the app for real with
-   `examples/my-list.txt`; its Cart page removes what the old live check left behind.
+1. You: `./instruction.sh live-check --cart` again. In each mode it asks you to search, scroll, and add + remove any
+   product on JioMart: that teaches paging and how the page adds in Shop all. The report shows what was learnt (field
+   names only). Then the app with `examples/my-list.txt`.
 2. Unverified on the real site, in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH`), the cart page
    (`CART_PAGE_PATH = /checkout/cart`).
 3. Confirm paging from step 1's output; tune the matcher on real searches (sanitised fixtures + cases in `match.test.ts`).

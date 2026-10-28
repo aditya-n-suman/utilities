@@ -291,19 +291,66 @@ export function cartQuantity(json: unknown, uid: number): number {
     .reduce((n, i) => n + (num(i.quantity) ?? 0), 0);
 }
 
-export function addBody(item: Pick<Product, "uid" | "size" | "sellerId" | "verticalCode">, quantity: number): Json {
+/**
+ * What the page's own add-to-cart carried besides the product, learnt per delivery mode from the page itself
+ * (src/local/jiomart-tab.ts): extra URL parameters, extra fields on the item (e.g. a journey in `meta`), extra
+ * top-level fields. Merged into the tool's own add so a Shop all add is sent the way the page sends one.
+ */
+export interface AddTemplate {
+  query: Record<string, string>;
+  item: Json;
+  top: Json;
+}
+
+/** Item fields that belong to one product, never copied from the page's add. */
+const PRODUCT_FIELDS = new Set(["item_id", "item_size", "quantity", "seller_id", "article_id", "identifiers", "item_index", "parent_item_identifiers"]);
+
+export function addTemplateFrom(url: string, body: unknown): AddTemplate | undefined {
+  let u: URL;
+  try {
+    u = new URL(url);
+  } catch {
+    return undefined;
+  }
+  const b = obj(body);
+  const first = arr(b.items)[0];
+  if (!isObj(first)) return undefined;
   return {
-    items: [
-      {
-        item_id: item.uid,
-        item_size: item.size,
-        quantity,
-        seller_id: item.sellerId,
-        meta: { vertical_code: item.verticalCode, compute_delivery_fee: true },
-        extra_meta: { is_tradein_opted: false },
-      },
-    ],
+    query: Object.fromEntries([...u.searchParams].filter(([k]) => k !== "id")),
+    item: Object.fromEntries(Object.entries(first).filter(([k]) => !PRODUCT_FIELDS.has(k))),
+    top: Object.fromEntries(Object.entries(b).filter(([k]) => k !== "items")),
   };
+}
+
+/** `base` with `over` laid on top, objects merged key by key. */
+function merge(base: Json, over: Json): Json {
+  const out: Json = { ...base };
+  for (const [k, v] of Object.entries(over)) out[k] = isObj(v) && isObj(out[k]) ? merge(out[k] as Json, v) : v;
+  return out;
+}
+
+export function addBody(item: Pick<Product, "uid" | "size" | "sellerId" | "verticalCode">, quantity: number, tpl?: AddTemplate): Json {
+  const own: Json = {
+    item_id: item.uid,
+    item_size: item.size,
+    quantity,
+    seller_id: item.sellerId,
+    meta: { vertical_code: item.verticalCode, compute_delivery_fee: true },
+    extra_meta: { is_tradein_opted: false },
+  };
+  // The page's extras fill in what we don't send; the product's own fields always win.
+  return { ...(tpl?.top ?? {}), items: [tpl ? merge(tpl.item, own) : own] };
+}
+
+/** Leaf paths of a template with short, harmless values (for reports): "meta.journey=standard", "query.b". */
+export function describeTemplate(t: AddTemplate): string[] {
+  const out: string[] = [];
+  const walk = (v: unknown, path: string) => {
+    if (isObj(v)) for (const [k, x] of Object.entries(v)) walk(x, path ? `${path}.${k}` : k);
+    else out.push(typeof v === "string" && v.length <= 24 && !/\d{5,}/.test(v) ? `${path}=${v}` : typeof v === "boolean" || typeof v === "number" ? `${path}=${v}` : path);
+  };
+  walk({ query: t.query, item: t.item, top: t.top }, "");
+  return out;
 }
 
 export interface AddedLine {

@@ -112,9 +112,23 @@ try {
   const cart = await client.cart();
   const tata = dal.products[1];
   await client.add(cart.id, tata, 1);
+  // A Shop all add before the page has shown how it adds in Shop all goes out as Quick, and fails.
+  const early = await client.add(cart.id, allCooker.products[0], 1).catch((e: unknown) => e);
+  check((early as { code?: string }).code === "out_of_stock", "a Shop all add without the learnt template fails like on the real site");
+  // You add something on JioMart in Shop all: the tab learns what the page sends.
+  await page.click("#all");
+  await page.fill("#q", "strainer");
+  await page.click("#go");
+  await page.waitForTimeout(300);
+  await page.click("#add");
+  await page.waitForTimeout(500);
+  check(tab.session.addTemplates?.all?.query.journey === "standard" && !tab.session.addTemplates.quick, "Shop all add learnt from the page's own add");
+  jm.cart.delete(9100002); // you'd remove it again on JioMart
+  jm.writes.length = 1;
   await client.add(cart.id, allCooker.products[0], 1);
   check(jm.cart.get(tata.uid)?.quantity === 1 && jm.cart.get(9100001)?.quantity === 1, "added one item from each mode");
   check(jm.writes[1]?.location === "loc-all", "the Shop all add went out with Shop all's headers");
+  check(jm.cart.get(9100001)?.journey === "standard", "the Shop all add is delivered as Shop all (journey standard)");
   check(jm.writes.every((w) => !w.signed), "writes go out without a signature");
   let lines = (await client.cart()).lines;
   const tataLine = lines.find((l) => l.uid === tata.uid)!;

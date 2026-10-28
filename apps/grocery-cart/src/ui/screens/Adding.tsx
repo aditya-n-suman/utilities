@@ -64,7 +64,14 @@ export function Adding({ run }: { run: RunState }) {
               {rupees(r.chosen?.lineTotal)}
             </div>
             <div role="cell" style={{ fontSize: 13.5 }}>
-              {r.add === "added" && <span style={{ color: "var(--accent-text)", fontWeight: 600 }}>Added ✓</span>}
+              {r.add === "added" &&
+                (r.addedPacks ? (
+                  <span style={{ color: "var(--warn-text)", fontWeight: 600 }} title={r.addMessage}>
+                    Added {r.addedPacks} of {r.chosen?.packs} · low stock
+                  </span>
+                ) : (
+                  <span style={{ color: "var(--accent-text)", fontWeight: 600 }}>Added ✓</span>
+                ))}
               {r.add === "adding" && (
                 <span style={{ display: "flex", gap: 8, alignItems: "center", fontWeight: 600 }}>
                   <span className={`spin${run.paused ? " warn" : ""}`} aria-hidden="true" />

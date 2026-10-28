@@ -14,7 +14,7 @@ import { join } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { parseArgs } from "node:util";
 import type { BrowserContext, Page } from "playwright-core";
-import type { Mode, Product } from "../engine/jiomart/api.ts";
+import { describeTemplate, type Mode, type Product } from "../engine/jiomart/api.ts";
 import { CartError, JioMartClient, ShopError } from "../engine/jiomart/client.ts";
 import { formatAmount } from "../engine/units.ts";
 import { connect, DEFAULT_ENDPOINT } from "../research/cdp.ts";
@@ -86,9 +86,15 @@ async function main(): Promise<void> {
     await tab.page.bringToFront();
 
     const before = await snapshot(context, tab.page);
-    await enter('1/2  On JioMart, switch to "Quick", search for anything (e.g. rice) and scroll down until more products load.');
+    await enter(
+      '1/2  On JioMart, switch to "Quick", search for anything (e.g. rice) and scroll down until more products load.\n' +
+        "     Then add any product to the cart from those results, and remove it again (on JioMart).",
+    );
     const afterQuick = await snapshot(context, tab.page);
-    await enter('2/2  Now switch to "Shop all" and search for anything (e.g. rice).');
+    await enter(
+      '2/2  Now switch to "Shop all", search for anything (e.g. strainer), add any product from the results to the cart,\n' +
+        "     and remove it again (on JioMart). That shows how the page adds in Shop all.",
+    );
     const afterAll = await snapshot(context, tab.page);
     const s = tab.session;
 
@@ -100,6 +106,15 @@ async function main(): Promise<void> {
       log(`- ${MODE_NAME[mode]} filter: ${f === undefined ? "not seen" : f === "" ? "(empty)" : `\`${safeFilter(f)}\``}`);
     }
     if (tab.missing.length) log(`- still missing: ${tab.missing.join("; ")}`);
+    const diag = tab.diagnostics();
+    if (!s.paging && diag.pagingUnmatched) {
+      const u = diag.pagingUnmatched;
+      log(`- paging: saw a page-2 request (params ${u.params.map((k) => `\`${k}\``).join(", ") || "none"}, page_id ${u.idLength} chars) but its page_id wasn't in any of the ${u.answers} search answers seen`);
+    }
+    for (const mode of ["quick", "all"] as Mode[]) {
+      const t = s.addTemplates?.[mode];
+      log(`- ${MODE_NAME[mode]} add, learnt from the page: ${t ? describeTemplate(t).map((x) => `\`${x}\``).join(", ") || "nothing beyond the product" : "not seen (add something on JioMart in this mode)"}`);
+    }
     log(
       `- paging: ${s.paging ? `page_id from \`${s.paging.idFrom}\`, with ${Object.keys(s.paging.params).map((k) => `\`${k}\``).join(", ") || "no other parameters"}` : "not learnt (scroll down on a search results page until more load)"}`,
     );
@@ -167,7 +182,7 @@ async function main(): Promise<void> {
             await f();
           } catch (e) {
             const code = e instanceof CartError || e instanceof ShopError ? e.code : "error";
-            log(`- ❌ ${MODE_NAME[mode]} ${label}: ${code}: ${(e as Error).message}`);
+            log(`- ❌ ${MODE_NAME[mode]} ${label} "${p.name}": ${code}: ${(e as Error).message}`);
           }
         };
         await step("add", async () => {

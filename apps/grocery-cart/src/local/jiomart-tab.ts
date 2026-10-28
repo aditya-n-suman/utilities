@@ -8,7 +8,18 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { BrowserContext, Page, Request, Response } from "playwright-core";
-import { CART_DETAIL_PATH, type Mode, ORIGIN, type Paging, pathOfValue, SEARCH_PATH, storeFromFilter } from "../engine/jiomart/api.ts";
+import {
+  ADD_PATH,
+  type AddTemplate,
+  addTemplateFrom,
+  CART_DETAIL_PATH,
+  type Mode,
+  ORIGIN,
+  type Paging,
+  pathOfValue,
+  SEARCH_PATH,
+  storeFromFilter,
+} from "../engine/jiomart/api.ts";
 import type { Fetcher, FetchRequest, FetchResponse, Session } from "../engine/jiomart/client.ts";
 import { sitePage } from "../research/cdp.ts";
 import { type Site, SITES } from "../research/sites.ts";
@@ -56,12 +67,17 @@ export interface Observed {
   cartQuery?: string;
   filters: Partial<Record<Mode, string>>;
   modeHeaders: Partial<Record<Mode, Record<string, string>>>;
-  /** the page's last search answer per filter + words, to see where its next page_id came from */
-  lastSearch?: Map<string, unknown>;
+  /** the page's recent search answers (newest last), to see where a later page's page_id came from */
+  answers?: unknown[];
   paging?: Paging;
+  /** a page-2 request whose page_id wasn't found in any recent answer (for the live-check report) */
+  pagingUnmatched?: { params: string[]; idLength: number; answers: number };
+  /** the mode of the page's last search: what an add on the page belongs to */
+  lastMode?: Mode;
+  addTemplates: Partial<Record<Mode, AddTemplate>>;
 }
 
-const searchKey = (u: URL) => `${u.searchParams.get("f") ?? ""}|${u.searchParams.get("q") ?? ""}`;
+const MAX_ANSWERS = 20;
 
 /** Remembers a search answer the page received. Exported for tests. */
 export function observeSearchAnswer(o: Observed, url: string, json: unknown, origin = ORIGIN): void {
@@ -72,11 +88,12 @@ export function observeSearchAnswer(o: Observed, url: string, json: unknown, ori
     return;
   }
   if (u.origin !== origin || u.pathname !== SEARCH_PATH) return;
-  (o.lastSearch ??= new Map()).set(searchKey(u), json);
+  (o.answers ??= []).push(json);
+  if (o.answers.length > MAX_ANSWERS) o.answers.shift();
 }
 
 /** Folds one of the page's requests into what we've learnt. Exported for tests. */
-export function observe(o: Observed, url: string, headers: Record<string, string>, origin = ORIGIN): void {
+export function observe(o: Observed, url: string, headers: Record<string, string>, origin = ORIGIN, body?: string): void {
   let u: URL;
   try {
     u = new URL(url);
@@ -90,15 +107,30 @@ export function observe(o: Observed, url: string, headers: Record<string, string
     // No `f` at all counts as an unfiltered search, which can only be Shop all.
     const f = u.searchParams.get("f") ?? "";
     const mode = modeOfFilter(f);
-    o.filters[mode] = f;
+    o.lastMode = mode;
+    if (!u.searchParams.has("page_id")) o.filters[mode] = f;
     if (headers.authorization) o.modeHeaders[mode] = pageHeaders(headers);
-    // Asking for a later page (you scrolled): learn which field of the previous answer it sent as page_id.
+    // Asking for a later page (you scrolled): learn which field of a recent answer it sent as page_id.
     const pageId = u.searchParams.get("page_id");
-    const previous = o.lastSearch?.get(searchKey(u));
-    const idFrom = pageId && previous !== undefined ? pathOfValue(previous, pageId) : undefined;
-    if (idFrom) {
+    if (pageId) {
+      let idFrom: string | undefined;
+      for (const a of [...(o.answers ?? [])].reverse()) if ((idFrom = pathOfValue(a, pageId))) break;
       const params = Object.fromEntries([...u.searchParams].filter(([k]) => k !== "f" && k !== "q" && k !== "page_id"));
-      o.paging = { idFrom, params };
+      if (idFrom) {
+        o.paging = { idFrom, params };
+        o.pagingUnmatched = undefined;
+      } else if (!o.paging) {
+        o.pagingUnmatched = { params: Object.keys(params), idLength: pageId.length, answers: o.answers?.length ?? 0 };
+      }
+    }
+  }
+  // The page adding to the cart: learn what it sends besides the product, for the mode of its last search.
+  if (u.pathname === ADD_PATH && body && o.lastMode) {
+    try {
+      const tpl = addTemplateFrom(url, JSON.parse(body));
+      if (tpl) o.addTemplates[o.lastMode] = tpl;
+    } catch {
+      /* not JSON */
     }
   }
 }
@@ -107,11 +139,27 @@ export function areaCode(cartQuery: string | undefined): string {
   return new URLSearchParams(cartQuery ?? "").get("area_code") ?? "unknown";
 }
 
-export function pageFetcher(page: Page): Fetcher {
+const requestKey = (method: string, url: string) => {
+  try {
+    return `${method} ${new URL(url).href}`;
+  } catch {
+    return `${method} ${url}`;
+  }
+};
+
+/**
+ * Sends the tool's requests with fetch() inside the tab. `own` counts the requests in flight, so the tab's
+ * listener can tell them from the page's own requests and learn only from the page.
+ */
+export function pageFetcher(page: Page, own: Map<string, number> = new Map()): Fetcher {
   return async (req: FetchRequest): Promise<FetchResponse> => {
+    const key = requestKey(req.method, req.url);
+    own.set(key, (own.get(key) ?? 0) + 1);
+    // Forget it a little after it's done, if the listener hasn't consumed it.
+    const release = () => setTimeout(() => (own.get(key) ?? 0) > 0 && own.set(key, own.get(key)! - 1), 5000);
     for (let attempt = 0; ; attempt++) {
       try {
-        return await page.evaluate(async ({ url, method, headers, body }) => {
+        const res = await page.evaluate(async ({ url, method, headers, body }) => {
           try {
             const res = await fetch(url, { method, headers, body, credentials: "include" });
             return { status: res.status, contentType: res.headers.get("content-type") ?? "", body: await res.text() };
@@ -119,9 +167,14 @@ export function pageFetcher(page: Page): Fetcher {
             return { status: 0, contentType: "", body: "", error: String(e) };
           }
         }, req);
+        release();
+        return res;
       } catch (e) {
         // The page navigated mid-call (you clicked something). Wait for it to settle and try once more.
-        if (attempt > 0) return { status: 0, contentType: "", body: "", error: (e as Error).message.split("\n")[0] };
+        if (attempt > 0) {
+          release();
+          return { status: 0, contentType: "", body: "", error: (e as Error).message.split("\n")[0] };
+        }
         await page.waitForLoadState("domcontentloaded").catch(() => undefined);
       }
     }
@@ -134,6 +187,8 @@ export interface JioMartTab {
   session: Session;
   /** the store in the quick filter, if known */
   storeId?: string;
+  /** what the tab has seen that isn't in the session: an unmatched page-2 request (for reports) */
+  diagnostics(): { pagingUnmatched?: Observed["pagingUnmatched"]; addLearnt: Mode[] };
   /** what's still missing, in words for the UI (updates as the page makes more requests) */
   readonly missing: string[];
   /** stop listening to the page */
@@ -151,8 +206,9 @@ export async function openJioMartTab(
   const origin = opts.origin ?? ORIGIN;
   const page = await sitePage(context, opts.site ?? SITES.jiomart);
   const saved = loadSaved();
-  const o: Observed = { filters: {}, modeHeaders: {} };
+  const o: Observed = { filters: {}, modeHeaders: {}, addTemplates: {} };
   let savedPaging = readConfig<Paging | undefined>("jiomart-paging.json", undefined);
+  const savedAdd = readConfig<Partial<Record<Mode, AddTemplate>>>("jiomart-add.json", {});
   const session: Session = { headers: {}, cartQuery: "", filters: {}, ...(origin !== ORIGIN ? { origin } : {}) };
 
   const sync = () => {
@@ -164,6 +220,11 @@ export async function openJioMartTab(
       writeConfig("jiomart-paging.json", o.paging);
     }
     session.paging = o.paging ?? savedPaging;
+    if (Object.keys(o.addTemplates).length && JSON.stringify({ ...savedAdd, ...o.addTemplates }) !== JSON.stringify(savedAdd)) {
+      Object.assign(savedAdd, o.addTemplates);
+      writeConfig("jiomart-add.json", savedAdd);
+    }
+    session.addTemplates = { ...savedAdd };
     const area = areaCode(o.cartQuery);
     const remembered = saved[area] ?? {};
     session.filters = { ...remembered, ...o.filters };
@@ -172,11 +233,19 @@ export async function openJioMartTab(
       save(saved);
     }
   };
+  const own = new Map<string, number>();
   const onRequest = (req: Request) => {
+    // The tool's own requests also run in this tab: learn only from the page's.
+    const key = requestKey(req.method(), req.url());
+    const mine = own.get(key) ?? 0;
+    if (mine > 0) {
+      own.set(key, mine - 1);
+      return;
+    }
     void req
       .allHeaders()
       .then((h) => {
-        observe(o, req.url(), h, origin);
+        observe(o, req.url(), h, origin, req.postData() ?? undefined);
         sync();
       })
       .catch(() => undefined);
@@ -211,11 +280,12 @@ export async function openJioMartTab(
 
   return {
     page,
-    fetcher: pageFetcher(page),
+    fetcher: pageFetcher(page, own),
     session,
     get storeId() {
       return session.filters.quick ? storeFromFilter(session.filters.quick) : undefined;
     },
+    diagnostics: () => ({ pagingUnmatched: o.pagingUnmatched, addLearnt: Object.keys(session.addTemplates ?? {}) as Mode[] }),
     get missing() {
       return missing();
     },

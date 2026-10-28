@@ -90,6 +90,16 @@ export function Connect({ state, onContinue }: { state: AppState; onContinue: ()
                   {ready && (c.modes.quick || c.modes.all) && ` ${c.modes.quick ? "Quick" : "Shop all"} is ready already.`}
                 </span>
               )}
+              {modesOk && c.learnt && (!c.learnt.shopAllAdd || !c.learnt.paging) && (
+                <span className="sub muted">
+                  {[
+                    !c.learnt.shopAllAdd && "In Shop all, add any product on JioMart once and remove it again, so Shop all items are added as Shop all.",
+                    !c.learnt.paging && "Scroll a search on JioMart until more products load, so searches can read more than 12 results.",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                </span>
+              )}
             </div>
           </li>
         </ul>
