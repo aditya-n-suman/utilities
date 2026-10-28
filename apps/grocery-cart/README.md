@@ -4,7 +4,7 @@ Turn a grocery list into a filled JioMart cart, in your own signed-in Chrome. Pa
 picks (pack sizes, brands, prices), and it adds them to your cart. It never checks out or pays: you check the cart
 and pay on JioMart yourself. DMart Ready may follow.
 
-**State: Phase 0 (feasibility).** Only the research tools exist so far. See [STATUS.md](STATUS.md).
+**State: Phase 0 done** (search and cart work from your tab with JioMart's own requests). Only the research tools exist so far. See [STATUS.md](STATUS.md).
 
 ## How it will work
 ```

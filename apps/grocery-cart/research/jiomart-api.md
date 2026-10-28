@@ -9,12 +9,16 @@ user's machine; this file keeps only what Phase 2 needs. JioMart's storefront ru
 Every API call carries `authorization`, `visitor-id`, `x-currency-code`, `x-fp-date`, `x-fp-sdk-version`,
 `x-fp-signature`, `x-geolocation`, `x-location-detail`, plus the session cookies.
 - **Search works without any of them** (replayed with only cookies: same 12 products).
-- Cart writes: unknown yet. `cart-probe` tries without `x-fp-signature`/`x-fp-date` first, then with the captured ones.
+- **Cart writes work without `x-fp-signature`/`x-fp-date`** (cart probe, 2026-10-28). They were sent with the other
+  captured headers (`authorization`, `visitor-id`, `x-location-detail`, …); whether those are needed is untested. Phase 2
+  doesn't need to know: it copies them from the page's own live requests (the page polls the cart constantly).
 
 ## Search
 `GET /ext/vertex/application/api/v1.0/products?f=<filter>&q=<words>` (first page, 12 items), then
 `&page_id=<page.next_id>&page_size=50` for more. Replay with new words from the tab: ✅ (toor dal → 12 toor dal products).
-`f` is a filter string the page sets; not decoded yet (the cart probe prints it).
+`f` is `journey:quickcommerce:::store_ids:<store>||<store>`: results limited to quick delivery from the nearby
+store picked for the pincode. Open: kitchenware (pressure cooker, containers) may only be sold with standard delivery
+and so be missing from these results; try `journey:standard` or no `f` in Phase 2.
 
 Per item (fields we'll use):
 | Field | Example | Use |
@@ -22,7 +26,7 @@ Per item (fields we'll use):
 | `uid` | 132487249 | cart `item_id` |
 | `name` | Aashirvaad Shudh Whole Wheat Chakki Atta 5 kg | matching, display |
 | `brand.name` | aashirvaad | matching |
-| `sizes[0]` | `OS` (one size) | cart `item_size` (to confirm: the added Fortune pack used `5 KG`) |
+| `sizes[0]` | `OS`, `5 KG` | cart `item_size` (confirmed: the probe added "Loose Toor Dal" with `OS`; the page added the Fortune pack with `5 KG`) |
 | `net-quantity-value` / `-unit` | 5 / kg | pack maths |
 | `attributes.product-size` | 5 kg | pack maths fallback |
 | `price.effective.min` / `price.marked.min` | 245 / 262 | price, MRP |
@@ -51,7 +55,7 @@ returns the store, seller, `article_id`, live price and store `quantity` (stock)
   `items` is a list, so a whole basket could go in one request (to test).
 - **Change quantity / remove**: `PUT /api/service/application/cart/v2.0/detail?id=<cart id>` with
   `{ operation: "remove_item" | …, item: { article_id, item_id, identifiers: { identifier: <line id> }, item_size, quantity, item_index, … } }`.
-  The +1 step used the same PUT (operation not captured in the summary; to check).
+  The +1 step is the same PUT with `operation: "update_item"` and the new `quantity` → "Item updated to cart".
 - Failures come back as HTTP 200 with `success: false` (e.g. "Failed to remove item from cart"), so check `success`.
 
 ## Probe results
@@ -59,7 +63,16 @@ returns the store, seller, `article_id`, live price and store `quantity` (stock)
 - `probe --add` replayed the wrong request (a `remove_item` the page sent just before the add) and JioMart answered
   "Failed to remove item from cart"; the cart didn't change. Fixed: the add pick now prefers a write whose response
   says "added" and skips removals.
-- Built add + remove of a new product: run `./instruction.sh cart-probe` (results go here).
+- Cart probe (search "toor dal" → pick the first sellable → add → check → remove → check), all ✅:
+  ```
+  - search filter `f`: `journey:quickcommerce:::store_ids:<store>||<store>`
+  - picked: Loose Toor Dal Value 1 kg (size `OS`, ₹156.5, max 6)
+  - ✅ add without the signature headers: status 200, "Product has been added to cart"
+  - ✅ cart now has 1 of it
+  - ✅ remove: status 200, "Item removed from cart"
+  - ✅ cart is back to how it was
+  ```
+  It picked a *loose* product: the matcher has to rank (Phase 3), not take the first sellable result.
 
 ## Other hosts (not needed)
 Google Analytics, AppsFlyer, Moloco, JioMart's ad server (`ads.jiomartjcp.com`, sponsored products), image CDNs.

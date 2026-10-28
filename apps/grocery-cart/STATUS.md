@@ -23,7 +23,7 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 | # | Phase | State |
 |---|---|---|
 | 0 | Feasibility: record a search + add by hand, summarise (redacted), replay the search with new words from the tab | ✅ search replay works on JioMart (even without its custom headers); endpoints mapped in `research/jiomart-api.md` |
-| 0b | Add a product found by a new search, check, remove (`cart-probe`); learn whether the `x-fp-signature` is checked | 🔧 built, tested on a JioMart-shaped stand-in; **waiting for a real run** |
+| 0b | Add a product found by a new search, check, remove (`cart-probe`); learn whether the `x-fp-signature` is checked | ✅ add + remove work from the tab; the signature isn't needed |
 | 1 | List parser + units, tests (format in LIST_FORMAT.md, sample `examples/my-list.txt`) | format decided |
 | 2 | JioMart adapter: search + add via its requests, click fallback; fixtures from Phase 0 | |
 | 3 | Matcher: name/brand tokens, pack size and pack maths, stock, price per unit, confidence | |
@@ -60,8 +60,10 @@ Details and field tables: `research/jiomart-api.md`.
 - Add to cart is `POST /api/service/application/cart/v2.0/bulk-detail?id=<cart>` with a list of items; remove and
   quantity changes are `PUT /api/service/application/cart/v2.0/detail?id=<cart>`. Failures are HTTP 200 with
   `success: false`.
-- Open: is `x-fp-signature` checked on cart writes (if so, the tool must get the page to sign, or click instead);
-  is `item_size` always `sizes[0]` from search; what `f` holds; can one bulk-detail call add the whole basket.
+- Cart writes work from the tab without the request signature (cart probe ✅ add, check, remove). Decision: Phase 2
+  sends JioMart's own requests; clicking is not needed.
+- Open: search's `f` limits results to quick delivery from one nearby store; kitchenware may only exist with
+  standard delivery. Can one bulk-detail call add the whole basket.
 - The first summary leaked an `area_code` (pincode) in a URL and a store's coordinates; redaction now covers
   `area_code`, 6-digit query values and location keys (including arrays like `long_lat`).
 - `probe --add` replayed a `remove_item` sent just before the add (harmless: "Failed to remove", cart unchanged).
@@ -70,8 +72,8 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. You: `./instruction.sh summarize` (regenerates the summary with the fixed redaction), then
-   `./instruction.sh cart-probe "toor dal"` and share the new lines at the end of `probe.md`.
-2. Me: if the add works without the signature, Phase 2 uses requests; if only with a fresh signature, find how the
-   page signs (Fynd SDK in the page) or fall back to clicking. Then Phase 1 (parser) and Phase 2 (adapter, fixtures).
+1. Phase 1: list parser (`src/engine/list.ts`) against `examples/my-list.txt` and LIST_FORMAT.md's rules.
+2. Phase 2: JioMart adapter (`src/engine/jiomart/`): take headers, cart id and store from the page's live requests
+   (no capture file needed), search with paging, add/update/remove; check quick vs standard delivery for kitchenware.
+   Fixtures: sanitised search responses.
 3. Paste `DESIGN_BRIEF.md`'s prompt into Claude Design; save the canvas in `design/`.
