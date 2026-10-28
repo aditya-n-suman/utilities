@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#E3DFD7}a{color:var(--accent-text,#2f6b3c);text-underline-offset:3px}a:hover{color:var(--ink,#1d1b17)}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed}input,textarea{font:inherit}</style>
+</helmet>
+
+<div style="padding:72px;display:flex;flex-direction:column;gap:96px;font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;color:#2B2924">
+
+<div style="display:flex;flex-direction:column;gap:8px;max-width:760px">
+<h1 style="margin:0;font-size:40px;letter-spacing:-0.02em">Grocery Cart</h1>
+<p style="margin:0;font-size:17px;line-height:1.5;color:#55504A;text-wrap:pretty">Turns a typed grocery list into a filled JioMart cart, then stops. Part A is the local web app (1280 px, down to 900 px). Part B is the later Chrome side-panel extension, derived from A. Light and dark frames are mixed throughout.</p>
+</div>
+
+<section id="partA" style="display:flex;flex-direction:column;gap:40px">
+<h2 style="margin:0;font-size:26px;letter-spacing:-0.01em">A · Local web app</h2>
+<div style="display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start">
+
+<!-- A1 Connect -->
+<div id="A1" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A1</span>Connect · signed out, pincode waiting</div>
+<div data-screen-label="A1 Connect" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column;min-height:720px">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">1/6</span> Connect</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+</header>
+<main style="flex:1;display:flex;justify-content:center;padding:72px 28px">
+<div style="width:100%;max-width:600px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Connect to JioMart</h1>
+<p style="margin:0;color:var(--muted);font-size:15px;text-wrap:pretty">Grocery Cart fills your cart in a separate Chrome window. It never checks out or pays.</p>
+</div>
+<ul aria-label="Connection checklist" style="list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px">
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 20px">
+<span role="img" aria-label="OK" style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700">✓</span>
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px">Chrome is open for Grocery Cart</span></div>
+</li>
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 20px;border-top:1px solid var(--line);background:var(--warn-soft)">
+<span role="img" aria-label="Problem" style="width:22px;height:22px;border-radius:50%;background:var(--warn);color:#2a2208;display:grid;place-items:center;font-size:13px;font-weight:700">!</span>
+<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start"><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px">Signed in to JioMart</span><span style="color:var(--warn-text);font-size:13.5px">Not signed in yet in the Grocery Cart Chrome window.</span></div>
+<button style="height:36px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13.5px;font-weight:600">Open JioMart sign-in</button></div>
+</li>
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 20px;border-top:1px solid var(--line)">
+<span role="img" aria-label="Waiting" style="width:22px;height:22px;border-radius:50%;border:1.5px dashed var(--muted);box-sizing:border-box"></span>
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:15px;color:var(--muted)">Delivery pincode</span><span style="color:var(--muted);font-size:13.5px">Checked after you sign in.</span></div>
+</li>
+</ul>
+<div style="display:flex;justify-content:flex-end"><button disabled aria-disabled="true" style="height:42px;padding:0 22px;border:none;border-radius:9px;background:var(--sunk);color:var(--muted);font-size:14.5px;font-weight:600">Continue</button></div>
+</div>
+</main>
+</div>
+</div>
+
+<!-- A1b Connect ok, dark -->
+<div id="A1b" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A1b</span>Connect · all ok (dark)</div>
+<div data-screen-label="A1b Connect ok" style="width:1280px;--bg:#141311;--surface:#1C1A17;--sunk:#272520;--ink:#F0ECE4;--muted:#A39C90;--line:#322F2A;--accent:oklch(0.74 0.15 148);--accent-ink:#0F130E;--accent-soft:oklch(0.31 0.06 148);--accent-text:oklch(0.84 0.12 148);--warn:oklch(0.80 0.13 82);--warn-soft:oklch(0.33 0.055 80);--warn-text:oklch(0.88 0.10 88);--bad-soft:oklch(0.31 0.06 30);--bad-text:oklch(0.82 0.10 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column;min-height:720px">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">1/6</span> Connect</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+</header>
+<main style="flex:1;display:flex;justify-content:center;padding:72px 28px">
+<div style="width:100%;max-width:600px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:6px">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Connect to JioMart</h1>
+<p style="margin:0;color:var(--muted);font-size:15px">Grocery Cart fills your cart in a separate Chrome window. It never checks out or pays.</p>
+</div>
+<ul aria-label="Connection checklist" style="list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px">
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 20px"><span role="img" aria-label="OK" style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700">✓</span><span style="font-weight:600;font-size:15px">Chrome is open for Grocery Cart</span></li>
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr);gap:14px;padding:18px 20px;border-top:1px solid var(--line)"><span role="img" aria-label="OK" style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700">✓</span><span style="font-weight:600;font-size:15px">Signed in to JioMart</span></li>
+<li style="display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:14px;padding:18px 20px;border-top:1px solid var(--line);align-items:center"><span role="img" aria-label="OK" style="width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:13px;font-weight:700">✓</span><span style="font-weight:600;font-size:15px">Delivering to <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span>, Bengaluru</span><a href="#A1b" style="font-size:13.5px">Change on JioMart</a></li>
+</ul>
+<div style="display:flex;justify-content:flex-end"><button style="height:42px;padding:0 22px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:14.5px;font-weight:600">Continue</button></div>
+</div>
+</main>
+</div>
+</div>
+
+<!-- A2 Paste list -->
+<div id="A2" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A2</span>Paste list · Format help open (click to toggle)</div>
+<div data-screen-label="A2 Paste list" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">2/6</span> Paste list</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+<span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>JioMart · <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span></span>
+</header>
+<main style="padding:32px 28px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Your list</h1>
+<a href="#A2" style="font-size:14px">Load last list</a>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start">
+<div style="display:flex;flex-direction:column;gap:10px;position:relative">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)">
+<span><code style="font-family:'Geist Mono','Noto Sans Devanagari',monospace;color:var(--ink)">what to buy ; how much ; note</code>  e.g. <code style="font-family:'Geist Mono','Noto Sans Devanagari',monospace;color:var(--ink)">Atta ; 5 kg ; आटा</code></span>
+<button aria-expanded="{{ helpOpen }}" aria-controls="fmt-help" onClick="{{ toggleHelp }}" style="height:28px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:12.5px;font-weight:600">Format help</button>
+</div>
+<sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ true }}">
+<div id="fmt-help" role="dialog" aria-label="Format help" style="position:absolute;top:38px;left:220px;z-index:2;width:380px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(40,30,10,.14);padding:18px 20px;display:flex;flex-direction:column;gap:12px;font-size:13.5px">
+<div style="display:flex;justify-content:space-between;align-items:center"><strong style="font-size:14.5px">Format help</strong><button aria-label="Close format help" onClick="{{ toggleHelp }}" style="border:none;background:none;color:var(--muted);font-size:16px">×</button></div>
+<ol style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px">
+<li>One item per line: <code style="font-family:'Geist Mono',monospace">what to buy ; how much ; note</code></li>
+<li>How much is a count like <code style="font-family:'Geist Mono',monospace">x6</code>, or an amount in <code style="font-family:'Geist Mono',monospace">g</code>, <code style="font-family:'Geist Mono',monospace">kg</code>, <code style="font-family:'Geist Mono',monospace">ml</code> or <code style="font-family:'Geist Mono',monospace">L</code> like <code style="font-family:'Geist Mono',monospace">5 kg</code>.</li>
+<li>The note is optional and can be in Hindi or English.</li>
+</ol>
+</div>
+</sc-if>
+<div role="textbox" aria-multiline="true" aria-label="Grocery list" tabindex="0" style="background:var(--surface);border:1px solid var(--line);border-radius:12px;height:560px;overflow:auto;padding:14px 0;font-family:'Geist Mono','Noto Sans Devanagari',ui-monospace,monospace;font-size:13.5px;line-height:26px">
+<sc-for list="{{ rawLines }}" as="l" hint-placeholder-count="20">
+<div style="display:grid;grid-template-columns:44px minmax(0,1fr);padding-right:16px"><span aria-hidden="true" style="text-align:right;padding-right:14px;color:var(--muted);opacity:.7">{{ l.n }}</span><span style="white-space:pre-wrap;overflow-wrap:anywhere">{{ l.text }}</span></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<div style="font-size:13.5px;color:var(--muted);height:28px;display:flex;align-items:center">How each line was read</div>
+<ol aria-label="Parsed list preview" style="list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;height:588px;overflow:auto">
+<sc-for list="{{ preview }}" as="p" hint-placeholder-count="16">
+<li style="display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;padding:9px 16px;border-bottom:1px solid var(--line);align-items:baseline">
+<span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted);text-align:right">{{ p.line }}</span>
+<sc-if value="{{ p.ok }}" hint-placeholder-val="{{ true }}"><div style="display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline"><span style="font-weight:500">{{ p.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:5px;background:var(--sunk)">{{ p.qtyText }}</span><span lang="hi" style="color:var(--muted);font-size:13.5px">{{ p.note }}</span></div></sc-if>
+<sc-if value="{{ p.isErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="color:var(--bad-text);font-size:13.5px;display:flex;flex-direction:column;gap:2px"><span style="font-weight:600">{{ p.errText }}</span><code style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ p.raw }}</code></div></sc-if>
+</li>
+</sc-for>
+</ol>
+</div>
+</div>
+</main>
+<footer style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;border-top:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;gap:16px;align-items:baseline;font-size:14px"><span><span style="font-family:'Geist Mono',monospace;font-weight:600">65</span> items</span><span style="color:var(--bad-text)">1 line can't be read</span></div>
+<button style="height:42px;padding:0 22px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:14.5px;font-weight:600">Find products</button>
+</footer>
+</div>
+</div>
+
+<!-- A3 Finding -->
+<div id="A3" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A3</span>Finding products · live</div>
+<div data-screen-label="A3 Finding" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">3/6</span> Find products</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+<span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>JioMart · <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span></span>
+</header>
+<div style="padding:28px 28px 20px;display:flex;flex-direction:column;gap:14px;border-bottom:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Finding products</h1>
+<span style="color:var(--muted);font-size:14px">One item at a time, like a person would. About 2 minutes.</span>
+</div>
+<div role="progressbar" aria-label="Searched" aria-valuemin="0" aria-valuemax="65" aria-valuenow="23" style="height:8px;border-radius:4px;background:var(--sunk);overflow:hidden"><div style="width:35.4%;height:100%;background:var(--accent);border-radius:4px"></div></div>
+<div aria-live="polite" style="display:flex;gap:20px;font-size:13.5px;flex-wrap:wrap"><span><span style="font-family:'Geist Mono',monospace;font-weight:600">23 / 65</span> searched</span><span style="color:var(--muted)"><span style="font-family:'Geist Mono',monospace">19</span> good match · <span style="font-family:'Geist Mono',monospace">3</span> check this · <span style="font-family:'Geist Mono',monospace">1</span> not found</span></div>
+</div>
+<div role="table" aria-label="Search results" style="background:var(--surface)">
+<div role="row" style="display:grid;grid-template-columns:minmax(170px,1fr) minmax(0,2.2fr) minmax(200px,0.8fr);gap:24px;padding:10px 28px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em"><span role="columnheader">Your list</span><span role="columnheader">Product</span><span role="columnheader">Match</span></div>
+<sc-for list="{{ findRows }}" as="f" hint-placeholder-count="12">
+<div role="row" style="display:grid;grid-template-columns:minmax(170px,1fr) minmax(0,2.2fr) minmax(200px,0.8fr);gap:24px;padding:14px 28px;border-top:1px solid var(--line);align-items:center">
+<div role="cell" style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="font-weight:600;font-size:15px">{{ f.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:5px;background:var(--sunk)">{{ f.qtyText }}</span></div><span lang="hi" style="font-size:13.5px;color:var(--muted)">{{ f.note }}</span></div>
+<div role="cell" style="min-width:0">
+<sc-if value="{{ f.done }}" hint-placeholder-val="{{ true }}"><div style="display:flex;gap:14px;align-items:center"><div role="img" aria-label="Product image" style="flex:none;width:40px;height:40px;border-radius:7px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 5px,var(--surface) 5px 10px)"></div><span style="flex:1;font-weight:500;overflow-wrap:anywhere">{{ f.name }}</span><span style="font-family:'Geist Mono',monospace;font-size:12.5px;color:var(--muted)">{{ f.covers }}</span><span style="font-family:'Geist Mono',monospace;font-weight:600;min-width:64px;text-align:right">{{ f.total }}</span></div></sc-if>
+<sc-if value="{{ f.searching }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:10px;align-items:center;color:var(--accent-text);font-weight:500"><span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);border-right-color:transparent"></span>Searching JioMart…</div></sc-if>
+<sc-if value="{{ f.pending }}" hint-placeholder-val="{{ false }}"><div aria-label="Waiting to search" style="display:flex;gap:14px;align-items:center"><div style="width:40px;height:40px;border-radius:7px;background:var(--sunk)"></div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><div style="height:10px;width:62%;border-radius:4px;background:var(--sunk)"></div><div style="height:10px;width:34%;border-radius:4px;background:var(--sunk)"></div></div></div></sc-if>
+</div>
+<div role="cell">
+<sc-if value="{{ f.isHigh }}" hint-placeholder-val="{{ true }}"><span style="font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)">Good match</span></sc-if>
+<sc-if value="{{ f.isCheck }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn-text)">Check this</span></sc-if>
+<sc-if value="{{ f.pending }}" hint-placeholder-val="{{ false }}"><div style="height:20px;width:84px;border-radius:999px;background:var(--sunk)"></div></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<!-- A4 Review -->
+<div id="A4" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A4</span>Review · interactive: tabs, Change, Search, stepper, Skip</div>
+<div data-screen-label="A4 Review" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">4/6</span> Review</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+<span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>JioMart · <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span></span>
+</header>
+<div style="padding:28px 28px 0;display:flex;flex-direction:column;gap:16px;background:var(--surface)">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Review your cart</h1>
+<div role="tablist" aria-label="Filter rows" style="display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.select }}" style="display:flex;gap:8px;align-items:center;height:40px;padding:0 12px;border:none;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:none;color:var(--ink);font-size:14px;font-weight:{{ t.weight }}">{{ t.label }}<span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:999px;background:var(--sunk);color:var(--muted)">{{ t.count }}</span></button>
+</sc-for>
+</div>
+</div>
+<div role="table" aria-label="Review" style="background:var(--surface)">
+<sc-for list="{{ rowsA }}" as="r" hint-placeholder-count="8">
+<div role="row" style="display:grid;grid-template-columns:minmax(170px,1fr) minmax(0,2.2fr) minmax(220px,0.85fr);gap:24px;padding:18px 28px;border-top:1px solid var(--line);align-items:start">
+<div role="cell" style="display:flex;flex-direction:column;gap:5px;min-width:0">
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="font-weight:600;font-size:15px;overflow-wrap:anywhere">{{ r.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:5px;background:var(--sunk)">{{ r.qtyText }}</span></div>
+<span lang="hi" style="font-size:13.5px;color:var(--muted)">{{ r.note }}</span>
+</div>
+<div role="cell" style="min-width:0;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ r.hasProduct }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:14px;align-items:flex-start">
+<div role="img" aria-label="Product image" style="flex:none;width:52px;height:52px;border-radius:8px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 5px,var(--surface) 5px 10px)"></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+<span style="font-weight:500;font-size:14.5px;text-wrap:pretty;overflow-wrap:anywhere">{{ r.p.name }}</span>
+<span style="font-size:13px;color:var(--muted)">{{ r.p.brandPack }}</span>
+<div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;margin-top:3px"><span style="font-family:'Geist Mono',monospace;font-size:13.5px;font-weight:600">{{ r.p.priceText }}</span><sc-if value="{{ r.p.hasMrp }}" hint-placeholder-val="{{ true }}"><s aria-label="MRP {{ r.p.mrpText }}" style="font-family:'Geist Mono',monospace;font-size:12.5px;color:var(--muted)">{{ r.p.mrpText }}</s></sc-if><sc-if value="{{ r.p.oos }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;padding:1px 8px;border-radius:5px;background:var(--bad-soft);color:var(--bad-text)">Out of stock</span></sc-if></div>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:3px;align-items:flex-end;text-align:right"><span style="font-family:'Geist Mono',monospace;font-size:12.5px;color:var(--muted)">{{ r.covers }}</span><span style="font-family:'Geist Mono',monospace;font-size:15px;font-weight:600">{{ r.totalText }}</span></div>
+</div>
+<sc-if value="{{ r.changed }}" hint-placeholder-val="{{ false }}"><label style="display:flex;gap:8px;align-items:center;font-size:13.5px;padding-left:66px;cursor:pointer"><input type="checkbox" checked="{{ r.remember }}" onChange="{{ r.toggleRemember }}" style="accent-color:var(--accent);width:16px;height:16px;margin:0">Remember for next time</label></sc-if>
+</sc-if>
+<sc-if value="{{ r.isNone }}" hint-placeholder-val="{{ false }}"><p style="margin:0;color:var(--muted)">Nothing on JioMart matched “{{ r.query }}”. Try other words.</p></sc-if>
+<sc-if value="{{ r.isSkipped }}" hint-placeholder-val="{{ false }}"><div style="display:flex;gap:12px;align-items:center;color:var(--muted)">Skipped. It won't be added.<button onClick="{{ r.unskip }}" style="height:28px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px">Undo</button></div></sc-if>
+<sc-if value="{{ r.showSearch }}" hint-placeholder-val="{{ false }}"><form role="search" onSubmit="{{ prevent }}" style="display:flex;gap:8px"><input type="search" aria-label="Search JioMart by hand for {{ r.query }}" placeholder="Search JioMart, e.g. {{ r.query }} powder" style="flex:1;min-width:0;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:13.5px"><button type="submit" style="height:36px;padding:0 14px;border:none;border-radius:8px;background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:600">Search</button></form></sc-if>
+<sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
+<div role="listbox" aria-label="Alternatives for {{ r.query }}" style="border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:0 10px 28px rgba(40,30,10,.10);overflow:hidden">
+<div style="padding:8px 14px;font-size:12px;color:var(--muted)">Best match first</div>
+<sc-for list="{{ r.alts }}" as="a" hint-placeholder-count="4">
+<div role="option" aria-selected="{{ a.selected }}" tabindex="0" onClick="{{ a.pick }}" onKeyDown="{{ a.key }}" style="display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line);cursor:pointer;background:{{ a.bg }}" style-hover="background:var(--sunk)">
+<div role="img" aria-label="Product image" style="width:36px;height:36px;border-radius:6px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 4px,var(--surface) 4px 8px)"></div>
+<div style="min-width:0;display:flex;flex-direction:column;gap:1px"><span style="font-size:13.5px;overflow-wrap:anywhere">{{ a.name }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ a.packText }} · {{ a.perText }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:1px"><span style="font-family:'Geist Mono',monospace;font-size:13.5px;font-weight:600">{{ a.priceText }}</span><span style="font-size:11.5px;color:var(--accent-text);font-weight:600">{{ a.tag }}</span></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+<div role="cell" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<sc-if value="{{ r.isHigh }}" hint-placeholder-val="{{ true }}"><span style="font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)">Good match</span></sc-if>
+<sc-if value="{{ r.isCheck }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn-text)">Check this</span></sc-if>
+<sc-if value="{{ r.isNone }}" hint-placeholder-val="{{ false }}"><span style="font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--bad-soft);color:var(--bad-text)">Not found</span></sc-if>
+<sc-if value="{{ r.remembered }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)">Remembered</span></sc-if>
+</div>
+<sc-if value="{{ r.hasProduct }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<button aria-haspopup="listbox" aria-expanded="{{ r.open }}" onClick="{{ r.toggleOpen }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px" style-hover="background:var(--sunk)">Change</button>
+<button aria-expanded="{{ r.showSearch }}" onClick="{{ r.toggleSearch }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px" style-hover="background:var(--sunk)">Search</button>
+<button onClick="{{ r.skip }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px" style-hover="background:var(--sunk)">Skip</button>
+</div>
+<div role="group" aria-label="Pack count for {{ r.query }}" style="display:flex;align-items:center;border:1px solid var(--line);border-radius:7px;overflow:hidden">
+<button aria-label="One pack fewer" onClick="{{ r.dec }}" disabled="{{ r.decDisabled }}" style="width:30px;height:30px;border:none;background:var(--surface);color:var(--ink);font-size:15px">−</button>
+<span aria-live="polite" style="min-width:56px;text-align:center;font-family:'Geist Mono',monospace;font-size:13px;border-left:1px solid var(--line);border-right:1px solid var(--line);line-height:30px">{{ r.packs }} {{ r.packWord }}</span>
+<button aria-label="One pack more" onClick="{{ r.inc }}" style="width:30px;height:30px;border:none;background:var(--surface);color:var(--ink);font-size:15px">+</button>
+</div>
+</sc-if>
+<sc-if value="{{ r.isNone }}" hint-placeholder-val="{{ false }}"><button onClick="{{ r.skip }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px">Skip</button></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<footer style="position:sticky;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -8px 24px rgba(40,30,10,.05)">
+<div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:15px;font-weight:600"><span style="font-family:'Geist Mono',monospace">58</span> items to add · estimated <span style="font-family:'Geist Mono',monospace">₹6,240</span></span><span style="font-size:12.5px;color:var(--muted)">Prices are JioMart's, as of this search</span></div>
+<button style="height:44px;padding:0 22px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Add 58 items to JioMart cart</button>
+</footer>
+</div>
+</div>
+
+<!-- A5 Adding -->
+<div id="A5" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A5</span>Adding · paused for JioMart's human check</div>
+<div data-screen-label="A5 Adding" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">5/6</span> Add to cart</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+<span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>JioMart · <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span></span>
+</header>
+<div style="padding:28px 28px 20px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
+<h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Adding <span style="font-family:'Geist Mono',monospace;font-weight:500">12 / 58</span></h1>
+<span style="font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--warn-soft);color:var(--warn-text)">Paused</span>
+</div>
+<div role="progressbar" aria-label="Added" aria-valuemin="0" aria-valuemax="58" aria-valuenow="11" style="height:8px;border-radius:4px;background:var(--sunk);overflow:hidden"><div style="width:19%;height:100%;background:var(--accent)"></div></div>
+<div role="alertdialog" aria-label="Human check" style="margin-top:8px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;padding:22px 24px;border-radius:14px;background:var(--warn-soft);border:1.5px solid var(--warn)">
+<span aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:var(--warn);color:#2a2208;display:grid;place-items:center;font-weight:700;font-size:18px">!</span>
+<div style="display:flex;flex-direction:column;gap:3px"><strong style="font-size:17px">JioMart wants to check you're human.</strong><span style="font-size:14.5px">Finish the check in the Chrome window, then click Resume.</span></div>
+<button style="height:44px;padding:0 24px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Resume</button>
+</div>
+</div>
+<div role="table" aria-label="Adding to cart" style="background:var(--surface);border-top:1px solid var(--line)">
+<sc-for list="{{ addRows }}" as="d" hint-placeholder-count="12">
+<div role="row" style="display:grid;grid-template-columns:minmax(170px,1fr) minmax(0,2fr) 90px minmax(200px,0.8fr);gap:24px;padding:13px 28px;border-bottom:1px solid var(--line);align-items:center;opacity:{{ d.opacity }}">
+<div role="cell" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span style="font-weight:600">{{ d.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:5px;background:var(--sunk)">{{ d.qtyText }}</span></div>
+<div role="cell" style="display:flex;gap:12px;align-items:center;min-width:0"><div role="img" aria-label="Product image" style="flex:none;width:32px;height:32px;border-radius:6px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 4px,var(--surface) 4px 8px)"></div><span style="overflow-wrap:anywhere">{{ d.name }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap">{{ d.covers }}</span></div>
+<div role="cell" style="font-family:'Geist Mono',monospace;font-weight:600;text-align:right">{{ d.total }}</div>
+<div role="cell" style="font-size:13.5px">
+<sc-if value="{{ d.added }}" hint-placeholder-val="{{ true }}"><span style="color:var(--accent-text);font-weight:600">Added ✓</span></sc-if>
+<sc-if value="{{ d.adding }}" hint-placeholder-val="{{ false }}"><span style="display:flex;gap:8px;align-items:center;font-weight:600"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;border:2px solid var(--warn);border-right-color:transparent"></span>Adding… paused</span></sc-if>
+<sc-if value="{{ d.waiting }}" hint-placeholder-val="{{ false }}"><span style="color:var(--muted)">Waiting</span></sc-if>
+<sc-if value="{{ d.failed }}" hint-placeholder-val="{{ false }}"><span style="color:var(--bad-text);font-weight:600">Failed · {{ d.err }}</span></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+
+<!-- A6 Done -->
+<div id="A6" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A6</span>Done (dark)</div>
+<div data-screen-label="A6 Done" style="width:1280px;--bg:#141311;--surface:#1C1A17;--sunk:#272520;--ink:#F0ECE4;--muted:#A39C90;--line:#322F2A;--accent:oklch(0.74 0.15 148);--accent-ink:#0F130E;--accent-soft:oklch(0.31 0.06 148);--accent-text:oklch(0.84 0.12 148);--warn:oklch(0.80 0.13 82);--warn-soft:oklch(0.33 0.055 80);--warn-text:oklch(0.88 0.10 88);--bad-soft:oklch(0.31 0.06 30);--bad-text:oklch(0.82 0.10 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="font-size:13px;color:var(--muted);flex:1"><span style="font-family:'Geist Mono',ui-monospace,monospace">6/6</span> Done</span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7">Remembered choices</a></nav>
+<span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:var(--accent)"></span>JioMart · <span style="font-family:'Geist Mono',ui-monospace,monospace">560001</span></span>
+</header>
+<main style="padding:64px 28px 72px;display:flex;justify-content:center">
+<div style="width:100%;max-width:680px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;flex-direction:column;gap:10px">
+<h1 style="margin:0;font-size:44px;letter-spacing:-0.03em;font-weight:600"><span style="font-family:'Geist Mono',monospace;font-weight:500">56</span> of <span style="font-family:'Geist Mono',monospace;font-weight:500">58</span> added</h1>
+<p style="margin:0;color:var(--muted);font-size:15.5px;text-wrap:pretty">Your JioMart cart is filled. Check it and pay on JioMart yourself.</p>
+</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button style="height:46px;padding:0 24px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Open cart in Chrome</button>
+<button style="height:46px;padding:0 20px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600">Retry 2 failed</button>
+</div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:12px">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)"><strong style="font-size:15px">Buy these elsewhere</strong><button onClick="{{ copySummary }}" style="height:32px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-size:13px;font-weight:600">{{ summaryLabel }}</button></div>
+<sc-for list="{{ notBought }}" as="n" hint-placeholder-count="4">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:12px 18px;border-bottom:1px solid var(--line);align-items:center">
+<div style="display:flex;gap:8px;align-items:baseline;flex-wrap:wrap"><span style="font-weight:600">{{ n.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 7px;border-radius:5px;background:var(--sunk)">{{ n.qtyText }}</span><span lang="hi" style="color:var(--muted)">{{ n.note }}</span></div>
+<span style="font-size:13px;color:var(--bad-text);font-weight:500">{{ n.reason }}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+<!-- A7 Remembered -->
+<div id="A7" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">A7</span>Remembered choices · search filters live</div>
+<div data-screen-label="A7 Remembered" style="width:1280px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:20px;height:60px;padding:0 28px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<span style="flex:1"></span>
+<nav aria-label="Main" style="display:flex;gap:18px;font-size:13px"><a href="#A7" aria-current="page" style="color:var(--ink);font-weight:600;text-decoration:none">Remembered choices</a></nav>
+</header>
+<main style="padding:32px 28px 48px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+<div style="display:flex;flex-direction:column;gap:4px"><h1 style="margin:0;font-size:28px;letter-spacing:-0.02em">Remembered choices</h1><p style="margin:0;color:var(--muted)">When a line uses these words again, Grocery Cart picks this product.</p></div>
+<input type="search" aria-label="Search remembered choices" placeholder="Search words or products" value="{{ remQ }}" onChange="{{ setRemQ }}" style="width:300px;height:40px;padding:0 14px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:14px">
+</div>
+<div role="table" aria-label="Remembered choices" style="background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden">
+<div role="row" style="display:grid;grid-template-columns:minmax(140px,0.8fr) minmax(0,2fr) 100px 120px 150px;gap:20px;padding:10px 20px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--line)"><span role="columnheader">Your words</span><span role="columnheader">Product</span><span role="columnheader" style="text-align:right">Last price</span><span role="columnheader">Last used</span><span role="columnheader"><span style="position:absolute;width:1px;height:1px;overflow:hidden">Actions</span></span></div>
+<sc-for list="{{ remRows }}" as="m" hint-placeholder-count="8">
+<div role="row" style="display:grid;grid-template-columns:minmax(140px,0.8fr) minmax(0,2fr) 100px 120px 150px;gap:20px;padding:14px 20px;border-bottom:1px solid var(--line);align-items:center">
+<span role="cell" style="font-weight:600;font-size:15px">{{ m.query }}</span>
+<div role="cell" style="display:flex;gap:12px;align-items:center;min-width:0"><div role="img" aria-label="Product image" style="flex:none;width:40px;height:40px;border-radius:7px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 5px,var(--surface) 5px 10px)"></div><div style="display:flex;flex-direction:column;min-width:0"><span style="overflow-wrap:anywhere">{{ m.name }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ m.pack }}</span></div></div>
+<span role="cell" style="font-family:'Geist Mono',monospace;font-weight:600;text-align:right">{{ m.price }}</span>
+<span role="cell" style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--muted)">{{ m.used }}</span>
+<div role="cell" style="display:flex;gap:6px;justify-content:flex-end"><button aria-label="Change product for {{ m.query }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px">Change</button><button aria-label="Forget {{ m.query }}" onClick="{{ m.forget }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--bad-text);font-size:13px">Forget</button></div>
+</div>
+</sc-for>
+<sc-if value="{{ remEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:32px 20px;text-align:center;color:var(--muted)">No remembered choice matches “{{ remQ }}”.</div></sc-if>
+</div>
+</main>
+</div>
+</div>
+
+</div>
+
+<div style="display:flex;flex-direction:column;gap:24px">
+<h3 style="margin:0;font-size:20px">A8 · Errors and empty states</h3>
+<div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+<sc-for list="{{ errorCards }}" as="e" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">{{ e.id }}</span>{{ e.label }}</div>
+<div data-screen-label="{{ e.id }}" style="width:620px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);padding:48px 44px;min-height:300px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;justify-content:center">
+<span aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:var(--warn-soft);color:var(--warn-text);display:grid;place-items:center;font-weight:700;font-size:17px">!</span>
+<div role="alert" style="display:flex;flex-direction:column;gap:6px"><strong style="font-size:20px;letter-spacing:-0.01em;text-wrap:pretty">{{ e.title }}</strong><span style="color:var(--muted);font-size:14.5px;text-wrap:pretty">{{ e.body }}</span></div>
+<sc-if value="{{ e.hasCmd }}" hint-placeholder-val="{{ false }}"><div style="display:flex;align-items:center;gap:10px;background:var(--sunk);border-radius:9px;padding:8px 8px 8px 14px"><code style="flex:1;font-family:'Geist Mono',monospace;font-size:13.5px">./instruction.sh chrome</code><button onClick="{{ copyCmd }}" style="height:30px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:12.5px;font-weight:600">{{ cmdLabel }}</button></div></sc-if>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<button style="height:40px;padding:0 18px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:14px;font-weight:600">{{ e.primary }}</button>
+<sc-if value="{{ e.hasSecondary }}" hint-placeholder-val="{{ true }}"><button style="height:40px;padding:0 16px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:14px;font-weight:600">{{ e.secondary }}</button></sc-if>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="partB" style="display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:6px"><h2 style="margin:0;font-size:26px;letter-spacing:-0.01em">B · Browser extension (later)</h2><p style="margin:0;color:#55504A;font-size:15px">Chrome side panel, 400 px wide, next to the JioMart tab. Remembered choices opens as a full tab reusing <a href="#A7" style="color:#2B2924">A7</a>.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+<!-- B1 first run -->
+<div id="B1" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B1</span>First run</div>
+<div data-screen-label="B1 First run" style="width:400px;height:820px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<main style="flex:1;padding:48px 28px 28px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px"><span aria-hidden="true" style="width:12px;height:12px;border-radius:3px;background:var(--accent);box-shadow:4px 4px 0 0 var(--warn)"></span>Grocery Cart</div>
+<h1 style="margin:0;font-size:28px;line-height:1.15;letter-spacing:-0.02em;text-wrap:pretty">Type a list. Get a filled JioMart cart.</h1>
+<ol style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px">
+<li style="display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px"><span style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--accent-text);font-weight:600">01</span><div><strong>Only your own JioMart tab.</strong><div style="color:var(--muted)">It works in the JioMart tab where you're already signed in. Nothing else.</div></div></li>
+<li style="display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px"><span style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--accent-text);font-weight:600">02</span><div><strong>You review every match.</strong><div style="color:var(--muted)">Swap products, change pack counts or skip lines before anything is added.</div></div></li>
+<li style="display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px"><span style="font-family:'Geist Mono',monospace;font-size:13px;color:var(--accent-text);font-weight:600">03</span><div><strong>It never checks out.</strong><div style="color:var(--muted)">It stops at a full cart. You check it and pay on JioMart yourself.</div></div></li>
+</ol>
+</main>
+<footer style="padding:16px 20px;border-top:1px solid var(--line);background:var(--surface)"><button style="width:100%;height:46px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Get started</button></footer>
+</div>
+</div>
+
+<!-- B2 Open JioMart + menu -->
+<div id="B2" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B2</span>Not on JioMart · menu open</div>
+<div data-screen-label="B2 Open JioMart" style="width:400px;height:820px;position:relative;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="flex:1;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<button aria-haspopup="menu" aria-label="Shop: JioMart" style="height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600">JioMart ▾</button>
+<button aria-haspopup="menu" aria-expanded="true" aria-label="Menu" style="width:32px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--ink);font-size:16px">⋯</button>
+</header>
+<div role="menu" aria-label="Menu" style="position:absolute;top:50px;right:12px;width:210px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(40,30,10,.14);padding:6px;display:flex;flex-direction:column;z-index:2">
+<button role="menuitem" style="text-align:left;height:36px;padding:0 10px;border:none;border-radius:6px;background:var(--sunk);color:var(--ink);font-size:13.5px">Remembered choices</button>
+<button role="menuitem" style="text-align:left;height:36px;padding:0 10px;border:none;border-radius:6px;background:none;color:var(--ink);font-size:13.5px">Help</button>
+<button role="menuitem" style="text-align:left;height:36px;padding:0 10px;border:none;border-radius:6px;background:none;color:var(--ink);font-size:13.5px">Report a problem</button>
+</div>
+<main style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:28px">
+<h1 style="margin:0;font-size:22px;letter-spacing:-0.01em">Open JioMart to start</h1>
+<p style="margin:0;color:var(--muted);font-size:14.5px;text-wrap:pretty">Grocery Cart works in your signed-in JioMart tab. This tab isn't JioMart.</p>
+<button style="align-self:flex-start;height:42px;padding:0 20px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:14.5px;font-weight:600">Open JioMart</button>
+</main>
+</div>
+</div>
+
+<!-- B3 Paste list + shop switcher -->
+<div id="B3" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B3</span>Paste list · shop switcher open</div>
+<div data-screen-label="B3 Paste list" style="width:400px;height:820px;position:relative;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="flex:1;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<button aria-haspopup="menu" aria-expanded="true" aria-label="Shop: JioMart" style="height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--ink);font-size:13px;font-weight:600">JioMart ▾</button>
+<button aria-haspopup="menu" aria-label="Menu" style="width:32px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:16px">⋯</button>
+</header>
+<div role="menu" aria-label="Shop" style="position:absolute;top:50px;right:52px;width:230px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(40,30,10,.14);padding:6px;z-index:2;display:flex;flex-direction:column">
+<button role="menuitemradio" aria-checked="true" style="display:flex;justify-content:space-between;align-items:center;height:38px;padding:0 10px;border:none;border-radius:6px;background:var(--sunk);color:var(--ink);font-size:13.5px;font-weight:600">JioMart<span style="color:var(--accent-text)">✓</span></button>
+<button role="menuitemradio" aria-checked="false" aria-disabled="true" disabled style="display:flex;justify-content:space-between;align-items:center;height:38px;padding:0 10px;border:none;border-radius:6px;background:none;color:var(--muted);font-size:13.5px">DMart Ready<span style="font-size:12px">coming later</span></button>
+</div>
+<main style="flex:1;overflow:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><h1 style="margin:0;font-size:20px">Your list</h1><a href="#B3" style="font-size:13px">Load last list</a></div>
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:12.5px;color:var(--muted)"><code style="font-family:'Geist Mono',monospace;color:var(--ink)">what to buy ; how much ; note</code><button aria-expanded="false" style="height:26px;padding:0 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font-size:12px;font-weight:600">Format help</button></div>
+<div role="textbox" aria-multiline="true" aria-label="Grocery list" tabindex="0" style="background:var(--surface);border:1px solid var(--line);border-radius:10px;height:220px;overflow:auto;padding:10px 12px;font-family:'Geist Mono','Noto Sans Devanagari',monospace;font-size:13px;line-height:24px;white-space:pre-wrap">
+<sc-for list="{{ rawLinesB }}" as="l" hint-placeholder-count="9"><div style="overflow-wrap:anywhere">{{ l.text }}</div></sc-for>
+</div>
+<div style="font-size:12.5px;color:var(--muted)">How each line was read</div>
+<ol aria-label="Parsed list preview" style="list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px">
+<sc-for list="{{ previewB }}" as="p" hint-placeholder-count="6">
+<li style="display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--line)">
+<sc-if value="{{ p.ok }}" hint-placeholder-val="{{ true }}"><span style="font-weight:500">{{ p.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 6px;border-radius:5px;background:var(--sunk)">{{ p.qtyText }}</span><span lang="hi" style="color:var(--muted)">{{ p.note }}</span></sc-if>
+<sc-if value="{{ p.isErr }}" hint-placeholder-val="{{ false }}"><span role="alert" style="color:var(--bad-text);font-weight:600;font-size:13px">{{ p.errText }}</span></sc-if>
+</li>
+</sc-for>
+</ol>
+</main>
+<footer style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--line);background:var(--surface)"><span><span style="font-family:'Geist Mono',monospace;font-weight:600">65</span> items</span><button style="height:42px;padding:0 20px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:14.5px;font-weight:600">Find products</button></footer>
+</div>
+</div>
+
+<!-- B4 Review narrow -->
+<div id="B4" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B4</span>Review · Change expanded (interactive)</div>
+<div data-screen-label="B4 Review" style="width:400px;height:820px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-soft:oklch(0.94 0.045 148);--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);--warn-soft:oklch(0.94 0.06 88);--warn-text:oklch(0.43 0.09 70);--bad-soft:oklch(0.95 0.03 30);--bad-text:oklch(0.48 0.15 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.08);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="flex:1;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<button aria-haspopup="menu" aria-label="Shop: JioMart" style="height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600">JioMart ▾</button>
+<button aria-haspopup="menu" aria-label="Menu" style="width:32px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:16px">⋯</button>
+</header>
+<div role="tablist" aria-label="Filter rows" style="display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 6px;border-bottom:1px solid var(--line);background:var(--surface)">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button role="tab" aria-selected="{{ t.selected }}" onClick="{{ t.select }}" style="flex:none;display:flex;gap:6px;align-items:center;height:40px;padding:0 7px;border:none;border-bottom:2px solid {{ t.border }};margin-bottom:-1px;background:none;color:var(--ink);font-size:12.5px;font-weight:{{ t.weight }};white-space:nowrap">{{ t.short }}<span style="font-family:'Geist Mono',monospace;font-size:11.5px;color:var(--muted)">{{ t.count }}</span></button>
+</sc-for>
+</div>
+<main style="flex:1;overflow:auto;background:var(--surface)">
+<sc-for list="{{ rowsB }}" as="r" hint-placeholder-count="5">
+<div style="padding:14px 16px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:4px 8px;align-items:baseline;flex-wrap:wrap"><span style="font-weight:600;font-size:15px">{{ r.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;padding:1px 6px;border-radius:5px;background:var(--sunk)">{{ r.qtyText }}</span><span lang="hi" style="color:var(--muted);font-size:13.5px">{{ r.note }}</span></div>
+<sc-if value="{{ r.hasProduct }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:12px;align-items:flex-start"><div role="img" aria-label="Product image" style="flex:none;width:44px;height:44px;border-radius:7px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 5px,var(--surface) 5px 10px)"></div><div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px"><span style="font-size:14px;font-weight:500;overflow-wrap:anywhere;text-wrap:pretty">{{ r.p.name }}</span><div style="display:flex;gap:7px;align-items:baseline;flex-wrap:wrap"><span style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:600">{{ r.p.priceText }}</span><sc-if value="{{ r.p.hasMrp }}" hint-placeholder-val="{{ true }}"><s style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ r.p.mrpText }}</s></sc-if><span style="font-size:12.5px;color:var(--muted)">{{ r.p.brandPack }}</span></div></div></div>
+</sc-if>
+<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+<sc-if value="{{ r.isHigh }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)">Good match</span></sc-if>
+<sc-if value="{{ r.isCheck }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--warn-soft);color:var(--warn-text)">Check this</span></sc-if>
+<sc-if value="{{ r.isNone }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--bad-soft);color:var(--bad-text)">Not found</span></sc-if>
+<sc-if value="{{ r.p.oos }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--bad-soft);color:var(--bad-text)">Out of stock</span></sc-if>
+<sc-if value="{{ r.remembered }}" hint-placeholder-val="{{ false }}"><span style="font-size:11.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted)">Remembered</span></sc-if>
+<sc-if value="{{ r.hasProduct }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ r.covers }}</span><span style="margin-left:auto;font-family:'Geist Mono',monospace;font-weight:600">{{ r.totalText }}</span></sc-if>
+</div>
+<sc-if value="{{ r.isNone }}" hint-placeholder-val="{{ false }}"><form role="search" onSubmit="{{ prevent }}" style="display:flex;gap:6px"><input type="search" aria-label="Search JioMart by hand for {{ r.query }}" placeholder="Search JioMart" style="flex:1;min-width:0;height:36px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font-size:13.5px"><button type="submit" style="height:36px;padding:0 12px;border:none;border-radius:8px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600">Search</button></form></sc-if>
+<sc-if value="{{ r.hasProduct }}" hint-placeholder-val="{{ true }}">
+<button aria-expanded="{{ r.open }}" onClick="{{ r.toggleOpen }}" style="align-self:flex-start;height:32px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600">{{ r.changeLabel }}</button>
+</sc-if>
+<sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:10px;background:var(--bg);border:1px solid var(--line)">
+<div role="listbox" aria-label="Alternatives for {{ r.query }}" style="display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden">
+<sc-for list="{{ r.alts }}" as="a" hint-placeholder-count="4">
+<div role="option" aria-selected="{{ a.selected }}" tabindex="0" onClick="{{ a.pick }}" onKeyDown="{{ a.key }}" style="display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);cursor:pointer;background:{{ a.bg }}">
+<div role="img" aria-label="Product image" style="width:30px;height:30px;border-radius:5px;border:1px solid var(--line);background:repeating-linear-gradient(135deg,var(--sunk) 0 4px,var(--surface) 4px 8px)"></div>
+<div style="min-width:0"><div style="font-size:13px;overflow-wrap:anywhere">{{ a.name }}</div><div style="font-family:'Geist Mono',monospace;font-size:11.5px;color:var(--muted)">{{ a.packText }} · {{ a.perText }}</div></div>
+<span style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:600">{{ a.priceText }}</span>
+</div>
+</sc-for>
+</div>
+<form role="search" onSubmit="{{ prevent }}" style="display:flex;gap:6px"><input type="search" aria-label="Search JioMart by hand for {{ r.query }}" placeholder="Search JioMart by hand" style="flex:1;min-width:0;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px"><button type="submit" style="height:34px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px">Search</button></form>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<div role="group" aria-label="Pack count for {{ r.query }}" style="display:flex;align-items:center;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface)"><button aria-label="One pack fewer" onClick="{{ r.dec }}" disabled="{{ r.decDisabled }}" style="width:32px;height:32px;border:none;background:none;color:var(--ink);font-size:15px">−</button><span aria-live="polite" style="min-width:60px;text-align:center;font-family:'Geist Mono',monospace;font-size:13px">{{ r.packs }} {{ r.packWord }}</span><button aria-label="One pack more" onClick="{{ r.inc }}" style="width:32px;height:32px;border:none;background:none;color:var(--ink);font-size:15px">+</button></div>
+<button onClick="{{ r.skip }}" style="height:32px;padding:0 12px;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--ink);font-size:13px">Skip</button>
+</div>
+<sc-if value="{{ r.changed }}" hint-placeholder-val="{{ false }}"><label style="display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer"><input type="checkbox" checked="{{ r.remember }}" onChange="{{ r.toggleRemember }}" style="accent-color:var(--accent);width:16px;height:16px;margin:0">Remember for next time</label></sc-if>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</main>
+<footer style="display:flex;flex-direction:column;gap:10px;padding:12px 16px;border-top:1px solid var(--line);background:var(--surface);box-shadow:0 -8px 24px rgba(40,30,10,.06)">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-weight:600"><span style="font-family:'Geist Mono',monospace">58</span> items · <span style="font-family:'Geist Mono',monospace">₹6,240</span></span><span style="font-size:12px;color:var(--muted)">JioMart prices, as of this search</span></div>
+<button style="width:100%;height:44px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Add 58 items to JioMart cart</button>
+</footer>
+</div>
+</div>
+
+<!-- B5 Adding dark -->
+<div id="B5" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B5</span>Adding · running (dark)</div>
+<div data-screen-label="B5 Adding" style="width:400px;height:820px;--bg:#141311;--surface:#1C1A17;--sunk:#272520;--ink:#F0ECE4;--muted:#A39C90;--line:#322F2A;--accent:oklch(0.74 0.15 148);--accent-ink:#0F130E;--accent-soft:oklch(0.31 0.06 148);--accent-text:oklch(0.84 0.12 148);--warn:oklch(0.80 0.13 82);--warn-soft:oklch(0.33 0.055 80);--warn-text:oklch(0.88 0.10 88);--bad-soft:oklch(0.31 0.06 30);--bad-text:oklch(0.82 0.10 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="flex:1;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<button aria-haspopup="menu" aria-label="Shop: JioMart" style="height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600">JioMart ▾</button>
+<button aria-haspopup="menu" aria-label="Menu" style="width:32px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:16px">⋯</button>
+</header>
+<div style="padding:16px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)">
+<div style="display:flex;justify-content:space-between;align-items:center"><span aria-live="polite" style="font-size:18px;font-weight:600">Adding <span style="font-family:'Geist Mono',monospace;font-weight:500">12 / 58</span></span><button style="height:34px;padding:0 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13.5px;font-weight:600">Pause</button></div>
+<div role="progressbar" aria-label="Added" aria-valuemin="0" aria-valuemax="58" aria-valuenow="11" style="height:6px;border-radius:3px;background:var(--sunk);overflow:hidden"><div style="width:19%;height:100%;background:var(--accent)"></div></div>
+</div>
+<main style="flex:1;overflow:auto">
+<sc-for list="{{ addRows }}" as="d" hint-placeholder-count="12">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);align-items:center;opacity:{{ d.opacity }}">
+<div style="min-width:0;display:flex;flex-direction:column;gap:1px"><div style="display:flex;gap:6px;align-items:baseline"><span style="font-weight:600">{{ d.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ d.qtyText }}</span></div><span style="font-size:12.5px;color:var(--muted);overflow-wrap:anywhere">{{ d.name }}</span></div>
+<div style="font-size:13px;text-align:right">
+<sc-if value="{{ d.added }}" hint-placeholder-val="{{ true }}"><span style="color:var(--accent-text);font-weight:600">Added ✓</span></sc-if>
+<sc-if value="{{ d.adding }}" hint-placeholder-val="{{ false }}"><span style="font-weight:600">Adding…</span></sc-if>
+<sc-if value="{{ d.waiting }}" hint-placeholder-val="{{ false }}"><span style="color:var(--muted)">Waiting</span></sc-if>
+<sc-if value="{{ d.failed }}" hint-placeholder-val="{{ false }}"><span style="color:var(--bad-text);font-weight:600">{{ d.err }}</span></sc-if>
+</div>
+</div>
+</sc-for>
+</main>
+</div>
+</div>
+
+<!-- B6 Done dark -->
+<div id="B6" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B6</span>Done (dark)</div>
+<div data-screen-label="B6 Done" style="width:400px;height:820px;--bg:#141311;--surface:#1C1A17;--sunk:#272520;--ink:#F0ECE4;--muted:#A39C90;--line:#322F2A;--accent:oklch(0.74 0.15 148);--accent-ink:#0F130E;--accent-soft:oklch(0.31 0.06 148);--accent-text:oklch(0.84 0.12 148);--warn:oklch(0.80 0.13 82);--bad-text:oklch(0.82 0.10 30);background:var(--bg);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25);display:flex;flex-direction:column">
+<header style="display:flex;align-items:center;gap:8px;padding:10px 12px 10px 16px;border-bottom:1px solid var(--line);background:var(--surface)">
+<div style="flex:1;display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<button aria-haspopup="menu" aria-label="Shop: JioMart" style="height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px;font-weight:600">JioMart ▾</button>
+<button aria-haspopup="menu" aria-label="Menu" style="width:32px;height:32px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:16px">⋯</button>
+</header>
+<main style="flex:1;overflow:auto;padding:28px 16px;display:flex;flex-direction:column;gap:20px">
+<div style="display:flex;flex-direction:column;gap:6px"><h1 style="margin:0;font-size:32px;letter-spacing:-0.02em;font-weight:600"><span style="font-family:'Geist Mono',monospace;font-weight:500">56</span> of <span style="font-family:'Geist Mono',monospace;font-weight:500">58</span> added</h1><p style="margin:0;color:var(--muted)">Check the cart in this tab and pay on JioMart yourself.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><button style="height:44px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Open cart</button><button style="height:44px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:600">Retry 2 failed</button></div>
+<div style="background:var(--surface);border:1px solid var(--line);border-radius:10px">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line)"><strong>Buy elsewhere</strong><button onClick="{{ copySummary }}" style="height:30px;padding:0 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-size:12.5px;font-weight:600">{{ summaryLabel }}</button></div>
+<sc-for list="{{ notBought }}" as="n" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-bottom:1px solid var(--line)"><div style="display:flex;gap:6px;align-items:baseline;flex-wrap:wrap"><span style="font-weight:600">{{ n.query }}</span><span style="font-family:'Geist Mono',monospace;font-size:12px;color:var(--muted)">{{ n.qtyText }}</span><span lang="hi" style="color:var(--muted)">{{ n.note }}</span></div><span style="font-size:12.5px;color:var(--bad-text)">{{ n.reason }}</span></div>
+</sc-for>
+</div>
+</main>
+</div>
+</div>
+
+<!-- B7 popup -->
+<div id="B7" style="display:flex;flex-direction:column;gap:12px">
+<div style="font-size:14px;font-weight:600;display:flex;gap:10px;align-items:center"><span style="font-family:'Geist Mono',monospace;font-size:12px;background:#1D1B17;color:#F6F3EC;padding:2px 7px;border-radius:5px">B7</span>Toolbar popup</div>
+<div data-screen-label="B7 Popup" style="width:320px;--bg:#F6F3EC;--surface:#FFFDF9;--sunk:#EEEAE1;--ink:#1D1B17;--muted:#69635A;--line:#E2DCD0;--accent:oklch(0.52 0.13 148);--accent-ink:#FFFFFF;--accent-text:oklch(0.40 0.11 148);--warn:oklch(0.80 0.14 82);background:var(--surface);color:var(--ink);font-family:'Schibsted Grotesk','Noto Sans Devanagari',system-ui,sans-serif;font-size:14px;line-height:1.45;border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(40,30,10,.06),0 12px 40px rgba(40,30,10,.12);padding:18px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:9px;font-weight:700;font-size:15px"><span aria-hidden="true" style="width:11px;height:11px;border-radius:3px;background:var(--accent);box-shadow:3px 3px 0 0 var(--warn)"></span>Grocery Cart</div>
+<div style="display:flex;flex-direction:column;gap:2px;padding:12px;border-radius:9px;background:var(--bg)"><span style="font-size:12px;color:var(--muted)">Last list · <span style="font-family:'Geist Mono',monospace">27 Oct</span></span><span style="font-weight:600"><span style="font-family:'Geist Mono',monospace">56</span> of <span style="font-family:'Geist Mono',monospace">58</span> added to JioMart cart</span></div>
+<button style="height:44px;border:none;border-radius:9px;background:var(--accent);color:var(--accent-ink);font-size:15px;font-weight:600">Open Grocery Cart</button>
+</div>
+</div>
+
+</div>
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const RAW = `Atta ; 5 kg ; आटा
+Masoor dal ; 2 kg ; मसूर दाल
+Jeera ; 100 g ; जीरा
+Mustard oil ; 5 L ; सरसों का तेल
+Pressure cooker 5 L ; x1 ; कुकर
+Container 1 kg ; x6 ; डिब्बा
+Tea strainer ; x1 ; छलनी
+Toor dal ; 2 kg ; तूर दाल
+Hing ; 50 g ; हींग
+Kasuri methi ; 25 g ; कसूरी मेथी
+Poha ; 1 kg ; पोहा
+Ghee ; 1 L ; घी
+Basmati rice ; 5 kg ; बासमती चावल
+Maggi ; 4 pkt
+Chana dal ; 1 kg ; चना दाल
+Moong dal ; 1 kg ; मूंग दाल
+Sugar ; 2 kg ; चीनी
+Salt ; 1 kg ; नमक
+Haldi ; 200 g ; हल्दी
+Lal mirch powder ; 200 g ; लाल मिर्च
+Dhania powder ; 200 g ; धनिया
+Garam masala ; 100 g
+Rai ; 100 g ; राई
+Sunflower oil ; 1 L
+Tea ; 500 g ; चाय पत्ती
+Coffee ; 200 g
+Suji ; 1 kg ; सूजी
+Besan ; 1 kg ; बेसन
+Maida ; 1 kg ; मैदा
+Rajma ; 1 kg ; राजमा
+Kabuli chana ; 1 kg ; काबुली चना
+Gud ; 1 kg ; गुड़
+Peanuts ; 500 g ; मूंगफली
+Kaju ; 250 g ; काजू
+Badam ; 250 g ; बादाम
+Kishmish ; 200 g ; किशमिश
+Sabudana ; 500 g ; साबूदाना
+Ajwain ; 100 g ; अजवाइन
+Saunf ; 100 g ; सौंफ
+Elaichi ; 50 g ; इलायची
+Laung ; 50 g ; लौंग
+Imli ; 200 g ; इमली
+Papad ; 200 g ; पापड़
+Mango pickle ; 500 g ; आम का अचार
+Honey ; 500 g ; शहद
+Milk powder ; 500 g
+Oats ; 1 kg
+Cornflakes ; 500 g
+Marie biscuits ; x4
+Dishwash liquid ; 750 ml
+Scrub pad ; x3 ; बर्तन वाला
+Detergent powder ; 2 kg
+Floor cleaner ; 1 L
+Garbage bags ; x2
+Kadhai ; x1 ; कड़ाही
+Tawa ; x1 ; तवा
+Steel glass ; x6 ; गिलास
+Ladle ; x2 ; कलछी
+Kitchen knife ; x1 ; चाकू
+Chopping board ; x1
+Belan ; x1 ; बेलन
+Lunch box ; x2 ; टिफ़िन
+Water bottle 1 L ; x4 ; बोतल
+Matchbox ; x10 ; माचिस
+Aluminium foil ; x1
+Cling film ; x1`.split('\n');
+
+function parse(raw, i) {
+  const [q = '', qt = '', note = ''] = raw.split(';').map(s => s.trim());
+  const line = i + 1;
+  let qty;
+  if (!qt) qty = { kind: 'count', value: 1 };
+  else if (/^x\d+$/i.test(qt)) qty = { kind: 'count', value: +qt.slice(1) };
+  else {
+    const m = qt.match(/^([\d.]+)\s*(\S+)$/);
+    if (!m) return { line, raw, error: `can't read '${qt}'` };
+    if (!['g', 'kg', 'ml', 'L'].includes(m[2])) return { line, raw, error: `unknown unit '${m[2]}'` };
+    qty = { kind: 'amount', value: +m[1], unit: m[2] };
+  }
+  return { line, raw, query: q, qty, note };
+}
+const ITEMS = RAW.map(parse);
+const BY = Object.fromEntries(ITEMS.map(x => [x.line, x]));
+const qtyText = q => q.kind === 'count' ? 'x' + q.value : q.value + ' ' + q.unit;
+const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const pk = t => { if (!t) return null; const m = t.match(/^([\d.]+)\s*(g|kg|ml|L)$/); return m ? { value: +m[1], unit: m[2], text: t } : null; };
+const P = (name, brand, pack, price, mrp, o = {}) => ({ name, brand, pack: pk(pack), price, mrp: mrp ?? price, inStock: true, ...o });
+const base = (v, u) => (u === 'kg' || u === 'L') ? v * 1000 : v;
+const autoPacks = (q, p) => q.kind === 'count' ? q.value : (!p ? 1 : Math.max(1, Math.ceil(base(q.value, q.unit) / base(p.value, p.unit) - 1e-9)));
+function covers(q, p, n) {
+  if (q.kind === 'count') return 'x' + n;
+  if (!p) return n + ' × pack';
+  let t = +(p.value * n).toFixed(2), u = p.unit;
+  if ((u === 'g' || u === 'ml') && t >= 1000) { t = t / 1000; u = u === 'g' ? 'kg' : 'L'; }
+  return `${n} × ${p.text} = ${t} ${u}`;
+}
+function per(p) {
+  if (!p.pack) return 'per pack';
+  const b = base(p.pack.value, p.pack.unit) / 1000;
+  const v = Math.round(p.price / b * 10) / 10;
+  return '₹' + v.toLocaleString('en-IN') + '/' + ((p.pack.unit === 'g' || p.pack.unit === 'kg') ? 'kg' : 'L');
+}
+
+const M = {
+  1: { conf: 'high', rem: true, alts: [P('Aashirvaad Shudh Chakki Atta 5 kg', 'Aashirvaad', '5 kg', 289, 330), P('Pillsbury Chakki Fresh Atta 5 kg', 'Pillsbury', '5 kg', 275, 310), P('Fortune Chakki Fresh Atta 5 kg', 'Fortune', '5 kg', 262, 299), P('Aashirvaad Shudh Chakki Atta 10 kg', 'Aashirvaad', '10 kg', 549, 640)] },
+  2: { conf: 'high', alts: [P('Tata Sampann Unpolished Masoor Dal 1 kg', 'Tata Sampann', '1 kg', 159, 185), P('Good Life Masoor Dal 1 kg', 'Good Life', '1 kg', 138, 160), P('24 Mantra Organic Masoor Dal 500 g', '24 Mantra', '500 g', 96, 110)] },
+  3: { conf: 'high', rem: true, alts: [P('Catch Jeera Whole 100 g', 'Catch', '100 g', 62, 70), P('Everest Jeera Whole 100 g', 'Everest', '100 g', 58, 65), P('Good Life Jeera 200 g', 'Good Life', '200 g', 108, 125)] },
+  4: { conf: 'medium', alts: [P('Fortune Kachi Ghani Pure Mustard Oil 1 L Pouch', 'Fortune', '1 L', 178, 195), P('Fortune Kachi Ghani Pure Mustard Oil 5 L Jar', 'Fortune', '5 L', 849, 975), P('Patanjali Kachi Ghani Mustard Oil 5 L', 'Patanjali', '5 L', 825, 900), P('Dhara Kachi Ghani Mustard Oil 1 L', 'Dhara', '1 L', 172, 190), P('Engine Kachi Ghani Mustard Oil 2 L', 'Engine', '2 L', 360, 398)] },
+  5: { conf: 'high', alts: [P('Prestige Popular Aluminium Pressure Cooker 5 L, Inner Lid, Induction Base', 'Prestige', '5 L', 1849, 2300), P('Hawkins Classic Aluminium Pressure Cooker 5 L', 'Hawkins', '5 L', 1795, 2000), P('Pigeon Favourite Aluminium Pressure Cooker 5 L', 'Pigeon', '5 L', 1299, 1850)] },
+  6: { conf: 'medium', alts: [P('Signoraware Classic Plastic Storage Container 1100 ml', 'Signoraware', '1100 ml', 129, 175), P('Cello Checkers Plastic Container 1 L', 'Cello', '1 L', 115, 150), P('Stainless Steel Storage Dabba with Lid', 'Classic Essentials', null, 199, 249)] },
+  7: { conf: 'high', alts: [P('Stainless Steel Tea Strainer, Medium', 'Classic Essentials', null, 99, 99), P('Stainless Steel Tea Strainer with Long Handle, Set of 2', 'Classic Essentials', null, 149, 199)] },
+  8: { conf: 'low', alts: [P('Tata Sampann Unpolished Toor Dal 1 kg', 'Tata Sampann', '1 kg', 189, 210, { inStock: false }), P('Good Life Toor Dal 1 kg', 'Good Life', '1 kg', 172, 195), P('Tata Sampann Unpolished Toor Dal 2 kg', 'Tata Sampann', '2 kg', 369, 415)] },
+  9: { status: 'not_found' }, 10: { status: 'not_found' },
+  11: { conf: 'high', changed: true, alts: [P('Rajdhani Thick Poha 1 kg', 'Rajdhani', '1 kg', 72, 80), P('Good Life Thick Poha 500 g', 'Good Life', '500 g', 38, 45), P('Tata Sampann Poha 500 g', 'Tata Sampann', '500 g', 45, 50)] },
+  12: { status: 'skipped', alts: [P('Amul Pure Ghee 1 L', 'Amul', '1 L', 650, 675)] },
+  13: { conf: 'medium', alts: [P('Daawat Rozana Super Basmati Rice 1 kg', 'Daawat', '1 kg', 115, 140), P('India Gate Basmati Rice Classic 5 kg', 'India Gate', '5 kg', 699, 899), P('Fortune Biryani Special Basmati Rice 5 kg', 'Fortune', '5 kg', 649, 820)] },
+};
+const EXTRA = {
+  15: ['Tata Sampann Unpolished Chana Dal 1 kg', '1 × 1 kg = 1 kg', 129, 'high'], 16: ['Tata Sampann Unpolished Moong Dal 1 kg', '1 × 1 kg = 1 kg', 169, 'high'],
+  17: ['Madhur Pure Sugar 1 kg', '2 × 1 kg = 2 kg', 104, 'high'], 18: ['Tata Salt Vacuum Evaporated Iodised 1 kg', '1 × 1 kg = 1 kg', 28, 'high'],
+  19: ['Catch Turmeric Powder 200 g', '1 × 200 g = 200 g', 68, 'high'], 20: ['Everest Kashmirilal Chilli Powder 200 g', '1 × 200 g = 200 g', 112, 'high'],
+  21: ['MDH Dhania Powder 100 g', '2 × 100 g = 200 g', 116, 'medium'], 22: ['Everest Garam Masala 100 g', '1 × 100 g = 100 g', 82, 'high'],
+  23: ['Good Life Mustard Seeds (Rai) 100 g', '1 × 100 g = 100 g', 35, 'high'], 24: ['Fortune Sunlite Refined Sunflower Oil 1 L Pouch', '1 × 1 L = 1 L', 155, 'high'],
+};
+const REM = [
+  ['atta', 'Aashirvaad Shudh Chakki Atta 5 kg', '5 kg', 289, '2026-10-27'],
+  ['jeera', 'Catch Jeera Whole 100 g', '100 g', 62, '2026-10-27'],
+  ['poha', 'Rajdhani Thick Poha 1 kg', '1 kg', 72, '2026-10-27'],
+  ['मूंगफली', 'Good Life Raw Peanuts 500 g', '500 g', 89, '2026-10-12'],
+  ['sugar', 'Madhur Pure Sugar 1 kg', '1 kg', 52, '2026-10-12'],
+  ['tea', 'Tata Tea Gold Leaf Tea 500 g', '500 g', 285, '2026-10-12'],
+  ['dishwash liquid', 'Vim Lemon Dishwash Liquid Gel 750 ml', '750 ml', 199, '2026-09-28'],
+  ['steel glass', 'Stainless Steel Tumbler Glass 300 ml', '300 ml', 79, '2026-09-28'],
+  ['pressure cooker 5 l', 'Prestige Popular Aluminium Pressure Cooker 5 L, Inner Lid, Induction Base', '5 L', 1849, '2026-08-03'],
+];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const dfmt = s => { const [y, m, d] = s.split('-'); return `${+d} ${MON[m - 1]} ${y}`; };
+const TABS = [['all', 'All', 'All', 65], ['look', 'Needs a look', 'Check', 7], ['nf', 'Not found', 'Not found', 2], ['ready', 'Ready', 'Ready', 51], ['skipped', 'Skipped', 'Skipped', 5]];
+const NOT_BOUGHT = [[9, 'Not found'], [10, 'Not found'], [8, 'Failed · out of stock now'], [57, 'Failed · quantity limit reached']];
+const ERRS = { out_of_stock: 'Out of stock now', qty_limit: 'Quantity limit reached', shop_error: 'JioMart error' };
+
+class Component extends DCLogic {
+  state = { tab: 'all', aOpen: 4, aSearch: 9, bOpen: 6, choice: {}, packs: {}, skip: {}, changed: {}, rem: {}, helpOpen: true, copied: null, remQ: '', forgot: {} };
+  setIn(k, line, v) { this.setState(s => ({ [k]: { ...s[k], [line]: v } })); }
+  pick(line, i, key) {
+    this.setState(s => ({ choice: { ...s.choice, [line]: i }, changed: { ...s.changed, [line]: true }, packs: { ...s.packs, [line]: undefined }, [key + 'Open']: null }));
+  }
+  copy(id, text) {
+    try { navigator.clipboard && navigator.clipboard.writeText(text); } catch (e) {}
+    this.setState({ copied: id }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ copied: null }), 1600);
+  }
+  row(it, key) {
+    const s = this.state, m = M[it.line] || {}, L = it.line;
+    const nf = m.status === 'not_found';
+    const skipped = !nf && (s.skip[L] ?? (m.status === 'skipped'));
+    const ci = s.choice[L] ?? 0, p = m.alts && m.alts[ci];
+    const n = s.packs[L] ?? (p ? autoPacks(it.qty, p.pack) : 1);
+    const changed = s.changed[L] ?? !!m.changed;
+    const conf = changed ? 'high' : m.conf;
+    const open = s[key + 'Open'] === L && !!p && !skipped;
+    const live = !nf && !skipped;
+    return {
+      line: L, query: it.query, qtyText: qtyText(it.qty), note: it.note,
+      hasProduct: !!p && live, isNone: nf, isSkipped: skipped,
+      isHigh: live && conf === 'high', isCheck: live && (conf === 'medium' || conf === 'low'),
+      remembered: live && !!m.rem && !changed,
+      p: p ? { name: p.name, brandPack: p.brand + (p.pack ? ' · ' + p.pack.text : ''), priceText: fmt(p.price), mrpText: fmt(p.mrp), hasMrp: p.mrp > p.price, oos: live && !p.inStock } : { oos: false },
+      covers: p ? covers(it.qty, p.pack, n) : '', totalText: p ? fmt(p.price * n) : '',
+      packs: n, packWord: it.qty.kind === 'count' ? 'pcs' : (n === 1 ? 'pack' : 'packs'), decDisabled: n <= 1,
+      changed: live && changed, remember: s.rem[L] ?? true,
+      open, changeLabel: open ? 'Done' : 'Change',
+      showSearch: nf || (key === 'a' && s.aSearch === L && live),
+      alts: open ? m.alts.map((a, i) => ({
+        name: a.name, packText: a.pack ? a.pack.text : 'Pack not stated', perText: per(a) + (a.inStock ? '' : ' · out of stock'), priceText: fmt(a.price),
+        selected: i === ci, tag: i === ci ? 'Selected' : '', bg: i === ci ? 'var(--accent-soft)' : 'transparent',
+        pick: () => this.pick(L, i, key), key: e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.pick(L, i, key); } },
+      })) : [],
+      toggleOpen: () => this.setState(st => ({ [key + 'Open']: st[key + 'Open'] === L ? null : L })),
+      toggleSearch: () => this.setState(st => ({ aSearch: st.aSearch === L ? null : L })),
+      skip: () => this.setIn('skip', L, true), unskip: () => this.setIn('skip', L, false),
+      inc: () => this.setIn('packs', L, n + 1), dec: () => this.setIn('packs', L, Math.max(1, n - 1)),
+      toggleRemember: () => this.setIn('rem', L, !(s.rem[L] ?? true)),
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const reviewItems = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(l => BY[l]);
+    const all = reviewItems.map(it => this.row(it, 'a'));
+    const f = { all: () => true, look: r => r.isCheck, nf: r => r.isNone, ready: r => r.isHigh, skipped: r => r.isSkipped }[s.tab];
+    const prev = ITEMS.slice(0, 18).map(x => x.error
+      ? { line: x.line, ok: false, isErr: true, errText: `Line ${x.line}: ${x.error}`, raw: x.raw }
+      : { line: x.line, ok: true, isErr: false, query: x.query, qtyText: qtyText(x.qty), note: x.note });
+    const findRows = [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30].map(l => {
+      const it = BY[l], e = EXTRA[l];
+      return { query: it.query, qtyText: qtyText(it.qty), note: it.note, done: !!e, searching: l === 25, pending: l > 25,
+        name: e ? e[0] : '', covers: e ? e[1] : '', total: e ? fmt(e[2]) : '', isHigh: !!e && e[3] === 'high', isCheck: !!e && e[3] === 'medium' };
+    });
+    const addSeq = [[1, 'added'], [2, 'added'], [3, 'added'], [4, 'added'], [5, 'added'], [6, 'added'], [7, 'added'], [8, 'failed', 'out_of_stock'], [11, 'added'], [13, 'added'], [15, 'added'], [16, 'adding'], [17, 'waiting'], [18, 'waiting'], [19, 'waiting']];
+    const addRows = addSeq.map(([l, st, err]) => {
+      const it = BY[l], m = M[l];
+      let name, cov, total;
+      if (m && m.alts) { const p = m.alts[0], n = autoPacks(it.qty, p.pack); name = p.name; cov = covers(it.qty, p.pack, n); total = fmt(p.price * n); }
+      else { const e = EXTRA[l]; name = e[0]; cov = e[1]; total = fmt(e[2]); }
+      return { query: it.query, qtyText: qtyText(it.qty), name, covers: cov, total, added: st === 'added', adding: st === 'adding', waiting: st === 'waiting', failed: st === 'failed', err: ERRS[err] || '', opacity: st === 'waiting' ? 0.6 : 1 };
+    });
+    const notBought = NOT_BOUGHT.map(([l, reason]) => { const it = BY[l]; return { query: it.query, qtyText: qtyText(it.qty), note: it.note || '', reason }; });
+    const q = s.remQ.trim().toLowerCase();
+    const remRows = REM.filter(r => !s.forgot[r[0]] && (!q || r[0].toLowerCase().includes(q) || r[1].toLowerCase().includes(q)))
+      .map(r => ({ query: r[0], name: r[1], pack: r[2], price: fmt(r[3]), used: dfmt(r[4]), forget: () => this.setIn('forgot', r[0], true) }));
+    const summaryText = NOT_BOUGHT.map(([l]) => BY[l].raw).join('\n');
+    return {
+      helpOpen: s.helpOpen, toggleHelp: () => this.setState(st => ({ helpOpen: !st.helpOpen })),
+      rawLines: RAW.slice(0, 22).map((t, i) => ({ n: i + 1, text: t })),
+      rawLinesB: RAW.slice(0, 16).map(t => ({ text: t })),
+      preview: prev, previewB: prev.slice(7, 15),
+      findRows,
+      tabs: TABS.map(([id, label, short, count]) => ({ label, short, count, selected: s.tab === id, border: s.tab === id ? 'var(--ink)' : 'transparent', weight: s.tab === id ? 600 : 400, select: () => this.setState({ tab: id }) })),
+      rowsA: all.filter(f),
+      rowsB: [1, 4, 6, 9, 11].map(l => this.row(BY[l], 'b')),
+      addRows, notBought,
+      summaryLabel: s.copied === 'sum' ? 'Copied' : 'Copy as text', copySummary: () => this.copy('sum', summaryText),
+      cmdLabel: s.copied === 'cmd' ? 'Copied' : 'Copy', copyCmd: () => this.copy('cmd', './instruction.sh chrome'),
+      remQ: s.remQ, setRemQ: e => this.setState({ remQ: e.target.value }), remRows, remEmpty: remRows.length === 0,
+      prevent: e => e.preventDefault(),
+      errorCards: [
+        { id: 'A8.1', label: 'Chrome not reachable', title: "Can't reach the Grocery Cart Chrome window", body: 'Start it from a terminal. This page reconnects on its own.', hasCmd: true, primary: 'Try again', hasSecondary: false },
+        { id: 'A8.2', label: 'Signed out mid-way', title: 'Paused at 31 / 58. JioMart signed you out.', body: 'Sign in again in the Chrome window, then Resume. Items already added stay in your cart.', hasCmd: false, primary: 'Resume', hasSecondary: true, secondary: 'Open JioMart sign-in' },
+        { id: 'A8.3', label: 'Pincode not serviceable', title: "JioMart doesn't deliver to 560099", body: 'Change the delivery pincode on JioMart, then check again.', hasCmd: false, primary: 'Check again', hasSecondary: true, secondary: 'Change on JioMart' },
+        { id: 'A8.4', label: 'Shop changed', title: "JioMart changed something, search isn't working", body: "Grocery Cart couldn't read JioMart's search results. Nothing was added to your cart.", hasCmd: false, primary: 'Report a problem', hasSecondary: true, secondary: 'Try again' },
+        { id: 'A8.5', label: 'Empty list', title: 'Your list is empty', body: 'Type or paste one item per line, like  Atta ; 5 kg ; आटा', hasCmd: false, primary: 'Load last list', hasSecondary: true, secondary: 'Format help' },
+        { id: 'A8.6', label: 'Nothing found', title: 'None of the 65 items were found', body: 'Check the Chrome window shows JioMart and your pincode, then search again.', hasCmd: false, primary: 'Search again', hasSecondary: true, secondary: 'Back to list' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
