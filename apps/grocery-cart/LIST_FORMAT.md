@@ -9,7 +9,7 @@ One item per line. Plain text, so you can type it, paste it from a note, or have
 | Part | Required | Meaning |
 |---|---|---|
 | what to buy | yes | The words to search for. Use the name a grocery site uses (`Poha`, `Jeera`, `Pressure cooker 5 L`). A brand narrows it (`Aashirvaad atta`). A size **here** describes each piece (`Container 1 kg` is a 1 kg container), not how many to buy. |
-| how much | no | `x6` = 6 pieces or packs. `5 kg`, `500 g`, `2 L`, `200 ml` = the total amount; the tool picks packs that add up to it, preferring a single pack of that size (5 kg → one 5 kg pack, else 2 × 2.5 kg …). Left out = `x1`. |
+| how much | no | `x6` (or `6`, `6 pcs`, `6 packs`) = 6 pieces or packs. `5 kg`, `500 g`, `2 L`, `200 ml` = the total amount; the tool picks packs that add up to it, preferring a single pack of that size (5 kg → one 5 kg pack, else 2 × 2.5 kg …). Left out = `x1`. |
 | note | no | Shown next to the item while reviewing, never searched. Good for the Hindi name or a reminder (`चावल`, `any brand`). |
 
 Rules:

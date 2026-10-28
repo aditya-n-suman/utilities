@@ -10,7 +10,8 @@
 #                                          Phase 0: replay the captured search (and add) from the shop's tab
 #   ./instruction.sh cart-probe ["toor dal"] [dir]
 #                                          Phase 0b (JioMart): add one product found by a new search, check, remove
-#   ./instruction.sh e2e                   Phase 0 tools against a local stand-in shop (no network)
+#   ./instruction.sh live-check [--cart]   Phase 2: run the JioMart client in your tab (Quick + Shop all); --cart also writes
+#   ./instruction.sh e2e                   research tools + engine against local stand-in shops (no network)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -63,6 +64,7 @@ case "${1:-}" in
   summarize) setup; npm run --silent summarize -- "${@:2}" ;;
   probe) setup; npm run --silent probe -- "${@:2}" ;;
   cart-probe) setup; npm run --silent cart-probe -- "${@:2}" ;;
+  live-check) setup; npm run --silent live-check -- "${@:2}" ;;
   e2e) setup; npm run --silent e2e ;;
-  *) sed -n '2,13p' "$0"; exit 1 ;;
+  *) sed -n '2,14p' "$0"; exit 1 ;;
 esac

@@ -24,12 +24,35 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 |---|---|---|
 | 0 | Feasibility: record a search + add by hand, summarise (redacted), replay the search with new words from the tab | ✅ search replay works on JioMart (even without its custom headers); endpoints mapped in `research/jiomart-api.md` |
 | 0b | Add a product found by a new search, check, remove (`cart-probe`); learn whether the `x-fp-signature` is checked | ✅ add + remove work from the tab; the signature isn't needed |
-| 1 | List parser + units, tests (format in LIST_FORMAT.md, sample `examples/my-list.txt`) | format decided |
-| 2 | JioMart adapter: search + add via its requests, click fallback; fixtures from Phase 0 | |
+| 1 | List parser + units (`src/engine/list.ts`, `units.ts`) | ✅ reads all 65 lines of `examples/my-list.txt`; per-line errors |
+| 2 | JioMart client (`src/engine/jiomart/`) + tab connection (`src/local/jiomart-tab.ts`); Quick and Shop all | 🔧 built; unit + e2e on a JioMart-shaped stand-in pass; **waiting for `live-check` on the real site** |
 | 3 | Matcher: name/brand tokens, pack size and pack maths, stock, price per unit, confidence | |
 | 4 | Local web page: paste, live search, review, add, report (design from Claude Design) | brief ready |
 | 5 | Remembered choices | |
 | 6 | DMart Ready adapter; extension (side panel) | brief covers the extension |
+
+## Engine (`src/engine/`, no browser code: the extension will reuse it)
+- `list.ts` / `units.ts`: the list format; quantities are a count (`x6`, `6 pcs`) or an amount (`5 kg`; g/kg/ml/L
+  and spellings like gm, ltr). 1 kg ≈ 1 L.
+- `jiomart/api.ts`: request builders and response readers: `Product` (uid, name, brand, size code, pack amount or
+  pieces, price, MRP, per-unit label, sellable, min/max qty, categories, image, journey, variants), `Cart`/`CartLine`
+  (identifier, article id, quantity, stock, journey, vertical), add / update / remove bodies, search URL.
+- `jiomart/client.ts`: `JioMartClient(fetcher, session)`: `search(query, mode, limit)` with paging, `cart()`,
+  `add`, `setQuantity`, `remove`. Writes are paced (1.5 s apart, searches 0.7 s). JioMart's answers become
+  `ShopError` (`signed_out`, `human_check`, `rate_limited`, `shop_changed`, `mode_unknown`, `network`) or `CartError`
+  (`out_of_stock`, `qty_limit`, `not_in_cart`, `shop_error`), as named in DESIGN_BRIEF.md.
+- **Modes:** `quick` = JioMart Quick (`f=journey:quickcommerce:::store_ids:<store>||<store>`); `all` = Shop all.
+  Each mode uses the filter *and headers* the page itself used for its last search in that mode, so the tool follows
+  whatever JioMart does. Shop all's exact form is unconfirmed; an unfiltered search is assumed when the page sends no `f`.
+
+## Local (`src/local/`, Playwright over CDP)
+- `jiomart-tab.ts`: finds the JioMart tab, learns headers (minus the stale `x-fp-signature`/`x-fp-date`) and the
+  cart query from the page's own polling (reloads once if the page is quiet), and each mode's filter from the page's
+  searches; remembers filters per area code in `~/.config/grocery-cart/jiomart.json`. Requests go out with fetch()
+  inside the tab.
+- `live-check.ts`: you search once in Quick and once in Shop all on JioMart; it reports what it learnt (names only for
+  headers, cookies, storage keys that change between modes), searches groceries and kitchenware in both modes,
+  checks paging; `--cart` adds, changes to 2 and removes one product per mode (asks first).
 
 ## Phase 0 tools (`src/research/`)
 - `record.ts`: guided recording; `recorder.ts` keeps document/fetch/XHR/ping requests to `*.jiomart.com` in full and
@@ -72,8 +95,8 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. Phase 1: list parser (`src/engine/list.ts`) against `examples/my-list.txt` and LIST_FORMAT.md's rules.
-2. Phase 2: JioMart adapter (`src/engine/jiomart/`): take headers, cart id and store from the page's live requests
-   (no capture file needed), search with paging, add/update/remove; check quick vs standard delivery for kitchenware.
-   Fixtures: sanitised search responses.
-3. Paste `DESIGN_BRIEF.md`'s prompt into Claude Design; save the canvas in `design/`.
+1. You: `./instruction.sh live-check --cart` and share `captures/live-check-*.md`. It settles Shop all (filter,
+   headers, cookies), whether kitchenware needs it, paging, and update/remove in both modes.
+2. Me: fix what it shows, then Phase 3: matcher (name/brand/category tokens, loose vs packed, pack maths for
+   amounts like 5 kg, stock and order limits, confidence) with fixtures from real searches.
+3. Paste `DESIGN_BRIEF.md`'s prompt into Claude Design (updated for Quick / Shop all); save the canvas in `design/`.

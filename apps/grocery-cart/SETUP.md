@@ -59,7 +59,15 @@ the same requests from your signed-in tab. You do the clicking; the tools only w
    checks the cart, removes it and checks again. It refuses if that product is already in your cart. Share the new
    lines at the end of `probe.md`. If it ends with "remove … by hand", do that on the cart page.
 
-7. Close the tool's Chrome.
+7. **Phase 2: live check of the JioMart client (Quick and Shop all).**
+   ```bash
+   ./instruction.sh live-check --cart      # leave out --cart for a read-only run
+   ```
+   It asks you to search once in "Quick" and once in "Shop all" on JioMart (that's how it learns both), then searches
+   a few list lines in both modes. With `--cart`, for each mode it asks before adding 1 of a product, changes it to 2
+   and removes it. Share `captures/live-check-<time>.md` (redacted: header, cookie and storage *names* only).
+
+8. Close the tool's Chrome.
 
 ### If something goes wrong
 | Symptom | Cause / fix |

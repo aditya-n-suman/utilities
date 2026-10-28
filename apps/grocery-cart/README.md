@@ -4,7 +4,7 @@ Turn a grocery list into a filled JioMart cart, in your own signed-in Chrome. Pa
 picks (pack sizes, brands, prices), and it adds them to your cart. It never checks out or pays: you check the cart
 and pay on JioMart yourself. DMart Ready may follow.
 
-**State: Phase 0 done** (search and cart work from your tab with JioMart's own requests). Only the research tools exist so far. See [STATUS.md](STATUS.md).
+**State: Phases 0–1 done, Phase 2 built** (list parser; JioMart client for Quick and Shop all, awaiting a live check). No UI yet. See [STATUS.md](STATUS.md).
 
 ## How it will work
 ```
@@ -14,6 +14,8 @@ list (text)  →  parse  →  search JioMart  →  pick best product per line  �
 - Runs on your computer only. It attaches to a Chrome you start with `./instruction.sh chrome` (its own profile).
 - It uses JioMart's own requests from inside the JioMart tab, so it has your session and pincode without handling
   logins, and it goes at a human pace (one item at a time).
+- You choose **Quick** (nearby store, fast) or **Shop all** (JioMart's full range, scheduled delivery) for the list,
+  and can switch single items.
 - It remembers what you picked for each line, so next month's list needs little review.
 - Later, the same engine moves into a browser extension (side panel next to the JioMart tab), like `extensions/playlist-bridge`.
 

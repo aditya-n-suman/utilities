@@ -12,7 +12,8 @@
     "summarize": "tsx src/research/summarize.ts",
     "probe": "tsx src/research/probe.ts",
     "cart-probe": "tsx src/research/cart-probe.ts",
-    "e2e": "tsx tests/e2e/phase0.e2e.ts",
+    "live-check": "tsx src/local/live-check.ts",
+    "e2e": "tsx tests/e2e/phase0.e2e.ts && tsx tests/e2e/engine.e2e.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },

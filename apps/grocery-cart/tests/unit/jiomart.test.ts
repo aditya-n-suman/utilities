@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Capture, CapturedRequest } from "../../src/research/capture.ts";
 import { addCandidate } from "../../src/research/classify.ts";
-import { addBody, addedLine, cartId, cartQuantity, cartWriteOk, removeBody, searchItems, withCartId } from "../../src/research/jiomart.ts";
+import { addBody, addedLine, cartId, cartQuantity, cartWriteOk, removeBody, searchItems, withCartId } from "../../src/engine/jiomart/api.ts";
 import { REDACTED } from "../../src/research/redact.ts";
 import { outline } from "../../src/research/shape.ts";
 import { safeUrl } from "../../src/research/summarize.ts";
@@ -37,19 +37,8 @@ const ADD_RESPONSE = {
 
 describe("jiomart requests", () => {
   it("reads search items", () => {
-    expect(searchItems(SEARCH)).toEqual([
-      {
-        uid: 132487249,
-        name: "Aashirvaad Shudh Whole Wheat Chakki Atta 5 kg",
-        brand: "aashirvaad",
-        size: "OS",
-        price: 245,
-        mrp: 262,
-        sellable: true,
-        maxQty: 2,
-        verticalCode: "GROCERIES",
-        sellerId: 1,
-      },
+    expect(searchItems(SEARCH)).toMatchObject([
+      { uid: 132487249, name: "Aashirvaad Shudh Whole Wheat Chakki Atta 5 kg", brand: "aashirvaad", size: "OS", price: 245, mrp: 262, sellable: true, maxQty: 2, minQty: 1, verticalCode: "GROCERIES", sellerId: 1 },
     ]);
     expect(searchItems({})).toEqual([]);
   });

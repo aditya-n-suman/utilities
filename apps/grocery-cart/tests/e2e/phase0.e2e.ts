@@ -125,13 +125,13 @@ try {
     const jm = await startFakeJioMart({ requireSignature });
     const jmPage = await context.newPage();
     await jmPage.goto(`${jm.origin}/`);
-    const headers = { "content-type": "application/json", authorization: "Bearer app", "x-fp-signature": "v1.1:sig", "x-fp-date": "20261028T022600Z" };
+    const headers = { "content-type": "application/json", authorization: jm.auth, "x-fp-signature": "v1.1:sig", "x-fp-date": "20261028T022600Z" };
     const tpl = (method: string, path: string, step = "add", reqBody?: string): CapturedRequest => ({
       seq: 1, t: 0, step, method, url: `${jm.origin}${path}`, resourceType: "xhr", siteHost: true, reqHeaders: headers, reqBody,
     });
     const templates: CartTemplates = {
       term: "atta",
-      search: tpl("GET", "/ext/vertex/application/api/v1.0/products?f=x&q=atta", "search"),
+      search: tpl("GET", "/ext/vertex/application/api/v1.0/products?f=journey%3Aquickcommerce%3A%3A%3Astore_ids%3A13895%7C%7C13895&q=atta", "search"),
       cartDetail: tpl("GET", "/api/service/application/cart/v1.0/detail?b=true&i=true"),
       add: tpl("POST", "/api/service/application/cart/v2.0/bulk-detail?id=old"),
       remove: tpl("PUT", "/api/service/application/cart/v2.0/detail?id=old", "remove", '{"operation":"remove_item"}'),

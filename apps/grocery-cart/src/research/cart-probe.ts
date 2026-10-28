@@ -16,7 +16,7 @@ import { type Capture, type CapturedRequest, latestCaptureDir, loadCapture, step
 import { connect, DEFAULT_ENDPOINT, sitePage } from "./cdp.ts";
 import { addCandidate, replaceTermInUrl, searchCandidates } from "./classify.ts";
 import { isMain } from "./cli.ts";
-import { addBody, addedLine, cartId, cartQuantity, cartWriteOk, removeBody, searchItems, withCartId, type SearchItem } from "./jiomart.ts";
+import { addBody, addedLine, cartId, cartQuantity, cartWriteOk, removeBody, searchItems, withCartId, type SearchItem } from "../engine/jiomart/api.ts";
 import { replay, replayHeaders } from "./probe.ts";
 import { REDACTED, redactValue } from "./redact.ts";
 import { responseJson } from "./shape.ts";

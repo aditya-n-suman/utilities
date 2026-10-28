@@ -18,11 +18,10 @@ import { addCandidate, replaceTermInBody, replaceTermInUrl, searchCandidates } f
 import { isMain } from "./cli.ts";
 import { customHeaderNames } from "./redact.ts";
 import { isPlainObject, outline, responseJson } from "./shape.ts";
+import { BROWSER_HEADERS } from "../local/headers.ts";
 import { getSite } from "./sites.ts";
 import { safeUrl } from "./summarize.ts";
 
-/** Headers the browser sets itself; fetch() refuses or ignores them. */
-const BROWSER_HEADERS = /^(:|sec-|cookie$|host$|content-length$|connection$|origin$|referer$|user-agent$|accept-encoding$|priority$|keep-alive$|te$|trailer$|transfer-encoding$|upgrade$|via$|dnt$|date$|expect$)/i;
 
 export function replayHeaders(req: CapturedRequest, withCustom: boolean): Record<string, string> {
   const custom = new Set(customHeaderNames(req.reqHeaders));

@@ -1,0 +1,26 @@
+{
+  "cart_id": "cart-1",
+  "id": "cart-1",
+  "breakup_values": { "raw": { "total": 242, "mrp_total": 749 } },
+  "items": [
+    {
+      "identifiers": { "identifier": "FO9ms15gRLq26X0KjbyZ2Q" },
+      "product": { "type": "product", "uid": 82239826, "name": "Maxx Flash Mosquito Repellent Refill" },
+      "article": { "uid": "69f2fefe57e25a9ef68c96d5", "size": "OS", "meta": { "vertical_code": "GROCERIES" } },
+      "quantity": 1,
+      "availability": { "out_of_stock": false, "deliverable": true, "sellable_quantity": 1980 },
+      "journey_wise_promise": [{ "journey": "standard" }],
+      "res_item_index": 0
+    },
+    {
+      "identifiers": { "identifier": "sHqFskWmSHmFnbSndB8NNA" },
+      "product": { "uid": 7507147, "name": "Fortune Chakki Fresh Atta 5 kg" },
+      "article": { "uid": "692794663dcd7ab2ae455d36", "size": "5 KG", "meta": { "vertical_code": "GROCERIES" } },
+      "quantity": 2,
+      "availability": { "out_of_stock": false },
+      "journey_wise_promise": [{ "journey": "quickcommerce" }],
+      "res_item_index": 1
+    },
+    { "identifiers": {}, "product": { "uid": 1 }, "article": {} }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "items": [
+    {
+      "type": "product",
+      "attributes": { "vertical-code": "GROCERIES", "max-qty-in-order": "2", "l1-category": ["Cooking Essentials"], "l2-category": ["Atta, Flours & Sooji"], "l3-category": ["Atta"], "product-size": "5 kg" },
+      "sellable": true,
+      "name": "Aashirvaad Shudh Whole Wheat Chakki Atta 5 kg",
+      "slug": "aashirvaad-shudh-whole-wheat-chakki-atta-5-kg",
+      "uid": 132487249,
+      "brand": { "type": "brand", "uid": 262, "name": "aashirvaad" },
+      "medias": [{ "url": "https://cdn.example/atta.jpg", "type": "image", "alt": "Aashirvaad" }],
+      "moq": { "minimum": 1, "maximum": 2, "increment_unit": 1 },
+      "net-quantity-value": 5,
+      "net-quantity-unit": "kg",
+      "net_quantity": "49.00/kg",
+      "price": { "effective": { "min": 245, "max": 245 }, "marked": { "min": 262, "max": 262 }, "currency_code": "INR" },
+      "journey": "quickcommerce",
+      "seller_id": 1,
+      "sizes": ["OS"],
+      "variants": [{ "items": [{ "uid": 132487249, "is_available": true, "value": "5 kg" }, { "uid": 132487250, "is_available": false, "value": "10 kg" }], "key": "product-size" }]
+    },
+    {
+      "type": "product",
+      "attributes": { "vertical-code": "GROCERIES", "product-size": "5 kg" },
+      "sellable": true,
+      "name": "Fortune Chakki Fresh Atta 5 kg",
+      "uid": 7507147,
+      "brand": { "name": "Fortune" },
+      "price": { "effective": { "min": 225 }, "marked": { "min": 245 } },
+      "seller_id": 1,
+      "sizes": ["5 KG"]
+    },
+    {
+      "type": "product",
+      "attributes": {},
+      "sellable": false,
+      "name": "Loose Chakki Atta Value 1 kg",
+      "uid": 7528100,
+      "sizes": ["OS"]
+    },
+    { "type": "product", "name": "Broken entry without uid", "sizes": ["OS"] }
+  ],
+  "page": { "has_previous": false, "has_next": true, "item_total": 278, "type": "cursor", "next_id": "2" },
+  "meta": { "nextPageToken": "tok-page-2" }
+}
