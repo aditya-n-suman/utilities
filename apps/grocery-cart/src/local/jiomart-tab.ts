@@ -6,16 +6,16 @@
 // Requests then go out with fetch() inside the tab: your cookies, JioMart's origin, nothing stored by us.
 
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import type { BrowserContext, Page, Request } from "playwright-core";
 import { CART_DETAIL_PATH, type Mode, ORIGIN, SEARCH_PATH, storeFromFilter } from "../engine/jiomart/api.ts";
 import type { Fetcher, FetchRequest, FetchResponse, Session } from "../engine/jiomart/client.ts";
 import { sitePage } from "../research/cdp.ts";
 import { type Site, SITES } from "../research/sites.ts";
+import { configDir } from "./config.ts";
 import { resendableHeaders } from "./headers.ts";
 
-const stateFile = () => process.env.GROCERY_CART_STATE ?? join(homedir(), ".config", "grocery-cart", "jiomart.json");
+const stateFile = () => process.env.GROCERY_CART_STATE ?? join(configDir(), "jiomart.json");
 
 interface SavedFilters {
   /** area code → mode → filter */

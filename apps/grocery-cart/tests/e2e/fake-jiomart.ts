@@ -11,7 +11,7 @@ import { createServer } from "node:http";
 const AUTH = "Bearer app-token";
 const STORE = "13895";
 
-const base = (uid: number, name: string, size: string, journey: string, sellable = true, vertical = "GROCERIES") => ({
+const base = (uid: number, name: string, size: string, journey: string, sellable = true, vertical = "GROCERIES", price = 179, maxQty = 4) => ({
   type: "product",
   uid,
   name,
@@ -19,18 +19,25 @@ const base = (uid: number, name: string, size: string, journey: string, sellable
   sellable,
   journey,
   brand: { name: name.split(" ")[0].toLowerCase() },
-  attributes: { "vertical-code": vertical, "max-qty-in-order": "4" },
-  price: { effective: { min: 179, max: 179 }, marked: { min: 210, max: 210 } },
-  moq: { minimum: 1, maximum: 4, increment_unit: 1 },
+  attributes: { "vertical-code": vertical, "max-qty-in-order": String(maxQty) },
+  price: { effective: { min: price, max: price }, marked: { min: Math.round(price * 1.15), max: Math.round(price * 1.15) } },
+  moq: { minimum: 1, maximum: maxQty, increment_unit: 1 },
   seller_id: 1,
+  medias: [{ url: `/img/${uid}.svg`, type: "image" }],
 });
 
 const ITEMS = [
   base(7001, "Loose Toor Dal Value 1 kg", "OS", "quickcommerce", false),
   base(7507147, "Tata Sampann Unpolished Toor Dal 1 kg", "1 KG", "quickcommerce"),
-  base(7600001, "Aashirvaad Atta 5 kg", "OS", "quickcommerce"),
-  base(9100001, "Hawkins Pressure Cooker 5 L", "OS", "standard", true, "HOMEANDKITCHEN"),
-  base(9100002, "Steel Tea Strainer", "OS", "standard", true, "HOMEANDKITCHEN"),
+  base(7600001, "Aashirvaad Atta 5 kg", "OS", "quickcommerce", true, "GROCERIES", 289),
+  base(7600002, "Pillsbury Chakki Fresh Atta 5 kg", "OS", "quickcommerce", true, "GROCERIES", 275),
+  base(7600010, "Fortune Kachi Ghani Mustard Oil 1 L", "OS", "quickcommerce", true, "GROCERIES", 178, 6),
+  base(7600011, "Fortune Kachi Ghani Mustard Oil 5 L", "OS", "quickcommerce", true, "GROCERIES", 849, 2),
+  base(7600020, "Catch Jeera Whole 100 g", "OS", "quickcommerce", true, "GROCERIES", 62),
+  base(7600030, "Cello Plastic Storage Container 1 kg", "OS", "quickcommerce", true, "HOMEANDKITCHEN", 115, 4),
+  base(9100001, "Hawkins Pressure Cooker 5 L", "OS", "standard", true, "HOMEANDKITCHEN", 1795),
+  base(9100003, "Prestige Popular Pressure Cooker 3 L", "OS", "standard", true, "HOMEANDKITCHEN", 1499),
+  base(9100002, "Steel Tea Strainer", "OS", "standard", true, "HOMEANDKITCHEN", 99),
 ];
 
 const PAGE = `<!doctype html><meta charset="utf-8"><title>JioMart stand-in</title>
@@ -57,6 +64,8 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
   const writes: { path: string; signed: boolean; body: unknown; location?: string }[] = [];
   const CART = "cart0001";
   let lineSeq = 0;
+  /** set humanCheckNext to answer the next cart write with Akamai-style 403 HTML */
+  const state = { humanCheckNext: false };
   const server = createServer((req, res) => {
     const url = new URL(req.url ?? "/", "http://x");
     const send = (body: unknown, status = 200) => {
@@ -67,19 +76,36 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
       res.writeHead(200, { "content-type": "text/html", "set-cookie": "sess=s1; Path=/" });
       return res.end(PAGE);
     }
+    if (url.pathname === "/checkout/cart") {
+      res.writeHead(200, { "content-type": "text/html" });
+      return res.end("<!doctype html><title>Cart</title><h1>Cart</h1>");
+    }
+    const img = /^\/img\/(\d+)\.svg$/.exec(url.pathname);
+    if (img) {
+      const hue = Number(img[1]) % 360;
+      res.writeHead(200, { "content-type": "image/svg+xml", "access-control-allow-origin": "*" });
+      return res.end(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><rect width="40" height="40" fill="hsl(${hue} 40% 85%)"/><rect x="10" y="8" width="20" height="26" rx="4" fill="hsl(${hue} 45% 45%)"/></svg>`);
+    }
     let raw = "";
     req.on("data", (c) => (raw += c));
     req.on("end", () => {
       if (!(req.headers.cookie ?? "").includes("sess=s1") || req.headers.authorization !== AUTH) return send({ message: "unauthorised" }, 401);
+      if (state.humanCheckNext && url.pathname.startsWith("/api/service/application/cart/v2.0/")) {
+        state.humanCheckNext = false;
+        res.writeHead(403, { "content-type": "text/html" });
+        return res.end("<html><body>Access Denied</body></html>");
+      }
       const signed = typeof req.headers["x-fp-signature"] === "string";
       const location = req.headers["x-location-detail"] as string | undefined;
+      if (url.pathname === "/api/service/application/user/profile/v1.0/user-attributes") return send({ attributes: {} });
       if (url.pathname === "/ext/vertex/application/api/v1.0/products") {
         const words = (url.searchParams.get("q") ?? "").toLowerCase().split(/\s+/).filter(Boolean);
         const f = url.searchParams.get("f");
         const quick = f === `journey:quickcommerce:::store_ids:${STORE}||${STORE}`;
         if (f !== null && !quick) return send({ items: [], page: { has_next: false, item_total: 0 } });
         const items = ITEMS.filter((i) => (quick ? i.journey === "quickcommerce" : true) && words.every((w) => i.name.toLowerCase().includes(w)));
-        return send({ items, page: { has_next: false, item_total: items.length } });
+        const abs = items.map((i) => ({ ...i, medias: i.medias.map((m) => ({ ...m, url: `http://${req.headers.host}${m.url}` })) }));
+        return send({ items: abs, page: { has_next: false, item_total: items.length } });
       }
       if (url.pathname === "/api/service/application/cart/v1.0/detail") {
         return send({
@@ -112,7 +138,7 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
           journey: known.journey,
         };
         line.quantity += it.quantity;
-        if (line.quantity > 4) return send({ success: false, message: "You can add maximum 4 quantity" });
+        if (line.quantity > known.moq.maximum) return send({ success: false, message: `You can add maximum ${known.moq.maximum} quantity` });
         cart.set(it.item_id, line);
         return send({
           cart_id: CART,
@@ -138,5 +164,5 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
   });
   await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
   const origin = `http://127.0.0.1:${(server.address() as { port: number }).port}`;
-  return { origin, cart, writes, auth: AUTH, close: () => new Promise<void>((r) => server.close(() => r())) };
+  return { origin, cart, writes, auth: AUTH, state, close: () => new Promise<void>((r) => server.close(() => r())) };
 }

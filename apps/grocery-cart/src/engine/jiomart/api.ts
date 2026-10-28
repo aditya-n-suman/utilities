@@ -14,6 +14,11 @@ export const SEARCH_PATH = "/ext/vertex/application/api/v1.0/products";
 export const CART_DETAIL_PATH = "/api/service/application/cart/v1.0/detail";
 export const ADD_PATH = "/api/service/application/cart/v2.0/bulk-detail";
 export const CHANGE_PATH = "/api/service/application/cart/v2.0/detail";
+/** Seen when the cart page loads; assumed to answer 401/403 when signed out (to confirm in a live run). */
+export const PROFILE_PATH = "/api/service/application/user/profile/v1.0/user-attributes";
+/** Pages the app opens in the tab. The cart page path is unconfirmed. */
+export const HOME_URL = `${ORIGIN}/`;
+export const CART_PAGE_PATH = "/checkout/cart";
 
 /** "quick": JioMart Quick (nearby store, fast delivery). "all": Shop all (scheduled delivery, wider range). */
 export type Mode = "quick" | "all";

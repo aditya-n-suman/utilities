@@ -4,6 +4,7 @@
 #   ./instruction.sh setup                 install dependencies (idempotent)
 #   ./instruction.sh test                  unit tests + typecheck
 #   ./instruction.sh chrome                start Chrome with its own profile and remote debugging (leave it open)
+#   ./instruction.sh start                 the app: builds the UI, serves it on http://127.0.0.1:4180 and opens it
 #   ./instruction.sh record [jiomart]      Phase 0: record one search + add-to-cart done by hand
 #   ./instruction.sh summarize [dir]       rewrite summary.md for the newest (or given) capture
 #   ./instruction.sh probe [--query "toor dal"] [--add] [dir]
@@ -11,7 +12,7 @@
 #   ./instruction.sh cart-probe ["toor dal"] [dir]
 #                                          Phase 0b (JioMart): add one product found by a new search, check, remove
 #   ./instruction.sh live-check [--cart]   Phase 2: run the JioMart client in your tab (Quick + Shop all); --cart also writes
-#   ./instruction.sh e2e                   research tools + engine against local stand-in shops (no network)
+#   ./instruction.sh e2e                   research tools, engine and UI against local stand-in shops (no network)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -60,11 +61,18 @@ case "${1:-}" in
   setup) setup; echo "Setup done." ;;
   test) setup; npm test; npm run typecheck ;;
   chrome) chrome ;;
+  start)
+    setup
+    npm run --silent build:ui >/dev/null
+    PORT_UI="${GROCERY_UI_PORT:-4180}"
+    ( sleep 1.5; command -v xdg-open >/dev/null && xdg-open "http://127.0.0.1:$PORT_UI/" >/dev/null 2>&1 || true ) &
+    npx tsx src/local/server.ts --port "$PORT_UI" --endpoint "http://127.0.0.1:$PORT"
+    ;;
   record) setup; npm run --silent record -- "${@:2}" ;;
   summarize) setup; npm run --silent summarize -- "${@:2}" ;;
   probe) setup; npm run --silent probe -- "${@:2}" ;;
   cart-probe) setup; npm run --silent cart-probe -- "${@:2}" ;;
   live-check) setup; npm run --silent live-check -- "${@:2}" ;;
   e2e) setup; npm run --silent e2e ;;
-  *) sed -n '2,14p' "$0"; exit 1 ;;
+  *) sed -n '2,15p' "$0"; exit 1 ;;
 esac

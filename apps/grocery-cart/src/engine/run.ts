@@ -320,7 +320,7 @@ export class Run {
             this.emit();
             break;
           }
-          r.add = "waiting";
+          // The line stays "adding" while paused (the UI shows "Adding… paused") and is retried on resume.
           this.pauseFor(e instanceof ShopError ? e : new ShopError("network", (e as Error).message), "adding");
           if (!(await this.gate(gen))) return;
         }
@@ -330,6 +330,15 @@ export class Run {
       this.phase = "done";
       this.emit();
     }
+  }
+
+  /** Drops the run (back to the list). Anything still running stops before its next line. */
+  reset(): void {
+    this.generation++;
+    this.rows = [];
+    this.items.clear();
+    this.phase = "idle";
+    this.resume();
   }
 
   /** Back to review from done (e.g. to change something and add again). */

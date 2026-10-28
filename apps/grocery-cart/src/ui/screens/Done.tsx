@@ -1,0 +1,76 @@
+// A6 Done: how many were added, open the cart, retry failures, what to buy elsewhere.
+
+import type { RunState } from "../../engine/run.ts";
+import { act } from "../api.ts";
+import { Copy } from "../bits.tsx";
+import { ADD_ERRORS } from "./Adding.tsx";
+
+export function Done({ run }: { run: RunState }) {
+  const tried = run.rows.filter((r) => r.add === "added" || r.add === "failed");
+  const added = tried.filter((r) => r.add === "added").length;
+  const failed = tried.length - added;
+  const elsewhere = run.rows
+    .filter((r) => !r.skipped && (r.add === "failed" || (r.search === "done" && !r.chosen)))
+    .map((r) => ({ r, reason: r.add === "failed" ? `Failed · ${ADD_ERRORS[r.addError ?? "shop_error"].toLowerCase()}` : "Not found" }));
+  return (
+    <main className="center" style={{ padding: "64px 28px 72px" }}>
+      <div className="col" style={{ maxWidth: 680, gap: 32 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <h1 className="big">
+            <span className="mono" style={{ fontWeight: 500 }}>
+              {added}
+            </span>{" "}
+            of{" "}
+            <span className="mono" style={{ fontWeight: 500 }}>
+              {tried.length}
+            </span>{" "}
+            added
+          </h1>
+          <p className="lede" style={{ fontSize: 15.5 }}>
+            Your JioMart cart is filled. Check it and pay on JioMart yourself.
+          </p>
+        </div>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <button className="btn lg" onClick={() => void act("open", { what: "cart" })}>
+            Open cart in Chrome
+          </button>
+          {failed > 0 && (
+            <button className="btn lg ghost" onClick={() => void act("add", { onlyFailed: true })}>
+              Retry {failed} failed
+            </button>
+          )}
+          <button className="btn lg ghost" onClick={() => void act("review")}>
+            Back to review
+          </button>
+          <button className="btn lg ghost" onClick={() => void act("reset")}>
+            New list
+          </button>
+        </div>
+        {elsewhere.length > 0 && (
+          <div className="panel">
+            <div className="panel-head">
+              <strong style={{ fontSize: 15 }}>Buy these elsewhere</strong>
+              <Copy text={elsewhere.map(({ r }) => r.raw).join("\n")} label="Copy as text" />
+            </div>
+            {elsewhere.map(({ r, reason }) => (
+              <div className="panel-row" key={r.line}>
+                <div style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap" }}>
+                  <span style={{ fontWeight: 600 }}>{r.query}</span>
+                  <span className="qty">{r.qtyText}</span>
+                  {r.note && (
+                    <span lang="hi" className="muted">
+                      {r.note}
+                    </span>
+                  )}
+                </div>
+                <span className="bad" style={{ fontSize: 13, fontWeight: 500 }}>
+                  {reason}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}

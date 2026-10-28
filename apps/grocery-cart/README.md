@@ -4,7 +4,15 @@ Turn a grocery list into a filled JioMart cart, in your own signed-in Chrome. Pa
 picks (pack sizes, brands, prices), and it adds them to your cart. It never checks out or pays: you check the cart
 and pay on JioMart yourself. DMart Ready may follow.
 
-**State: Phases 0–1 done, Phase 2 built** (list parser; JioMart client for Quick and Shop all, awaiting a live check). No UI yet. See [STATUS.md](STATUS.md).
+**State: usable end to end on a stand-in shop** (local app built from the Claude Design canvas: list → find → review →
+add, Quick and Shop all, remembered choices). The first real-site runs are next. See [STATUS.md](STATUS.md).
+
+```bash
+cd apps/grocery-cart
+./instruction.sh setup
+./instruction.sh chrome     # the tool's own Chrome window: sign in to JioMart there once, set your pincode
+./instruction.sh start      # opens http://127.0.0.1:4180
+```
 
 ## How it will work
 ```
@@ -21,8 +29,9 @@ list (text)  →  parse  →  search JioMart  →  pick best product per line  �
 
 ## Docs
 - [LIST_FORMAT.md](LIST_FORMAT.md): the list format, and a Gemini prompt that converts your usual list into it.
-- [SETUP.md](SETUP.md): install, and the Phase 0 recording run on Fedora.
+- [SETUP.md](SETUP.md): install, using the app, the research runs on Fedora, troubleshooting.
 - [DESIGN_BRIEF.md](DESIGN_BRIEF.md): the Claude Design prompt (local app now, extension later) and the UI's data.
+  The resulting canvas is `design/Grocery Cart.dc.html`.
 - [STATUS.md](STATUS.md): phases, findings, decisions, next steps.
 - [research/jiomart-api.md](research/jiomart-api.md): JioMart's search and cart requests, from the Phase 0 run.
 

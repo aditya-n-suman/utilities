@@ -2,7 +2,7 @@
 
 _Branch `ccr-1f3a7259-ii7u86` · local tool (Node + Playwright over CDP) now, browser extension later_
 
-Read this first, then `README.md`, `SETUP.md` (Phase 0 run), `LIST_FORMAT.md` and `DESIGN_BRIEF.md`.
+Read this first, then `README.md`, `SETUP.md` (runs and checks), `LIST_FORMAT.md` and `DESIGN_BRIEF.md`.
 Development follows `extensions/playlist-bridge`: phases with a feasibility gate first, `instruction.sh`, fixture-based
 unit tests, a scripted e2e, and a Claude Design canvas in `design/` before UI work.
 
@@ -26,10 +26,34 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 | 0b | Add a product found by a new search, check, remove (`cart-probe`); learn whether the `x-fp-signature` is checked | ✅ add + remove work from the tab; the signature isn't needed |
 | 1 | List parser + units (`src/engine/list.ts`, `units.ts`) | ✅ reads all 65 lines of `examples/my-list.txt`; per-line errors |
 | 2 | JioMart client (`src/engine/jiomart/`) + tab connection (`src/local/jiomart-tab.ts`); Quick and Shop all | 🔧 built; unit + e2e on a JioMart-shaped stand-in pass; **waiting for `live-check` on the real site** |
-| 3 | Matcher: name/brand tokens, pack size and pack maths, stock, price per unit, confidence | |
-| 4 | Local web page: paste, live search, review, add, report (design from Claude Design) | brief ready |
-| 5 | Remembered choices | |
+| 3 | Matcher (`src/engine/match.ts`) | ✅ v1, unit-tested on cases from the real data; **tune on real searches** |
+| 4 | Local app: server (`src/local/server.ts`, `app.ts`) + React UI (`src/ui/`) from `design/Grocery Cart.dc.html` | ✅ all of Part A, light + dark; UI e2e on the stand-in passes; **not yet run against the real site** |
+| 5 | Remembered choices (`src/engine/remembered.ts`, A7) | ✅ kept in `~/.config/grocery-cart/remembered.json` |
 | 6 | DMart Ready adapter; extension (side panel) | brief covers the extension |
+
+## Run it
+```bash
+./instruction.sh chrome     # the tool's Chrome; sign in to JioMart there (once)
+./instruction.sh start      # builds the UI, serves http://127.0.0.1:4180 and opens it
+./instruction.sh test       # unit tests + typecheck
+./instruction.sh e2e        # research tools, engine and UI against local stand-in shops (no network)
+```
+`SHOTS=<dir> npx tsx tests/e2e/ui.e2e.ts` saves screenshots of every screen (light and dark) for design checks.
+
+## UI (`src/ui/`, design: `design/Grocery Cart.dc.html`, Part A)
+- `App.tsx` picks the screen from the run's phase: Connect (A1) → Paste list (A2) → Finding (A3) → Review (A4) →
+  Adding (A5) → Done (A6); Remembered choices (A7) at `#remembered`. State arrives over SSE (`/api/events`); actions are
+  POSTs (`api.ts`). The list preview runs the engine's own parser in the browser.
+- Tokens and layouts follow the design (`styles.css`): same colours (light and dark via `prefers-color-scheme`),
+  Schibsted Grotesk / Geist Mono / Noto Sans Devanagari bundled with @fontsource (no Google Fonts call), 1280 px down to 900.
+- Additions for Quick / Shop all (not in the canvas, which predates them): a delivery choice on Paste list, a 4th
+  Connect row ("Learnt Quick and Shop all"), a delivery tag on each product, "Search Shop all for this" on Quick rows
+  that found nothing, and a footer split ("5 Quick · 1 Shop all").
+- Other differences from the canvas: Connect shows the pincode without the area name (JioMart's area name isn't read
+  yet); A7 has Forget but not Change (change a remembered product by picking another one in Review); "Pincode not
+  serviceable" (A8.3) isn't detected; the A8 errors appear as the pause banner on the screen you're on, and "Nothing
+  found" / "Your list is empty" in place. Extra links: "Stop and edit list", "Edit list", "Back to review", "New list".
+- Server (`src/local/server.ts`): 127.0.0.1 only; refuses other Host headers (DNS rebinding) and cross-site POSTs.
 
 ## Engine (`src/engine/`, no browser code: the extension will reuse it)
 - `list.ts` / `units.ts`: the list format; quantities are a count (`x6`, `6 pcs`) or an amount (`5 kg`; g/kg/ml/L
@@ -41,6 +65,16 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
   `add`, `setQuantity`, `remove`. Writes are paced (1.5 s apart, searches 0.7 s). JioMart's answers become
   `ShopError` (`signed_out`, `human_check`, `rate_limited`, `shop_changed`, `mode_unknown`, `network`) or `CartError`
   (`out_of_stock`, `qty_limit`, `not_in_cart`, `shop_error`), as named in DESIGN_BRIEF.md.
+- `match.ts`: per line, scores each result by word coverage (with a shop synonym table: toor/tur/arhar, jeera/cumin,
+  …), pack fit (an amount is best met by one pack of that size; over-buying costs; a size in the name is checked
+  against each piece), and penalties for unsellable, "loose" (unless asked) and order limits (packs are capped);
+  JioMart's order breaks ties. Confidence: high / medium / low / none. Returns the chosen candidate (packs, covers
+  text, line total, price per kg/L) and up to 5 alternatives. A remembered product wins when it's in the results.
+- `run.ts`: one run of a list: `find` (line by line), review edits (`choose`, `setPacks`, `skip`, `setRemember`,
+  `searchAgain` with other words or the other mode), `addAll` (existing cart lines are increased, not duplicated;
+  `onlyFailed` for retries), `pause`/`resume`, `reset`. Shop trouble pauses on the current line and resume retries it;
+  a refused write fails only that line. Remembers a changed pick (if ticked) when it's added.
+- `remembered.ts`: the remembered-choice record and store interface (local: JSON file; extension: chrome.storage).
 - **Modes:** `quick` = JioMart Quick (`f=journey:quickcommerce:::store_ids:<store>||<store>`); `all` = Shop all.
   Each mode uses the filter *and headers* the page itself used for its last search in that mode, so the tool follows
   whatever JioMart does. Shop all's exact form is unconfirmed; an unfiltered search is assumed when the page sends no `f`.
@@ -95,8 +129,9 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. You: `./instruction.sh live-check --cart` and share `captures/live-check-*.md`. It settles Shop all (filter,
-   headers, cookies), whether kitchenware needs it, paging, and update/remove in both modes.
-2. Me: fix what it shows, then Phase 3: matcher (name/brand/category tokens, loose vs packed, pack maths for
-   amounts like 5 kg, stock and order limits, confidence) with fixtures from real searches.
-3. Paste `DESIGN_BRIEF.md`'s prompt into Claude Design (updated for Quick / Shop all); save the canvas in `design/`.
+1. You: `./instruction.sh live-check --cart` (if not done yet), then try the app for real: `./instruction.sh chrome`,
+   `./instruction.sh start`, paste `examples/my-list.txt`. Share what looks wrong (screenshots welcome).
+2. Unverified on the real site, all isolated in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH` assumed
+   to answer 401/403 when signed out), the cart page (`CART_PAGE_PATH = /checkout/cart`), Shop all's filter.
+3. Tune the matcher on real searches (save sanitised search responses as fixtures and add cases to `match.test.ts`).
+4. Later: area name on Connect, A7 "Change", pincode serviceability, then the extension (Part B of the canvas).
