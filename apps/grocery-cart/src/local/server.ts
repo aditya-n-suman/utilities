@@ -117,6 +117,30 @@ export async function handle(app: App, req: IncomingMessage, res: ServerResponse
       case "/api/remembered/set":
         if (!app.rememberProduct(String(b.key), Number(b.uid))) return send(res, 400, { error: "search again first" });
         break;
+      case "/api/cart/load":
+        await app.loadCart();
+        break;
+      case "/api/cart/remove": {
+        const targets = Array.isArray(b.targets) ? (b.targets as { uid: unknown; toQuantity?: unknown; name?: unknown }[]) : [];
+        app.tidyCart(
+          targets
+            .filter((t) => Number.isFinite(Number(t.uid)))
+            .map((t) => ({ uid: Number(t.uid), toQuantity: Math.max(0, Number(t.toQuantity ?? 0) || 0), name: typeof t.name === "string" ? t.name : undefined })),
+        );
+        break;
+      }
+      case "/api/cart/undo-run":
+        app.tidyCart(app.run.undoTargets());
+        break;
+      case "/api/cart/pause":
+        app.tidy.pause();
+        break;
+      case "/api/cart/resume":
+        await app.resumeTidy();
+        break;
+      case "/api/cart/reset":
+        app.tidy.reset();
+        break;
       case "/api/forget":
         app.memory.forget(String(b.key));
         app.emit();

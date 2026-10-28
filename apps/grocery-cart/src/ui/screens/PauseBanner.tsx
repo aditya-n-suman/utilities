@@ -16,7 +16,7 @@ const TEXT: Record<Pause["code"], { title: string; body: string }> = {
 
 const REPORT = "https://github.com/aditya-n-suman/utilities/issues/new?title=Grocery%20Cart%3A%20JioMart%20changed%20something";
 
-export function PauseBanner({ pause, done, total }: { pause: Pause; done: number; total: number }) {
+export function PauseBanner({ pause, done, total, resumeAction = "resume" }: { pause: Pause; done: number; total: number; resumeAction?: string }) {
   const t = TEXT[pause.code];
   return (
     <div className="alert" role="alertdialog" aria-label="Paused">
@@ -42,7 +42,7 @@ export function PauseBanner({ pause, done, total }: { pause: Pause; done: number
             Report a problem
           </a>
         )}
-        <button className="btn lg" onClick={() => void act("resume")}>
+        <button className="btn lg" onClick={() => void act(resumeAction)}>
           {pause.code === "shop_changed" ? "Try again" : "Resume"}
         </button>
       </div>

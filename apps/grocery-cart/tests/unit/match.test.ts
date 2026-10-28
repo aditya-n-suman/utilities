@@ -117,6 +117,15 @@ describe("match", () => {
     expect(m.remembered).toBe(true);
   });
 
+  it("counts sets as several pieces", () => {
+    const m = match(item("Container 1 kg ; x6"), [P("Joyo Storewell Containers 1 kg (Set of 3)", 118, { pieces: 3 })]);
+    expect(m.chosen?.packs).toBe(2);
+    expect(m.chosen?.covers).toBe("2 × set of 3 = 6 pcs");
+    expect(m.chosen?.lineTotal).toBe(236);
+    const big = match(item("Steel glass ; x2"), [P("Steel Glass (Set of 10)", 499, { pieces: 10 })]);
+    expect(big.chosen?.issues).toContain("a set of 10 for 2");
+  });
+
   it("re-plans packs from the stepper", () => {
     const m = match(item("Atta ; 5 kg"), [P("Aashirvaad Atta 5 kg", 289)]);
     const c = withPacks(m.chosen!, item("Atta ; 5 kg"), 2);

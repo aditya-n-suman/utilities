@@ -25,10 +25,11 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
 | 0 | Feasibility: record a search + add by hand, summarise (redacted), replay the search with new words from the tab | ✅ search replay works on JioMart (even without its custom headers); endpoints mapped in `research/jiomart-api.md` |
 | 0b | Add a product found by a new search, check, remove (`cart-probe`); learn whether the `x-fp-signature` is checked | ✅ add + remove work from the tab; the signature isn't needed |
 | 1 | List parser + units (`src/engine/list.ts`, `units.ts`) | ✅ reads all 65 lines of `examples/my-list.txt`; per-line errors |
-| 2 | JioMart client (`src/engine/jiomart/`) + tab connection (`src/local/jiomart-tab.ts`); Quick and Shop all | 🔧 built; unit + e2e on a JioMart-shaped stand-in pass; **waiting for `live-check` on the real site** |
+| 2 | JioMart client (`src/engine/jiomart/`) + tab connection (`src/local/jiomart-tab.ts`); Quick and Shop all | ✅ live check: both modes learnt and searched, adds work; paging and quantity changes open (below) |
 | 3 | Matcher (`src/engine/match.ts`) | ✅ v1, unit-tested on cases from the real data; **tune on real searches** |
 | 4 | Local app: server (`src/local/server.ts`, `app.ts`) + React UI (`src/ui/`) from `design/Grocery Cart.dc.html` | ✅ all of Part A, light + dark; UI e2e on the stand-in passes; **not yet run against the real site** |
 | 5 | Remembered choices (`src/engine/remembered.ts`, A7) | ✅ kept in `~/.config/grocery-cart/remembered.json`; Change (search + pick) and Forget |
+| 5b | Cart page (`#cart`) + "Undo this run" (`src/engine/tidy.ts`) | ✅ select lines (all / added by Grocery Cart / Quick / Scheduled) and remove them one by one; Undo restores what was there before |
 | 6 | DMart Ready adapter; extension (side panel) | brief covers the extension |
 
 ## Run it
@@ -53,6 +54,9 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
   yet); A7's Change opens an inline search (words + Quick / Shop all) under the row instead of a dialog; "Pincode not
   serviceable" (A8.3) isn't detected; the A8 errors appear as the pause banner on the screen you're on, and "Nothing
   found" / "Your list is empty" in place. Extra links: "Stop and edit list", "Edit list", "Back to review", "New list".
+- Cart page (`#cart`, `screens/CartScreen.tsx`): not in the canvas, built from its patterns (Remembered's head, Review's
+  tabs and footer, Adding's progress and pause banner). Removing asks for confirmation in the footer; Done offers
+  "Undo this run" (also confirmed). Requested because JioMart's cart page reloads after every change.
 - Server (`src/local/server.ts`): 127.0.0.1 only; refuses other Host headers (DNS rebinding) and cross-site POSTs.
 
 ## Engine (`src/engine/`, no browser code: the extension will reuse it)
@@ -74,6 +78,9 @@ No checkout, no payment, no logins handled by us: everything runs inside your ow
   `searchAgain` with other words or the other mode), `addAll` (existing cart lines are increased, not duplicated;
   `onlyFailed` for retries), `pause`/`resume`, `reset`. Shop trouble pauses on the current line and resume retries it;
   a refused write fails only that line. Remembers a changed pick (if ticked) when it's added.
+- `tidy.ts`: `CartTidy.run(targets)` brings each product down to a quantity (0 = remove), one at a time, re-reading the
+  cart before each change because JioMart renumbers lines; pauses on shop trouble like the run. `Run.undoTargets()`
+  gives "Undo this run": what the run added goes back to the quantity the cart had before (`Row.before`).
 - `remembered.ts`: the remembered-choice record and store interface (local: JSON file; extension: chrome.storage).
 - **Modes:** `quick` = JioMart Quick (`f=journey:quickcommerce:::store_ids:<store>||<store>`); `all` = Shop all.
   Each mode uses the filter *and headers* the page itself used for its last search in that mode, so the tool follows
@@ -129,11 +136,12 @@ Details and field tables: `research/jiomart-api.md`.
   safety checks (a headless browser posing as a normal one). All live runs happen in the user's Chrome.
 
 ## Next steps
-1. You: `./instruction.sh live-check --cart` (if not done yet), then try the app for real: `./instruction.sh chrome`,
-   `./instruction.sh start`, paste `examples/my-list.txt`. Share what looks wrong (screenshots welcome).
-2. Unverified on the real site, all isolated in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH` assumed
-   to answer 401/403 when signed out), the cart page (`CART_PAGE_PATH = /checkout/cart`), Shop all's filter.
-3. Tune the matcher on real searches (save sanitised search responses as fixtures and add cases to `match.test.ts`).
+1. You: `./instruction.sh paging` (reads your Phase 0 capture; prints which field the page used for page 2), then
+   `./instruction.sh live-check --cart` once more (prints stock for the quantity-change test and always cleans up).
+   Then the app for real with `examples/my-list.txt`; the Cart page removes what the old live check left behind.
+2. Unverified on the real site, in `src/engine/jiomart/api.ts`: the sign-in check (`PROFILE_PATH`), the cart page
+   (`CART_PAGE_PATH = /checkout/cart`).
+3. Fix paging from step 1's output; tune the matcher on real searches (sanitised fixtures + cases in `match.test.ts`).
 4. Needs real JioMart responses first: the area name on Connect, pincode serviceability (A8.3).
 5. Then the extension (Part B of the canvas), once the local app has worked on the real site: the engine
    (`src/engine/`) moves as is; `src/local/jiomart-tab.ts` becomes a content script + side panel.

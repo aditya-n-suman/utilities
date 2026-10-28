@@ -158,9 +158,12 @@ export class JioMartClient {
       await this.pace("search");
       const page = parseSearch(await this.send("GET", searchUrl(filter || undefined, query, next, 50, this.origin), undefined, mode));
       if (!page) throw new ShopError("shop_changed", "JioMart's search answer changed shape");
-      products.push(...page.products.map((p) => ({ ...p, mode })));
+      // Stop when a page brings nothing new: a wrong page id makes JioMart repeat the first page.
+      const seen = new Set(products.map((p) => p.uid));
+      const fresh = page.products.filter((p) => !seen.has(p.uid));
+      products.push(...fresh.map((p) => ({ ...p, mode })));
       total ??= page.total;
-      next = page.next;
+      next = fresh.length ? page.next : undefined;
     } while (next && products.length < limit);
     return { products: products.slice(0, Math.max(limit, 0)), total };
   }

@@ -112,7 +112,12 @@ export async function startFakeJioMart(opts: { requireSignature?: boolean } = {}
           id: CART,
           items: [...cart].map(([uid, l], i) => ({
             identifiers: { identifier: l.identifier },
-            product: { uid, name: ITEMS.find((x) => x.uid === uid)?.name },
+            product: {
+              uid,
+              name: ITEMS.find((x) => x.uid === uid)?.name,
+              images: [{ url: `http://${req.headers.host}/img/${uid}.svg` }],
+            },
+            price: { base: { effective: ITEMS.find((x) => x.uid === uid)?.price.effective.min, marked: ITEMS.find((x) => x.uid === uid)?.price.marked.min } },
             article: { uid: l.article_id, size: l.size, meta: { vertical_code: l.vertical } },
             quantity: l.quantity,
             availability: { out_of_stock: false, sellable_quantity: 50 },

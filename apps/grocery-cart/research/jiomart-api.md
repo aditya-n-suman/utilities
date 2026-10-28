@@ -77,3 +77,19 @@ returns the store, seller, `article_id`, live price and store `quantity` (stock)
 ## Other hosts (not needed)
 Google Analytics, AppsFlyer, Moloco, JioMart's ad server (`ads.jiomartjcp.com`, sponsored products), image CDNs.
 Sponsored results come from the ad server, not the search response, so search results are organic.
+
+## Live check (2026-10-28, `live-check --cart`)
+- **Filters:** Quick `journey:quickcommerce:::store_ids:<s>||<s>:::searchType:global`; Shop all
+  `journey:standard:::store_ids:<s2>||<s2>` (a different store id). Headers are identical in both modes; the page keeps
+  the mode in site storage (`journey`, `userJourney`, `activeTab`, …), and only the filter changes in search.
+- **Reach:** "atta" 281 results in Quick vs 8,679 in Shop all; "pressure cooker 5 L" 6 vs 314. Kitchenware needs Shop all.
+- **Paging:** sending `page_id=<meta.nextPageToken>&page_size=50` returned the first page again (40 asked → 12
+  distinct). The client now stops when a page brings nothing new. `./instruction.sh paging` reads the Phase 0 capture
+  to see what the page itself sent as `page_id`.
+- **Cart:** adds work in both modes. A product found in Shop all was added with `journey quickcommerce` (it's also
+  stocked nearby; JioMart picks the fulfilment). Changing the quantity to 2 failed for both test products with
+  "Product is out of stock": probably real (one unit in the nearby store); the live check now prints the line's
+  sellable quantity to confirm. The check didn't reach its removal step, so it left both products in the cart; it now
+  always removes.
+- **Names:** sizes aren't always last ("… Cooker 5 Ltr / ISI Certified / 5 Year Warranty"), and sets matter
+  ("(Set of 3)", "2 pcs."). Both are read now.

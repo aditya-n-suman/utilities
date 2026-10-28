@@ -4,12 +4,13 @@
 // - Files in ~/.config/grocery-cart/: last list and mode, remembered choices, learnt filters (jiomart-tab.ts).
 
 import type { Browser } from "playwright-core";
-import { CART_PAGE_PATH, type Mode, ORIGIN, type Product, PROFILE_PATH } from "../engine/jiomart/api.ts";
+import { CART_PAGE_PATH, type CartLine, type Mode, ORIGIN, type Product, PROFILE_PATH } from "../engine/jiomart/api.ts";
 import { JioMartClient, ShopError } from "../engine/jiomart/client.ts";
 import { parseList } from "../engine/list.ts";
 import { type Candidate, match } from "../engine/match.ts";
 import { MemoryStore, type Remembered, type RememberedStore, rememberedFrom } from "../engine/remembered.ts";
 import { Run, type RunState, type Shop } from "../engine/run.ts";
+import { CartTidy, type TidyState, type TidyTarget } from "../engine/tidy.ts";
 import { connect, DEFAULT_ENDPOINT } from "../research/cdp.ts";
 import type { Site } from "../research/sites.ts";
 import { readConfig, readText, writeConfig } from "./config.ts";
@@ -26,12 +27,25 @@ export interface Connection {
   missing: string[];
 }
 
+export interface CartView {
+  lines: CartLine[];
+  total?: number;
+  /** ISO time it was read */
+  loadedAt?: string;
+  loading: boolean;
+  error?: string;
+}
+
 export interface AppState {
   connection: Connection;
   run: RunState;
   lastList: string;
   lastMode: Mode;
   remembered: Remembered[];
+  cart: CartView;
+  tidy: TidyState;
+  /** products the current run added that "Undo this run" would take back */
+  undoable: number;
 }
 
 class FileStore extends MemoryStore implements RememberedStore {
@@ -64,6 +78,8 @@ export class App {
   private connection: Connection = { chrome: "waiting", signedIn: "waiting", modes: { quick: false, all: false }, missing: [] };
   readonly memory = new FileStore();
   readonly run: Run;
+  readonly tidy: CartTidy;
+  private cartView: CartView = { lines: [], loading: false };
   private listeners = new Set<(s: AppState) => void>();
 
   constructor(private readonly opts: AppOptions = {}) {
@@ -74,6 +90,14 @@ export class App {
       setQuantity: (id, line, n, mode) => this.requireClient().setQuantity(id, line, n, mode),
     };
     this.run = new Run(shop, this.memory, () => this.emit());
+    this.tidy = new CartTidy(
+      {
+        cart: () => this.requireClient().cart(),
+        setQuantity: (id, line, n) => this.requireClient().setQuantity(id, line, n),
+        remove: (id, line) => this.requireClient().remove(id, line),
+      },
+      () => this.emit(),
+    );
   }
 
   private requireClient(): JioMartClient {
@@ -97,7 +121,41 @@ export class App {
       lastList: readText("last-list.txt"),
       lastMode: readConfig<{ mode?: Mode }>("settings.json", {}).mode ?? "quick",
       remembered: this.memory.all(),
+      cart: { ...this.cartView },
+      tidy: this.tidy.state(),
+      undoable: this.run.undoTargets().length,
     };
+  }
+
+  /** Reads the JioMart cart for the Cart page. */
+  async loadCart(): Promise<void> {
+    this.cartView = { ...this.cartView, loading: true, error: undefined };
+    this.emit();
+    try {
+      await this.check();
+      const cart = await this.requireClient().cart();
+      // Fall back to adding up the lines when JioMart doesn't report a total.
+      const sum = Math.round(cart.lines.reduce((n, l) => n + (l.price ?? 0) * l.quantity, 0));
+      this.cartView = { lines: cart.lines, total: cart.total || sum, loadedAt: new Date().toISOString(), loading: false };
+    } catch (e) {
+      this.cartView = { ...this.cartView, loading: false, error: (e as Error).message };
+    }
+    this.emit();
+  }
+
+  /** Removes (or reduces) cart lines one by one, then re-reads the cart. */
+  tidyCart(targets: TidyTarget[]): void {
+    if (this.tidy.state().phase === "removing" || !targets.length) return;
+    void this.tidy.run(targets).then(() => {
+      const failed = new Set(this.tidy.state().failed.map((f) => f.uid));
+      this.run.markUndone(targets.filter((t) => !failed.has(t.uid)).map((t) => t.uid));
+      return this.loadCart();
+    });
+  }
+
+  async resumeTidy(): Promise<void> {
+    await this.check();
+    this.tidy.resume();
   }
 
   subscribe(f: (s: AppState) => void): () => void {

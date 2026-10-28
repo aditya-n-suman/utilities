@@ -10,6 +10,7 @@ import { CartError, type CartErrorCode, ShopError, type ShopErrorCode } from "./
 import { formatQuantity, type ListItem } from "./list.ts";
 import { type Candidate, type Confidence, match, withPacks } from "./match.ts";
 import { rememberedFrom, rememberKey, type RememberedStore } from "./remembered.ts";
+import type { TidyTarget } from "./tidy.ts";
 
 export interface Shop {
   search(query: string, mode: Mode, limit?: number): Promise<{ products: Product[] }>;
@@ -43,6 +44,11 @@ export interface Row {
   add: AddState;
   addError?: CartErrorCode | ShopErrorCode;
   addMessage?: string;
+  /** once added: the product added and how many of it the cart had before (for "Undo this run") */
+  addedUid?: number;
+  before?: number;
+  /** taken back out of the cart afterwards ("Undo this run" or the Cart page) */
+  undone?: boolean;
 }
 
 export type Phase = "idle" | "finding" | "review" | "adding" | "done";
@@ -302,6 +308,7 @@ export class Run {
           cart ??= await this.shop.cart();
           const c = r.chosen!;
           const existing = cart.lines.find((l) => l.uid === c.product.uid);
+          const before = existing?.quantity ?? 0;
           if (existing) {
             await this.shop.setQuantity(cart.id, existing, existing.quantity + c.packs, r.mode);
             existing.quantity += c.packs;
@@ -309,7 +316,7 @@ export class Run {
             await this.shop.add(cart.id, { ...c.product, mode: r.mode }, c.packs);
             cart = undefined; // re-read: the new line's identifiers are needed if it comes up again
           }
-          r.add = "added";
+          Object.assign(r, { add: "added", addedUid: c.product.uid, before });
           if ((r.changed && r.remember) || r.remembered) this.memory.set(rememberedFrom(r.query, { ...c.product, mode: r.mode }, this.today()));
           this.emit();
           break;
@@ -339,6 +346,28 @@ export class Run {
     this.items.clear();
     this.phase = "idle";
     this.resume();
+  }
+
+  /**
+   * What "Undo this run" should do to the cart: each product this run added goes back to the quantity it had
+   * before (0 = remove). If a product was added by two lines, the earliest "before" wins.
+   */
+  undoTargets(): TidyTarget[] {
+    const byUid = new Map<number, TidyTarget>();
+    for (const r of this.rows) {
+      if (r.add !== "added" || r.addedUid === undefined || r.undone) continue;
+      const prev = byUid.get(r.addedUid);
+      const before = r.before ?? 0;
+      byUid.set(r.addedUid, { uid: r.addedUid, name: r.chosen?.product.name, toQuantity: prev ? Math.min(prev.toQuantity, before) : before });
+    }
+    return [...byUid.values()];
+  }
+
+  /** Marks what this run added as taken back, for products whose cart line was undone or removed. */
+  markUndone(uids: number[]): void {
+    const set = new Set(uids);
+    for (const r of this.rows) if (r.addedUid !== undefined && set.has(r.addedUid)) r.undone = true;
+    this.emit();
   }
 
   /** Back to review from done (e.g. to change something and add again). */

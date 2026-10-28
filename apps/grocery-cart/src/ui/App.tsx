@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { type AppState, useAppState } from "./api.ts";
 import { Adding } from "./screens/Adding.tsx";
+import { CartScreen } from "./screens/CartScreen.tsx";
 import { Connect } from "./screens/Connect.tsx";
 import { Done } from "./screens/Done.tsx";
 import { Finding } from "./screens/Finding.tsx";
@@ -11,7 +12,7 @@ import { ListScreen } from "./screens/ListScreen.tsx";
 import { Remembered } from "./screens/Remembered.tsx";
 import { Review } from "./screens/Review.tsx";
 
-type Screen = "connect" | "list" | "finding" | "review" | "adding" | "done" | "remembered";
+type Screen = "connect" | "list" | "finding" | "review" | "adding" | "done" | "remembered" | "cart";
 const STEP: Partial<Record<Screen, [number, string]>> = {
   connect: [1, "Connect"],
   list: [2, "Paste list"],
@@ -33,6 +34,7 @@ function useHash(): string {
 
 function screenOf(s: AppState, continued: boolean, hash: string): Screen {
   if (hash === "#remembered") return "remembered";
+  if (hash === "#cart") return "cart";
   const phase = s.run.phase;
   if (phase !== "idle") return phase === "finding" ? "finding" : phase;
   return continued ? "list" : "connect";
@@ -82,16 +84,13 @@ export function App() {
           )}
         </span>
         <nav aria-label="Main">
-          {screen === "remembered" ? (
-            <>
-              <a href="#">Back</a>
-              <a href="#remembered" aria-current="page">
-                Remembered choices
-              </a>
-            </>
-          ) : (
-            <a href="#remembered">Remembered choices</a>
-          )}
+          {(screen === "remembered" || screen === "cart") && <a href="#">Back</a>}
+          <a href="#cart" aria-current={screen === "cart" ? "page" : undefined}>
+            Your cart
+          </a>
+          <a href="#remembered" aria-current={screen === "remembered" ? "page" : undefined}>
+            Remembered choices
+          </a>
         </nav>
         {screen !== "connect" && (
           <span className="conn" title={connected ? "Connected to JioMart" : "Not connected"}>
@@ -107,7 +106,8 @@ export function App() {
       {screen === "finding" && <Finding run={state.run} />}
       {screen === "review" && <Review run={state.run} allModeKnown={c.modes.all} />}
       {screen === "adding" && <Adding run={state.run} />}
-      {screen === "done" && <Done run={state.run} />}
+      {screen === "done" && <Done run={state.run} undoable={state.undoable} />}
+      {screen === "cart" && <CartScreen state={state} />}
       {screen === "remembered" && <Remembered items={state.remembered} modes={c.modes} />}
     </div>
   );

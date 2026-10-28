@@ -106,16 +106,19 @@ function fmtAmount(base: number, liquid: boolean): string {
 
 const isLiquid = (a: Amount) => a.unit === "ml" || a.unit === "L";
 
-/** "2 × 2.5 kg = 5 kg" for amounts, "x6" for counts, "1 × pack" when the pack size isn't stated. */
-export function coversText(qty: Quantity, pack: Amount | undefined, packs: number): string {
-  if (qty.kind === "count") return `x${packs}`;
+/** "2 × 2.5 kg = 5 kg" for amounts; "x6" or "2 × set of 3 = 6 pcs" for counts; "1 × pack" when the size isn't stated. */
+export function coversText(qty: Quantity, pack: Amount | undefined, packs: number, pieces = 1): string {
+  if (qty.kind === "count") return pieces > 1 ? `${packs} × set of ${pieces} = ${packs * pieces} pcs` : `x${packs}`;
   if (!pack) return `${packs} × pack`;
   return `${packs} × ${+pack.value.toFixed(2)} ${pack.unit} = ${fmtAmount(toBase(pack.value, pack.unit) * packs, isLiquid(pack))}`;
 }
 
-/** Packs needed to meet a quantity, and how much that over-buys (1 = exact). */
-export function packPlan(qty: Quantity, pack: Amount | undefined): { packs: number; overBuy: number } {
-  if (qty.kind === "count") return { packs: qty.value, overBuy: 1 };
+/** Packs needed to meet a quantity, and how much that over-buys (1 = exact). Sets count as several pieces. */
+export function packPlan(qty: Quantity, pack: Amount | undefined, pieces = 1): { packs: number; overBuy: number } {
+  if (qty.kind === "count") {
+    const packs = Math.max(1, Math.ceil(qty.value / pieces));
+    return { packs, overBuy: (packs * pieces) / qty.value };
+  }
   if (!pack) return { packs: 1, overBuy: 1 };
   const want = toBase(qty.value, qty.unit);
   const each = toBase(pack.value, pack.unit);
@@ -138,7 +141,8 @@ export function candidate(item: ListItem, p: Product, rank: number): Candidate {
   const issues: string[] = [];
   let score = coverage * 100;
 
-  const plan = packPlan(item.qty, p.pack);
+  const pieces = item.qty.kind === "count" ? (p.pieces ?? 1) : 1;
+  const plan = packPlan(item.qty, p.pack, pieces);
   let packs = plan.packs;
   if (item.qty.kind === "amount") {
     if (!p.pack) {
@@ -151,6 +155,10 @@ export function candidate(item: ListItem, p: Product, rank: number): Candidate {
       score -= Math.min(8, packs - 1); // two 2.5 kg packs are fine, one 5 kg pack is nicer
     }
   } else {
+    if (plan.overBuy > 1.5) {
+      score -= Math.min(20, (plan.overBuy - 1) * 8);
+      issues.push(`a set of ${pieces} for ${item.qty.value}`);
+    }
     const size = sizeInQuery(item.query);
     if (size && p.pack) {
       const ratio = toBase(p.pack.value, p.pack.unit) / toBase(size.value, size.unit);
@@ -178,7 +186,7 @@ export function candidate(item: ListItem, p: Product, rank: number): Candidate {
   return {
     product: p,
     packs,
-    covers: coversText(item.qty, p.pack, packs),
+    covers: coversText(item.qty, p.pack, packs, pieces),
     lineTotal: p.price !== undefined ? Math.round(p.price * packs * 100) / 100 : undefined,
     pricePerUnit: pricePerUnit(p),
     score: Math.round(score * 10) / 10,
@@ -218,7 +226,7 @@ export function withPacks(c: Candidate, item: ListItem, packs: number): Candidat
   return {
     ...c,
     packs: n,
-    covers: coversText(item.qty, c.product.pack, n),
+    covers: coversText(item.qty, c.product.pack, n, item.qty.kind === "count" ? (c.product.pieces ?? 1) : 1),
     lineTotal: c.product.price !== undefined ? Math.round(c.product.price * n * 100) / 100 : undefined,
   };
 }

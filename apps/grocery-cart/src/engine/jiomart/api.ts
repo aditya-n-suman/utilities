@@ -72,20 +72,35 @@ const str = (v: unknown): string | undefined => (typeof v === "string" && v ? v 
 const num = (v: unknown): number | undefined =>
   typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" && !isNaN(+v) ? +v : undefined;
 
+/** Pieces in one pack from the name: "(Set of 3)", "Pack of 2", "6 pcs". */
+export function piecesFromName(name: string): number | undefined {
+  const m = /\b(?:set|pack|combo)\s+of\s+(\d+)\b|\b(\d+)\s*(?:pcs|pieces|pc)\b/i.exec(name);
+  const n = m ? Number(m[1] ?? m[2]) : undefined;
+  return n && n > 1 ? n : undefined;
+}
+
+/** The first weight or volume in a name: "… Pressure Cooker 5 Ltr / ISI Certified / 5 Year Warranty" → 5 L. */
+export function sizeFromName(name: string): Amount | undefined {
+  for (const m of name.matchAll(/(\d+(?:\.\d+)?)\s*(kgs?|gms?|g|ml|ltrs?|litres?|liters?|l)\b/gi)) {
+    const a = parseAmount(`${m[1]} ${m[2]}`);
+    if (a) return a;
+  }
+  return undefined;
+}
+
 function packOf(it: Json, attrs: Json): { pack?: Amount; pieces?: number } {
+  const name = str(it.name) ?? "";
   const value = num(it["net-quantity-value"]);
   const unitText = str(it["net-quantity-unit"]);
+  const namedPieces = piecesFromName(name);
   if (value && unitText) {
-    if (/^pieces?$|^pcs?$|^nos?$/i.test(unitText)) return { pieces: value };
+    if (/^pieces?$|^pcs?$|^nos?$/i.test(unitText)) return { pieces: value, pack: sizeFromName(name) };
     const unit = normalizeUnit(unitText);
-    if (unit) return { pack: { value, unit } };
+    if (unit) return { pack: { value, unit }, pieces: namedPieces };
   }
-  const fromLabel = parseAmount(str(attrs["product-size"]) ?? "");
-  if (fromLabel) return { pack: fromLabel };
-  // Last resort: a trailing size in the name, "… Atta 5 kg".
-  const m = /(\d+(?:\.\d+)?\s*(?:kg|g|gm|ml|l|ltr|litre))\b[^\d]*$/i.exec(str(it.name) ?? "");
-  const fromName = m ? parseAmount(m[1]) : undefined;
-  return fromName ? { pack: fromName } : {};
+  // JioMart's size label, else a size in the name (it isn't always last: "5 Ltr / … / 5 Year Warranty").
+  const pack = parseAmount(str(attrs["product-size"]) ?? "") ?? sizeFromName(name);
+  return { pack, pieces: namedPieces };
 }
 
 export function parseProduct(v: unknown): Product | undefined {
@@ -176,6 +191,11 @@ export interface CartLine {
   sellableQuantity?: number;
   journey?: string;
   verticalCode: string;
+  image?: string;
+  brand?: string;
+  /** price of one, as the cart shows it */
+  price?: number;
+  mrp?: number;
 }
 
 export interface Cart {
@@ -211,6 +231,10 @@ export function parseCart(json: unknown): Cart | undefined {
         sellableQuantity: num(availability.sellable_quantity),
         journey: str(obj(arr(it.journey_wise_promise)[0]).journey),
         verticalCode: str(obj(article.meta).vertical_code) ?? "GROCERIES",
+        image: str(obj(arr(product.images)[0]).url),
+        brand: str(obj(product.brand).name),
+        price: num(obj(obj(it.price).base).effective),
+        mrp: num(obj(obj(it.price).base).marked),
       },
     ];
   });

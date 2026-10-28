@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { parseCart, parseSearch, quickFilter, searchUrl, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
+import { parseCart, parseSearch, piecesFromName, quickFilter, searchUrl, sizeFromName, storeFromFilter, updateBody } from "../../src/engine/jiomart/api.ts";
 import { CartError, cartErrorCode, type FetchRequest, type FetchResponse, JioMartClient, type Session, ShopError } from "../../src/engine/jiomart/client.ts";
 import { areaCode, modeOfFilter, type Observed, observe, pageHeaders } from "../../src/local/jiomart-tab.ts";
 
@@ -55,6 +55,16 @@ describe("parsing", () => {
     expect(loose.sellable).toBe(false);
   });
 
+  it("reads sizes and sets from real product names", () => {
+    expect(sizeFromName("Prestlee Aluminium Non Induction Base Pressure Cooker 5 Ltr / ISI Certified / 5 Year Warranty")).toEqual({ value: 5, unit: "L" });
+    expect(sizeFromName("Fortune Premium Kachi Ghani Pure Mustard Oil 910 g")).toEqual({ value: 910, unit: "g" });
+    expect(sizeFromName("Joyo Storewell Containers 2 L (Set of 3) - Design/colour may vary")).toEqual({ value: 2, unit: "L" });
+    expect(sizeFromName("Univision Commando Stainless Steel Strainer (No.2)")).toBeUndefined();
+    expect(piecesFromName("Mastercook Assorted Colour Plastic Container 1.5 L (Set of 10)")).toBe(10);
+    expect(piecesFromName("MUKE stainless steel dabba set 5 kg Size Steel Container 2 pcs.")).toBe(2);
+    expect(piecesFromName("Aashirvaad Atta 5 kg")).toBeUndefined();
+  });
+
   it("reads the cart", () => {
     const cart = parseCart(CART)!;
     expect(cart).toMatchObject({ id: "cart-1", total: 242, mrpTotal: 749 });
@@ -83,7 +93,9 @@ describe("parsing", () => {
 
 describe("client", () => {
   it("searches with the mode's filter and headers, and pages until the limit", async () => {
-    const pages = [SEARCH, { ...(SEARCH as object), page: { has_next: false }, meta: {} }];
+    const second = JSON.parse(JSON.stringify(SEARCH)) as { items: { uid: number }[] };
+    for (const it of second.items) it.uid += 1;
+    const pages = [SEARCH, { ...second, page: { has_next: false }, meta: {} }];
     const { client, calls } = fakeShop(() => json(pages.shift()));
     const { products, total } = await client.search("atta", "all", 5);
     expect(total).toBe(278);
@@ -91,6 +103,13 @@ describe("client", () => {
     expect(products.every((p) => p.mode === "all")).toBe(true);
     expect(calls.map((c) => new URL(c.url).search)).toEqual(["?q=atta", "?page_id=tok-page-2&page_size=50&q=atta"]);
     expect(calls[0].headers["x-location-detail"]).toBe("loc-all");
+  });
+
+  it("stops paging when JioMart repeats a page", async () => {
+    const { client, calls } = fakeShop(() => json(SEARCH));
+    const { products } = await client.search("atta", "quick", 40);
+    expect(products).toHaveLength(3);
+    expect(calls).toHaveLength(2);
   });
 
   it("stops at the first page when it has enough", async () => {

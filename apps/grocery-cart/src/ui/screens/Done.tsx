@@ -1,11 +1,13 @@
 // A6 Done: how many were added, open the cart, retry failures, what to buy elsewhere.
 
+import { useState } from "react";
 import type { RunState } from "../../engine/run.ts";
 import { act } from "../api.ts";
 import { Copy } from "../bits.tsx";
 import { ADD_ERRORS } from "./Adding.tsx";
 
-export function Done({ run }: { run: RunState }) {
+export function Done({ run, undoable }: { run: RunState; undoable: number }) {
+  const [confirmUndo, setConfirmUndo] = useState(false);
   const tried = run.rows.filter((r) => r.add === "added" || r.add === "failed");
   const added = tried.filter((r) => r.add === "added").length;
   const failed = tried.length - added;
@@ -46,6 +48,37 @@ export function Done({ run }: { run: RunState }) {
             New list
           </button>
         </div>
+        {undoable > 0 && (
+          <div className="panel" style={{ padding: "14px 18px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+            <span className="muted" style={{ fontSize: 14 }}>
+              {confirmUndo
+                ? `Take back the ${undoable} ${undoable === 1 ? "product" : "products"} this run added? Products that were already in your cart go back to their earlier quantity.`
+                : "Changed your mind? Take back what this run added, without touching the rest of your cart."}
+            </span>
+            {confirmUndo ? (
+              <div style={{ display: "flex", gap: 8, flex: "none" }}>
+                <button className="btn-m" onClick={() => setConfirmUndo(false)}>
+                  Cancel
+                </button>
+                <button
+                  className="btn danger"
+                  style={{ height: 36 }}
+                  onClick={() => {
+                    setConfirmUndo(false);
+                    void act("cart/undo-run");
+                    location.hash = "#cart";
+                  }}
+                >
+                  Yes, undo
+                </button>
+              </div>
+            ) : (
+              <button className="btn-m" style={{ flex: "none" }} onClick={() => setConfirmUndo(true)}>
+                Undo this run
+              </button>
+            )}
+          </div>
+        )}
         {elsewhere.length > 0 && (
           <div className="panel">
             <div className="panel-head">

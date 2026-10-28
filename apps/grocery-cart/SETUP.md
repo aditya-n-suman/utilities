@@ -21,7 +21,12 @@ cd apps/grocery-cart
    "Search Shop all for this". A changed pick is remembered for next time unless you untick it.
 4. **Add**: one line at a time. If JioMart asks you to prove you're human, or signs you out, it pauses: fix it in the
    Chrome window, then Resume.
-5. **Done**: open the cart in Chrome, retry failures, copy what to buy elsewhere.
+5. **Done**: open the cart in Chrome, retry failures, copy what to buy elsewhere, or **Undo this run** (takes back
+   what it added; products you already had go back to their earlier quantity).
+
+**Your cart** (header link): your JioMart cart with checkboxes. Filter by "Added by Grocery Cart", Quick or Scheduled,
+select (or select all) and **Remove**: it asks once, then removes them one by one while you watch, instead of JioMart
+reloading its cart page after each change.
 
 It never checks out or pays. Files: `~/.config/grocery-cart/` (last list, remembered choices, learnt filters).
 

@@ -159,22 +159,37 @@ async function main(): Promise<void> {
           log(`- ${MODE_NAME[mode]}: skipped by you`);
           continue;
         }
-        try {
+        const step = async (label: string, f: () => Promise<void>) => {
+          try {
+            await f();
+          } catch (e) {
+            const code = e instanceof CartError || e instanceof ShopError ? e.code : "error";
+            log(`- ❌ ${MODE_NAME[mode]} ${label}: ${code}: ${(e as Error).message}`);
+          }
+        };
+        await step("add", async () => {
           await client.add(current.id, p, 1);
           const line = (await client.cart()).lines.find((l) => l.uid === p.uid);
-          log(`- ${line?.quantity === 1 ? "✅" : "❌"} ${MODE_NAME[mode]} add "${p.name}": cart has ${line?.quantity ?? 0}${line?.journey ? ` (journey ${line.journey})` : ""}`);
-          if (line) {
-            await client.setQuantity(current.id, line, 2, mode);
-            const two = (await client.cart()).lines.find((l) => l.uid === p.uid);
-            log(`- ${two?.quantity === 2 ? "✅" : "❌"} change to 2: cart has ${two?.quantity ?? 0}`);
-            await client.remove(current.id, two ?? line, mode);
-          }
-          const gone = !(await client.cart()).lines.some((l) => l.uid === p.uid);
-          log(`- ${gone ? "✅ removed again" : `❌ still in cart: remove "${p.name}" by hand`}`);
-        } catch (e) {
-          const code = e instanceof CartError || e instanceof ShopError ? e.code : "error";
-          log(`- ❌ ${MODE_NAME[mode]}: ${code}: ${(e as Error).message}. Check the cart for "${p.name}".`);
-        }
+          log(
+            `- ${line?.quantity === 1 ? "✅" : "❌"} ${MODE_NAME[mode]} add "${p.name}": cart has ${line?.quantity ?? 0}` +
+              `${line?.journey ? ` (journey ${line.journey})` : ""}; JioMart can sell ${line?.sellableQuantity ?? "?"} more` +
+              `${line?.outOfStock ? ", marked out of stock" : ""}; order limit ${p.maxQty ?? "?"}`,
+          );
+        });
+        await step("change to 2", async () => {
+          const line = (await client.cart()).lines.find((l) => l.uid === p.uid);
+          if (!line) return;
+          await client.setQuantity(current.id, line, 2, mode);
+          const two = (await client.cart()).lines.find((l) => l.uid === p.uid);
+          log(`- ${two?.quantity === 2 ? "✅" : "❌"} change to 2: cart has ${two?.quantity ?? 0}`);
+        });
+        // Always take it out again, whatever happened above.
+        await step("remove", async () => {
+          const line = (await client.cart()).lines.find((l) => l.uid === p.uid);
+          if (line) await client.remove(current.id, line, mode);
+        });
+        const gone = !(await client.cart()).lines.some((l) => l.uid === p.uid);
+        log(`- ${gone ? "✅ removed again" : `❌ still in cart: remove "${p.name}" by hand (or on the app's Cart page)`}`);
       }
     }
     tab.close();

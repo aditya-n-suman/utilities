@@ -155,7 +155,11 @@ try {
     if (scheme === "dark") await shot(ui, "a4-review-dark");
 
     // 5. Adding (with a human check on the light pass) → 6. Done.
-    if (scheme === "light") jm.state.humanCheckNext = true;
+    if (scheme === "light") {
+      jm.state.humanCheckNext = true;
+      // Toor dal is already in the cart once: the run increases it, and Undo must put it back to 1.
+      jm.cart.set(7507147, { identifier: "pre1", article_id: "art7507147", quantity: 1, size: "1 KG", vertical: "GROCERIES", journey: "quickcommerce" });
+    }
     await ui.getByRole("button", { name: /Add 6 items to JioMart cart/ }).click();
     if (scheme === "light") {
       await ui.getByText("JioMart wants to check you're human.").waitFor();
@@ -170,13 +174,45 @@ try {
     if (scheme === "light") {
       const lines = [...jm.cart.entries()].map(([uid, l]) => `${uid}:${l.quantity}`).sort();
       check(
-        lines.join(",") === ["7507147:2", "7600001:2", "7600010:5", "7600020:1", "7600030:4", "9100001:1"].sort().join(","),
+        lines.join(",") === ["7507147:3", "7600001:2", "7600010:5", "7600020:1", "7600030:4", "9100001:1"].sort().join(","),
         `the shop's cart has what was reviewed (${lines.join(", ")})`,
       );
       check(jm.writes.filter((w) => w.path.endsWith("bulk-detail")).every((w) => !w.signed), "no stale signature sent");
     }
-    check((await ui.locator(".panel").count()) === 0, "nothing to buy elsewhere: the skipped line isn't listed");
+    check((await ui.getByText("Buy these elsewhere").count()) === 0, "nothing to buy elsewhere: the skipped line isn't listed");
     await shot(ui, scheme === "light" ? "a6-done" : "a6-done-dark");
+
+    // Taking things out again: "Undo this run" (light), or select all + remove on the cart page (dark).
+    if (scheme === "light") {
+      await ui.getByRole("button", { name: "Undo this run" }).click();
+      await ui.getByRole("button", { name: "Yes, undo" }).click();
+      await ui.getByRole("heading", { name: "Your JioMart cart" }).waitFor();
+      await ui.getByText(/^Removed\s/).waitFor({ timeout: 20000 });
+      const left = [...jm.cart.entries()].map(([uid, l]) => `${uid}:${l.quantity}`);
+      check(left.join(",") === "7507147:1", `undo takes back the run and restores what was there (${left.join(", ")})`);
+      await ui.getByText("1 line · ₹179").waitFor();
+      check((await ui.getByRole("tab", { name: /Added by Grocery Cart/ }).innerText()).includes("0"), "after undo nothing is marked as added by Grocery Cart");
+      await ui.getByRole("link", { name: "Back" }).click();
+      check((await ui.getByRole("button", { name: "Undo this run" }).count()) === 0, "Undo isn't offered twice");
+      await ui.getByRole("link", { name: "Your cart" }).click();
+      await shot(ui, "cart-after-undo");
+      await ui.getByRole("button", { name: "Dismiss" }).click();
+      jm.cart.clear();
+      await ui.getByRole("button", { name: "Refresh" }).click();
+      await ui.getByText("Your cart is empty.").waitFor();
+    } else {
+      await ui.getByRole("link", { name: "Your cart" }).click();
+      await ui.getByRole("heading", { name: "Your JioMart cart" }).waitFor();
+      await ui.getByText("6 lines ·").waitFor();
+      check((await ui.getByRole("tab", { name: /Added by Grocery Cart/ }).innerText()).includes("6"), "cart page marks the 6 lines this run added");
+      await ui.getByLabel("Select all shown").check();
+      await ui.getByRole("button", { name: "Remove 6 lines" }).click();
+      await shot(ui, "cart-confirm-dark");
+      await ui.getByRole("button", { name: "Yes, remove 6 lines" }).click();
+      await ui.getByText("Your cart is empty.").waitFor({ timeout: 20000 });
+      check(jm.cart.size === 0, "select all + remove empties the cart");
+      await ui.getByRole("link", { name: "Back" }).click();
+    }
 
     // 7. Remembered choices.
     await ui.getByRole("link", { name: "Remembered choices" }).click();
